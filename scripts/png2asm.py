@@ -51,6 +51,7 @@ for infile, outfile in zip(args.infile, args.outfile):
             y = 0
             while y < sprite_height:
                 x = 0
+                f_out.write('\t.byte\t')
                 while x < sprite_width:
                     b0 = image_pixels[ix + x + 0,iy + y]
                     b1 = image_pixels[ix + x + 1,iy + y]
@@ -60,10 +61,17 @@ for infile, outfile in zip(args.infile, args.outfile):
                     b5 = image_pixels[ix + x + 5,iy + y]
                     b6 = image_pixels[ix + x + 6,iy + y]
                     b7 = image_pixels[ix + x + 7,iy + y]
-                    f_out.write('\t\t\t.byte\t'+f'0x{b0:0x},'+f'0x{b1:0x},'+f'0x{b2:0x},'+f'0x{b3:0x},'+f'0x{b4:0x},'+f'0x{b5:0x},'+f'0x{b6:0x},'+f'0x{b7:0x}\n')
+                    f_out.write(f'0x{b0:02x},'+f'0x{b1:02x},'+f'0x{b2:02x},'+f'0x{b3:02x},'+f'0x{b4:02x},'+f'0x{b5:02x},'+f'0x{b6:02x},'+f'0x{b7:02x}')
                     x += 8
+                    if x < sprite_width:
+                        f_out.write(',')
+                    else:
+                        f_out.write('\n')
                 y += 1
             ix += sprite_width
+            if ix < image_width:
+                if iy <= (image_height - sprite_height):
+                    f_out.write('\n')
         iy += sprite_height
 
     # if args.spriteshift:
