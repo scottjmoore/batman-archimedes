@@ -40,7 +40,8 @@ for infile, outfile in zip(args.infile, args.outfile):
     print("\tImage size : "+f'{image_width}'+"x"+f'{image_height}')
     print("\tSprite size : "+f'{sprite_width}'+"x"+f'{sprite_height}')
 
-    f_out.write(image_name+':\n')
+    label_name = image_name.replace("-","_")
+    f_out.write(label_name+':\n')
 
     iy = 0
 
@@ -147,6 +148,6 @@ for infile, outfile in zip(args.infile, args.outfile):
     #         f_out.write('\t\t\t.byte\t'+f'0x{bs0:0x},'+f'0x{bs1:0x},'+f'0x{bs2:0x}\n')
     #         y += 1
 
-    f_out.write(image_name+'_end:\n\n')
+    f_out.write(label_name+'_end:\n\n')
 
     f_out.close()
