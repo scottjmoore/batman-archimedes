@@ -16,6 +16,496 @@ main:
     ADRL R1,buffer
     SWI OS_ReadVduVariables
 
+    ADRL R12,level_1_tiles  ; move address of the level 1 tiles into R12
+    LDR R10,[R1]            ; move address of the start of screen memory into R11
+
+    ADD R10,R10,#320*32     ; move place to draw tile down 32 scanlines (320 bytes per scanline)
+    
+    MOV R0,#16*16           ; put size of tile in bytes (16 x 16 pixels) into R0
+    MOV R1,#73              ; put tile index '70' into R1
+    MLA R12,R0,R1,R12       ; calculate address of tile
+
+    MOV R11,R10
+
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    
+    ADD R11,R10,#16
+
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+
+    ADD R11,R10,#32
+
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+
+    ADRL R12,level_1_tiles  ; move address of the level 1 tiles into R12
+    ADRL R1,buffer
+    LDR R10,[R1]            ; move address of the start of screen memory into R11
+
+    ADD R10,R10,#320*32     ; move place to draw tile down 32 scanlines (320 bytes per scanline)
+    ADD R10,R10,#320*16
+
+    MOV R0,#16*16           ; put size of tile in bytes (16 x 16 pixels) into R0
+    MOV R1,#89              ; put tile index '41' into R1
+    MLA R12,R0,R1,R12       ; calculate address of tile
+
+    MOV R11,R10
+
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    
+    ADD R11,R10,#16
+
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+
+    ADD R11,R10,#32
+
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+
+    ADRL R12,level_1_tiles  ; move address of the level 1 tiles into R12
+    ADRL R1,buffer
+    LDR R10,[R1]            ; move address of the start of screen memory into R11
+
+    ADD R10,R10,#320*32     ; move place to draw tile down 32 scanlines (320 bytes per scanline)
+    ADD R10,R10,#320*32
+
+    MOV R0,#16*16           ; put size of tile in bytes (16 x 16 pixels) into R0
+    MOV R1,#105              ; put tile index '41' into R1
+    MLA R12,R0,R1,R12       ; calculate address of tile
+
+    MOV R11,R10
+
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    
+    ADD R11,R10,#16
+
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+
+    ADD R11,R10,#32
+
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+
 .exit:
     LDMFD SP!, {PC}
 
@@ -37,10 +527,11 @@ buffer:
     .4byte 0x00000000
     .4byte 0x00000000
 
-;    .nolist    
-    .balign 16
 
-.incbin "build/level-1.bin"
+    .nolist    
+    .balign 16
+level_1_tiles:
+    .incbin "build/level-1.bin"
 
 ; reserve 256 bytes for a stack
 .space 256
