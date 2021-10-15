@@ -3,6 +3,8 @@
     b main
 
 copy_buffer_to_screen:
+    STMFD SP!, {R0-R12}
+    
     MOV R12,R0
     MOV R11,R1
     MOV R10,#256
@@ -42,6 +44,8 @@ copy_buffer_to_screen:
     STMIA R11!,{R0-R9}
     SUBS R10,R10,#2
     BNE .loop
+
+    LDMFD SP!, {R0-R12}
     MOV PC,R14
 
 .include "swi.asm"
