@@ -31,4 +31,4 @@ deploy:
 	@make
 	@mkdir $(ARCULATOR)/!Batman  > /dev/null 2>&1 || true
 	@cp src/Run $(ARCULATOR)/!Batman/!Run,feb
-	@cp build/batman $(ARCULATOR)/!Batman/!Batman,ff8
+	@cp build/batman $(ARCULATOR)/!Batman/!RunImage,ff8
