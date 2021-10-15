@@ -48,6 +48,73 @@ copy_buffer_to_screen:
     LDMFD SP!, {R0-R12}
     MOV PC,R14
 
+copy_tile_to_screen:
+    ; R0 = tile
+    ; R1 = tile_set
+    ; R2 = x coordinate
+    ; R3 = y coordinate
+    ; R4 = display start
+
+    STMFD SP!, {R0-R12}
+    MOV R5,#16*16
+    MLA R12,R0,R5,R1
+    MOV R5,#320
+    MLA R11,R3,R5,R4
+    ADD R11,R11,R2
+
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+    LDMIA R12!,{R0-R3}
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#320
+
+    LDMFD SP!, {R0-R12}
+    MOV PC,R14
+
+
 .include "swi.asm"
 .include "vdu.asm"
 .include "macros.asm"
@@ -558,6 +625,34 @@ main:
     LDMIA R12!,{R0-R3}
     STMIA R11,{R0-R3}
     ADD R11,R11,#320
+
+    ADRL R1,buffer
+    LDR R4,[R1]
+    MOV R0,#4
+    ADRL R1,level_1_tiles
+    MOV R2,#128
+    MOV R3,#128
+    BL copy_tile_to_screen
+    ADD R0,R0,#1
+    ADD R2,R2,#16
+    ADD R3,R3,#1
+    BL copy_tile_to_screen
+    ADD R0,R0,#1
+    ADD R2,R2,#16
+    ADD R3,R3,#1
+    BL copy_tile_to_screen
+    ADD R0,R0,#1
+    ADD R2,R2,#16
+    ADD R3,R3,#1
+    BL copy_tile_to_screen
+    ADD R0,R0,#1
+    ADD R2,R2,#16
+    ADD R3,R3,#1
+    BL copy_tile_to_screen
+    ADD R0,R0,#1
+    ADD R2,R2,#16
+    ADD R3,R3,#1
+    BL copy_tile_to_screen
 
     SWI OS_ReadC
 
