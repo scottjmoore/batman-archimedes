@@ -11,6 +11,7 @@
 
 ; VDU macro, can accept upto 10 parameters
 .macro VDU v1,v2,v3,v4,v5,v6,v7,v8,v9,v10
+    STMFD SP!, {R0}
     .nolist
     .if \v1<>-1           ; if macro is passed 1 parameter
         MOV R0,#\v1      ; move parameter 1 into R0
@@ -52,6 +53,7 @@
         MOV R0,#\v10      ; move parameter 9 into R0
         SWI OS_WriteC   ; write it to the display
     .endif
+    LDMFD SP!, {R0}
     .list
 .endm
 

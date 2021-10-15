@@ -5,5 +5,6 @@
 .set OS_ReadC,0x04
 .set OS_Byte,0x06
 .set OS_Exit,0x11
+.set OS_EnterOS,0x16
 .set OS_Mouse,0x1c
 .set OS_ReadVduVariables,0x31
