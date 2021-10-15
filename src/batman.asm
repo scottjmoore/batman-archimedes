@@ -1,11 +1,54 @@
+; start program for $8000 in memory
+.org 0x00008000
+    b main
+
+copy_buffer_to_screen:
+    MOV R12,R0
+    MOV R11,R1
+    MOV R10,#256
+
+.loop:
+    LDMIA R12!,{R0-R9}
+    STMIA R11!,{R0-R9}
+    LDMIA R12!,{R0-R9}
+    STMIA R11!,{R0-R9}
+    LDMIA R12!,{R0-R9}
+    STMIA R11!,{R0-R9}
+    LDMIA R12!,{R0-R9}
+    STMIA R11!,{R0-R9}
+    LDMIA R12!,{R0-R9}
+    STMIA R11!,{R0-R9}
+    LDMIA R12!,{R0-R9}
+    STMIA R11!,{R0-R9}
+    LDMIA R12!,{R0-R9}
+    STMIA R11!,{R0-R9}
+    LDMIA R12!,{R0-R9}
+    STMIA R11!,{R0-R9}
+    LDMIA R12!,{R0-R9}
+    STMIA R11!,{R0-R9}
+    LDMIA R12!,{R0-R9}
+    STMIA R11!,{R0-R9}
+    LDMIA R12!,{R0-R9}
+    STMIA R11!,{R0-R9}
+    LDMIA R12!,{R0-R9}
+    STMIA R11!,{R0-R9}
+    LDMIA R12!,{R0-R9}
+    STMIA R11!,{R0-R9}
+    LDMIA R12!,{R0-R9}
+    STMIA R11!,{R0-R9}
+    LDMIA R12!,{R0-R9}
+    STMIA R11!,{R0-R9}
+    LDMIA R12!,{R0-R9}
+    STMIA R11!,{R0-R9}
+    SUBS R10,R10,#2
+    BNE .loop
+    MOV PC,R14
+
 .include "swi.asm"
 .include "vdu.asm"
 .include "macros.asm"
 
-; start program for $8000 in memory
-.org 0x00008000
-
-; start of our code
+; main entry point of code
 main:
     ADRL SP,stack       ; load stack pointer with our stack address
     STMFD SP!, {R14}
@@ -16,45 +59,9 @@ main:
     ADRL R1,buffer
     SWI OS_ReadVduVariables
 
-    ADRL R12,main_title
-    LDR R11,[R1]
-    MOV R10,#128
-
-.title_screen_loop:
-    LDMIA R12!,{R0-R9}
-    STMIA R11!,{R0-R9}
-    LDMIA R12!,{R0-R9}
-    STMIA R11!,{R0-R9}
-    LDMIA R12!,{R0-R9}
-    STMIA R11!,{R0-R9}
-    LDMIA R12!,{R0-R9}
-    STMIA R11!,{R0-R9}
-    LDMIA R12!,{R0-R9}
-    STMIA R11!,{R0-R9}
-    LDMIA R12!,{R0-R9}
-    STMIA R11!,{R0-R9}
-    LDMIA R12!,{R0-R9}
-    STMIA R11!,{R0-R9}
-    LDMIA R12!,{R0-R9}
-    STMIA R11!,{R0-R9}
-    LDMIA R12!,{R0-R9}
-    STMIA R11!,{R0-R9}
-    LDMIA R12!,{R0-R9}
-    STMIA R11!,{R0-R9}
-    LDMIA R12!,{R0-R9}
-    STMIA R11!,{R0-R9}
-    LDMIA R12!,{R0-R9}
-    STMIA R11!,{R0-R9}
-    LDMIA R12!,{R0-R9}
-    STMIA R11!,{R0-R9}
-    LDMIA R12!,{R0-R9}
-    STMIA R11!,{R0-R9}
-    LDMIA R12!,{R0-R9}
-    STMIA R11!,{R0-R9}
-    LDMIA R12!,{R0-R9}
-    STMIA R11!,{R0-R9}
-    SUBS R10,R10,#1
-    BNE .title_screen_loop
+    ADRL R0,intro_screen
+    LDR R1,[R1]
+    BL copy_buffer_to_screen
 
     ADRL R1,buffer
     ADRL R12,level_1_tiles  ; move address of the level 1 tiles into R12
@@ -574,6 +581,8 @@ buffer:
 
 main_title:
     .incbin "build/main_title.bin"
+intro_screen:
+    .incbin "build/intro_screen.bin"
 level_1_tiles:
     .incbin "build/level-1.bin"
 
