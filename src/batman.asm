@@ -59,7 +59,8 @@ main:
     ADRL R1,buffer
     SWI OS_ReadVduVariables
 
-    ADRL R0,intro_screen
+    ADRL R0,main_title
+    ADRL R1,buffer
     LDR R1,[R1]
     BL copy_buffer_to_screen
 
@@ -553,6 +554,13 @@ main:
     LDMIA R12!,{R0-R3}
     STMIA R11,{R0-R3}
     ADD R11,R11,#320
+
+    SWI OS_ReadC
+
+    ADRL R0,intro_screen
+    ADRL R1,buffer
+    LDR R1,[R1]
+    BL copy_buffer_to_screen
 
 .exit:
     LDMFD SP!, {PC}
