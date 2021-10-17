@@ -493,7 +493,7 @@ main:
     VDU VDU_SelectScreenMode,13,-1,-1,-1,-1,-1,-1,-1,-1     ; change to mode 13 (320x256 256 colours) for A3000
     VDU VDU_MultiPurpose,1,0,0,0,0,0,0,0,0,0
     ADRL R0,vdu_variables_screen_start
-    ADRL R1,buffer
+    ADRL R1,vdu_variables_screen_start_buffer
     SWI OS_ReadVduVariables
 
     MOV R12,R1
@@ -589,6 +589,8 @@ exit:
 ;       intro_font_lookup_table
 ;   ----------------------------------------------------------------
 ;       Lookup table to convert from ascii to intro font tile set
+;           c = copyright symbol
+;           b = blank character symbol
 ;   ----------------------------------------------------------------
 intro_font_lookup_table:
     .byte " 0123456789.!&cbABCDEFGHIJKLMNOPQRSTUVWXYZ"
