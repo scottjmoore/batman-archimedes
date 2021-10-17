@@ -404,44 +404,85 @@ intro_font_lookup_exit:     ; found character in lookup table
     LDMFD SP!, {R1-R12}     ; restore all registers from the stack
     MOV PC,R14              ; return from function    
 
+
+;   ****************************************************************
+;       draw_intro_font_text
+;   ----------------------------------------------------------------
+;       Draw zero terminated ascii string using intro font to the
+;       screen or display buffer, assumes a scanline width of
+;       320 bytes.
+;   ----------------------------------------------------------------
+;       Parameters
+;   ----------------------------------------------------------------
+;       R0      :   ascii string to draw
+;       R1      :   address of the tileset
+;       R2      :   x coordinate to draw string to
+;       R3      :   y coordinate to draw string to
+;       R4      :   destination address of screen or display buffer
+;       R5      :   N/A
+;       R6      :   N/A
+;       R7      :   N/A
+;       R8      :   N/A
+;       R9      :   N/A
+;       R10     :   N/A
+;       R11     :   N/A
+;       R11     :   N/A
+;   ----------------------------------------------------------------
+;       Returns
+;   ----------------------------------------------------------------
+;       R0      :   Unchanged
+;       R1      :   Unchanged
+;       R2      :   Unchanged
+;       R3      :   Unchanged
+;       R4      :   Unchanged
+;       R5      :   Unchanged
+;       R6      :   Unchanged
+;       R7      :   Unchanged
+;       R8      :   Unchanged
+;       R9      :   Unchanged
+;       R10     :   Unchanged
+;       R11     :   Unchanged
+;       R11     :   Unchanged
+;   ****************************************************************
+
 draw_intro_font_text:
-    ; R0 = ascii text to print
-    ; R1 = tile map to use
-    ; R2 = x
-    ; R3 = y
-    ; R4 = display buffer start
 
-    STMFD SP!, {R0-R12,R14}
+    STMFD SP!, {R0-R12,R14}     ; store all registers onto the stack
 
-    MOV R10,R0
-    EOR R0,R0,R0
+    MOV R10,R0      ; move address of ascii string into R10
+    EOR R0,R0,R0    ; clear R0 to zero
 
-draw_intro_font_text_loop:
-    LDRB R0,[R10]
-    ADD R10,R10,#1
-    CMP R0,#0
-    BEQ draw_intro_font_text_exit
-    CMP R0,#0x0a
-    BEQ draw_intro_font_text_nextline
-    BL intro_font_lookup
-    CMP R0,#0
-    BEQ draw_intro_font_text_skip_tile
-    BL copy_8x8_tile_to_screen
-draw_intro_font_text_skip_tile:
-    ADD R2,R2,#8
-    CMP R2,#320
-    BLT draw_intro_font_text_loop
-draw_intro_font_text_nextline:
-    MOV R2,#0
-    ADD R3,R3,#8
-    B draw_intro_font_text_loop
+draw_intro_font_text_loop:              ; start of loop
+    LDRB R0,[R10]                       ; load 1 byte from ascii string into R0
+    ADD R10,R10,#1                      ; increase address for ascii string by 1 byte
+    CMP R0,#0                           ; check to see if we are at the end of a string
+    BEQ draw_intro_font_text_exit       ; if byte is zero exit loop
+    CMP R0,#0x0a                        ; check to see if we need to move down to the next line
+    BEQ draw_intro_font_text_nextline   ; if byte == 0x0a goto next line section
+    BL intro_font_lookup                ; lookup tile number from ascii character in string
+    CMP R0,#0                           ; if tile number == 0
+    BEQ draw_intro_font_text_skip_tile  ; skip this tile
+    BL copy_8x8_tile_to_screen          ; draw the tile onto screen or display buffer
+draw_intro_font_text_skip_tile:         ; skip tile section
+    ADD R2,R2,#8                        ; move destination up by 8 bytes (width of 1 character)
+    CMP R2,#320                         ; check to see if we've overflowed a line
+    BLT draw_intro_font_text_loop       ; if not go back to start of loop
+draw_intro_font_text_nextline:          ; next line section
+    MOV R2,#0                           ; go to start of scanline
+    ADD R3,R3,#8                        ; increase scanline to draw to by 8 (height of 1 character)
+    B draw_intro_font_text_loop         ; go back to start of loop
 
-draw_intro_font_text_exit:
-    LDMFD SP!, {R0-R12,R14}
-    MOV PC,R14
+draw_intro_font_text_exit:              ; exit loop
+    
+    LDMFD SP!, {R0-R12,R14}     ; restore all registers from the stack, including R14 Link registger
+    MOV PC,R14                  ; exit function
 
 
-; main entry point of code
+;   ****************************************************************
+;       main
+;   ----------------------------------------------------------------
+;       Entry point of applicataion
+;   ----------------------------------------------------------------
 main:
     ADRL SP,stack       ; load stack pointer with our stack address
     STMFD SP!, {R14}
@@ -534,7 +575,13 @@ exit:
     MOV   R0,R0 
     LDMFD SP!, {PC}
 
-.balign 16
+
+;   ****************************************************************
+;       data tables
+;   ----------------------------------------------------------------
+;       All data goes here, start by aligning to a 32 byte boundary
+;   ----------------------------------------------------------------
+.balign 32
 
 intro_font_lookup_table:
     .byte " 0123456789.!&cbABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -580,12 +627,12 @@ intro_text_3:
     .byte "             F1..PAUSE GAME             ",0x0a
     .byte "             F2..TOGGLE MUSIC           ",0
 
-.balign 16
+.balign 32
 vdu_variables_screen_start:
     .4byte 0x00000095       ; display memory start address
     .4byte 0xffffffff
 
-.balign 16
+.balign 32
 buffer:
     .4byte 0x00000000
     .4byte 0x00000000
@@ -599,7 +646,7 @@ buffer:
     .4byte 0x00000000
 
 .nolist    
-.balign 16
+.balign 32
 
 main_title:
     .incbin "build/main_title.bin"
@@ -611,7 +658,7 @@ intro_font:
 level_1_tiles:
     .incbin "build/level-1.bin"
 
-; reserve 512 bytes for a stack
-.space 512
+; reserve 1024 bytes for a stack
+.space 1024
 stack:
 
