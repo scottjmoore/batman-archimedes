@@ -484,10 +484,11 @@ draw_intro_font_text_exit:              ; exit loop
 ;       Entry point of applicataion
 ;   ----------------------------------------------------------------
 main:
-    ADRL SP,stack       ; load stack pointer with our stack address
-    STMFD SP!, {R14}
 
-    SWI OS_EnterOS
+    ADRL SP,stack       ; load stack pointer with our stack address
+    STMFD SP!, {R14}    ; store link register R14 onto the stack
+
+    SWI OS_EnterOS      ; enter supervisor mode
 
     VDU VDU_SelectScreenMode,13,-1,-1,-1,-1,-1,-1,-1,-1     ; change to mode 13 (320x256 256 colours) for A3000
     VDU VDU_MultiPurpose,1,0,0,0,0,0,0,0,0,0
@@ -577,16 +578,28 @@ exit:
 
 
 ;   ****************************************************************
-;       data tables
+;       DATA section
 ;   ----------------------------------------------------------------
 ;       All data goes here, start by aligning to a 32 byte boundary
 ;   ----------------------------------------------------------------
 .balign 32
 
+
+;   ****************************************************************
+;       intro_font_lookup_table
+;   ----------------------------------------------------------------
+;       Lookup table to convert from ascii to intro font tile set
+;   ----------------------------------------------------------------
 intro_font_lookup_table:
     .byte " 0123456789.!&cbABCDEFGHIJKLMNOPQRSTUVWXYZ"
     .byte 0x00
 
+
+;   ****************************************************************
+;       intro_text_1
+;   ----------------------------------------------------------------
+;       Introduction screen text part 1
+;   ----------------------------------------------------------------
 intro_text_1:
     .byte "         OCEAN SOFTWARE PRESENTS       ",0x0a
     .byte 0x0a
@@ -597,6 +610,12 @@ intro_text_1:
     .byte "               SCOTT MOORE             ",0x0a
     .byte 0x00
 
+
+;   ****************************************************************
+;       intro_text_1_clear
+;   ----------------------------------------------------------------
+;       Introduction screen clear part 1 text
+;   ----------------------------------------------------------------
 intro_text_1_clear:
     .byte "         bbbbbbbbbbbbbbbbbbbbbbb       ",0x0a
     .byte 0x0a
@@ -607,16 +626,34 @@ intro_text_1_clear:
     .byte "               bbbbbbbbbbb             ",0x0a
     .byte 0x00
 
+
+;   ****************************************************************
+;       intro_text_2
+;   ----------------------------------------------------------------
+;       Introduction screen text part 2
+;   ----------------------------------------------------------------
 intro_text_2:
     .byte "                 BATMAN                ",0x0a
     .byte 0x0a
     .byte "               THE MOVIE.              ",0
 
+
+;   ****************************************************************
+;       intro_text_2_clear
+;   ----------------------------------------------------------------
+;       Introduction screen clear part 2 text
+;   ----------------------------------------------------------------
 intro_text_2_clear:
     .byte "                 bbbbbb                ",0x0a
     .byte 0x0a
     .byte "               bbbbbbbbbb              ",0
 
+
+;   ****************************************************************
+;       intro_text_3
+;   ----------------------------------------------------------------
+;       Introduction screen text part 3
+;   ----------------------------------------------------------------
 intro_text_3:
     .byte "          TM & c DC COMICS INC.         ",0x0a
     .byte "                  1989                  ",0x0a
@@ -627,38 +664,83 @@ intro_text_3:
     .byte "             F1..PAUSE GAME             ",0x0a
     .byte "             F2..TOGGLE MUSIC           ",0
 
+
 .balign 32
+
+;   ****************************************************************
+;       vdu_variables_screen_start
+;   ----------------------------------------------------------------
+;       VDU variables lookup table, terminated by -1
+;           +00   :   get display memory start address
+;           +04   :   -1 to end lookup table
+;   ----------------------------------------------------------------
 vdu_variables_screen_start:
     .4byte 0x00000095       ; display memory start address
     .4byte 0xffffffff
 
+
 .balign 32
-buffer:
+
+;   ****************************************************************
+;       vdu_variables_screen_start_buffer
+;   ----------------------------------------------------------------
+;       VDU variables lookup table, terminated by -1
+;           +00   :   start of display memory address
+;           +04   :   not used
+;           +08   :   not used
+;           +12   :   not used
+;   ----------------------------------------------------------------
+vdu_variables_screen_start_buffer:
     .4byte 0x00000000
     .4byte 0x00000000
     .4byte 0x00000000
     .4byte 0x00000000
-    .4byte 0x00000000
-    .4byte 0x00000000
-    .4byte 0x00000000
-    .4byte 0x00000000
-    .4byte 0x00000000
-    .4byte 0x00000000
+
 
 .nolist    
 .balign 32
 
+;   ****************************************************************
+;       main_title
+;   ----------------------------------------------------------------
+;       Bitmap for main title screen
+;   ----------------------------------------------------------------
 main_title:
     .incbin "build/main_title.bin"
+
+
+;   ****************************************************************
+;       intro_screen
+;   ----------------------------------------------------------------
+;       Bitmap for introduction screen
+;   ----------------------------------------------------------------
 intro_screen:
     .incbin "build/intro_screen.bin"
 
+
+;   ****************************************************************
+;       intro_font
+;   ----------------------------------------------------------------
+;       Bitmap for introduction screen font tileset
+;   ----------------------------------------------------------------
 intro_font:
     .incbin "build/intro_font.bin"
+
+
+;   ****************************************************************
+;       level_1_tiles
+;   ----------------------------------------------------------------
+;       Bitmap for level 1 tileset
+;   ----------------------------------------------------------------
 level_1_tiles:
     .incbin "build/level-1.bin"
 
-; reserve 1024 bytes for a stack
+
+;   ****************************************************************
+;       stack
+;   ----------------------------------------------------------------
+;       Reserve 1024 bytes for our stack
+;   ----------------------------------------------------------------
 .space 1024
 stack:
 
