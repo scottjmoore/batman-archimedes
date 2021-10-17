@@ -268,65 +268,141 @@ copy_16x16_tile_to_screen:
     LDMFD SP!, {R0-R12}     ; restore all the registers from the stack
     MOV PC,R14              ; return from function
 
+
+;   ****************************************************************
+;       copy_8x8_tile_to_screen
+;   ----------------------------------------------------------------
+;       Copy a 8x8 tile to the screen or display buffer, must be
+;       word aligned.
+;   ----------------------------------------------------------------
+;       Parameters
+;   ----------------------------------------------------------------
+;       R0      :   number of the 8x8 tile in the tileset
+;       R1      :   address of the tileset
+;       R2      :   x coordinate to copy the tile to
+;       R3      :   y coordinate to copy the tile to
+;       R4      :   address of the screen or display buffer
+;       R5      :   N/A
+;       R6      :   N/A
+;       R7      :   N/A
+;       R8      :   N/A
+;       R9      :   N/A
+;       R10     :   N/A
+;       R11     :   N/A
+;       R11     :   N/A
+;   ----------------------------------------------------------------
+;       Returns
+;   ----------------------------------------------------------------
+;       R0      :   Unchanged
+;       R1      :   Unchanged
+;       R2      :   Unchanged
+;       R3      :   Unchanged
+;       R4      :   Unchanged
+;       R5      :   Unchanged
+;       R6      :   Unchanged
+;       R7      :   Unchanged
+;       R8      :   Unchanged
+;       R9      :   Unchanged
+;       R10     :   Unchanged
+;       R11     :   Unchanged
+;       R11     :   Unchanged
+;   ****************************************************************
+
 copy_8x8_tile_to_screen:
-    ; R0 = tile
-    ; R1 = tile_set
-    ; R2 = x coordinate
-    ; R3 = y coordinate
-    ; R4 = display start
 
-    STMFD SP!, {R0-R12}
-    MOV R5,#8*8
-    MLA R12,R0,R5,R1
-    MOV R5,#320
-    MLA R11,R3,R5,R4
-    ADD R11,R11,R2
+    STMFD SP!, {R0-R12}     ; store all registers onto the stack
 
-    LDMIA R12!,{R0-R3}
-    STMIA R11,{R0-R1}
-    ADD R11,R11,#320
-    STMIA R11,{R2-R3}
-    ADD R11,R11,#320
-    LDMIA R12!,{R0-R3}
-    STMIA R11,{R0-R1}
-    ADD R11,R11,#320
-    STMIA R11,{R2-R3}
-    ADD R11,R11,#320
-    LDMIA R12!,{R0-R3}
-    STMIA R11,{R0-R1}
-    ADD R11,R11,#320
-    STMIA R11,{R2-R3}
-    ADD R11,R11,#320
-    LDMIA R12!,{R0-R3}
-    STMIA R11,{R0-R1}
-    ADD R11,R11,#320
-    STMIA R11,{R2-R3}
-    ADD R11,R11,#320
+    MOV R5,#8*8             ; put the size of a single tile in bytes into R5
+    MLA R12,R0,R5,R1        ; calculate the address of the start of the tile [source = (tile number * (8 * 8)) + address of tileset]
+    MOV R5,#320             ; put the width of a scanline into R5
+    MLA R11,R3,R5,R4        ; calculate the address of the destination [destination = (y * 320) + address of screen or buffer]
+    ADD R11,R11,R2          ; add x to the destination address
 
-    LDMFD SP!, {R0-R12}
-    MOV PC,R14
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R0-R1}       ; store first 8 bytes from R0-R1 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    STMIA R11,{R2-R3}       ; store second 8 bytes from R2-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R0-R1}       ; store first 8 bytes from R0-R1 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    STMIA R11,{R2-R3}       ; store second 8 bytes from R2-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R0-R1}       ; store first 8 bytes from R0-R1 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    STMIA R11,{R2-R3}       ; store second 8 bytes from R2-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R0-R1}       ; store first 8 bytes from R0-R1 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    STMIA R11,{R2-R3}       ; store second 8 bytes from R2-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMFD SP!, {R0-R12}     ; restore all registers from the stack
+    MOV PC,R14              ; return from function
+
+
+;   ****************************************************************
+;       intro_font_lookup
+;   ----------------------------------------------------------------
+;       Calculate tile number from an ascii charaction for the
+;       intro font tileset.
+;       Returns the tile number in R0.
+;   ----------------------------------------------------------------
+;       Parameters
+;   ----------------------------------------------------------------
+;       R0      :   ascii character to convert
+;       R1      :   N/A
+;       R2      :   N/A
+;       R3      :   N/A
+;       R4      :   N/A
+;       R5      :   N/A
+;       R6      :   N/A
+;       R7      :   N/A
+;       R8      :   N/A
+;       R9      :   N/A
+;       R10     :   N/A
+;       R11     :   N/A
+;       R11     :   N/A
+;   ----------------------------------------------------------------
+;       Returns
+;   ----------------------------------------------------------------
+;       R0      :   number of tile for intro font tileset
+;       R1      :   Unchanged
+;       R2      :   Unchanged
+;       R3      :   Unchanged
+;       R4      :   Unchanged
+;       R5      :   Unchanged
+;       R6      :   Unchanged
+;       R7      :   Unchanged
+;       R8      :   Unchanged
+;       R9      :   Unchanged
+;       R10     :   Unchanged
+;       R11     :   Unchanged
+;       R11     :   Unchanged
+;   ****************************************************************
 
 intro_font_lookup:
-    ; R0 = ascii input character / on exit R0 = intro font tile number
 
-    STMFD SP!, {R1-R12}
+    STMFD SP!, {R1-R12}     ; store all the registers onto the stack
 
-    ADRL R1,intro_font_lookup_table
-    MOV R3,#0
+    ADRL R1,intro_font_lookup_table     ; load address of intro font conversion lookup table into R1
+    MOV R3,#0                           ; move 0 into R3
 
-intro_font_lookup_loop:
-    LDRB R2,[R1]
-    CMP R2,R0
-    BEQ intro_font_lookup_exit
-    ADD R1,R1,#1
-    ADD R3,R3,#1
-    B intro_font_lookup_loop
+intro_font_lookup_loop:         ; start of loop
+    LDRB R2,[R1]                ; load byte from lookup table into R2
+    CMP R2,R0                   ; compare with ascii character to convert
+    BEQ intro_font_lookup_exit  ; if R2==R0 then exit loop
+    ADD R1,R1,#1                ; increase address of lookup table by 1 byte
+    ADD R3,R3,#1                ; increase tile index by 1
+    B intro_font_lookup_loop    ; go back to start of loop
 
-intro_font_lookup_exit:
-    MOV R0,R3
+intro_font_lookup_exit:     ; found character in lookup table
+    MOV R0,R3               ; move tile index into R0
 
-    LDMFD SP!, {R1-R12}
-    MOV PC,R14
+    LDMFD SP!, {R1-R12}     ; restore all registers from the stack
+    MOV PC,R14              ; return from function    
 
 draw_intro_font_text:
     ; R0 = ascii text to print
