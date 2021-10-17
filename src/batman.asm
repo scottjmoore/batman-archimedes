@@ -264,6 +264,13 @@ main:
     MOV R2,#256
     BL copy_4byte_to_screen
 
+    ADRL R0,intro_text_1
+    ADRL R1,intro_font
+    MOV R2,#0
+    MOV R3,#40
+    ADRL R4,intro_screen
+    BL draw_intro_font_text
+
     ADRL R0,intro_screen
     MOV R2,#1
     MOV R3,#255
@@ -281,16 +288,43 @@ intro_screen_loop:
     ;VDU 19,0,24,0,0,0,-1,-1,-1,-1
     SUB R5,R5,#320
     ADD R2,R2,#1
+    CMP R2,#200
+    BNE intro_screen_skip_1
+
+    STMFD SP!,{R0-R4}
+    ADRL R0,intro_text_1_clear
+    ADRL R1,intro_font
+    MOV R2,#0
+    MOV R3,#40
+    ADRL R4,intro_screen
+    BL draw_intro_font_text
+    ADRL R0,intro_text_2
+    ADRL R1,intro_font
+    MOV R2,#0
+    MOV R3,#72
+    ADRL R4,intro_screen
+    BL draw_intro_font_text
+    LDMFD SP!,{R0-R4}
+
+intro_screen_skip_1:
     CMP R2,#256
     BLE intro_screen_loop
+
+    ADRL R0,intro_text_2_clear
+    ADRL R1,intro_font
+    MOV R2,#0
+    MOV R3,#72
+    LDR R4,[R12]
+    BL draw_intro_font_text
 
     ADRL R0,intro_text_3
     ADRL R1,intro_font
     MOV R2,#0
-    MOV R3,#35
+    MOV R3,#32
     LDR R4,[R12]
     BL draw_intro_font_text
 
+    SWI OS_ReadC
 exit:
     TEQP  PC,#0
     MOV   R0,R0 
@@ -299,15 +333,39 @@ exit:
 .balign 16
 
 intro_font_lookup_table:
-    .byte " 0123456789.!&c-ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    .byte " 0123456789.!&cbABCDEFGHIJKLMNOPQRSTUVWXYZ"
     .byte 0x00
 
 intro_text_1:
-    .byte "          OCEAN SOFTWARE PRESENTS      "
+    .byte "         OCEAN SOFTWARE PRESENTS       ",0x0a
+    .byte 0x0a
+    .byte 0x0a
+    .byte 0x0a
+    .byte "              ACORN PORT BY            ",0x0a
+    .byte 0x0a
+    .byte "               SCOTT MOORE             ",0x0a
+    .byte 0x00
+
+intro_text_1_clear:
+    .byte "         bbbbbbbbbbbbbbbbbbbbbbb       ",0x0a
+    .byte 0x0a
+    .byte 0x0a
+    .byte 0x0a
+    .byte "              bbbbbbbbbbbbb            ",0x0a
+    .byte 0x0a
+    .byte "               bbbbbbbbbbb             ",0x0a
     .byte 0x00
 
 intro_text_2:
-    .byte "            BATMAN THE MOVIE           ",0
+    .byte "                 BATMAN                ",0x0a
+    .byte 0x0a
+    .byte "               THE MOVIE.              ",0
+
+intro_text_2_clear:
+    .byte "                 bbbbbb                ",0x0a
+    .byte 0x0a
+    .byte "               bbbbbbbbbb              ",0
+
 intro_text_3:
     .byte "          TM & c DC COMICS INC.         ",0x0a
     .byte "                  1989                  ",0x0a
