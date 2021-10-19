@@ -17,12 +17,67 @@
 
 
 ;   ****************************************************************
+;       stack
+;   ----------------------------------------------------------------
+;       Reserve 1024 bytes for our stack
+;   ----------------------------------------------------------------
+    .space 256
+stack:
+
+
+;   ****************************************************************
 ;       Include external source files
 ;   ****************************************************************
 
 .include "swi.asm"
 .include "vdu.asm"
 .include "macros.asm"
+
+
+;   ****************************************************************
+;       set_display_start
+;   ----------------------------------------------------------------
+;       Copy 4 bytes from a register to the screen or display
+;       buffer, function assumes a 320 byte wide scanline width.
+;   ----------------------------------------------------------------
+;       Parameters
+;   ----------------------------------------------------------------
+;       R0      :   physical address of screen display buffer >> 2
+;       R1      :   N/A
+;       R2      :   N/A
+;       R3      :   N/A
+;       R4      :   N/A
+;       R5      :   N/A
+;       R6      :   N/A
+;       R7      :   N/A
+;       R8      :   N/A
+;       R9      :   N/A
+;       R10     :   N/A
+;       R11     :   N/A
+;       R11     :   N/A
+;   ----------------------------------------------------------------
+;       Returns
+;   ----------------------------------------------------------------
+;       R0      :   Corrupted
+;       R1      :   Corrupted
+;       R2      :   Unchanged
+;       R3      :   Unchanged
+;       R4      :   Unchanged
+;       R5      :   Unchanged
+;       R6      :   Unchanged
+;       R7      :   Unchanged
+;       R8      :   Unchanged
+;       R9      :   Unchanged
+;       R10     :   Unchanged
+;       R11     :   Unchanged
+;       R11     :   Unchanged
+;   ****************************************************************
+set_display_start:
+    MOV R1,#0x3600000
+    ADD R0,R0,R1
+    STR R0,[R0]
+
+    MOV PC,R14
 
 
 ;   ****************************************************************
@@ -63,7 +118,6 @@
 ;       R11     :   Unchanged
 ;       R11     :   Unchanged
 ;   ****************************************************************
-
 copy_4byte_to_screen:
 
     STMFD SP!, {R0-R12}     ; store all the registers onto the stack
@@ -134,7 +188,6 @@ copy_4byte_to_screen_loop:      ; start of copy loop
 ;       R11     :   Unchanged
 ;       R11     :   Unchanged
 ;   ****************************************************************
-
 copy_buffer_to_screen:
 
     STMFD SP!, {R0-R12}     ; store all the registers onto the stack
@@ -205,7 +258,6 @@ copy_buffer_to_screen_loop:     ; start of copy loop
 ;       R11     :   Unchanged
 ;       R11     :   Unchanged
 ;   ****************************************************************
-
 copy_16x16_tile_to_screen:
 
     STMFD SP!, {R0-R12}     ; store all the registers on the stack
@@ -270,6 +322,163 @@ copy_16x16_tile_to_screen:
 
 
 ;   ****************************************************************
+;       fade_buffer_with_lookup
+;   ----------------------------------------------------------------
+;       Do a lookup on each byte of screen or display buffer and
+;       replace with a byte from a lookup table
+;   ----------------------------------------------------------------
+;       Parameters
+;   ----------------------------------------------------------------
+;       R0      :   address of lookup table
+;       R1      :   address of source screen or display buffer
+;       R2      :   address of destination screen or display buffer
+;       R3      :   N/A
+;       R4      :   N/A
+;       R5      :   N/A
+;       R6      :   N/A
+;       R7      :   N/A
+;       R8      :   N/A
+;       R9      :   N/A
+;       R10     :   N/A
+;       R11     :   N/A
+;       R11     :   N/A
+;   ----------------------------------------------------------------
+;       Returns
+;   ----------------------------------------------------------------
+;       R0      :   Unchanged
+;       R1      :   Unchanged
+;       R2      :   Unchanged
+;       R3      :   Unchanged
+;       R4      :   Unchanged
+;       R5      :   Unchanged
+;       R6      :   Unchanged
+;       R7      :   Unchanged
+;       R8      :   Unchanged
+;       R9      :   Unchanged
+;       R10     :   Unchanged
+;       R11     :   Unchanged
+;       R11     :   Unchanged
+;   ****************************************************************
+fade_buffer_with_lookup:
+
+    STMFD SP!, {R0-R12}     ; store all registers onto the stack
+
+    MOV R11,R1
+    MOV R12,R2
+
+    MOV R1,#5120
+fade_buffer_with_lookup_loop:
+    LDMIA R11!,{R2-R5}
+
+    AND R10,R2,#255
+    ADD R10,R10,R0
+    LDRB R6,[R10]
+
+    MOV R2,R2,ROR #8
+    AND R10,R2,#255
+    ADD R10,R10,R0
+    LDRB R7,[R10]
+    MOV R7,R7,LSL #8
+    ORR R6,R6,R7
+
+    MOV R2,R2,ROR #8
+    AND R10,R2,#255
+    ADD R10,R10,R0
+    LDRB R7,[R10]
+    MOV R7,R7,LSL #16
+    ORR R6,R6,R7
+    
+    MOV R2,R2,ROR #8
+    AND R10,R2,#255
+    ADD R10,R10,R0
+    LDRB R7,[R10]
+    MOV R7,R7,LSL #24
+    ORR R6,R6,R7
+    
+    AND R10,R3,#255
+    ADD R10,R10,R0
+    LDRB R7,[R10]
+
+    MOV R3,R3,ROR #8
+    AND R10,R3,#255
+    ADD R10,R10,R0
+    LDRB R8,[R10]
+    MOV R8,R8,LSL #8
+    ORR R7,R7,R8
+
+    MOV R3,R3,ROR #8
+    AND R10,R3,#255
+    ADD R10,R10,R0
+    LDRB R8,[R10]
+    MOV R8,R8,LSL #16
+    ORR R7,R7,R8
+    
+    MOV R3,R3,ROR #8
+    AND R10,R3,#255
+    ADD R10,R10,R0
+    LDRB R8,[R10]
+    MOV R8,R8,LSL #24
+    ORR R7,R7,R8
+    
+    AND R10,R4,#255
+    ADD R10,R10,R0
+    LDRB R8,[R10]
+
+    MOV R4,R4,ROR #8
+    AND R10,R4,#255
+    ADD R10,R10,R0
+    LDRB R9,[R10]
+    MOV R9,R9,LSL #8
+    ORR R8,R8,R9
+
+    MOV R4,R4,ROR #8
+    AND R10,R4,#255
+    ADD R10,R10,R0
+    LDRB R9,[R10]
+    MOV R9,R9,LSL #16
+    ORR R8,R8,R9
+    
+    MOV R4,R4,ROR #8
+    AND R10,R4,#255
+    ADD R10,R10,R0
+    LDRB R9,[R10]
+    MOV R9,R9,LSL #24
+    ORR R8,R8,R9
+    
+    AND R10,R5,#255
+    ADD R10,R10,R0
+    LDRB R9,[R10]
+
+    MOV R5,R5,ROR #8
+    AND R10,R5,#255
+    ADD R10,R10,R0
+    LDRB R2,[R10]
+    MOV R2,R2,LSL #8
+    ORR R9,R9,R2
+
+    MOV R5,R5,ROR #8
+    AND R10,R5,#255
+    ADD R10,R10,R0
+    LDRB R2,[R10]
+    MOV R2,R2,LSL #16
+    ORR R9,R9,R2
+    
+    MOV R5,R5,ROR #8
+    AND R10,R5,#255
+    ADD R10,R10,R0
+    LDRB R2,[R10]
+    MOV R2,R2,LSL #24
+    ORR R9,R9,R2
+
+    STMIA R12!,{R6-R9}
+
+    SUBS R1,R1,#1
+    BNE fade_buffer_with_lookup_loop
+
+    LDMFD SP!, {R0-R12}     ; restore all the registers from the stack
+    MOV PC,R14              ; return from function
+
+;   ****************************************************************
 ;       copy_8x8_tile_to_screen
 ;   ----------------------------------------------------------------
 ;       Copy a 8x8 tile to the screen or display buffer, must be
@@ -307,7 +516,6 @@ copy_16x16_tile_to_screen:
 ;       R11     :   Unchanged
 ;       R11     :   Unchanged
 ;   ****************************************************************
-
 copy_8x8_tile_to_screen:
 
     STMFD SP!, {R0-R12}     ; store all registers onto the stack
@@ -601,6 +809,47 @@ draw_tile_map_exit:              ; exit loop
     LDMFD SP!, {R0-R12,R14}     ; restore all registers from the stack, including R14 Link registger
     MOV PC,R14                  ; exit function
 
+
+fade_screen_to_black:
+
+    STMFD SP!, {R0-R12,R14}     ; store all registers onto the stack
+
+    ADRL R0,palette_fade
+    LDR R1,[R12,#0]
+    LDR R2,[R12,#4]
+    BL fade_buffer_with_lookup
+    MOV R0,#80*256
+    BL set_display_start
+    
+    ADRL R0,palette_fade
+    LDR R1,[R12,#4]
+    LDR R2,[R12,#0]
+    BL fade_buffer_with_lookup
+    MOV R0,#0
+    BL set_display_start
+
+    ADRL R0,palette_fade
+    LDR R1,[R12,#0]
+    LDR R2,[R12,#4]
+    BL fade_buffer_with_lookup
+    MOV R0,#80*256
+    BL set_display_start
+
+    ADRL R0,palette_fade
+    LDR R1,[R12,#4]
+    LDR R2,[R12,#0]
+    BL fade_buffer_with_lookup
+    MOV R0,#0
+    BL set_display_start
+
+    EOR R0,R0,R0
+    LDR R1,[R12]
+    MOV R2,#256
+    BL copy_4byte_to_screen
+
+    LDMFD SP!, {R0-R12,R14}     ; restore all registers from the stack, including R14 Link registger
+    MOV PC,R14
+
 ;   ****************************************************************
 ;       main
 ;   ----------------------------------------------------------------
@@ -613,6 +862,7 @@ main:
 
     SWI OS_EnterOS      ; enter supervisor mode
 
+    VDU VDU_SelectScreenMode,15,-1,-1,-1,-1,-1,-1,-1,-1     ; change to mode 13 (320x256 256 colours) for A3000
     VDU VDU_SelectScreenMode,13,-1,-1,-1,-1,-1,-1,-1,-1     ; change to mode 13 (320x256 256 colours) for A3000
     VDU VDU_MultiPurpose,1,0,0,0,0,0,0,0,0,0
     ADRL R0,vdu_variables_screen_start
@@ -621,6 +871,10 @@ main:
 
     MOV R12,R1
 
+    LDR R1,[R12,#0]
+    ADD R1,R1,#320*256
+    STR R1,[R12,#4]
+
     ADRL R0,main_title
     LDR R1,[R12]
     MOV R2,#256
@@ -628,10 +882,7 @@ main:
 
     SWI OS_ReadC
 
-    EOR R0,R0,R0
-    LDR R1,[R12]
-    MOV R2,#256
-    BL copy_4byte_to_screen
+    BL fade_screen_to_black
 
     ADRL R0,intro_text_1
     ADRL R1,intro_font
@@ -695,10 +946,8 @@ intro_screen_skip_1:
 
     SWI OS_ReadC
 
-    MOV R0,#0
-    LDR R1,[R12]
-    MOV R2,#256
-    BL copy_4byte_to_screen
+    BL fade_screen_to_black
+    
     MOV R3,#0
     MOV R4,#0
 
@@ -837,6 +1086,7 @@ intro_text_3:
 ;   ----------------------------------------------------------------
 vdu_variables_screen_start:
     .4byte 0x00000095       ; display memory start address
+    .4byte 0x00000095       ; display memory start address
     .4byte 0xffffffff
 
 
@@ -846,8 +1096,8 @@ vdu_variables_screen_start:
 ;       vdu_variables_screen_start_buffer
 ;   ----------------------------------------------------------------
 ;       VDU variables lookup table, terminated by -1
-;           +00   :   start of display memory address
-;           +04   :   not used
+;           +00   :   start of display memory address buffer #1
+;           +04   :   start of display memory address buffer #2
 ;           +08   :   not used
 ;           +12   :   not used
 ;   ----------------------------------------------------------------
@@ -894,6 +1144,15 @@ status_bar:
 
 
 ;   ****************************************************************
+;       palette_fade
+;   ----------------------------------------------------------------
+;       Bitmap for palette fade lookup table
+;   ----------------------------------------------------------------
+palette_fade:
+    .incbin "build/palette_fade.bin"
+
+
+;   ****************************************************************
 ;       intro_font
 ;   ----------------------------------------------------------------
 ;       Bitmap for introduction screen font tileset
@@ -909,13 +1168,3 @@ intro_font:
 ;   ----------------------------------------------------------------
 level_1_tiles:
     .incbin "build/level-1.bin"
-
-
-;   ****************************************************************
-;       stack
-;   ----------------------------------------------------------------
-;       Reserve 1024 bytes for our stack
-;   ----------------------------------------------------------------
-    .space 1024
-stack:
-
