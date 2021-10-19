@@ -34,7 +34,7 @@ for child in root:
         layer_height = int(child.attrib.get("height"))
         for data in child:
             if data.attrib.get("encoding") == "csv":
-                f_out.write(f"{filename.replace('-','_')}_{layer_name.lower()}:\n")
+                f_out.write(f"{filename.replace('-','_')}_{layer_name.lower()}:\n.nolist\n")
                 layer_data = [int(e) if e.isdigit() else e for e in data.text.replace("\n","0").split(",")]
 
                 i = 0
@@ -53,6 +53,8 @@ for child in root:
                         f_out.write(f'0x{u:02x},')
                     
                     i = i + 1
+                    
+                f_out.write(".list\n\n")
 
 f_out.close()
         
