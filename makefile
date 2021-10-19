@@ -2,7 +2,7 @@ ARCULATOR = ../../sarah-walker-pcem/arculator/hostfs
 
 all: build/batman
 
-build/batman: src/batman.asm build/level-1.bin build/main_title.bin build/intro_screen.bin build/intro_font.bin build/level_1_map.asm
+build/batman: src/batman.asm build/level-1.bin build/main_title.bin build/intro_screen.bin build/intro_font.bin build/status_bar.bin build/level_1_map.asm
 	vasmarm_std src/batman.asm -a2 -m2 -opt-ldrpc -opt-adr -L build/batman.lst -Fbin -o build/batman
 
 build/level-1.bin: build/level-1.asm
@@ -28,6 +28,12 @@ build/intro_screen.bin: build/intro_screen.asm
 
 build/intro_screen.asm: assets/images/intro_screen.png
 	./scripts/png2asm.py -i assets/images/intro_screen.png -o build/intro_screen.asm -sw 320 -sh 256
+
+build/status_bar.bin: build/status_bar.asm
+	vasmarm_std build/status_bar.asm -a2 -m2 -opt-ldrpc -opt-adr -L build/status_bar.lst -Fbin -o build/status_bar.bin
+
+build/status_bar.asm: assets/images/status_bar.png
+	./scripts/png2asm.py -i assets/images/status_bar.png -o build/status_bar.asm -sw 320 -sh 48
 
 build/level_1_map.asm: assets/maps/level-1.tmx
 	./scripts/tmx2asm.py -i assets/maps/level-1.tmx -o build/level_1_map.asm

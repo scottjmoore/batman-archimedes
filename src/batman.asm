@@ -593,7 +593,7 @@ draw_tile_map_loop:
     MOV R2,#0
     ADD R3,R3,#16
     ADD R6,R6,#128
-    CMP R3,#256
+    CMP R3,#208
     BNE draw_tile_map_loop
 
 draw_tile_map_exit:              ; exit loop
@@ -695,8 +695,20 @@ intro_screen_skip_1:
 
     SWI OS_ReadC
 
+    MOV R0,#0
+    LDR R1,[R12]
+    MOV R2,#256
+    BL copy_4byte_to_screen
     MOV R3,#0
     MOV R4,#0
+
+    ADRL R0,status_bar
+    LDR R1,[R12]
+    MOV R2,#208
+    MOV R3,#320
+    MLA R1,R2,R3,R1
+    MOV R2,#48
+    BL copy_buffer_to_screen
 main_draw_tile_map_loop:
     ADRL R0,level_1_map_tilemap
     ADRL R1,level_1_tiles
@@ -870,6 +882,15 @@ main_title:
 ;   ----------------------------------------------------------------
 intro_screen:
     .incbin "build/intro_screen.bin"
+
+
+;   ****************************************************************
+;       status_bar
+;   ----------------------------------------------------------------
+;       Bitmap for status bar
+;   ----------------------------------------------------------------
+status_bar:
+    .incbin "build/status_bar.bin"
 
 
 ;   ****************************************************************
