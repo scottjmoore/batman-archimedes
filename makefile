@@ -2,7 +2,7 @@ ARCULATOR = ../../sarah-walker-pcem/arculator/hostfs
 
 all: build/batman
 
-build/batman: src/batman.asm build/level-1.bin build/main_title.bin build/intro_screen.bin build/intro_font.bin build/status_bar.bin build/level_1_map.asm
+build/batman: src/batman.asm build/level-1.bin build/main_title.bin build/intro_screen.bin build/intro_font.bin build/status_bar.bin build/palette_fade.bin build/level_1_map.asm
 	vasmarm_std src/batman.asm -a2 -m2 -opt-ldrpc -opt-adr -L build/batman.lst -Fbin -o build/batman
 
 build/level-1.bin: build/level-1.asm
@@ -34,6 +34,12 @@ build/status_bar.bin: build/status_bar.asm
 
 build/status_bar.asm: assets/images/status_bar.png
 	./scripts/png2asm.py -i assets/images/status_bar.png -o build/status_bar.asm -sw 320 -sh 48
+
+build/palette_fade.bin: build/palette_fade.asm
+	vasmarm_std build/palette_fade.asm -a2 -m2 -opt-ldrpc -opt-adr -L build/palette_fade.lst -Fbin -o build/palette_fade.bin
+
+build/palette_fade.asm: assets/images/palette_fade.png
+	./scripts/png2asm.py -i assets/images/palette_fade.png -o build/palette_fade.asm -sw 16 -sh 16
 
 build/level_1_map.asm: assets/maps/level-1.tmx
 	./scripts/tmx2asm.py -i assets/maps/level-1.tmx -o build/level_1_map.asm
