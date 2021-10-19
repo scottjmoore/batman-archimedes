@@ -479,6 +479,129 @@ draw_intro_font_text_exit:              ; exit loop
 
 
 ;   ****************************************************************
+;       draw_tile_map
+;   ----------------------------------------------------------------
+;       Draw 16x16 pixel tile map to screen or display buffer
+;   ----------------------------------------------------------------
+;       Parameters
+;   ----------------------------------------------------------------
+;       R0      :   address of tilemap to draw
+;       R1      :   address of tileset to draw
+;       R2      :   address of screen or display buffer
+;       R3      :   x coordinate of tilemap in pixels to start from
+;       R4      :   y coordinate of tilemap in pixels to start from
+;       R5      :   N/A
+;       R6      :   N/A
+;       R7      :   N/A
+;       R8      :   N/A
+;       R9      :   N/A
+;       R10     :   N/A
+;       R11     :   N/A
+;       R11     :   N/A
+;   ----------------------------------------------------------------
+;       Returns
+;   ----------------------------------------------------------------
+;       R0      :   Unchanged
+;       R1      :   Unchanged
+;       R2      :   Unchanged
+;       R3      :   Unchanged
+;       R4      :   Unchanged
+;       R5      :   Unchanged
+;       R6      :   Unchanged
+;       R7      :   Unchanged
+;       R8      :   Unchanged
+;       R9      :   Unchanged
+;       R10     :   Unchanged
+;       R11     :   Unchanged
+;       R11     :   Unchanged
+;   ****************************************************************
+
+draw_tile_map:
+
+    STMFD SP!, {R0-R12,R14}     ; store all registers onto the stack
+
+    MOV R3,R3,LSR #4    ; divide tilemap x coordinate by 16
+    MOV R4,R4,LSR #4    ; divide tilemap y coordinate by 16
+    MOV R5,#128         ; move width of tilemap into R5
+    MLA R6,R4,R5,R0     ; calculate top left of tilemap to draw from (source = (y * 128) + tilemap_address)
+    ADD R6,R6,R3        ; add x tile to start from to tilemap source address
+
+    MOV R4,R2
+    MOV R2,#0
+    MOV R3,#0
+
+draw_tile_map_loop:
+    LDRB R0,[R6]
+    BL copy_16x16_tile_to_screen
+    ADD R2,R2,#16
+    LDRB R0,[R6,#1]
+    BL copy_16x16_tile_to_screen
+    ADD R2,R2,#16
+    LDRB R0,[R6,#2]
+    BL copy_16x16_tile_to_screen
+    ADD R2,R2,#16
+    LDRB R0,[R6,#3]
+    BL copy_16x16_tile_to_screen
+    ADD R2,R2,#16
+    LDRB R0,[R6,#4]
+    BL copy_16x16_tile_to_screen
+    ADD R2,R2,#16
+    LDRB R0,[R6,#5]
+    BL copy_16x16_tile_to_screen
+    ADD R2,R2,#16
+    LDRB R0,[R6,#6]
+    BL copy_16x16_tile_to_screen
+    ADD R2,R2,#16
+    LDRB R0,[R6,#7]
+    BL copy_16x16_tile_to_screen
+    ADD R2,R2,#16
+    LDRB R0,[R6,#8]
+    BL copy_16x16_tile_to_screen
+    ADD R2,R2,#16
+    LDRB R0,[R6,#9]
+    BL copy_16x16_tile_to_screen
+    ADD R2,R2,#16
+    LDRB R0,[R6,#10]
+    BL copy_16x16_tile_to_screen
+    ADD R2,R2,#16
+    LDRB R0,[R6,#11]
+    BL copy_16x16_tile_to_screen
+    ADD R2,R2,#16
+    LDRB R0,[R6,#12]
+    BL copy_16x16_tile_to_screen
+    ADD R2,R2,#16
+    LDRB R0,[R6,#13]
+    BL copy_16x16_tile_to_screen
+    ADD R2,R2,#16
+    LDRB R0,[R6,#14]
+    BL copy_16x16_tile_to_screen
+    ADD R2,R2,#16
+    LDRB R0,[R6,#15]
+    BL copy_16x16_tile_to_screen
+    ADD R2,R2,#16
+    LDRB R0,[R6,#16]
+    BL copy_16x16_tile_to_screen
+    ADD R2,R2,#16
+    LDRB R0,[R6,#17]
+    BL copy_16x16_tile_to_screen
+    ADD R2,R2,#16
+    LDRB R0,[R6,#18]
+    BL copy_16x16_tile_to_screen
+    ADD R2,R2,#16
+    LDRB R0,[R6,#19]
+    BL copy_16x16_tile_to_screen
+    MOV R2,#0
+    ADD R3,R3,#16
+    ADD R6,R6,#128
+    CMP R3,#256
+    BNE draw_tile_map_loop
+
+draw_tile_map_exit:              ; exit loop
+    
+    LDMFD SP!, {R0-R12,R14}     ; restore all registers from the stack, including R14 Link registger
+    MOV PC,R14                  ; exit function
+
+;   ****************************************************************
 ;       main
 ;   ----------------------------------------------------------------
 ;       Entry point of applicataion
@@ -571,6 +694,30 @@ intro_screen_skip_1:
     BL draw_intro_font_text
 
     SWI OS_ReadC
+
+    MOV R3,#0
+    MOV R4,#0
+main_draw_tile_map_loop:
+    ADRL R0,level_1_map_tilemap
+    ADRL R1,level_1_tiles
+    LDR R2,[R12]
+
+    BL draw_tile_map
+
+    VDU 19,0,24,0,0,0,-1,-1,-1,-1
+
+    ADD R3,R3,#1
+    CMP R3,#102*16
+    MOVEQ R3,#0
+    ADDEQ R4,R4,#1
+    CMP R4,#32*16
+    BEQ exit
+
+    MOV R0,#19
+    SWI OS_Byte
+    VDU 19,0,24,0,0,240,-1,-1,-1,-1
+
+    B main_draw_tile_map_loop
 exit:
     TEQP  PC,#0
     MOV   R0,R0 
@@ -667,7 +814,7 @@ intro_text_3:
     .byte "             F2..TOGGLE MUSIC           ",0
 
 
-.balign 32
+    .balign 32
 
 ;   ****************************************************************
 ;       vdu_variables_screen_start
@@ -681,7 +828,7 @@ vdu_variables_screen_start:
     .4byte 0xffffffff
 
 
-.balign 32
+    .balign 32
 
 ;   ****************************************************************
 ;       vdu_variables_screen_start_buffer
@@ -705,7 +852,7 @@ vdu_variables_screen_start_buffer:
     .include "build/level_1_map.asm"
 
 
-.nolist    
+    .nolist    
 
 ;   ****************************************************************
 ;       main_title
@@ -748,6 +895,6 @@ level_1_tiles:
 ;   ----------------------------------------------------------------
 ;       Reserve 1024 bytes for our stack
 ;   ----------------------------------------------------------------
-.space 1024
+    .space 1024
 stack:
 
