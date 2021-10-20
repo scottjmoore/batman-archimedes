@@ -158,7 +158,7 @@ for infile, outfile in zip(args.infile, args.outfile):
                             f_out.write(f'0x{b0:02x},'+f'0x{b1:02x},'+f'0x{b2:02x}'+'\n')
                     y += 1
 
-                tile = tile + 1
+            tile = tile + 1
 
             ix += sprite_width
             if ix < image_width:
