@@ -421,7 +421,7 @@ copy_16x16_tile_to_screen:
 
     STMFD SP!, {R0-R12}     ; store all the registers on the stack
 
-    MOV R7,#16*16           ; put the size of a single tile in bytes into R7
+    MOV R7,#16*16*4         ; put the size of a single tile in bytes into R7
     MLA R12,R0,R7,R1        ; calculate the address of the start of the tile [source = (tile number * (16 * 16)) + address of tileset]
     MOV R7,#320             ; put the width of a scanline into R7
     MLA R11,R3,R7,R4        ; calculate the address of the destination [destination = (y * 320) + address of screen or buffer]
