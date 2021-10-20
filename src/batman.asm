@@ -73,8 +73,9 @@ stack:
 ;       R11     :   Unchanged
 ;   ****************************************************************
 set_display_start:
-    MOV R1,#0x3600000       ; Move VIDC address into R1
-    ADD R0,R0,R1            ; Add pre-shifted screen start address to VIDC address
+    ; MOV R1,#0x3600000       ; Move VIDC address into R1
+    ; ADD R0,R0,R1            ; Add pre-shifted screen start address to VIDC address
+    ADD R0,R0,#0x3600000    ; Add pre-shifted screen start address to VIDC address
     STR R0,[R0]             ; Put VIDC address and screen start address onto address bus
 
     MOV PC,R14              ; return from function
@@ -1069,11 +1070,11 @@ main_draw_tile_map_loop:
 
     VDU 19,0,24,0,0,0,-1,-1,-1,-1
 
-    ADD R3,R3,#1
+    ADD R3,R3,#16
     CMP R3,#102*16
     MOVEQ R3,#0
-    ADDEQ R4,R4,#1
-    CMP R4,#32*16
+    ADDEQ R4,R4,#16
+    CMP R4,#29*16
     BEQ exit
 
     MOV R0,#19
