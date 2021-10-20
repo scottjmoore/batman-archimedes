@@ -73,11 +73,11 @@ stack:
 ;       R11     :   Unchanged
 ;   ****************************************************************
 set_display_start:
-    MOV R1,#0x3600000
-    ADD R0,R0,R1
-    STR R0,[R0]
+    MOV R1,#0x3600000       ; Move VIDC address into R1
+    ADD R0,R0,R1            ; Add pre-shifted screen start address to VIDC address
+    STR R0,[R0]             ; Put VIDC address and screen start address onto address bus
 
-    MOV PC,R14
+    MOV PC,R14              ; return from function
 
 
 ;   ****************************************************************
