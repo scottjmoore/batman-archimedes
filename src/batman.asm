@@ -572,14 +572,11 @@ copy_16x16_tile_to_screen_cropped_tile_start:
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
     ADD R11,R11,#320        ; move destination address to the next scanline
-    SUBS R6,R6,#1
-    BEQ copy_16x16_tile_to_screen_exit_cropped_tile
 
 copy_16x16_tile_to_screen_exit_cropped_tile:
+
     LDMFD SP!, {R0-R12}     ; restore all the registers from the stack
     MOV PC,R14              ; return from function
-
-
 
 
 ;   ****************************************************************
