@@ -1083,6 +1083,9 @@ main_draw_tile_map_loop:
 
     B main_draw_tile_map_loop
 exit:
+
+    BL fade_screen_to_black
+
     TEQP  PC,#0
     MOV   R0,R0 
     LDMFD SP!, {PC}
