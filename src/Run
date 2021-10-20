@@ -1,1 +1,2 @@
-RUN <Obey$Dir>.!RunImage
+Set Batman$Dir <Obey$Dir>
+Run <Batman$Dir>.!RunImage
