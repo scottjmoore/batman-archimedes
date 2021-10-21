@@ -438,11 +438,11 @@ copy_16x16_tile_to_screen:
 
     STMFD SP!, {R0-R12}     ; store all the registers on the stack
 
-    AND R8,R2,#0b11         ; get 4 pixel x coordinate
+    AND R8,R2,#0b11         ; get 4 pixel x coordinate offset
     EORNE R8,R8,#0b11       ; invert 4 pixel offset if not zero
     MOV R7,#16*16*4         ; put the size of a single tile in bytes into R7
     MLA R12,R0,R7,R1        ; calculate the address of the start of the tile [source = (tile number * (16 * 16)) + address of tileset]
-    ADD R12,R12,R8,LSL #8   ; add offset from 4 pixel x coordinate * (16*16) to get pre-shifted tile
+    ADD R12,R12,R8,LSL #8   ; add 4 pixel x coordinate offset * (16*16) to get pre-shifted tile
     MOV R7,#320             ; put the width of a scanline into R7
     MLA R11,R3,R7,R4        ; calculate the address of the destination [destination = (y * 320) + address of screen or buffer]
     ADD R11,R11,R2          ; add x to the destination address
