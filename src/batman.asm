@@ -73,13 +73,30 @@ stack:
 ;       R11     :   Unchanged
 ;   ****************************************************************
 set_display_start:
-    ; MOV R1,#0x3600000       ; Move VIDC address into R1
-    ; ADD R0,R0,R1            ; Add pre-shifted screen start address to VIDC address
     ADD R0,R0,#0x3600000    ; Add pre-shifted screen start address to VIDC address
     STR R0,[R0]             ; Put VIDC address and screen start address onto address bus
 
     MOV PC,R14              ; return from function
 
+swap_display_buffers:
+    STMFD SP!, {R0-R2,R14}
+
+    ADRL R2,vdu_variables_screen_start_buffer
+    LDR R0,[R2,#0]
+    LDR R1,[R2,#4]
+    STR R1,[R2,#0]
+    STR R0,[R2,#4]
+    ADRL R2,vidc_address_screen_start
+    LDR R0,[R2,#0]
+    LDR R1,[R2,#4]
+    STR R1,[R2,#0]
+    STR R0,[R2,#4]
+    MOV R0,R1
+
+    BL set_display_start
+
+    LDMFD SP!, {R0-R2,R14}
+    MOV PC,R14
 
 ;   ****************************************************************
 ;       copy_4byte_to_screen
@@ -422,10 +439,10 @@ copy_16x16_tile_to_screen:
     STMFD SP!, {R0-R12}     ; store all the registers on the stack
 
     AND R8,R2,#0b11         ; get 4 pixel x coordinate
-    EOR R8,R8,#0b11         ; invert 4 pixel offset
+    EORNE R8,R8,#0b11       ; invert 4 pixel offset if not zero
     MOV R7,#16*16*4         ; put the size of a single tile in bytes into R7
     MLA R12,R0,R7,R1        ; calculate the address of the start of the tile [source = (tile number * (16 * 16)) + address of tileset]
-    ADD R12,R12,R8,LSL #8
+    ADD R12,R12,R8,LSL #8   ; add offset from 4 pixel x coordinate * (16*16) to get pre-shifted tile
     MOV R7,#320             ; put the width of a scanline into R7
     MLA R11,R3,R7,R4        ; calculate the address of the destination [destination = (y * 320) + address of screen or buffer]
     ADD R11,R11,R2          ; add x to the destination address
@@ -1202,6 +1219,9 @@ main_draw_tile_map:
     MLA R1,R2,R3,R1
     MOV R2,#48
     BL copy_buffer_to_screen
+    ADD R1,R1,#320*256
+    BL copy_buffer_to_screen
+
 main_draw_tile_map_loop:
     ADRL R0,level_1_map_tilemap
     ADRL R1,level_1_tiles
@@ -1216,7 +1236,7 @@ main_draw_tile_map_loop:
     MOVEQ R4,#0
     ADD R3,R3,#1
     CMP R3,#102*16
-    BEQ exit
+    SUBEQ R3,R3,#102*16
 
     STMFD SP!, {R0-R8}
     
@@ -1239,6 +1259,7 @@ main_draw_tile_map_loop:
 
     MOV R0,#19
     SWI OS_Byte
+    BL swap_display_buffers
     VDU 19,0,24,0,0,240,-1,-1,-1,-1
 
     B main_draw_tile_map_loop
@@ -1355,32 +1376,29 @@ vdu_variables_screen_start:
     .4byte 0x00000095       ; display memory start address
     .4byte 0xffffffff
 
-
-    .balign 32
-
 ;   ****************************************************************
 ;       vdu_variables_screen_start_buffer
 ;   ----------------------------------------------------------------
 ;       VDU variables lookup table, terminated by -1
 ;           +00   :   start of display memory address buffer #1
 ;           +04   :   start of display memory address buffer #2
-;           +08   :   not used
-;           +12   :   not used
 ;   ----------------------------------------------------------------
 vdu_variables_screen_start_buffer:
     .4byte 0x00000000
     .4byte 0x00000000
-    .4byte 0x00000000
+
+vidc_address_screen_start:
+    .4byte 0x00005000
     .4byte 0x00000000
 
+    .balign 32
+    .nolist
 
 ;   ****************************************************************
 ;       Level 1 tilemap layers
 ;   ----------------------------------------------------------------
     .include "build/level_1_map.asm"
 
-
-    .nolist
 
 ;   ****************************************************************
 ;       main_title
