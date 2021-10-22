@@ -1809,10 +1809,10 @@ main_draw_tile_map_loop:
 
     VDU 19,0,24,0,0,0,-1,-1,-1,-1
 
-    ; ADD R4,R4,#1
+    ADD R4,R4,#1
     CMP R4,#29*16
     MOVEQ R4,#0
-    ; ADD R3,R3,#1
+    ADD R3,R3,#1
     CMP R3,#102*16
     SUBEQ R3,R3,#102*16
 
@@ -1823,7 +1823,7 @@ main_draw_tile_map_loop:
     MOV R2,R0,LSR #2
     MOV R3,R1,LSR #2
     EOR R3,R3,#0b11111111
-    MOV R0,#19
+    MOV R0,#70
     ADRL R1,level_1_tiles
     LDR R4,[R12]
     MOV R5,#0
@@ -1832,6 +1832,32 @@ main_draw_tile_map_loop:
     MOV R8,#0
 
     VDU 19,0,24,0,240,0,-1,-1,-1,-1
+    BL copy_16x16_tile_to_screen
+    ADD R0,R0,#1
+    ADD R2,R2,#16
+    BL copy_16x16_tile_to_screen
+    ADD R0,R0,#1
+    ADD R2,R2,#16
+    BL copy_16x16_tile_to_screen
+    ADD R0,R0,#16-2
+    SUB R2,R2,#32
+    ADD R3,R3,#16
+    BL copy_16x16_tile_to_screen
+    ADD R0,R0,#1
+    ADD R2,R2,#16
+    BL copy_16x16_tile_to_screen
+    ADD R0,R0,#1
+    ADD R2,R2,#16
+    BL copy_16x16_tile_to_screen
+    ADD R0,R0,#16-2
+    SUB R2,R2,#32
+    ADD R3,R3,#16
+    BL copy_16x16_tile_to_screen
+    ADD R0,R0,#1
+    ADD R2,R2,#16
+    BL copy_16x16_tile_to_screen
+    ADD R0,R0,#1
+    ADD R2,R2,#16
     BL copy_16x16_tile_to_screen
     VDU 19,0,24,0,0,0,-1,-1,-1,-1
 
