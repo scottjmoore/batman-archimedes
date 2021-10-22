@@ -67,95 +67,77 @@ for infile, outfile in zip(args.infile, args.outfile):
                     b7 = image_pixels[ix + x + 7,iy + y]
                     f_out.write(f'0x{b0:02x},'+f'0x{b1:02x},'+f'0x{b2:02x},'+f'0x{b3:02x},'+f'0x{b4:02x},'+f'0x{b5:02x},'+f'0x{b6:02x},'+f'0x{b7:02x}')
                     x += 8
-                    if x < sprite_width:
-                        f_out.write(',')
-                    else:
+                    if x >= sprite_width:
                         f_out.write('\n')
+                    else:
+                        f_out.write(',')
                 y += 1
 
             if sprite_shift:
                 f_out.write(label_name+f'_tile_{tile}'+'_shift_1:\n')
                 y = 0
                 while y < sprite_height:
-                    x = 1
-                    f_out.write('\t.byte\t')
+                    x = 0
+                    b0 = image_pixels[ix + (sprite_width - 1),iy + y]
+                    f_out.write('\t.byte\t'+f'0x{b0:02x},')
                     while x < sprite_width:
-                        b0 = image_pixels[ix + x + 0,iy + y]
-                        b1 = image_pixels[ix + x + 1,iy + y]
-                        b2 = image_pixels[ix + x + 2,iy + y]
-                        b3 = image_pixels[ix + x + 3,iy + y]
-                        b4 = image_pixels[ix + x + 4,iy + y]
-                        b5 = image_pixels[ix + x + 5,iy + y]
-                        b6 = image_pixels[ix + x + 6,iy + y]
-                        if (x + 7 < sprite_width):
-                            b7 = image_pixels[ix + x + 7,iy + y]
-                            f_out.write(f'0x{b0:02x},'+f'0x{b1:02x},'+f'0x{b2:02x},'+f'0x{b3:02x},'+f'0x{b4:02x},'+f'0x{b5:02x},'+f'0x{b6:02x},'+f'0x{b7:02x}')
-                        else:
-                            f_out.write(f'0x{b0:02x},'+f'0x{b1:02x},'+f'0x{b2:02x},'+f'0x{b3:02x},'+f'0x{b4:02x},'+f'0x{b5:02x},'+f'0x{b6:02x},')
-
+                        b1 = image_pixels[ix + x + 0,iy + y]
+                        b2 = image_pixels[ix + x + 1,iy + y]
+                        b3 = image_pixels[ix + x + 2,iy + y]
+                        b4 = image_pixels[ix + x + 3,iy + y]
+                        b5 = image_pixels[ix + x + 4,iy + y]
+                        b6 = image_pixels[ix + x + 5,iy + y]
+                        b7 = image_pixels[ix + x + 6,iy + y]
+                        if ((x + 8) < sprite_width):
+                            b8 = image_pixels[ix + x + 7,iy + y]
+                            f_out.write(f'0x{b1:02x},'+f'0x{b2:02x},'+f'0x{b3:02x},'+f'0x{b4:02x},'+f'0x{b5:02x},'+f'0x{b6:02x},'+f'0x{b7:02x},'+f'0x{b8:02x},')
                         x += 8
-                        if x < sprite_width:
-                            f_out.write(',')
-                        else:
-                            b0 = image_pixels[ix + 0,iy + y]
-                            f_out.write(f'0x{b0:02x}'+'\n')
+                    f_out.write(f'0x{b1:02x},'+f'0x{b2:02x},'+f'0x{b3:02x},'+f'0x{b4:02x},'+f'0x{b5:02x},'+f'0x{b6:02x},'+f'0x{b7:02x}\n')
                     y += 1
 
                 y = 0
                 f_out.write(label_name+f'_tile_{tile}'+'_shift_2:\n')
                 while y < sprite_height:
-                    x = 2
-                    f_out.write('\t.byte\t')
+                    x = 0
+                    b0 = image_pixels[ix + (sprite_width - 2),iy + y]
+                    b1 = image_pixels[ix + (sprite_width - 1),iy + y]
+                    f_out.write('\t.byte\t'+f'0x{b0:02x},'+f'0x{b1:02x},')
                     while x < sprite_width:
-                        b0 = image_pixels[ix + x + 0,iy + y]
-                        b1 = image_pixels[ix + x + 1,iy + y]
-                        b2 = image_pixels[ix + x + 2,iy + y]
-                        b3 = image_pixels[ix + x + 3,iy + y]
-                        b4 = image_pixels[ix + x + 4,iy + y]
-                        b5 = image_pixels[ix + x + 5,iy + y]
-                        if (x + 7 < sprite_width):
-                            b6 = image_pixels[ix + x + 6,iy + y]
-                            b7 = image_pixels[ix + x + 7,iy + y]
-                            f_out.write(f'0x{b0:02x},'+f'0x{b1:02x},'+f'0x{b2:02x},'+f'0x{b3:02x},'+f'0x{b4:02x},'+f'0x{b5:02x},'+f'0x{b6:02x},'+f'0x{b7:02x}')
-                        else:
-                            f_out.write(f'0x{b0:02x},'+f'0x{b1:02x},'+f'0x{b2:02x},'+f'0x{b3:02x},'+f'0x{b4:02x},'+f'0x{b5:02x},')
-
+                        b2 = image_pixels[ix + x + 0,iy + y]
+                        b3 = image_pixels[ix + x + 1,iy + y]
+                        b4 = image_pixels[ix + x + 2,iy + y]
+                        b5 = image_pixels[ix + x + 3,iy + y]
+                        b6 = image_pixels[ix + x + 4,iy + y]
+                        b7 = image_pixels[ix + x + 5,iy + y]
+                        if ((x + 8) < sprite_width):
+                            b8 = image_pixels[ix + x + 6,iy + y]
+                            b9 = image_pixels[ix + x + 7,iy + y]
+                            f_out.write(f'0x{b2:02x},'+f'0x{b3:02x},'+f'0x{b4:02x},'+f'0x{b5:02x},'+f'0x{b6:02x},'+f'0x{b7:02x},'+f'0x{b8:02x},'+f'0x{b9:02x},')
                         x += 8
-                        if x < sprite_width:
-                            f_out.write(',')
-                        else:
-                            b0 = image_pixels[ix + 0,iy + y]
-                            b1 = image_pixels[ix + 1,iy + y]
-                            f_out.write(f'0x{b0:02x},'+f'0x{b1:02x}'+'\n')
+                    f_out.write(f'0x{b2:02x},'+f'0x{b3:02x},'+f'0x{b4:02x},'+f'0x{b5:02x},'+f'0x{b6:02x},'+f'0x{b7:02x}\n')
                     y += 1
 
                 y = 0
                 f_out.write(label_name+f'_tile_{tile}'+'_shift_3:\n')
                 while y < sprite_height:
-                    x = 3
-                    f_out.write('\t.byte\t')
+                    x = 0
+                    b0 = image_pixels[ix + (sprite_width - 3),iy + y]
+                    b1 = image_pixels[ix + (sprite_width - 2),iy + y]
+                    b2 = image_pixels[ix + (sprite_width - 1),iy + y]
+                    f_out.write('\t.byte\t'+f'0x{b0:02x},'+f'0x{b1:02x},'+f'0x{b2:02x},')
                     while x < sprite_width:
-                        b0 = image_pixels[ix + x + 0,iy + y]
-                        b1 = image_pixels[ix + x + 1,iy + y]
-                        b2 = image_pixels[ix + x + 2,iy + y]
-                        b3 = image_pixels[ix + x + 3,iy + y]
-                        b4 = image_pixels[ix + x + 4,iy + y]
-                        if (x + 7 < sprite_width):
-                            b5 = image_pixels[ix + x + 5,iy + y]
-                            b6 = image_pixels[ix + x + 6,iy + y]
-                            b7 = image_pixels[ix + x + 7,iy + y]
-                            f_out.write(f'0x{b0:02x},'+f'0x{b1:02x},'+f'0x{b2:02x},'+f'0x{b3:02x},'+f'0x{b4:02x},'+f'0x{b5:02x},'+f'0x{b6:02x},'+f'0x{b7:02x}')
-                        else:
-                            f_out.write(f'0x{b0:02x},'+f'0x{b1:02x},'+f'0x{b2:02x},'+f'0x{b3:02x},'+f'0x{b4:02x},')
-
+                        b3 = image_pixels[ix + x + 0,iy + y]
+                        b4 = image_pixels[ix + x + 1,iy + y]
+                        b5 = image_pixels[ix + x + 2,iy + y]
+                        b6 = image_pixels[ix + x + 3,iy + y]
+                        b7 = image_pixels[ix + x + 4,iy + y]
+                        if ((x + 8) < sprite_width):
+                            b8 = image_pixels[ix + x + 5,iy + y]
+                            b9 = image_pixels[ix + x + 6,iy + y]
+                            b10 = image_pixels[ix + x + 7,iy + y]
+                            f_out.write(f'0x{b3:02x},'+f'0x{b4:02x},'+f'0x{b5:02x},'+f'0x{b6:02x},'+f'0x{b7:02x},'+f'0x{b8:02x},'+f'0x{b9:02x},'+f'0x{b10:02x},')
                         x += 8
-                        if x < sprite_width:
-                            f_out.write(',')
-                        else:
-                            b0 = image_pixels[ix + 0,iy + y]
-                            b1 = image_pixels[ix + 1,iy + y]
-                            b2 = image_pixels[ix + 2,iy + y]
-                            f_out.write(f'0x{b0:02x},'+f'0x{b1:02x},'+f'0x{b2:02x}'+'\n')
+                    f_out.write(f'0x{b3:02x},'+f'0x{b4:02x},'+f'0x{b5:02x},'+f'0x{b6:02x},'+f'0x{b7:02x}\n')
                     y += 1
 
             tile = tile + 1
