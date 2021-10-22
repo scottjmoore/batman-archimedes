@@ -1436,7 +1436,8 @@ draw_tile_map:
     ADD R10,R10,R3        ; add x tile to start from to tilemap source address
 
     MOV R4,R2
-    MOV R2,#0
+    EOR R7,R7,#0b1111
+    MOV R2,R7
     MOV R3,#0
     MOV R6,#0
     STMFD SP!, {R5}
@@ -1503,7 +1504,7 @@ draw_tile_map_cropped_top_row:
     ADD R2,R2,#16
     LDRB R0,[R10,#19]
     BL copy_16x16_tile_to_screen
-    MOV R2,#0
+    MOV R2,R7
     ADD R3,R3,#16
     SUB R3,R3,R5
     ADD R10,R10,#128
@@ -1569,7 +1570,7 @@ draw_tile_map_loop:
     ADD R2,R2,#16
     LDRB R0,[R10,#19]
     BL copy_16x16_tile_to_screen
-    MOV R2,#0
+    MOV R2,R7
     ADD R3,R3,#16
     ADD R10,R10,#128
     CMP R3,#192
