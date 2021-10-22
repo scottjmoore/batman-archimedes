@@ -438,8 +438,7 @@ copy_16x16_tile_to_screen:
 
     STMFD SP!, {R0-R12}     ; store all the registers on the stack
 
-    AND R8,R2,#0b11         ; get 4 pixel x coordinate offset
-    EORNE R8,R8,#0b11       ; invert 4 pixel offset if not zero
+    AND R8,R2,#0b11         ; get 4 pixel x coordinate offset and set status flags
     MOV R7,#16*16*4         ; put the size of a single tile in bytes into R7
     MLA R12,R0,R7,R1        ; calculate the address of the start of the tile [source = (tile number * (16 * 16)) + address of tileset]
     ADD R12,R12,R8,LSL #8   ; add 4 pixel x coordinate offset * (16*16) to get pre-shifted tile
@@ -448,12 +447,22 @@ copy_16x16_tile_to_screen:
     ADD R11,R11,R2          ; add x to the destination address
 
     CMP R5,#0
-    BEQ copy_16x16_tile_to_screen_full_tile
+    BEQ copy_16x16_tile_to_screen_uncropped_top
     B copy_16x16_tile_to_screen_cropped_tile
-copy_16x16_tile_to_screen_full_tile:
+copy_16x16_tile_to_screen_uncropped_top:
     CMP R6,#0
     BNE copy_16x16_tile_to_screen_cropped_tile
 
+    CMP R8,#0b00
+    BEQ copy_16x16_tile_to_screen_full_tile_00
+    CMP R8,#0b01
+    BEQ copy_16x16_tile_to_screen_full_tile_01
+    CMP R8,#0b10
+    BEQ copy_16x16_tile_to_screen_full_tile_10
+    CMP R8,#0b11
+    BEQ copy_16x16_tile_to_screen_full_tile_11
+
+copy_16x16_tile_to_screen_full_tile_00:
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
     ADD R11,R11,#320        ; move destination address to the next scanline
@@ -506,6 +515,959 @@ copy_16x16_tile_to_screen_full_tile:
     LDMFD SP!, {R0-R12}     ; restore all the registers from the stack
     MOV PC,R14              ; return from function
 
+copy_16x16_tile_to_screen_full_tile_01:
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    AND R0,R0,#0x000000ff
+    AND R4,R4,#0xffffff00
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    AND R9,R5,#0x000000ff
+    ORR R9,R9,R4
+    AND R5,R5,#0xffffff00
+    ORR R5,R5,R0
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    AND R0,R0,#0x000000ff
+    AND R4,R4,#0xffffff00
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    AND R9,R5,#0x000000ff
+    ORR R9,R9,R4
+    AND R5,R5,#0xffffff00
+    ORR R5,R5,R0
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    AND R0,R0,#0x000000ff
+    AND R4,R4,#0xffffff00
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    AND R9,R5,#0x000000ff
+    ORR R9,R9,R4
+    AND R5,R5,#0xffffff00
+    ORR R5,R5,R0
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    AND R0,R0,#0x000000ff
+    AND R4,R4,#0xffffff00
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    AND R9,R5,#0x000000ff
+    ORR R9,R9,R4
+    AND R5,R5,#0xffffff00
+    ORR R5,R5,R0
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    AND R0,R0,#0x000000ff
+    AND R4,R4,#0xffffff00
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    AND R9,R5,#0x000000ff
+    ORR R9,R9,R4
+    AND R5,R5,#0xffffff00
+    ORR R5,R5,R0
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    AND R0,R0,#0x000000ff
+    AND R4,R4,#0xffffff00
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    AND R9,R5,#0x000000ff
+    ORR R9,R9,R4
+    AND R5,R5,#0xffffff00
+    ORR R5,R5,R0
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    AND R0,R0,#0x000000ff
+    AND R4,R4,#0xffffff00
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    AND R9,R5,#0x000000ff
+    ORR R9,R9,R4
+    AND R5,R5,#0xffffff00
+    ORR R5,R5,R0
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    AND R0,R0,#0x000000ff
+    AND R4,R4,#0xffffff00
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    AND R9,R5,#0x000000ff
+    ORR R9,R9,R4
+    AND R5,R5,#0xffffff00
+    ORR R5,R5,R0
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    AND R0,R0,#0x000000ff
+    AND R4,R4,#0xffffff00
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    AND R9,R5,#0x000000ff
+    ORR R9,R9,R4
+    AND R5,R5,#0xffffff00
+    ORR R5,R5,R0
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    AND R0,R0,#0x000000ff
+    AND R4,R4,#0xffffff00
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    AND R9,R5,#0x000000ff
+    ORR R9,R9,R4
+    AND R5,R5,#0xffffff00
+    ORR R5,R5,R0
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    AND R0,R0,#0x000000ff
+    AND R4,R4,#0xffffff00
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    AND R9,R5,#0x000000ff
+    ORR R9,R9,R4
+    AND R5,R5,#0xffffff00
+    ORR R5,R5,R0
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    AND R0,R0,#0x000000ff
+    AND R4,R4,#0xffffff00
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    AND R9,R5,#0x000000ff
+    ORR R9,R9,R4
+    AND R5,R5,#0xffffff00
+    ORR R5,R5,R0
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    AND R0,R0,#0x000000ff
+    AND R4,R4,#0xffffff00
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    AND R9,R5,#0x000000ff
+    ORR R9,R9,R4
+    AND R5,R5,#0xffffff00
+    ORR R5,R5,R0
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    AND R0,R0,#0x000000ff
+    AND R4,R4,#0xffffff00
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    AND R9,R5,#0x000000ff
+    ORR R9,R9,R4
+    AND R5,R5,#0xffffff00
+    ORR R5,R5,R0
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    AND R0,R0,#0x000000ff
+    AND R4,R4,#0xffffff00
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    AND R9,R5,#0x000000ff
+    ORR R9,R9,R4
+    AND R5,R5,#0xffffff00
+    ORR R5,R5,R0
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    AND R0,R0,#0x000000ff
+    AND R4,R4,#0xffffff00
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    AND R9,R5,#0x000000ff
+    ORR R9,R9,R4
+    AND R5,R5,#0xffffff00
+    ORR R5,R5,R0
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMFD SP!, {R0-R12}     ; restore all the registers from the stack
+    MOV PC,R14              ; return from function
+copy_16x16_tile_to_screen_full_tile_10:
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    MOV R0,R0,LSL #16
+    MOV R4,R4,LSR #16
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    MOV R9,R5,LSL #16
+    MOV R9,R9,LSR #16
+    ORR R9,R9,R4,LSL #16
+    MOV R5,R5,LSR #16
+    MOV R5,R5,LSL #16
+    ORR R5,R5,R0,LSR #16
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    MOV R0,R0,LSL #16
+    MOV R4,R4,LSR #16
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    MOV R9,R5,LSL #16
+    MOV R9,R9,LSR #16
+    ORR R9,R9,R4,LSL #16
+    MOV R5,R5,LSR #16
+    MOV R5,R5,LSL #16
+    ORR R5,R5,R0,LSR #16
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    MOV R0,R0,LSL #16
+    MOV R4,R4,LSR #16
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    MOV R9,R5,LSL #16
+    MOV R9,R9,LSR #16
+    ORR R9,R9,R4,LSL #16
+    MOV R5,R5,LSR #16
+    MOV R5,R5,LSL #16
+    ORR R5,R5,R0,LSR #16
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    MOV R0,R0,LSL #16
+    MOV R4,R4,LSR #16
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    MOV R9,R5,LSL #16
+    MOV R9,R9,LSR #16
+    ORR R9,R9,R4,LSL #16
+    MOV R5,R5,LSR #16
+    MOV R5,R5,LSL #16
+    ORR R5,R5,R0,LSR #16
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    MOV R0,R0,LSL #16
+    MOV R4,R4,LSR #16
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    MOV R9,R5,LSL #16
+    MOV R9,R9,LSR #16
+    ORR R9,R9,R4,LSL #16
+    MOV R5,R5,LSR #16
+    MOV R5,R5,LSL #16
+    ORR R5,R5,R0,LSR #16
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    MOV R0,R0,LSL #16
+    MOV R4,R4,LSR #16
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    MOV R9,R5,LSL #16
+    MOV R9,R9,LSR #16
+    ORR R9,R9,R4,LSL #16
+    MOV R5,R5,LSR #16
+    MOV R5,R5,LSL #16
+    ORR R5,R5,R0,LSR #16
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    MOV R0,R0,LSL #16
+    MOV R4,R4,LSR #16
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    MOV R9,R5,LSL #16
+    MOV R9,R9,LSR #16
+    ORR R9,R9,R4,LSL #16
+    MOV R5,R5,LSR #16
+    MOV R5,R5,LSL #16
+    ORR R5,R5,R0,LSR #16
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    MOV R0,R0,LSL #16
+    MOV R4,R4,LSR #16
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    MOV R9,R5,LSL #16
+    MOV R9,R9,LSR #16
+    ORR R9,R9,R4,LSL #16
+    MOV R5,R5,LSR #16
+    MOV R5,R5,LSL #16
+    ORR R5,R5,R0,LSR #16
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    MOV R0,R0,LSL #16
+    MOV R4,R4,LSR #16
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    MOV R9,R5,LSL #16
+    MOV R9,R9,LSR #16
+    ORR R9,R9,R4,LSL #16
+    MOV R5,R5,LSR #16
+    MOV R5,R5,LSL #16
+    ORR R5,R5,R0,LSR #16
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    MOV R0,R0,LSL #16
+    MOV R4,R4,LSR #16
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    MOV R9,R5,LSL #16
+    MOV R9,R9,LSR #16
+    ORR R9,R9,R4,LSL #16
+    MOV R5,R5,LSR #16
+    MOV R5,R5,LSL #16
+    ORR R5,R5,R0,LSR #16
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    MOV R0,R0,LSL #16
+    MOV R4,R4,LSR #16
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    MOV R9,R5,LSL #16
+    MOV R9,R9,LSR #16
+    ORR R9,R9,R4,LSL #16
+    MOV R5,R5,LSR #16
+    MOV R5,R5,LSL #16
+    ORR R5,R5,R0,LSR #16
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    MOV R0,R0,LSL #16
+    MOV R4,R4,LSR #16
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    MOV R9,R5,LSL #16
+    MOV R9,R9,LSR #16
+    ORR R9,R9,R4,LSL #16
+    MOV R5,R5,LSR #16
+    MOV R5,R5,LSL #16
+    ORR R5,R5,R0,LSR #16
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    MOV R0,R0,LSL #16
+    MOV R4,R4,LSR #16
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    MOV R9,R5,LSL #16
+    MOV R9,R9,LSR #16
+    ORR R9,R9,R4,LSL #16
+    MOV R5,R5,LSR #16
+    MOV R5,R5,LSL #16
+    ORR R5,R5,R0,LSR #16
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    MOV R0,R0,LSL #16
+    MOV R4,R4,LSR #16
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    MOV R9,R5,LSL #16
+    MOV R9,R9,LSR #16
+    ORR R9,R9,R4,LSL #16
+    MOV R5,R5,LSR #16
+    MOV R5,R5,LSL #16
+    ORR R5,R5,R0,LSR #16
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    MOV R0,R0,LSL #16
+    MOV R4,R4,LSR #16
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    MOV R9,R5,LSL #16
+    MOV R9,R9,LSR #16
+    ORR R9,R9,R4,LSL #16
+    MOV R5,R5,LSR #16
+    MOV R5,R5,LSL #16
+    ORR R5,R5,R0,LSR #16
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    MOV R0,R0,LSL #16
+    MOV R4,R4,LSR #16
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    MOV R9,R5,LSL #16
+    MOV R9,R9,LSR #16
+    ORR R9,R9,R4,LSL #16
+    MOV R5,R5,LSR #16
+    MOV R5,R5,LSL #16
+    ORR R5,R5,R0,LSR #16
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    ; LDMIA R11,{R5,R0,R1,R2,R6}
+    ; MOV R5,R5,LSR #16
+    ; MOV R6,R6,LSL #16
+    ; LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    ; MOV R4,R0,LSL #16
+    ; MOV R4,R4,LSR #16
+    ; MOV R0,R0,LSR #16
+    ; MOV R0,R0,LSL #16
+    ; ORR R0,R0,R5,LSL #16
+    ; ORR R4,R4,R6,LSR #16
+    ; STMIA R11,{R0-R4}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ; ADD R11,R11,#320        ; move destination address to the next scanline
+
+    ; LDMIA R11,{R5,R0,R1,R2,R6}
+    ; MOV R5,R5,LSR #16
+    ; MOV R6,R6,LSL #16
+    ; LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    ; MOV R4,R0,LSL #16
+    ; MOV R4,R4,LSR #16
+    ; MOV R0,R0,LSR #16
+    ; MOV R0,R0,LSL #16
+    ; ORR R0,R0,R5,LSL #16
+    ; ORR R4,R4,R6,LSR #16
+    ; STMIA R11,{R0-R4}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ; ADD R11,R11,#320        ; move destination address to the next scanline
+
+    ; LDMIA R11,{R5,R0,R1,R2,R6}
+    ; MOV R5,R5,LSR #16
+    ; MOV R6,R6,LSL #16
+    ; LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    ; MOV R4,R0,LSL #16
+    ; MOV R4,R4,LSR #16
+    ; MOV R0,R0,LSR #16
+    ; MOV R0,R0,LSL #16
+    ; ORR R0,R0,R5,LSL #16
+    ; ORR R4,R4,R6,LSR #16
+    ; STMIA R11,{R0-R4}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ; ADD R11,R11,#320        ; move destination address to the next scanline
+
+    ; LDMIA R11,{R5,R0,R1,R2,R6}
+    ; MOV R5,R5,LSR #16
+    ; MOV R6,R6,LSL #16
+    ; LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    ; MOV R4,R0,LSL #16
+    ; MOV R4,R4,LSR #16
+    ; MOV R0,R0,LSR #16
+    ; MOV R0,R0,LSL #16
+    ; ORR R0,R0,R5,LSL #16
+    ; ORR R4,R4,R6,LSR #16
+    ; STMIA R11,{R0-R4}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ; ADD R11,R11,#320        ; move destination address to the next scanline
+
+    ; LDMIA R11,{R5,R0,R1,R2,R6}
+    ; MOV R5,R5,LSR #16
+    ; MOV R6,R6,LSL #16
+    ; LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    ; MOV R4,R0,LSL #16
+    ; MOV R4,R4,LSR #16
+    ; MOV R0,R0,LSR #16
+    ; MOV R0,R0,LSL #16
+    ; ORR R0,R0,R5,LSL #16
+    ; ORR R4,R4,R6,LSR #16
+    ; STMIA R11,{R0-R4}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ; ADD R11,R11,#320        ; move destination address to the next scanline
+
+    ; LDMIA R11,{R5,R0,R1,R2,R6}
+    ; MOV R5,R5,LSR #16
+    ; MOV R6,R6,LSL #16
+    ; LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    ; MOV R4,R0,LSL #16
+    ; MOV R4,R4,LSR #16
+    ; MOV R0,R0,LSR #16
+    ; MOV R0,R0,LSL #16
+    ; ORR R0,R0,R5,LSL #16
+    ; ORR R4,R4,R6,LSR #16
+    ; STMIA R11,{R0-R4}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ; ADD R11,R11,#320        ; move destination address to the next scanline
+
+    ; LDMIA R11,{R5,R0,R1,R2,R6}
+    ; MOV R5,R5,LSR #16
+    ; MOV R6,R6,LSL #16
+    ; LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    ; MOV R4,R0,LSL #16
+    ; MOV R4,R4,LSR #16
+    ; MOV R0,R0,LSR #16
+    ; MOV R0,R0,LSL #16
+    ; ORR R0,R0,R5,LSL #16
+    ; ORR R4,R4,R6,LSR #16
+    ; STMIA R11,{R0-R4}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ; ADD R11,R11,#320        ; move destination address to the next scanline
+
+    ; LDMIA R11,{R5,R0,R1,R2,R6}
+    ; MOV R5,R5,LSR #16
+    ; MOV R6,R6,LSL #16
+    ; LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    ; MOV R4,R0,LSL #16
+    ; MOV R4,R4,LSR #16
+    ; MOV R0,R0,LSR #16
+    ; MOV R0,R0,LSL #16
+    ; ORR R0,R0,R5,LSL #16
+    ; ORR R4,R4,R6,LSR #16
+    ; STMIA R11,{R0-R4}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ; ADD R11,R11,#320        ; move destination address to the next scanline
+
+    ; LDMIA R11,{R5,R0,R1,R2,R6}
+    ; MOV R5,R5,LSR #16
+    ; MOV R6,R6,LSL #16
+    ; LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    ; MOV R4,R0,LSL #16
+    ; MOV R4,R4,LSR #16
+    ; MOV R0,R0,LSR #16
+    ; MOV R0,R0,LSL #16
+    ; ORR R0,R0,R5,LSL #16
+    ; ORR R4,R4,R6,LSR #16
+    ; STMIA R11,{R0-R4}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ; ADD R11,R11,#320        ; move destination address to the next scanline
+
+    ; LDMIA R11,{R5,R0,R1,R2,R6}
+    ; MOV R5,R5,LSR #16
+    ; MOV R6,R6,LSL #16
+    ; LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    ; MOV R4,R0,LSL #16
+    ; MOV R4,R4,LSR #16
+    ; MOV R0,R0,LSR #16
+    ; MOV R0,R0,LSL #16
+    ; ORR R0,R0,R5,LSL #16
+    ; ORR R4,R4,R6,LSR #16
+    ; STMIA R11,{R0-R4}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ; ADD R11,R11,#320        ; move destination address to the next scanline
+
+    ; LDMIA R11,{R5,R0,R1,R2,R6}
+    ; MOV R5,R5,LSR #16
+    ; MOV R6,R6,LSL #16
+    ; LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    ; MOV R4,R0,LSL #16
+    ; MOV R4,R4,LSR #16
+    ; MOV R0,R0,LSR #16
+    ; MOV R0,R0,LSL #16
+    ; ORR R0,R0,R5,LSL #16
+    ; ORR R4,R4,R6,LSR #16
+    ; STMIA R11,{R0-R4}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ; ADD R11,R11,#320        ; move destination address to the next scanline
+
+    ; LDMIA R11,{R5,R0,R1,R2,R6}
+    ; MOV R5,R5,LSR #16
+    ; MOV R6,R6,LSL #16
+    ; LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    ; MOV R4,R0,LSL #16
+    ; MOV R4,R4,LSR #16
+    ; MOV R0,R0,LSR #16
+    ; MOV R0,R0,LSL #16
+    ; ORR R0,R0,R5,LSL #16
+    ; ORR R4,R4,R6,LSR #16
+    ; STMIA R11,{R0-R4}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ; ADD R11,R11,#320        ; move destination address to the next scanline
+
+    ; LDMIA R11,{R5,R0,R1,R2,R6}
+    ; MOV R5,R5,LSR #16
+    ; MOV R6,R6,LSL #16
+    ; LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    ; MOV R4,R0,LSL #16
+    ; MOV R4,R4,LSR #16
+    ; MOV R0,R0,LSR #16
+    ; MOV R0,R0,LSL #16
+    ; ORR R0,R0,R5,LSL #16
+    ; ORR R4,R4,R6,LSR #16
+    ; STMIA R11,{R0-R4}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ; ADD R11,R11,#320        ; move destination address to the next scanline
+
+    ; LDMIA R11,{R5,R0,R1,R2,R6}
+    ; MOV R5,R5,LSR #16
+    ; MOV R6,R6,LSL #16
+    ; LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    ; MOV R4,R0,LSL #16
+    ; MOV R4,R4,LSR #16
+    ; MOV R0,R0,LSR #16
+    ; MOV R0,R0,LSL #16
+    ; ORR R0,R0,R5,LSL #16
+    ; ORR R4,R4,R6,LSR #16
+    ; STMIA R11,{R0-R4}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ; ADD R11,R11,#320        ; move destination address to the next scanline
+
+    ; LDMIA R11,{R5,R0,R1,R2,R6}
+    ; MOV R5,R5,LSR #16
+    ; MOV R6,R6,LSL #16
+    ; LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    ; MOV R4,R0,LSL #16
+    ; MOV R4,R4,LSR #16
+    ; MOV R0,R0,LSR #16
+    ; MOV R0,R0,LSL #16
+    ; ORR R0,R0,R5,LSL #16
+    ; ORR R4,R4,R6,LSR #16
+    ; STMIA R11,{R0-R4}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ; ADD R11,R11,#320        ; move destination address to the next scanline
+
+    ; LDMIA R11,{R5,R0,R1,R2,R6}
+    ; MOV R5,R5,LSR #16
+    ; MOV R6,R6,LSL #16
+    ; LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    ; MOV R4,R0,LSL #16
+    ; MOV R4,R4,LSR #16
+    ; MOV R0,R0,LSR #16
+    ; MOV R0,R0,LSL #16
+    ; ORR R0,R0,R5,LSL #16
+    ; ORR R4,R4,R6,LSR #16
+    ; STMIA R11,{R0-R4}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ; ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMFD SP!, {R0-R12}     ; restore all the registers from the stack
+    MOV PC,R14              ; return from function
+copy_16x16_tile_to_screen_full_tile_11:
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    AND R0,R0,#0x00ffffff
+    AND R4,R4,#0xff000000
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    AND R9,R5,#0x00ffffff
+    ORR R9,R9,R4
+    AND R5,R5,#0xff000000
+    ORR R5,R5,R0
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    AND R0,R0,#0x00ffffff
+    AND R4,R4,#0xff000000
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    AND R9,R5,#0x00ffffff
+    ORR R9,R9,R4
+    AND R5,R5,#0xff000000
+    ORR R5,R5,R0
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    AND R0,R0,#0x00ffffff
+    AND R4,R4,#0xff000000
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    AND R9,R5,#0x00ffffff
+    ORR R9,R9,R4
+    AND R5,R5,#0xff000000
+    ORR R5,R5,R0
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    AND R0,R0,#0x00ffffff
+    AND R4,R4,#0xff000000
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    AND R9,R5,#0x00ffffff
+    ORR R9,R9,R4
+    AND R5,R5,#0xff000000
+    ORR R5,R5,R0
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    AND R0,R0,#0x00ffffff
+    AND R4,R4,#0xff000000
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    AND R9,R5,#0x00ffffff
+    ORR R9,R9,R4
+    AND R5,R5,#0xff000000
+    ORR R5,R5,R0
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    AND R0,R0,#0x00ffffff
+    AND R4,R4,#0xff000000
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    AND R9,R5,#0x00ffffff
+    ORR R9,R9,R4
+    AND R5,R5,#0xff000000
+    ORR R5,R5,R0
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    AND R0,R0,#0x00ffffff
+    AND R4,R4,#0xff000000
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    AND R9,R5,#0x00ffffff
+    ORR R9,R9,R4
+    AND R5,R5,#0xff000000
+    ORR R5,R5,R0
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    AND R0,R0,#0x00ffffff
+    AND R4,R4,#0xff000000
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    AND R9,R5,#0x00ffffff
+    ORR R9,R9,R4
+    AND R5,R5,#0xff000000
+    ORR R5,R5,R0
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    AND R0,R0,#0x00ffffff
+    AND R4,R4,#0xff000000
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    AND R9,R5,#0x00ffffff
+    ORR R9,R9,R4
+    AND R5,R5,#0xff000000
+    ORR R5,R5,R0
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    AND R0,R0,#0x00ffffff
+    AND R4,R4,#0xff000000
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    AND R9,R5,#0x00ffffff
+    ORR R9,R9,R4
+    AND R5,R5,#0xff000000
+    ORR R5,R5,R0
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    AND R0,R0,#0x00ffffff
+    AND R4,R4,#0xff000000
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    AND R9,R5,#0x00ffffff
+    ORR R9,R9,R4
+    AND R5,R5,#0xff000000
+    ORR R5,R5,R0
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    AND R0,R0,#0x00ffffff
+    AND R4,R4,#0xff000000
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    AND R9,R5,#0x00ffffff
+    ORR R9,R9,R4
+    AND R5,R5,#0xff000000
+    ORR R5,R5,R0
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    AND R0,R0,#0x00ffffff
+    AND R4,R4,#0xff000000
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    AND R9,R5,#0x00ffffff
+    ORR R9,R9,R4
+    AND R5,R5,#0xff000000
+    ORR R5,R5,R0
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    AND R0,R0,#0x00ffffff
+    AND R4,R4,#0xff000000
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    AND R9,R5,#0x00ffffff
+    ORR R9,R9,R4
+    AND R5,R5,#0xff000000
+    ORR R5,R5,R0
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    AND R0,R0,#0x00ffffff
+    AND R4,R4,#0xff000000
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    AND R9,R5,#0x00ffffff
+    ORR R9,R9,R4
+    AND R5,R5,#0xff000000
+    ORR R5,R5,R0
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMIA R11,{R0,R1,R2,R3,R4}
+    AND R0,R0,#0x00ffffff
+    AND R4,R4,#0xff000000
+    LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R0-R3
+    AND R9,R5,#0x00ffffff
+    ORR R9,R9,R4
+    AND R5,R5,#0xff000000
+    ORR R5,R5,R0
+    STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+
+    ; LDMIA R11,{R5,R0,R1,R2,R6}
+    ; AND R5,R5,#0x00ffffff
+    ; AND R6,R6,#0xff000000
+    ; LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    ; AND R4,R0,#0x00ffffff
+    ; AND R0,R0,#0xff000000
+    ; ORR R0,R0,R5
+    ; ORR R4,R4,R6
+    ; STMIA R11,{R0-R4}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ; ADD R11,R11,#320        ; move destination address to the next scanline
+
+    ; LDMIA R11,{R5,R0,R1,R2,R6}
+    ; AND R5,R5,#0x00ffffff
+    ; AND R6,R6,#0xff000000
+    ; LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    ; AND R4,R0,#0x00ffffff
+    ; AND R0,R0,#0xff000000
+    ; ORR R0,R0,R5
+    ; ORR R4,R4,R6
+    ; STMIA R11,{R0-R4}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ; ADD R11,R11,#320        ; move destination address to the next scanline
+
+    ; LDMIA R11,{R5,R0,R1,R2,R6}
+    ; AND R5,R5,#0x00ffffff
+    ; AND R6,R6,#0xff000000
+    ; LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    ; AND R4,R0,#0x00ffffff
+    ; AND R0,R0,#0xff000000
+    ; ORR R0,R0,R5
+    ; ORR R4,R4,R6
+    ; STMIA R11,{R0-R4}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ; ADD R11,R11,#320        ; move destination address to the next scanline
+
+    ; LDMIA R11,{R5,R0,R1,R2,R6}
+    ; AND R5,R5,#0x00ffffff
+    ; AND R6,R6,#0xff000000
+    ; LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    ; AND R4,R0,#0x00ffffff
+    ; AND R0,R0,#0xff000000
+    ; ORR R0,R0,R5
+    ; ORR R4,R4,R6
+    ; STMIA R11,{R0-R4}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ; ADD R11,R11,#320        ; move destination address to the next scanline
+
+    ; LDMIA R11,{R5,R0,R1,R2,R6}
+    ; AND R5,R5,#0x00ffffff
+    ; AND R6,R6,#0xff000000
+    ; LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    ; AND R4,R0,#0x00ffffff
+    ; AND R0,R0,#0xff000000
+    ; ORR R0,R0,R5
+    ; ORR R4,R4,R6
+    ; STMIA R11,{R0-R4}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ; ADD R11,R11,#320        ; move destination address to the next scanline
+
+    ; LDMIA R11,{R5,R0,R1,R2,R6}
+    ; AND R5,R5,#0x00ffffff
+    ; AND R6,R6,#0xff000000
+    ; LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    ; AND R4,R0,#0x00ffffff
+    ; AND R0,R0,#0xff000000
+    ; ORR R0,R0,R5
+    ; ORR R4,R4,R6
+    ; STMIA R11,{R0-R4}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ; ADD R11,R11,#320        ; move destination address to the next scanline
+
+    ; LDMIA R11,{R5,R0,R1,R2,R6}
+    ; AND R5,R5,#0x00ffffff
+    ; AND R6,R6,#0xff000000
+    ; LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    ; AND R4,R0,#0x00ffffff
+    ; AND R0,R0,#0xff000000
+    ; ORR R0,R0,R5
+    ; ORR R4,R4,R6
+    ; STMIA R11,{R0-R4}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ; ADD R11,R11,#320        ; move destination address to the next scanline
+
+    ; LDMIA R11,{R5,R0,R1,R2,R6}
+    ; AND R5,R5,#0x00ffffff
+    ; AND R6,R6,#0xff000000
+    ; LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    ; AND R4,R0,#0x00ffffff
+    ; AND R0,R0,#0xff000000
+    ; ORR R0,R0,R5
+    ; ORR R4,R4,R6
+    ; STMIA R11,{R0-R4}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ; ADD R11,R11,#320        ; move destination address to the next scanline
+
+    ; LDMIA R11,{R5,R0,R1,R2,R6}
+    ; AND R5,R5,#0x00ffffff
+    ; AND R6,R6,#0xff000000
+    ; LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    ; AND R4,R0,#0x00ffffff
+    ; AND R0,R0,#0xff000000
+    ; ORR R0,R0,R5
+    ; ORR R4,R4,R6
+    ; STMIA R11,{R0-R4}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ; ADD R11,R11,#320        ; move destination address to the next scanline
+
+    ; LDMIA R11,{R5,R0,R1,R2,R6}
+    ; AND R5,R5,#0x00ffffff
+    ; AND R6,R6,#0xff000000
+    ; LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    ; AND R4,R0,#0x00ffffff
+    ; AND R0,R0,#0xff000000
+    ; ORR R0,R0,R5
+    ; ORR R4,R4,R6
+    ; STMIA R11,{R0-R4}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ; ADD R11,R11,#320        ; move destination address to the next scanline
+
+    ; LDMIA R11,{R5,R0,R1,R2,R6}
+    ; AND R5,R5,#0x00ffffff
+    ; AND R6,R6,#0xff000000
+    ; LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    ; AND R4,R0,#0x00ffffff
+    ; AND R0,R0,#0xff000000
+    ; ORR R0,R0,R5
+    ; ORR R4,R4,R6
+    ; STMIA R11,{R0-R4}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ; ADD R11,R11,#320        ; move destination address to the next scanline
+
+    ; LDMIA R11,{R5,R0,R1,R2,R6}
+    ; AND R5,R5,#0x00ffffff
+    ; AND R6,R6,#0xff000000
+    ; LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    ; AND R4,R0,#0x00ffffff
+    ; AND R0,R0,#0xff000000
+    ; ORR R0,R0,R5
+    ; ORR R4,R4,R6
+    ; STMIA R11,{R0-R4}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ; ADD R11,R11,#320        ; move destination address to the next scanline
+
+    ; LDMIA R11,{R5,R0,R1,R2,R6}
+    ; AND R5,R5,#0x00ffffff
+    ; AND R6,R6,#0xff000000
+    ; LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    ; AND R4,R0,#0x00ffffff
+    ; AND R0,R0,#0xff000000
+    ; ORR R0,R0,R5
+    ; ORR R4,R4,R6
+    ; STMIA R11,{R0-R4}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ; ADD R11,R11,#320        ; move destination address to the next scanline
+
+    ; LDMIA R11,{R5,R0,R1,R2,R6}
+    ; AND R5,R5,#0x00ffffff
+    ; AND R6,R6,#0xff000000
+    ; LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    ; AND R4,R0,#0x00ffffff
+    ; AND R0,R0,#0xff000000
+    ; ORR R0,R0,R5
+    ; ORR R4,R4,R6
+    ; STMIA R11,{R0-R4}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ; ADD R11,R11,#320        ; move destination address to the next scanline
+
+    ; LDMIA R11,{R5,R0,R1,R2,R6}
+    ; AND R5,R5,#0x00ffffff
+    ; AND R6,R6,#0xff000000
+    ; LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    ; AND R4,R0,#0x00ffffff
+    ; AND R0,R0,#0xff000000
+    ; ORR R0,R0,R5
+    ; ORR R4,R4,R6
+    ; STMIA R11,{R0-R4}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ; ADD R11,R11,#320        ; move destination address to the next scanline
+
+    ; LDMIA R11,{R5,R0,R1,R2,R6}
+    ; AND R5,R5,#0x00ffffff
+    ; AND R6,R6,#0xff000000
+    ; LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    ; AND R4,R0,#0x00ffffff
+    ; AND R0,R0,#0xff000000
+    ; ORR R0,R0,R5
+    ; ORR R4,R4,R6
+    ; STMIA R11,{R0-R4}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
+    ; ADD R11,R11,#320        ; move destination address to the next scanline
+
+    LDMFD SP!, {R0-R12}     ; restore all the registers from the stack
+    MOV PC,R14              ; return from function
 copy_16x16_tile_to_screen_cropped_tile:
     ADRL R0,copy_16x16_tile_to_screen_cropped_tile_start
     MOV R1,#16
@@ -849,8 +1811,8 @@ draw_tile_map:
 
     STMFD SP!, {R0-R12,R14}     ; store all registers onto the stack
 
-    AND R5,R4,#0b1111   ; get scanline in tile to start from
     AND R7,R3,#0b1111   ; get pixel in tile to start from
+    AND R5,R4,#0b1111   ; get scanline in tile to start from
     MOV R3,R3,LSR #4    ; divide tilemap x coordinate by 16
     MOV R4,R4,LSR #4    ; divide tilemap y coordinate by 16
     MOV R9,#128         ; move width of tilemap into R5
@@ -1231,10 +2193,10 @@ main_draw_tile_map_loop:
 
     VDU 19,0,24,0,0,0,-1,-1,-1,-1
 
-    ADD R4,R4,#1
+    ; ADD R4,R4,#1
     CMP R4,#29*16
     MOVEQ R4,#0
-    ADD R3,R3,#1
+    ; ADD R3,R3,#1
     CMP R3,#102*16
     SUBEQ R3,R3,#102*16
 
@@ -1245,7 +2207,7 @@ main_draw_tile_map_loop:
     MOV R2,R0,LSR #2
     MOV R3,R1,LSR #2
     EOR R3,R3,#0b11111111
-    MOV R0,#1
+    MOV R0,#19
     ADRL R1,level_1_tiles
     LDR R4,[R12]
     MOV R5,#0
@@ -1253,7 +2215,9 @@ main_draw_tile_map_loop:
     MOV R7,#0
     MOV R8,#0
 
+    VDU 19,0,24,0,240,0,-1,-1,-1,-1
     BL copy_16x16_tile_to_screen
+    VDU 19,0,24,0,0,0,-1,-1,-1,-1
 
     LDMFD SP!, {R0-R8}
 
@@ -1277,7 +2241,7 @@ exit:
 ;   ----------------------------------------------------------------
 ;       All data goes here, start by aligning to a 32 byte boundary
 ;   ----------------------------------------------------------------
-.balign 32
+.align 4
 
 
 ;   ****************************************************************
@@ -1362,7 +2326,7 @@ intro_text_3:
     .byte "             F2..TOGGLE MUSIC           ",0
 
 
-    .balign 32
+    .align 4
 
 ;   ****************************************************************
 ;       vdu_variables_screen_start
@@ -1391,7 +2355,7 @@ vidc_address_screen_start:
     .4byte 0x00005000
     .4byte 0x00000000
 
-    .balign 32
+    .align 4
     .nolist
 
 ;   ****************************************************************
