@@ -33,6 +33,8 @@ stack:
 .include "vdu.asm"
 .include "macros.asm"
 
+.include "tiles.asm"
+
 
 ;   ****************************************************************
 ;       set_display_start
