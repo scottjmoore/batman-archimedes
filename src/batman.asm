@@ -1677,64 +1677,64 @@ draw_tile_map:
 
 draw_tile_map_cropped_top_row:
     LDRB R0,[R10]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#1]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#2]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#3]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#4]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#5]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#6]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#7]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#8]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#9]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#10]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#11]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#12]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#13]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#14]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#15]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#16]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#17]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#18]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#19]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     MOV R2,R7
     ADD R3,R3,#16
     SUB R3,R3,R5
@@ -1743,64 +1743,64 @@ draw_tile_map_cropped_top_row:
 
 draw_tile_map_loop:
     LDRB R0,[R10]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#1]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#2]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#3]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#4]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#5]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#6]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#7]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#8]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#9]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#10]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#11]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#12]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#13]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#14]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#15]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#16]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#17]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#18]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#19]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     MOV R2,R7
     ADD R3,R3,#16
     ADD R10,R10,#128
@@ -1813,64 +1813,64 @@ draw_tile_map_loop:
 draw_tile_map_cropped_bottom_row:
 
     LDRB R0,[R10]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#1]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#2]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#3]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#4]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#5]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#6]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#7]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#8]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#9]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#10]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#11]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#12]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#13]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#14]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#15]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#16]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#17]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#18]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#19]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
 
 draw_tile_map_exit:              ; exit loop
 
@@ -2041,9 +2041,9 @@ main_draw_tile_map_loop:
 
     VDU 19,0,24,0,0,0,-1,-1,-1,-1
 
-    ; ADD R4,R4,#1
-    ; CMP R4,#29*16
-    ; MOVEQ R4,#0
+    ADD R4,R4,#1
+    CMP R4,#29*16
+    MOVEQ R4,#0
     ADD R3,R3,#1
     CMP R3,#102*16
     SUBEQ R3,R3,#102*16
