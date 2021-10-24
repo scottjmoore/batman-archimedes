@@ -1804,7 +1804,7 @@ draw_tile_map_loop:
     MOV R2,R7
     ADD R3,R3,#16
     ADD R10,R10,#128
-    CMP R3,#160
+    CMP R3,#192
     BLE draw_tile_map_loop
 
     LDMFD SP!, {R6}
@@ -2024,7 +2024,7 @@ main_draw_tile_map:
 
     ADRL R0,status_bar
     LDR R1,[R12]
-    MOV R2,#176
+    MOV R2,#208
     MOV R3,#320
     MLA R1,R2,R3,R1
     MOV R2,#48
@@ -2053,15 +2053,13 @@ main_draw_tile_map_loop:
     SWI OS_Mouse
 
     MOV R2,R0,LSR #2
+    SUB R2,R2,#24
     MOV R3,R1,LSR #2
     EOR R3,R3,#0b11111111
+    SUB R3,R3,#24
     MOV R0,#70
     ADRL R1,level_1_tiles
     LDR R4,[R12]
-    ; MOV R5,#0
-    ; MOV R6,#0
-    ; MOV R7,#0
-    ; MOV R8,#0
 
     VDU 19,0,24,0,240,0,-1,-1,-1,-1
     BL draw_16x16_tile

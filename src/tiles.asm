@@ -11,7 +11,7 @@
 ;   ****************************************************************
 
 .set    CLIP_TOP,       0
-.set    CLIP_BOTTOM,    256
+.set    CLIP_BOTTOM,    208
 .set    CLIP_LEFT,      0
 .set    CLIP_RIGHT,     320
 
