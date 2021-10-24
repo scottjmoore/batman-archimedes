@@ -440,7 +440,7 @@ copy_16x16_tile_to_screen:
 
     STMFD SP!, {R0-R12}     ; store all the registers on the stack
 
-    AND R8,R2,#0b11         ; get 4 pixel x coordinate offset and set status flags
+    AND R8,R2,#0b11         ; get 4 pixel x coordinate offset
     MOV R7,#16*16*4         ; put the size of a single tile in bytes into R7
     MLA R12,R0,R7,R1        ; calculate the address of the start of the tile [source = (tile number * (16 * 16)) + address of tileset]
     ADD R12,R12,R8,LSL #8   ; add 4 pixel x coordinate offset * (16*16) to get pre-shifted tile
@@ -2058,39 +2058,39 @@ main_draw_tile_map_loop:
     MOV R0,#70
     ADRL R1,level_1_tiles
     LDR R4,[R12]
-    MOV R5,#0
-    MOV R6,#0
-    MOV R7,#0
-    MOV R8,#0
+    ; MOV R5,#0
+    ; MOV R6,#0
+    ; MOV R7,#0
+    ; MOV R8,#0
 
     VDU 19,0,24,0,240,0,-1,-1,-1,-1
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R0,R0,#1
     ADD R2,R2,#16
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R0,R0,#1
     ADD R2,R2,#16
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R0,R0,#16-2
     SUB R2,R2,#32
     ADD R3,R3,#16
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R0,R0,#1
     ADD R2,R2,#16
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R0,R0,#1
     ADD R2,R2,#16
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R0,R0,#16-2
     SUB R2,R2,#32
     ADD R3,R3,#16
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R0,R0,#1
     ADD R2,R2,#16
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R0,R0,#1
     ADD R2,R2,#16
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     VDU 19,0,24,0,0,0,-1,-1,-1,-1
 
     LDMFD SP!, {R0-R8}
