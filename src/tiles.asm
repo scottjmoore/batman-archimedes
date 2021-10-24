@@ -67,9 +67,38 @@ draw_16x16_tile:
     BGT draw_16x16_tile_clipped_right
 
 draw_16x16_tile_clipped_top:
+    CMP R3,#CLIP_TOP - 16
+    BLE draw_16x16_tile_exit
+    CMP R2,#CLIP_LEFT + 16
+    BLT draw_16x16_tile_clipped_top_left
+    CMP R2,#CLIP_TOP - 16
+    BGT draw_16x16_tile_clipped_top_right
+
+
+draw_16x16_tile_clipped_top_left:
+
+draw_16x16_tile_clipped_top_right:
+
 draw_16x16_tile_clipped_bottom:
+    CMP R3,#CLIP_BOTTOM + 16
+    BGE draw_16x16_tile_exit
+    CMP R2,#CLIP_LEFT + 16
+    BLT draw_16x16_tile_clipped_bottom_left
+    CMP R2,#CLIP_TOP - 16
+    BGT draw_16x16_tile_clipped_bottom_right
+
+draw_16x16_tile_clipped_bottom_left:
+
+draw_16x16_tile_clipped_bottom_right:
+
 draw_16x16_tile_clipped_left:
+    CMP R2,#CLIP_LEFT - 16
+    BLE draw_16x16_tile_clipped_right
+
 draw_16x16_tile_clipped_right:
+    CMP R2,#CLIP_RIGHT + 16
+    BGE draw_16x16_tile_clipped_right
+
 draw_16x16_tile_exit:       ; exit function code
 
     LDMFD SP!, {R0-R12}     ; restore all the registers from the stack
