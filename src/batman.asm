@@ -1658,88 +1658,18 @@ draw_tile_map:
 
     STMFD SP!, {R0-R12,R14}     ; store all registers onto the stack
 
-    AND R7,R3,#0b1111   ; get pixel in tile to start from
-    AND R5,R4,#0b1111   ; get scanline in tile to start from
+    AND R5,R3,#0b1111   ; get pixel in tile to start from
+    AND R6,R4,#0b1111   ; get scanline in tile to start from
     MOV R3,R3,LSR #4    ; divide tilemap x coordinate by 16
     MOV R4,R4,LSR #4    ; divide tilemap y coordinate by 16
-    MOV R9,#128         ; move width of tilemap into R5
-    MLA R10,R4,R9,R0     ; calculate top left of tilemap to draw from (source = (y * 128) + tilemap_address)
-    ADD R10,R10,R3        ; add x tile to start from to tilemap source address
+    MOV R7,#128         ; move width of tilemap into R5
+    MLA R10,R4,R7,R0    ; calculate top left of tilemap to draw from (source = (y * 128) + tilemap_address)
+    ADD R10,R10,R3      ; add x tile to start from to tilemap source address
 
     MOV R4,R2
-    EOR R7,R7,#0b1111
-    MOV R2,R7
-    MOV R3,#0
-    MOV R6,#0
-    STMFD SP!, {R5}
-    CMP R5,#0
-    BEQ draw_tile_map_loop
-
-draw_tile_map_cropped_top_row:
-    LDRB R0,[R10]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#1]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#2]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#3]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#4]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#5]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#6]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#7]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#8]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#9]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#10]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#11]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#12]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#13]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#14]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#15]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#16]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#17]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#18]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#19]
-    BL draw_16x16_tile
-    MOV R2,R7
-    ADD R3,R3,#16
-    SUB R3,R3,R5
-    ADD R10,R10,#128
-    MOV R5,#0
+    MOV R7,#0
+    SUB R2,R7,R5
+    SUB R3,R7,R6
 
 draw_tile_map_loop:
     LDRB R0,[R10]
@@ -1801,76 +1731,11 @@ draw_tile_map_loop:
     ADD R2,R2,#16
     LDRB R0,[R10,#19]
     BL draw_16x16_tile
-    MOV R2,R7
+    SUB R2,R2,#320-16
     ADD R3,R3,#16
     ADD R10,R10,#128
-    CMP R3,#192
+    CMP R3,#208
     BLE draw_tile_map_loop
-
-    LDMFD SP!, {R6}
-    CMP R6,#0
-    BEQ draw_tile_map_exit
-draw_tile_map_cropped_bottom_row:
-
-    LDRB R0,[R10]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#1]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#2]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#3]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#4]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#5]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#6]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#7]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#8]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#9]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#10]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#11]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#12]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#13]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#14]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#15]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#16]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#17]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#18]
-    BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#19]
-    BL draw_16x16_tile
 
 draw_tile_map_exit:              ; exit loop
 
@@ -2039,7 +1904,7 @@ main_draw_tile_map_loop:
 
     BL draw_tile_map
 
-    VDU 19,0,24,0,0,0,-1,-1,-1,-1
+    ; VDU 19,0,24,0,0,0,-1,-1,-1,-1
 
     ADD R4,R4,#1
     CMP R4,#29*16
@@ -2061,7 +1926,7 @@ main_draw_tile_map_loop:
     ADRL R1,level_1_tiles
     LDR R4,[R12]
 
-    VDU 19,0,24,0,240,0,-1,-1,-1,-1
+    ; VDU 19,0,24,0,240,0,-1,-1,-1,-1
     BL draw_16x16_tile
     ADD R0,R0,#1
     ADD R2,R2,#16
@@ -2089,14 +1954,14 @@ main_draw_tile_map_loop:
     ADD R0,R0,#1
     ADD R2,R2,#16
     BL draw_16x16_tile
-    VDU 19,0,24,0,0,0,-1,-1,-1,-1
+    ; VDU 19,0,24,0,0,0,-1,-1,-1,-1
 
     LDMFD SP!, {R0-R8}
 
     MOV R0,#19
     SWI OS_Byte
     BL swap_display_buffers
-    VDU 19,0,24,0,0,240,-1,-1,-1,-1
+    ; VDU 19,0,24,0,0,240,-1,-1,-1,-1
 
     B main_draw_tile_map_loop
 exit:
