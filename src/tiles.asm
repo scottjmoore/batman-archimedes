@@ -665,9 +665,11 @@ draw_16x16_tile_clipped_top_unclipped_left_right_11:
     MOV PC,R0                               ; move calculated code start address into program counter
 
 draw_16x16_tile_clipped_top_left:
+
     B draw_16x16_tile_exit                  ; branch to exit function
 
 draw_16x16_tile_clipped_top_right:
+
     B draw_16x16_tile_exit                  ; branch to exit function
 
 draw_16x16_tile_clipped_bottom:
