@@ -738,7 +738,341 @@ draw_16x16_tile_clipped_left:
     CMP R2,#CLIP_LEFT - 16                  ; check to see if x coordinate is completely off the screen
     BLE draw_16x16_tile_exit                ;   if so, branch to exit function
 
+    ADD R2,R2,#CLIP_LEFT + 16
+    AND R8,R2,#0b11         ; get 4 pixel x coordinate offset
+    AND R9,R2,#0b1100       ; get 4 word x coordinate offset
+    MOV R7,#16*16*4         ; put the size of a single tile in bytes into R7
+    MLA R12,R0,R7,R1        ; calculate the address of the start of the tile [source = (tile number * (16 * 16)) + address of tileset]
+    ADD R12,R12,R8,LSL #8   ; add 4 pixel x coordinate offset * (16*16) to get pre-shifted tile
+    MOV R7,#320             ; put the width of a scanline into R7
+    MLA R11,R3,R7,R4        ; calculate the address of the destination [destination = (y * 320) + address of screen or buffer]
+
+    ; CMP R8,#0b00                            ; check if x coordinate is word aligned
+    ; BEQ draw_16x16_tile_clipped_left_00    ;   if so, call word aligned draw function
+    ; CMP R8,#0b01                            ; check if x coordinate is aligned with byte 1
+    ; BEQ draw_16x16_tile_clipped_left_01    ;   if so, call byte 1 aligned draw function
+    ; CMP R8,#0b10                            ; check if x coordinate is aligned with byte 2
+    ; BEQ draw_16x16_tile_clipped_left_10    ;   if so, call byte 2 aligned draw function
+    ; CMP R8,#0b11                            ; check if x coordinate is aligned with byte 3
+    ; BEQ draw_16x16_tile_clipped_left_11    ;   if so, call byte 3 aligned draw function
+
+draw_16x16_tile_clipped_left_00:
+    TEQ R9,#0b1100
+    BEQ draw_16x16_tile_clipped_left_00_11
+    TEQ R9,#0b1000
+    BEQ draw_16x16_tile_clipped_left_00_10
+    TEQ R9,#0b0100
+    BEQ draw_16x16_tile_clipped_left_00_01
+
+draw_16x16_tile_clipped_left_00_00:
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R0}
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R0}
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R0}
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R0}
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R0}
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R0}
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R0}
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R0}
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R0}
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R0}
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R0}
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R0}
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R0}
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R0}
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R0}
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R0}
+    
     B draw_16x16_tile_exit                  ; branch to exit function
+
+draw_16x16_tile_clipped_left_00_01:
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R3}
+    STR R0,[R11,#4]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R3}
+    STR R0,[R11,#4]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R3}
+    STR R0,[R11,#4]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R3}
+    STR R0,[R11,#4]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R3}
+    STR R0,[R11,#4]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R3}
+    STR R0,[R11,#4]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R3}
+    STR R0,[R11,#4]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R3}
+    STR R0,[R11,#4]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R3}
+    STR R0,[R11,#4]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R3}
+    STR R0,[R11,#4]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R3}
+    STR R0,[R11,#4]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R3}
+    STR R0,[R11,#4]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R3}
+    STR R0,[R11,#4]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R3}
+    STR R0,[R11,#4]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R3}
+    STR R0,[R11,#4]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R3}
+    STR R0,[R11,#4]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+  
+    B draw_16x16_tile_exit                  ; branch to exit function
+
+draw_16x16_tile_clipped_left_00_10:
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R2-R3}
+    STR R0,[R11,#8]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R2-R3}
+    STR R0,[R11,#8]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R2-R3}
+    STR R0,[R11,#8]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R2-R3}
+    STR R0,[R11,#8]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R2-R3}
+    STR R0,[R11,#8]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R2-R3}
+    STR R0,[R11,#8]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R2-R3}
+    STR R0,[R11,#8]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R2-R3}
+    STR R0,[R11,#8]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R2-R3}
+    STR R0,[R11,#8]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R2-R3}
+    STR R0,[R11,#8]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R2-R3}
+    STR R0,[R11,#8]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R2-R3}
+    STR R0,[R11,#8]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R2-R3}
+    STR R0,[R11,#8]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R2-R3}
+    STR R0,[R11,#8]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R2-R3}
+    STR R0,[R11,#8]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R2-R3}
+    STR R0,[R11,#8]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    
+    B draw_16x16_tile_exit                  ; branch to exit function
+
+draw_16x16_tile_clipped_left_00_11:
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R1-R3}       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    STR R0,[R11,#12]        ; store pre-shifted end of tile
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R1-R3}       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    STR R0,[R11,#12]        ; store pre-shifted end of tile
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R1-R3}       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    STR R0,[R11,#12]        ; store pre-shifted end of tile
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R1-R3}       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    STR R0,[R11,#12]        ; store pre-shifted end of tile
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R1-R3}       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    STR R0,[R11,#12]        ; store pre-shifted end of tile
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R1-R3}       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    STR R0,[R11,#12]        ; store pre-shifted end of tile
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R1-R3}       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    STR R0,[R11,#12]        ; store pre-shifted end of tile
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R1-R3}       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    STR R0,[R11,#12]        ; store pre-shifted end of tile
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R1-R3}       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    STR R0,[R11,#12]        ; store pre-shifted end of tile
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R1-R3}       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    STR R0,[R11,#12]        ; store pre-shifted end of tile
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R1-R3}       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    STR R0,[R11,#12]        ; store pre-shifted end of tile
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R1-R3}       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    STR R0,[R11,#12]        ; store pre-shifted end of tile
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R1-R3}       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    STR R0,[R11,#12]        ; store pre-shifted end of tile
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R1-R3}       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    STR R0,[R11,#12]        ; store pre-shifted end of tile
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R1-R3}       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    STR R0,[R11,#12]        ; store pre-shifted end of tile
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R1-R3}       ; store 12 bytes from R1-R3 to the destination address without incrementing it
+    STR R0,[R11,#12]        ; store pre-shifted end of tile
+    
+    B draw_16x16_tile_exit                  ; branch to exit function
+
+
+draw_16x16_tile_clipped_left_01:
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R3}          ; store 4 bytes from R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R3}          ; store 4 bytes from R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R3}          ; store 4 bytes from R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R3}          ; store 4 bytes from R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R3}          ; store 4 bytes from R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R3}          ; store 4 bytes from R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R3}          ; store 4 bytes from R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R3}          ; store 4 bytes from R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R3}          ; store 4 bytes from R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R3}          ; store 4 bytes from R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R3}          ; store 4 bytes from R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R3}          ; store 4 bytes from R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R3}          ; store 4 bytes from R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R3}          ; store 4 bytes from R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R3}          ; store 4 bytes from R3 to the destination address without incrementing it
+    ADD R11,R11,#320        ; move destination address to the next scanline
+    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+    STMIA R11,{R3}          ; store 4 bytes from R3 to the destination address without incrementing it
+    
+    B draw_16x16_tile_exit                  ; branch to exit function
+
+draw_16x16_tile_clipped_left_10:
+    B draw_16x16_tile_exit                  ; branch to exit function
+draw_16x16_tile_clipped_left_11:
+    B draw_16x16_tile_exit                  ; branch to exit function
+
 
 draw_16x16_tile_clipped_right:
     CMP R2,#CLIP_RIGHT + 16                 ; check to see if x coordinate is completely off the screen
