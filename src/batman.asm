@@ -80,6 +80,14 @@ set_display_start:
 
     MOV PC,R14              ; return from function
 
+set_border_colour:
+    MOV R0,#0b01000000 << 24
+    MOV R1,R1,LSL #20
+    ORR R0,R0,R1,LSR #20
+    MOV R1,#0x3400000
+    STR R0,[R1]
+    MOV PC,R14
+
 swap_display_buffers:
     STMFD SP!, {R0-R2,R14}
 
@@ -1731,7 +1739,10 @@ draw_tile_map_loop:
     ADD R2,R2,#16
     LDRB R0,[R10,#19]
     BL draw_16x16_tile
-    SUB R2,R2,#320-16
+    ADD R2,R2,#16
+    LDRB R0,[R10,#20]
+    BL draw_16x16_tile
+    SUB R2,R2,#320
     ADD R3,R3,#16
     ADD R10,R10,#128
     CMP R3,#208
@@ -1838,9 +1849,7 @@ intro_screen_loop:
     LDMFD SP!, {R0-R2}
     LDR R1,[R12]
     ADD R1,R1,R5
-    ;VDU 19,0,24,0,0,240,-1,-1,-1,-1
     BL copy_buffer_to_screen
-    ;VDU 19,0,24,0,0,0,-1,-1,-1,-1
     SUB R5,R5,#320
     ADD R2,R2,#1
     CMP R2,#200
@@ -1884,6 +1893,7 @@ intro_screen_skip_1:
     BL fade_screen_to_black
 
 main_draw_tile_map:
+
     MOV R3,#0
     MOV R4,#0
 
@@ -1898,13 +1908,17 @@ main_draw_tile_map:
     BL copy_buffer_to_screen
 
 main_draw_tile_map_loop:
+
+    STMFD SP!, {R1-R3}
+    MOV R1,#15 << 8
+    BL set_border_colour
+    LDMFD SP!, {R1-R3}
+
     ADRL R0,level_1_map_tilemap
     ADRL R1,level_1_tiles
     LDR R2,[R12]
 
     BL draw_tile_map
-
-    ; VDU 19,0,24,0,0,0,-1,-1,-1,-1
 
     ADD R4,R4,#1
     CMP R4,#29*16
@@ -1926,7 +1940,6 @@ main_draw_tile_map_loop:
     ADRL R1,level_1_tiles
     LDR R4,[R12]
 
-    ; VDU 19,0,24,0,240,0,-1,-1,-1,-1
     BL draw_16x16_tile
     ADD R0,R0,#1
     ADD R2,R2,#16
@@ -1954,14 +1967,17 @@ main_draw_tile_map_loop:
     ADD R0,R0,#1
     ADD R2,R2,#16
     BL draw_16x16_tile
-    ; VDU 19,0,24,0,0,0,-1,-1,-1,-1
 
     LDMFD SP!, {R0-R8}
+
+    STMFD SP!, {R1-R3}
+    MOV R1,#15 << 4
+    BL set_border_colour
+    LDMFD SP!, {R1-R3}
 
     MOV R0,#19
     SWI OS_Byte
     BL swap_display_buffers
-    ; VDU 19,0,24,0,0,240,-1,-1,-1,-1
 
     B main_draw_tile_map_loop
 exit:
