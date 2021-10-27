@@ -37,6 +37,7 @@ stack:
 .include "vidc.asm"
 .include "tiles.asm"
 
+.include "build/test_40x48.asm"
 
 swap_display_buffers:
     STMFD SP!, {R0-R2,R14}
@@ -1912,6 +1913,46 @@ No_L_Key:
     ADDLT R4,R4,#64*16
 No_P_Key:
     MOV R0,#129
+    MOV R1,#-58
+    MOV R2,#255
+    SWI OS_Byte
+    CMP R2,#255
+    BNE No_CursorUp_Key
+    LDR R0,batman_y
+    SUB R0,R0,#1
+    STR R0,batman_y
+No_CursorUp_Key:
+    MOV R0,#129
+    MOV R1,#-42
+    MOV R2,#255
+    SWI OS_Byte
+    CMP R2,#255
+    BNE No_CursorDown_Key
+    LDR R0,batman_y
+    ADD R0,R0,#1
+    STR R0,batman_y
+No_CursorDown_Key:
+    MOV R0,#129
+    MOV R1,#-26
+    MOV R2,#255
+    SWI OS_Byte
+    CMP R2,#255
+    BNE No_CursorLeft_Key
+    LDR R0,batman_x
+    SUB R0,R0,#1
+    STR R0,batman_x
+No_CursorLeft_Key:
+    MOV R0,#129
+    MOV R1,#-122
+    MOV R2,#255
+    SWI OS_Byte
+    CMP R2,#255
+    BNE No_CursorRight_Key
+    LDR R0,batman_x
+    ADD R0,R0,#1
+    STR R0,batman_x
+No_CursorRight_Key:
+    MOV R0,#129
     MOV R1,#-113
     MOV R2,#255
     SWI OS_Byte
@@ -1919,13 +1960,6 @@ No_P_Key:
     BEQ exit
 
     LDMFD SP!,{R0-R2}
-
-    ; ADD R4,R4,#1
-    ; CMP R4,#29*16
-    ; MOVEQ R4,#0
-    ; ADD R3,R3,#1
-    ; CMP R3,#102*16
-    ; SUBEQ R3,R3,#102*16
 
     STMFD SP!, {R0-R8}
     
@@ -1973,6 +2007,28 @@ No_P_Key:
     ADD R2,R2,#16
     BL draw_16x16_tile
 
+    STMFD SP!, {R0,R1,R11}
+    LDR R11,[R12]
+    LDR R0,batman_x
+    ADD R11,R11,R0 ;#160-20
+    LDR R0,batman_y
+    ; MOV R0,#128-24
+    MOV R1,#320
+    MLA R11,R0,R1,R11
+
+    STMFD SP!,{R0-R1}
+    MOV R1,#0b000011111111
+    BL vidc_set_border_colour
+    LDMFD SP!,{R0-R1}
+
+    BL test_40x48_sprite_0
+
+    STMFD SP!,{R0-R1}
+    MOV R1,#0b000011110000
+    BL vidc_set_border_colour
+    LDMFD SP!,{R0-R1}
+    LDMFD SP!, {R0,R1,R11}
+
     LDMFD SP!, {R0-R8}
 
     STMFD SP!, {R1-R3}
@@ -1993,6 +2049,10 @@ exit:
     MOV   R0,R0
     LDMFD SP!, {PC}
 
+batman_x:
+    .4byte  140
+batman_y:
+    .4byte  104
 
 ;   ****************************************************************
 ;       DATA section
