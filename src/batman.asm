@@ -33,60 +33,10 @@ stack:
 .include "vdu.asm"
 .include "macros.asm"
 
+.include "memc.asm"
+.include "vidc.asm"
 .include "tiles.asm"
 
-
-;   ****************************************************************
-;       set_display_start
-;   ----------------------------------------------------------------
-;       Copy 4 bytes from a register to the screen or display
-;       buffer, function assumes a 320 byte wide scanline width.
-;   ----------------------------------------------------------------
-;       Parameters
-;   ----------------------------------------------------------------
-;       R0      :   physical address of screen display buffer >> 2
-;       R1      :   N/A
-;       R2      :   N/A
-;       R3      :   N/A
-;       R4      :   N/A
-;       R5      :   N/A
-;       R6      :   N/A
-;       R7      :   N/A
-;       R8      :   N/A
-;       R9      :   N/A
-;       R10     :   N/A
-;       R11     :   N/A
-;       R11     :   N/A
-;   ----------------------------------------------------------------
-;       Returns
-;   ----------------------------------------------------------------
-;       R0      :   Corrupted
-;       R1      :   Corrupted
-;       R2      :   Unchanged
-;       R3      :   Unchanged
-;       R4      :   Unchanged
-;       R5      :   Unchanged
-;       R6      :   Unchanged
-;       R7      :   Unchanged
-;       R8      :   Unchanged
-;       R9      :   Unchanged
-;       R10     :   Unchanged
-;       R11     :   Unchanged
-;       R11     :   Unchanged
-;   ****************************************************************
-set_display_start:
-    ADD R0,R0,#0x3600000    ; Add pre-shifted screen start address to VIDC address
-    STR R0,[R0]             ; Put VIDC address and screen start address onto address bus
-
-    MOV PC,R14              ; return from function
-
-set_border_colour:
-    MOV R0,#0b01000000 << 24
-    MOV R1,R1,LSL #20
-    ORR R0,R0,R1,LSR #20
-    MOV R1,#0x3400000
-    STR R0,[R1]
-    MOV PC,R14
 
 swap_display_buffers:
     STMFD SP!, {R0-R2,R14}
@@ -96,14 +46,14 @@ swap_display_buffers:
     LDR R1,[R2,#4]
     STR R1,[R2,#0]
     STR R0,[R2,#4]
-    ADRL R2,vidc_address_screen_start
+    ADRL R2,memc_address_screen_start
     LDR R0,[R2,#0]
     LDR R1,[R2,#4]
     STR R1,[R2,#0]
     STR R0,[R2,#4]
     MOV R0,R1
 
-    BL set_display_start
+    BL memc_set_display_start
 
     LDMFD SP!, {R0-R2,R14}
     MOV PC,R14
@@ -1763,28 +1713,28 @@ fade_screen_to_black:
     LDR R2,[R12,#4]
     BL fade_buffer_with_lookup
     MOV R0,#80*256
-    BL set_display_start
+    BL memc_set_display_start
 
     ADRL R0,palette_fade
     LDR R1,[R12,#4]
     LDR R2,[R12,#0]
     BL fade_buffer_with_lookup
     MOV R0,#0
-    BL set_display_start
+    BL memc_set_display_start
 
     ADRL R0,palette_fade
     LDR R1,[R12,#0]
     LDR R2,[R12,#4]
     BL fade_buffer_with_lookup
     MOV R0,#80*256
-    BL set_display_start
+    BL memc_set_display_start
 
     ADRL R0,palette_fade
     LDR R1,[R12,#4]
     LDR R2,[R12,#0]
     BL fade_buffer_with_lookup
     MOV R0,#0
-    BL set_display_start
+    BL memc_set_display_start
 
     EOR R0,R0,R0
     LDR R1,[R12]
@@ -1911,7 +1861,7 @@ main_draw_tile_map_loop:
 
     STMFD SP!, {R1-R3}
     MOV R1,#15 << 8
-    BL set_border_colour
+    BL vidc_set_border_colour
     LDMFD SP!, {R1-R3}
 
     ADRL R0,level_1_map_tilemap
@@ -1920,12 +1870,62 @@ main_draw_tile_map_loop:
 
     BL draw_tile_map
 
-    ADD R4,R4,#1
-    CMP R4,#29*16
-    MOVEQ R4,#0
+    STMFD SP!,{R0-R2}
+    MOV R0,#129
+    MOV R1,#-98
+    MOV R2,#255
+    SWI OS_Byte
+    CMP R2,#255
+    BNE No_Z_Key
+    SUB R3,R3,#1
+    CMP R3,#0
+    ADDLT R3,R3,#128*16
+No_Z_Key:
+    MOV R0,#129
+    MOV R1,#-67
+    MOV R2,#255
+    SWI OS_Byte
+    CMP R2,#255
+    BNE No_X_Key
     ADD R3,R3,#1
-    CMP R3,#102*16
-    SUBEQ R3,R3,#102*16
+    CMP R3,#128*16
+    MOVEQ R3,#0
+No_X_Key:
+    MOV R0,#129
+    MOV R1,#-87
+    MOV R2,#255
+    SWI OS_Byte
+    CMP R2,#255
+    BNE No_L_Key
+    ADD R4,R4,#1
+    CMP R4,#64*16
+    MOVEQ R4,#0
+No_L_Key:
+    MOV R0,#129
+    MOV R1,#-56
+    MOV R2,#255
+    SWI OS_Byte
+    CMP R2,#255
+    BNE No_P_Key
+    SUB R4,R4,#1
+    CMP R4,#0
+    ADDLT R4,R4,#64*16
+No_P_Key:
+    MOV R0,#129
+    MOV R1,#-113
+    MOV R2,#255
+    SWI OS_Byte
+    CMP R2,#255
+    BEQ exit
+
+    LDMFD SP!,{R0-R2}
+
+    ; ADD R4,R4,#1
+    ; CMP R4,#29*16
+    ; MOVEQ R4,#0
+    ; ADD R3,R3,#1
+    ; CMP R3,#102*16
+    ; SUBEQ R3,R3,#102*16
 
     STMFD SP!, {R0-R8}
     
@@ -1939,6 +1939,11 @@ main_draw_tile_map_loop:
     MOV R0,#70
     ADRL R1,level_1_tiles
     LDR R4,[R12]
+
+    STMFD SP!,{R0-R1}
+    MOV R1,#0b000000001111
+    BL vidc_set_border_colour
+    LDMFD SP!,{R0-R1}
 
     BL draw_16x16_tile
     ADD R0,R0,#1
@@ -1972,7 +1977,7 @@ main_draw_tile_map_loop:
 
     STMFD SP!, {R1-R3}
     MOV R1,#15 << 4
-    BL set_border_colour
+    BL vidc_set_border_colour
     LDMFD SP!, {R1-R3}
 
     MOV R0,#19
@@ -2104,7 +2109,7 @@ vdu_variables_screen_start_buffer:
     .4byte 0x00000000
     .4byte 0x00000000
 
-vidc_address_screen_start:
+memc_address_screen_start:
     .4byte 0x00005000
     .4byte 0x00000000
 
