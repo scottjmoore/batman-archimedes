@@ -675,7 +675,7 @@ draw_16x16_tile_clipped_top_right:
 draw_16x16_tile_clipped_bottom:
     CMP R3,#CLIP_BOTTOM                         ; check to see if y coordinate is completely off the screen
     BGE draw_16x16_tile_exit                    ;   if so, branch to exit function
-    CMP R2,#CLIP_LEFT + 16                      ; check to see if x coordinate is less than left clip pixel
+    CMP R2,#CLIP_LEFT                           ; check to see if x coordinate is less than left clip pixel
     BLT draw_16x16_tile_clipped_bottom_left     ;   if so, branch to clipped bottom & left function
     CMP R2,#CLIP_RIGHT - 16                     ; check to see if x coordinate is greater than right clip pixel
     BGT draw_16x16_tile_clipped_bottom_right    ;   if so, branch to clipped bottom & right function
