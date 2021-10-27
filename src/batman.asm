@@ -33,50 +33,10 @@ stack:
 .include "vdu.asm"
 .include "macros.asm"
 
+.include "memc.asm"
+.include "vidc.asm"
+.include "tiles.asm"
 
-;   ****************************************************************
-;       set_display_start
-;   ----------------------------------------------------------------
-;       Copy 4 bytes from a register to the screen or display
-;       buffer, function assumes a 320 byte wide scanline width.
-;   ----------------------------------------------------------------
-;       Parameters
-;   ----------------------------------------------------------------
-;       R0      :   physical address of screen display buffer >> 2
-;       R1      :   N/A
-;       R2      :   N/A
-;       R3      :   N/A
-;       R4      :   N/A
-;       R5      :   N/A
-;       R6      :   N/A
-;       R7      :   N/A
-;       R8      :   N/A
-;       R9      :   N/A
-;       R10     :   N/A
-;       R11     :   N/A
-;       R11     :   N/A
-;   ----------------------------------------------------------------
-;       Returns
-;   ----------------------------------------------------------------
-;       R0      :   Corrupted
-;       R1      :   Corrupted
-;       R2      :   Unchanged
-;       R3      :   Unchanged
-;       R4      :   Unchanged
-;       R5      :   Unchanged
-;       R6      :   Unchanged
-;       R7      :   Unchanged
-;       R8      :   Unchanged
-;       R9      :   Unchanged
-;       R10     :   Unchanged
-;       R11     :   Unchanged
-;       R11     :   Unchanged
-;   ****************************************************************
-set_display_start:
-    ADD R0,R0,#0x3600000    ; Add pre-shifted screen start address to VIDC address
-    STR R0,[R0]             ; Put VIDC address and screen start address onto address bus
-
-    MOV PC,R14              ; return from function
 
 swap_display_buffers:
     STMFD SP!, {R0-R2,R14}
@@ -86,14 +46,14 @@ swap_display_buffers:
     LDR R1,[R2,#4]
     STR R1,[R2,#0]
     STR R0,[R2,#4]
-    ADRL R2,vidc_address_screen_start
+    ADRL R2,memc_address_screen_start
     LDR R0,[R2,#0]
     LDR R1,[R2,#4]
     STR R1,[R2,#0]
     STR R0,[R2,#4]
     MOV R0,R1
 
-    BL set_display_start
+    BL memc_set_display_start
 
     LDMFD SP!, {R0-R2,R14}
     MOV PC,R14
@@ -438,7 +398,7 @@ copy_16x16_tile_to_screen:
 
     STMFD SP!, {R0-R12}     ; store all the registers on the stack
 
-    AND R8,R2,#0b11         ; get 4 pixel x coordinate offset and set status flags
+    AND R8,R2,#0b11         ; get 4 pixel x coordinate offset
     MOV R7,#16*16*4         ; put the size of a single tile in bytes into R7
     MLA R12,R0,R7,R1        ; calculate the address of the start of the tile [source = (tile number * (16 * 16)) + address of tileset]
     ADD R12,R12,R8,LSL #8   ; add 4 pixel x coordinate offset * (16*16) to get pre-shifted tile
@@ -1656,219 +1616,87 @@ draw_tile_map:
 
     STMFD SP!, {R0-R12,R14}     ; store all registers onto the stack
 
-    AND R7,R3,#0b1111   ; get pixel in tile to start from
-    AND R5,R4,#0b1111   ; get scanline in tile to start from
+    AND R5,R3,#0b1111   ; get pixel in tile to start from
+    AND R6,R4,#0b1111   ; get scanline in tile to start from
     MOV R3,R3,LSR #4    ; divide tilemap x coordinate by 16
     MOV R4,R4,LSR #4    ; divide tilemap y coordinate by 16
-    MOV R9,#128         ; move width of tilemap into R5
-    MLA R10,R4,R9,R0     ; calculate top left of tilemap to draw from (source = (y * 128) + tilemap_address)
-    ADD R10,R10,R3        ; add x tile to start from to tilemap source address
+    MOV R7,#128         ; move width of tilemap into R5
+    MLA R10,R4,R7,R0    ; calculate top left of tilemap to draw from (source = (y * 128) + tilemap_address)
+    ADD R10,R10,R3      ; add x tile to start from to tilemap source address
 
     MOV R4,R2
-    EOR R7,R7,#0b1111
-    MOV R2,R7
-    MOV R3,#0
-    MOV R6,#0
-    STMFD SP!, {R5}
-    CMP R5,#0
-    BEQ draw_tile_map_loop
-
-draw_tile_map_cropped_top_row:
-    LDRB R0,[R10]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#1]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#2]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#3]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#4]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#5]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#6]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#7]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#8]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#9]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#10]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#11]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#12]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#13]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#14]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#15]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#16]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#17]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#18]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#19]
-    BL copy_16x16_tile_to_screen
-    MOV R2,R7
-    ADD R3,R3,#16
-    SUB R3,R3,R5
-    ADD R10,R10,#128
-    MOV R5,#0
+    MOV R7,#0
+    SUB R2,R7,R5
+    SUB R3,R7,R6
 
 draw_tile_map_loop:
     LDRB R0,[R10]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#1]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#2]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#3]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#4]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#5]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#6]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#7]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#8]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#9]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#10]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#11]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#12]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#13]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#14]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#15]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#16]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#17]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#18]
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R2,R2,#16
     LDRB R0,[R10,#19]
-    BL copy_16x16_tile_to_screen
-    MOV R2,R7
+    BL draw_16x16_tile
+    ADD R2,R2,#16
+    LDRB R0,[R10,#20]
+    BL draw_16x16_tile
+    SUB R2,R2,#320
     ADD R3,R3,#16
     ADD R10,R10,#128
-    CMP R3,#160
+    CMP R3,#208
     BLE draw_tile_map_loop
-
-    LDMFD SP!, {R6}
-    CMP R6,#0
-    BEQ draw_tile_map_exit
-draw_tile_map_cropped_bottom_row:
-
-    LDRB R0,[R10]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#1]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#2]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#3]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#4]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#5]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#6]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#7]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#8]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#9]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#10]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#11]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#12]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#13]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#14]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#15]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#16]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#17]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#18]
-    BL copy_16x16_tile_to_screen
-    ADD R2,R2,#16
-    LDRB R0,[R10,#19]
-    BL copy_16x16_tile_to_screen
 
 draw_tile_map_exit:              ; exit loop
 
@@ -1885,28 +1713,28 @@ fade_screen_to_black:
     LDR R2,[R12,#4]
     BL fade_buffer_with_lookup
     MOV R0,#80*256
-    BL set_display_start
+    BL memc_set_display_start
 
     ADRL R0,palette_fade
     LDR R1,[R12,#4]
     LDR R2,[R12,#0]
     BL fade_buffer_with_lookup
     MOV R0,#0
-    BL set_display_start
+    BL memc_set_display_start
 
     ADRL R0,palette_fade
     LDR R1,[R12,#0]
     LDR R2,[R12,#4]
     BL fade_buffer_with_lookup
     MOV R0,#80*256
-    BL set_display_start
+    BL memc_set_display_start
 
     ADRL R0,palette_fade
     LDR R1,[R12,#4]
     LDR R2,[R12,#0]
     BL fade_buffer_with_lookup
     MOV R0,#0
-    BL set_display_start
+    BL memc_set_display_start
 
     EOR R0,R0,R0
     LDR R1,[R12]
@@ -1971,9 +1799,7 @@ intro_screen_loop:
     LDMFD SP!, {R0-R2}
     LDR R1,[R12]
     ADD R1,R1,R5
-    ;VDU 19,0,24,0,0,240,-1,-1,-1,-1
     BL copy_buffer_to_screen
-    ;VDU 19,0,24,0,0,0,-1,-1,-1,-1
     SUB R5,R5,#320
     ADD R2,R2,#1
     CMP R2,#200
@@ -2017,12 +1843,13 @@ intro_screen_skip_1:
     BL fade_screen_to_black
 
 main_draw_tile_map:
+
     MOV R3,#0
     MOV R4,#0
 
     ADRL R0,status_bar
     LDR R1,[R12]
-    MOV R2,#176
+    MOV R2,#208
     MOV R3,#320
     MLA R1,R2,R3,R1
     MOV R2,#48
@@ -2031,72 +1858,131 @@ main_draw_tile_map:
     BL copy_buffer_to_screen
 
 main_draw_tile_map_loop:
+
+    STMFD SP!, {R1-R3}
+    MOV R1,#15 << 8
+    BL vidc_set_border_colour
+    LDMFD SP!, {R1-R3}
+
     ADRL R0,level_1_map_tilemap
     ADRL R1,level_1_tiles
     LDR R2,[R12]
 
     BL draw_tile_map
 
-    VDU 19,0,24,0,0,0,-1,-1,-1,-1
+    STMFD SP!,{R0-R2}
+    MOV R0,#129
+    MOV R1,#-98
+    MOV R2,#255
+    SWI OS_Byte
+    CMP R2,#255
+    BNE No_Z_Key
+    SUB R3,R3,#1
+    CMP R3,#0
+    ADDLT R3,R3,#128*16
+No_Z_Key:
+    MOV R0,#129
+    MOV R1,#-67
+    MOV R2,#255
+    SWI OS_Byte
+    CMP R2,#255
+    BNE No_X_Key
+    ADD R3,R3,#1
+    CMP R3,#128*16
+    MOVEQ R3,#0
+No_X_Key:
+    MOV R0,#129
+    MOV R1,#-87
+    MOV R2,#255
+    SWI OS_Byte
+    CMP R2,#255
+    BNE No_L_Key
+    ADD R4,R4,#1
+    CMP R4,#64*16
+    MOVEQ R4,#0
+No_L_Key:
+    MOV R0,#129
+    MOV R1,#-56
+    MOV R2,#255
+    SWI OS_Byte
+    CMP R2,#255
+    BNE No_P_Key
+    SUB R4,R4,#1
+    CMP R4,#0
+    ADDLT R4,R4,#64*16
+No_P_Key:
+    MOV R0,#129
+    MOV R1,#-113
+    MOV R2,#255
+    SWI OS_Byte
+    CMP R2,#255
+    BEQ exit
+
+    LDMFD SP!,{R0-R2}
 
     ; ADD R4,R4,#1
     ; CMP R4,#29*16
     ; MOVEQ R4,#0
-    ADD R3,R3,#1
-    CMP R3,#102*16
-    SUBEQ R3,R3,#102*16
+    ; ADD R3,R3,#1
+    ; CMP R3,#102*16
+    ; SUBEQ R3,R3,#102*16
 
     STMFD SP!, {R0-R8}
     
     SWI OS_Mouse
 
     MOV R2,R0,LSR #2
+    SUB R2,R2,#24
     MOV R3,R1,LSR #2
     EOR R3,R3,#0b11111111
+    SUB R3,R3,#24
     MOV R0,#70
     ADRL R1,level_1_tiles
     LDR R4,[R12]
-    MOV R5,#0
-    MOV R6,#0
-    MOV R7,#0
-    MOV R8,#0
 
-    VDU 19,0,24,0,240,0,-1,-1,-1,-1
-    BL copy_16x16_tile_to_screen
+    STMFD SP!,{R0-R1}
+    MOV R1,#0b000000001111
+    BL vidc_set_border_colour
+    LDMFD SP!,{R0-R1}
+
+    BL draw_16x16_tile
     ADD R0,R0,#1
     ADD R2,R2,#16
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R0,R0,#1
     ADD R2,R2,#16
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R0,R0,#16-2
     SUB R2,R2,#32
     ADD R3,R3,#16
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R0,R0,#1
     ADD R2,R2,#16
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R0,R0,#1
     ADD R2,R2,#16
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R0,R0,#16-2
     SUB R2,R2,#32
     ADD R3,R3,#16
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R0,R0,#1
     ADD R2,R2,#16
-    BL copy_16x16_tile_to_screen
+    BL draw_16x16_tile
     ADD R0,R0,#1
     ADD R2,R2,#16
-    BL copy_16x16_tile_to_screen
-    VDU 19,0,24,0,0,0,-1,-1,-1,-1
+    BL draw_16x16_tile
 
     LDMFD SP!, {R0-R8}
+
+    STMFD SP!, {R1-R3}
+    MOV R1,#15 << 4
+    BL vidc_set_border_colour
+    LDMFD SP!, {R1-R3}
 
     MOV R0,#19
     SWI OS_Byte
     BL swap_display_buffers
-    VDU 19,0,24,0,0,240,-1,-1,-1,-1
 
     B main_draw_tile_map_loop
 exit:
@@ -2223,7 +2109,7 @@ vdu_variables_screen_start_buffer:
     .4byte 0x00000000
     .4byte 0x00000000
 
-vidc_address_screen_start:
+memc_address_screen_start:
     .4byte 0x00005000
     .4byte 0x00000000
 
