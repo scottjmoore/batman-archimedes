@@ -37,7 +37,7 @@ stack:
 .include "vidc.asm"
 .include "tiles.asm"
 
-.include "build/test_40x48.asm"
+.include "build/batman_sprites.asm"
 
 swap_display_buffers:
     STMFD SP!, {R0-R2,R14}
@@ -1860,10 +1860,10 @@ main_draw_tile_map:
 
 main_draw_tile_map_loop:
 
-    STMFD SP!, {R1-R3}
+    STMFD SP!, {R0,R1}
     MOV R1,#15 << 8
     BL vidc_set_border_colour
-    LDMFD SP!, {R1-R3}
+    LDMFD SP!, {R0,R1}
 
     ADRL R0,level_1_map_tilemap
     ADRL R1,level_1_tiles
@@ -1951,6 +1951,11 @@ No_CursorLeft_Key:
     LDR R0,batman_x
     ADD R0,R0,#1
     STR R0,batman_x
+    LDR R0,batman_frame
+    ADD R0,R0,#1
+    CMP R0,#28
+    MOVEQ R0,#0
+    STR R0,batman_frame
 No_CursorRight_Key:
     MOV R0,#129
     MOV R1,#-113
@@ -2012,7 +2017,6 @@ No_CursorRight_Key:
     LDR R0,batman_x
     ADD R11,R11,R0 ;#160-20
     LDR R0,batman_y
-    ; MOV R0,#128-24
     MOV R1,#320
     MLA R11,R0,R1,R11
 
@@ -2021,20 +2025,20 @@ No_CursorRight_Key:
     BL vidc_set_border_colour
     LDMFD SP!,{R0-R1}
 
-    BL test_40x48_sprite_0
+    LDR R0,batman_frame
+    MOV R0,R0,LSR #2
+    MOV R0,R0,LSL #2
+    ADR R1,batman_sprites
+    MOV R14,PC
+    LDR PC,[R1,R0]
 
     STMFD SP!,{R0-R1}
     MOV R1,#0b000011110000
     BL vidc_set_border_colour
     LDMFD SP!,{R0-R1}
+
     LDMFD SP!, {R0,R1,R11}
-
     LDMFD SP!, {R0-R8}
-
-    STMFD SP!, {R1-R3}
-    MOV R1,#15 << 4
-    BL vidc_set_border_colour
-    LDMFD SP!, {R1-R3}
 
     MOV R0,#19
     SWI OS_Byte
@@ -2053,6 +2057,18 @@ batman_x:
     .4byte  140
 batman_y:
     .4byte  104
+
+batman_frame:
+    .4byte 0
+
+batman_sprites:
+    .4byte batman_sprite_0
+    .4byte batman_sprite_1
+    .4byte batman_sprite_2
+    .4byte batman_sprite_3
+    .4byte batman_sprite_4
+    .4byte batman_sprite_5
+    .4byte batman_sprite_6
 
 ;   ****************************************************************
 ;       DATA section
