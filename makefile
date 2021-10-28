@@ -2,7 +2,7 @@ ARCULATOR = ../../sarah-walker-pcem/arculator/hostfs
 
 all: build/batman
 
-build/batman: src/batman.asm src/tiles.asm build/level-1.bin build/main_title.bin build/intro_screen.bin build/intro_font.bin build/status_bar.bin build/palette_fade.bin build/level_1_map.asm
+build/batman: src/batman.asm src/tiles.asm build/level-1.bin build/main_title.bin build/intro_screen.bin build/intro_font.bin build/status_bar.bin build/palette_fade.bin build/level_1_map.asm build/batman_sprites.asm
 	vasmarm_std src/batman.asm -a2 -m2 -opt-ldrpc -opt-adr -L build/batman.lst -Fbin -o build/batman
 
 build/level-1.bin: build/level-1.asm
@@ -44,6 +44,8 @@ build/palette_fade.asm: assets/images/palette_fade.png
 build/level_1_map.asm: assets/maps/level-1.tmx
 	./scripts/tmx2asm.py -i assets/maps/level-1.tmx -o build/level_1_map.asm
 
+build/batman_sprites.asm: assets/sprites/batman.png
+	./scripts/compilesprite.py -i assets/sprites/batman.png -o build/batman_sprites.asm -sw 32 -sh 48
 clean:
 	@rm -f build/*
 	@rm -rf $(ARCULATOR)/!Batman
