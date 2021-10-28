@@ -46,15 +46,15 @@ for infile, outfile in zip(args.infile, args.outfile):
     iy = 0
     tile = 0
 
-    frame = {}
-
-    for y in range(0,sprite_height):
-        for colour in range(0,256):
-            frame[y,colour] = []
-
     while iy < image_height:
         ix = 0
         while ix < image_width:
+            frame = {}
+
+            for y in range(0,sprite_height):
+                for colour in range(0,256):
+                    frame[y,colour] = []
+
             f_out.write(label_name+f'_sprite_{tile}'+':\n')
             y = 0
             while y < sprite_height:
