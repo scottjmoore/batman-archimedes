@@ -1993,18 +1993,154 @@ No_CursorRight_Key:
     LDR R2,batman_y
 
     BL draw_batman_sprite
+    ADD R0,R0,#1
+    AND R0,R0,#7
+    ADD R1,R1,#24
+    BL draw_batman_sprite
+    ADD R0,R0,#1
+    AND R0,R0,#7
+    ADD R1,R1,#24
+    BL draw_batman_sprite
+    ADD R0,R0,#1
+    AND R0,R0,#7
+    ADD R1,R1,#24
+    BL draw_batman_sprite
+    ADD R0,R0,#1
+    AND R0,R0,#7
+    ADD R1,R1,#24
+    BL draw_batman_sprite
+    ADD R0,R0,#1
+    AND R0,R0,#7
+    ADD R1,R1,#24
+    BL draw_batman_sprite
+    ADD R0,R0,#1
+    AND R0,R0,#7
+    ADD R1,R1,#24
+    BL draw_batman_sprite
+    ADD R0,R0,#1
+    AND R0,R0,#7
+    ADD R1,R1,#24
+    BL draw_batman_sprite
 
-    LDR R0,explosion_frame
+    LDR R11,[R12]
+
+    LDR R0,explosion_frame + 0
     ADD R0,R0,#1
     CMP R0,#40
     MOVEQ R0,#0
-    STR R0,explosion_frame
-
-    LDR R11,[R12]
-    LDR R0,explosion_frame
+    STR R0,explosion_frame + 0
     MOV R0,R0,LSR #3
-    MOV R1,#32
-    MOV R2,#16
+    LDR R1,explosion_x + 0
+    LDR R2,explosion_y + 0
+    ADD R2,R2,#1
+    CMP R2,#208
+    MOVGE R2,#-32
+    STR R2,explosion_y + 0
+
+    BL draw_explosion_sprite
+
+    LDR R0,explosion_frame + 4
+    ADD R0,R0,#1
+    CMP R0,#40
+    MOVEQ R0,#0
+    STR R0,explosion_frame + 4
+    MOV R0,R0,LSR #3
+    LDR R1,explosion_x + 4
+    LDR R2,explosion_y + 4
+    ADD R2,R2,#1
+    CMP R2,#208
+    MOVGE R2,#-32
+    STR R2,explosion_y + 4
+
+    BL draw_explosion_sprite
+
+    LDR R0,explosion_frame + 8
+    ADD R0,R0,#1
+    CMP R0,#40
+    MOVEQ R0,#0
+    STR R0,explosion_frame + 8
+    MOV R0,R0,LSR #3
+    LDR R1,explosion_x + 8
+    LDR R2,explosion_y + 8
+    ADD R2,R2,#1
+    CMP R2,#208
+    MOVGE R2,#-32
+    STR R2,explosion_y + 8
+
+    BL draw_explosion_sprite
+
+    LDR R0,explosion_frame + 12
+    ADD R0,R0,#1
+    CMP R0,#40
+    MOVEQ R0,#0
+    STR R0,explosion_frame + 12
+    MOV R0,R0,LSR #3
+    LDR R1,explosion_x + 12
+    LDR R2,explosion_y + 12
+    ADD R2,R2,#1
+    CMP R2,#208
+    MOVGE R2,#-32
+    STR R2,explosion_y + 12
+
+    BL draw_explosion_sprite
+
+    LDR R0,explosion_frame + 16
+    ADD R0,R0,#1
+    CMP R0,#40
+    MOVEQ R0,#0
+    STR R0,explosion_frame + 16
+    MOV R0,R0,LSR #3
+    LDR R1,explosion_x + 16
+    LDR R2,explosion_y + 16
+    ADD R2,R2,#1
+    CMP R2,#208
+    MOVGE R2,#-32
+    STR R2,explosion_y + 16
+
+    BL draw_explosion_sprite
+
+    LDR R0,explosion_frame + 20
+    ADD R0,R0,#1
+    CMP R0,#40
+    MOVEQ R0,#0
+    STR R0,explosion_frame + 20
+    MOV R0,R0,LSR #3
+    LDR R1,explosion_x + 20
+    LDR R2,explosion_y + 20
+    ADD R2,R2,#1
+    CMP R2,#208
+    MOVGE R2,#-32
+    STR R2,explosion_y + 20
+
+    BL draw_explosion_sprite
+
+    LDR R0,explosion_frame + 24
+    ADD R0,R0,#1
+    CMP R0,#40
+    MOVEQ R0,#0
+    STR R0,explosion_frame + 24
+    MOV R0,R0,LSR #3
+    LDR R1,explosion_x + 24
+    LDR R2,explosion_y + 24
+    ADD R2,R2,#1
+    CMP R2,#208
+    MOVGE R2,#-32
+    STR R2,explosion_y + 24
+
+    BL draw_explosion_sprite
+
+    LDR R0,explosion_frame + 28
+    ADD R0,R0,#1
+    CMP R0,#40
+    MOVEQ R0,#0
+    STR R0,explosion_frame + 28
+    MOV R0,R0,LSR #3
+    LDR R1,explosion_x + 28
+    LDR R2,explosion_y + 28
+    ADD R2,R2,#1
+    CMP R2,#208
+    MOVGE R2,#-32
+    STR R2,explosion_y + 28
 
     BL draw_explosion_sprite
 
@@ -2037,8 +2173,34 @@ batman_y:
 batman_frame:
     .4byte 0
 
+explosion_x:
+    .4byte  16 + (32 * 0)
+    .4byte  16 + (32 * 1)
+    .4byte  16 + (32 * 2)
+    .4byte  16 + (32 * 3)
+    .4byte  16 + (32 * 4)
+    .4byte  16 + (32 * 5)
+    .4byte  16 + (32 * 6)
+    .4byte  16 + (32 * 7)
+explosion_y:
+    .4byte  -32 - (8 * 0)
+    .4byte  -32 - (8 * 1)
+    .4byte  -32 - (8 * 2)
+    .4byte  -32 - (8 * 3)
+    .4byte  -32 - (8 * 4)
+    .4byte  -32 - (8 * 5)
+    .4byte  -32 - (8 * 6)
+    .4byte  -32 - (8 * 7)
+
 explosion_frame:
-    .4byte 0
+    .4byte 0 << 2
+    .4byte 1 << 2
+    .4byte 2 << 2
+    .4byte 3 << 2
+    .4byte 4 << 2
+    .4byte 5 << 2
+    .4byte 6 << 2
+    .4byte 7 << 2
 
 ;   ****************************************************************
 ;       DATA section

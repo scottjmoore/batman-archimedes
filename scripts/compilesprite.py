@@ -104,7 +104,6 @@ for infile, outfile in zip(args.infile, args.outfile):
 
             f_out.write('\tCMP R2,#0\n')
             f_out.write('\tBGE '+label_name+f'_sprite_{tile}_scanline_0\n')
-            f_out.write('\t;B '+label_name+f'_sprite_{tile}_exit\n')
             f_out.write('\tMOV R0,#0\n')
             f_out.write('\tSUB R0,R0,R2\n')
             f_out.write('\tMOV R0,R0,LSL #2\n')
