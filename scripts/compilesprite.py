@@ -28,6 +28,7 @@ for infile, outfile in zip(args.infile, args.outfile):
 
     sprite_width = args.spritewidth
     sprite_height = args.spriteheight
+    sprite_frames = int(image_width / sprite_width) * int(image_height / sprite_height)
 
     palette_name = filename + "_palette"
     palette_type,palette_data = image.palette.getdata()
@@ -38,10 +39,40 @@ for infile, outfile in zip(args.infile, args.outfile):
 
     print("\ncompilesprite: '"+infile.name+"' => '"+outfile.name+"'")
     print("\tImage size   : "+f'{image_width}'+"x"+f'{image_height}')
-    print("\tSprite size  : "+f'{sprite_width}'+"x"+f'{sprite_height}')
+    print("\tSprite size  : "+f'{sprite_width}'+"x"+f'{sprite_height}'+f' * {sprite_frames} frames')
 
     label_name = image_name.replace("-","_")
-    f_out.write(label_name+':\n')
+
+    f_out.write('\n'+label_name+'_sprites:\n')
+    
+    for frame in range(0,sprite_frames):
+        f_out.write('\t.4byte\t\t'+label_name+f'_sprite_{frame}\n')
+
+    f_out.write('\ndraw_'+label_name+'_sprite:\n')
+
+    f_out.write('\tSTMFD SP!, {R0-R2,R11}\n')
+    f_out.write('\tCMP R1,#0\n')
+    f_out.write('\tBLT draw_'+label_name+'_sprite_exit\n')
+    f_out.write('\tCMP R1,#'+f'{320 - sprite_width}\n')
+    f_out.write('\tBGE draw_'+label_name+'_sprite_exit\n')
+    f_out.write('\tCMP R2,#'+f'{208}\n')
+    f_out.write('\tBGE draw_'+label_name+'_sprite_exit\n')
+    f_out.write('\tCMP R2,#'+f'{0 - sprite_height}\n')
+    f_out.write('\tBLE draw_'+label_name+'_sprite_exit\n')
+    f_out.write('\tCMP R0,#0\n')
+    f_out.write('\tMOVLT R0,#0\n')
+    f_out.write('\tCMP R0,#8\n')
+    f_out.write('\tMOVGE R0,#0\n')
+    f_out.write('\tMOV R0,R0,LSL #2\n')
+    f_out.write('\tADD R11,R11,R1\n')
+    f_out.write('\tMOV R1,#320\n')
+    f_out.write('\tCMP R2,#0\n')
+    f_out.write('\tMLAGT R11,R1,R2,R11\n')
+    f_out.write('\tADR R1,'+label_name+'_sprites\n')
+    f_out.write('\tLDR PC,[R1,R0]\n')
+    f_out.write('\ndraw_'+label_name+'_sprite_exit:\n')
+    f_out.write('\tLDMFD SP!, {R0-R2,R11}\n')
+    f_out.write('\tMOV PC, R14\n')
 
     iy = 0
     tile = 0
@@ -55,20 +86,35 @@ for infile, outfile in zip(args.infile, args.outfile):
                 for colour in range(0,256):
                     frame[y,colour] = []
 
-            f_out.write(label_name+f'_sprite_{tile}'+':\n')
+            f_out.write('\n'+label_name+f'_sprite_{tile}_scanlines:\n')
+
             y = 0
             while y < sprite_height:
+                f_out.write('\t.4byte\t\t'+label_name+f'_sprite_{tile}_scanline_{y}\n')
+
                 x = 0
                 while x < sprite_width:
                     colour = image_pixels[ix + x, iy + y]
                     if (colour != 159):
                         frame[y,colour].append(x)
-                        # print(frame[colour,y])
                     x += 1
                 y += 1
 
+            f_out.write('\n'+label_name+f'_sprite_{tile}:\n')
+
+            f_out.write('\tCMP R2,#0\n')
+            f_out.write('\tBGE '+label_name+f'_sprite_{tile}_scanline_0\n')
+            f_out.write('\t;B '+label_name+f'_sprite_{tile}_exit\n')
+            f_out.write('\tMOV R0,#0\n')
+            f_out.write('\tSUB R0,R0,R2\n')
+            f_out.write('\tMOV R0,R0,LSL #2\n')
+            f_out.write('\tADR R1,'+label_name+f'_sprite_{tile}_scanlines\n')
+            f_out.write('\tLDR PC,[R1,R0]\n')
+
             for i in range(0,sprite_height):
                 jj = -1
+                f_out.write('\n'+label_name+f'_sprite_{tile}_scanline_{i}:\n')
+
                 for j in range(0,256):
                     if len(frame[i,j]) > 0:
                         if jj != j:
@@ -79,6 +125,12 @@ for infile, outfile in zip(args.infile, args.outfile):
                             f_out.write('\tSTRB R0,[R11,#'+f'{x:d}]\n')
                         
                 f_out.write('\tADD R11,R11,#320\n')
+                f_out.write('\tADD R2,R2,#1\n')
+                f_out.write('\tCMP R2,#208\n')
+                f_out.write('\tBEQ '+label_name+f'_sprite_{tile}_exit\n')
+
+            f_out.write('\n'+label_name+f'_sprite_{tile}_exit:\n')
+            f_out.write('\tLDMFD SP!, {R0-R2,R11}\n')
             f_out.write('\tMOV PC,R14\n')
 
             tile = tile + 1

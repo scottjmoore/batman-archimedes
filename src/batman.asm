@@ -38,6 +38,7 @@ stack:
 .include "tiles.asm"
 
 .include "build/batman_sprites.asm"
+.include "build/explosion.asm"
 
 swap_display_buffers:
     STMFD SP!, {R0-R2,R14}
@@ -1953,7 +1954,7 @@ No_CursorLeft_Key:
     STR R0,batman_x
     LDR R0,batman_frame
     ADD R0,R0,#1
-    CMP R0,#28
+    CMP R0,#56
     MOVEQ R0,#0
     STR R0,batman_frame
 No_CursorRight_Key:
@@ -1980,57 +1981,32 @@ No_CursorRight_Key:
     LDR R4,[R12]
 
     STMFD SP!,{R0-R1}
-    MOV R1,#0b000000001111
-    BL vidc_set_border_colour
-    LDMFD SP!,{R0-R1}
-
-    BL draw_16x16_tile
-    ADD R0,R0,#1
-    ADD R2,R2,#16
-    BL draw_16x16_tile
-    ADD R0,R0,#1
-    ADD R2,R2,#16
-    BL draw_16x16_tile
-    ADD R0,R0,#16-2
-    SUB R2,R2,#32
-    ADD R3,R3,#16
-    BL draw_16x16_tile
-    ADD R0,R0,#1
-    ADD R2,R2,#16
-    BL draw_16x16_tile
-    ADD R0,R0,#1
-    ADD R2,R2,#16
-    BL draw_16x16_tile
-    ADD R0,R0,#16-2
-    SUB R2,R2,#32
-    ADD R3,R3,#16
-    BL draw_16x16_tile
-    ADD R0,R0,#1
-    ADD R2,R2,#16
-    BL draw_16x16_tile
-    ADD R0,R0,#1
-    ADD R2,R2,#16
-    BL draw_16x16_tile
-
-    STMFD SP!, {R0,R1,R11}
-    LDR R11,[R12]
-    LDR R0,batman_x
-    ADD R11,R11,R0 ;#160-20
-    LDR R0,batman_y
-    MOV R1,#320
-    MLA R11,R0,R1,R11
-
-    STMFD SP!,{R0-R1}
     MOV R1,#0b000011111111
     BL vidc_set_border_colour
     LDMFD SP!,{R0-R1}
 
+    STMFD SP!, {R0,R1,R11}
+    LDR R11,[R12]
     LDR R0,batman_frame
-    MOV R0,R0,LSR #2
-    MOV R0,R0,LSL #2
-    ADR R1,batman_sprites
-    MOV R14,PC
-    LDR PC,[R1,R0]
+    MOV R0,R0,LSR #3
+    LDR R1,batman_x
+    LDR R2,batman_y
+
+    BL draw_batman_sprite
+
+    LDR R0,explosion_frame
+    ADD R0,R0,#1
+    CMP R0,#40
+    MOVEQ R0,#0
+    STR R0,explosion_frame
+
+    LDR R11,[R12]
+    LDR R0,explosion_frame
+    MOV R0,R0,LSR #3
+    MOV R1,#32
+    MOV R2,#16
+
+    BL draw_explosion_sprite
 
     STMFD SP!,{R0-R1}
     MOV R1,#0b000011110000
@@ -2061,14 +2037,8 @@ batman_y:
 batman_frame:
     .4byte 0
 
-batman_sprites:
-    .4byte batman_sprite_0
-    .4byte batman_sprite_1
-    .4byte batman_sprite_2
-    .4byte batman_sprite_3
-    .4byte batman_sprite_4
-    .4byte batman_sprite_5
-    .4byte batman_sprite_6
+explosion_frame:
+    .4byte 0
 
 ;   ****************************************************************
 ;       DATA section
