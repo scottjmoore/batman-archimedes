@@ -39,6 +39,7 @@ stack:
 
 .include "build/batman_sprites.asm"
 .include "build/explosion.asm"
+.include "build/intro_font.asm"
 
 swap_display_buffers:
     STMFD SP!, {R0-R2,R14}
@@ -1481,26 +1482,26 @@ copy_8x8_tile_to_screen:
 ;       R11     :   Unchanged
 ;   ****************************************************************
 
-intro_font_lookup:
+; intro_font_lookup:
 
-    STMFD SP!, {R1-R12}     ; store all the registers onto the stack
+;     STMFD SP!, {R1-R12}     ; store all the registers onto the stack
 
-    ADRL R1,intro_font_lookup_table     ; load address of intro font conversion lookup table into R1
-    MOV R3,#0                           ; move 0 into R3
+;     ADRL R1,intro_font_lookup_table     ; load address of intro font conversion lookup table into R1
+;     MOV R3,#0                           ; move 0 into R3
 
-intro_font_lookup_loop:         ; start of loop
-    LDRB R2,[R1]                ; load byte from lookup table into R2
-    CMP R2,R0                   ; compare with ascii character to convert
-    BEQ intro_font_lookup_exit  ; if R2==R0 then exit loop
-    ADD R1,R1,#1                ; increase address of lookup table by 1 byte
-    ADD R3,R3,#1                ; increase tile index by 1
-    B intro_font_lookup_loop    ; go back to start of loop
+; intro_font_lookup_loop:         ; start of loop
+;     LDRB R2,[R1]                ; load byte from lookup table into R2
+;     CMP R2,R0                   ; compare with ascii character to convert
+;     BEQ intro_font_lookup_exit  ; if R2==R0 then exit loop
+;     ADD R1,R1,#1                ; increase address of lookup table by 1 byte
+;     ADD R3,R3,#1                ; increase tile index by 1
+;     B intro_font_lookup_loop    ; go back to start of loop
 
-intro_font_lookup_exit:     ; found character in lookup table
-    MOV R0,R3               ; move tile index into R0
+; intro_font_lookup_exit:     ; found character in lookup table
+;     MOV R0,R3               ; move tile index into R0
 
-    LDMFD SP!, {R1-R12}     ; restore all registers from the stack
-    MOV PC,R14              ; return from function
+;     LDMFD SP!, {R1-R12}     ; restore all registers from the stack
+;     MOV PC,R14              ; return from function
 
 
 ;   ****************************************************************
@@ -1543,37 +1544,37 @@ intro_font_lookup_exit:     ; found character in lookup table
 ;       R11     :   Unchanged
 ;   ****************************************************************
 
-draw_intro_font_text:
+; draw_intro_font_text:
 
-    STMFD SP!, {R0-R12,R14}     ; store all registers onto the stack
+;     STMFD SP!, {R0-R12,R14}     ; store all registers onto the stack
 
-    MOV R10,R0      ; move address of ascii string into R10
-    EOR R0,R0,R0    ; clear R0 to zero
+;     MOV R10,R0      ; move address of ascii string into R10
+;     EOR R0,R0,R0    ; clear R0 to zero
 
-draw_intro_font_text_loop:              ; start of loop
-    LDRB R0,[R10]                       ; load 1 byte from ascii string into R0
-    ADD R10,R10,#1                      ; increase address for ascii string by 1 byte
-    CMP R0,#0                           ; check to see if we are at the end of a string
-    BEQ draw_intro_font_text_exit       ; if byte is zero exit loop
-    CMP R0,#0x0a                        ; check to see if we need to move down to the next line
-    BEQ draw_intro_font_text_nextline   ; if byte == 0x0a goto next line section
-    BL intro_font_lookup                ; lookup tile number from ascii character in string
-    CMP R0,#0                           ; if tile number == 0
-    BEQ draw_intro_font_text_skip_tile  ; skip this tile
-    BL copy_8x8_tile_to_screen          ; draw the tile onto screen or display buffer
-draw_intro_font_text_skip_tile:         ; skip tile section
-    ADD R2,R2,#8                        ; move destination up by 8 bytes (width of 1 character)
-    CMP R2,#320                         ; check to see if we've overflowed a line
-    BLT draw_intro_font_text_loop       ; if not go back to start of loop
-draw_intro_font_text_nextline:          ; next line section
-    MOV R2,#0                           ; go to start of scanline
-    ADD R3,R3,#8                        ; increase scanline to draw to by 8 (height of 1 character)
-    B draw_intro_font_text_loop         ; go back to start of loop
+; draw_intro_font_text_loop:              ; start of loop
+;     LDRB R0,[R10]                       ; load 1 byte from ascii string into R0
+;     ADD R10,R10,#1                      ; increase address for ascii string by 1 byte
+;     CMP R0,#0                           ; check to see if we are at the end of a string
+;     BEQ draw_intro_font_text_exit       ; if byte is zero exit loop
+;     CMP R0,#0x0a                        ; check to see if we need to move down to the next line
+;     BEQ draw_intro_font_text_nextline   ; if byte == 0x0a goto next line section
+;     BL intro_font_lookup                ; lookup tile number from ascii character in string
+;     CMP R0,#0                           ; if tile number == 0
+;     BEQ draw_intro_font_text_skip_tile  ; skip this tile
+;     BL copy_8x8_tile_to_screen          ; draw the tile onto screen or display buffer
+; draw_intro_font_text_skip_tile:         ; skip tile section
+;     ADD R2,R2,#8                        ; move destination up by 8 bytes (width of 1 character)
+;     CMP R2,#320                         ; check to see if we've overflowed a line
+;     BLT draw_intro_font_text_loop       ; if not go back to start of loop
+; draw_intro_font_text_nextline:          ; next line section
+;     MOV R2,#0                           ; go to start of scanline
+;     ADD R3,R3,#8                        ; increase scanline to draw to by 8 (height of 1 character)
+;     B draw_intro_font_text_loop         ; go back to start of loop
 
-draw_intro_font_text_exit:              ; exit loop
+; draw_intro_font_text_exit:              ; exit loop
 
-    LDMFD SP!, {R0-R12,R14}     ; restore all registers from the stack, including R14 Link registger
-    MOV PC,R14                  ; exit function
+;     LDMFD SP!, {R0-R12,R14}     ; restore all registers from the stack, including R14 Link registger
+;     MOV PC,R14                  ; exit function
 
 
 ;   ****************************************************************
@@ -1697,7 +1698,7 @@ draw_tile_map_loop:
     SUB R2,R2,#320
     ADD R3,R3,#16
     ADD R10,R10,#128
-    CMP R3,#208
+    CMP R3,#CLIP_BOTTOM
     BLE draw_tile_map_loop
 
 draw_tile_map_exit:              ; exit loop
@@ -1783,11 +1784,11 @@ main:
     BL fade_screen_to_black
 
     ADRL R0,intro_text_1
-    ADRL R1,intro_font
+    ; ADRL R1,intro_font
     MOV R2,#0
     MOV R3,#40
     ADRL R4,intro_screen
-    BL draw_intro_font_text
+    ;BL draw_intro_font_text
 
     ADRL R0,intro_screen
     MOV R2,#1
@@ -1809,17 +1810,17 @@ intro_screen_loop:
 
     STMFD SP!,{R0-R4}
     ADRL R0,intro_text_1_clear
-    ADRL R1,intro_font
+    ; ADRL R1,intro_font
     MOV R2,#0
     MOV R3,#40
     ADRL R4,intro_screen
-    BL draw_intro_font_text
+    ;BL draw_intro_font_text
     ADRL R0,intro_text_2
-    ADRL R1,intro_font
+    ; ADRL R1,intro_font
     MOV R2,#0
     MOV R3,#72
     ADRL R4,intro_screen
-    BL draw_intro_font_text
+    ;BL draw_intro_font_text
     LDMFD SP!,{R0-R4}
 
 intro_screen_skip_1:
@@ -1827,18 +1828,18 @@ intro_screen_skip_1:
     BLE intro_screen_loop
 
     ADRL R0,intro_text_2_clear
-    ADRL R1,intro_font
+    ; ADRL R1,intro_font
     MOV R2,#0
     MOV R3,#72
     LDR R4,[R12]
-    BL draw_intro_font_text
+    ;BL draw_intro_font_text
 
     ADRL R0,intro_text_3
-    ADRL R1,intro_font
+    ; ADRL R1,intro_font
     MOV R2,#0
     MOV R3,#32
     LDR R4,[R12]
-    BL draw_intro_font_text
+    ;BL draw_intro_font_text
 
     SWI OS_ReadC
 
@@ -1851,7 +1852,7 @@ main_draw_tile_map:
 
     ADRL R0,status_bar
     LDR R1,[R12]
-    MOV R2,#208
+    MOV R2,#CLIP_BOTTOM
     MOV R3,#320
     MLA R1,R2,R3,R1
     MOV R2,#48
@@ -2033,7 +2034,7 @@ No_CursorRight_Key:
     LDR R1,explosion_x + 0
     LDR R2,explosion_y + 0
     ADD R2,R2,#1
-    CMP R2,#208
+    CMP R2,#CLIP_BOTTOM
     MOVGE R2,#-32
     STR R2,explosion_y + 0
 
@@ -2048,7 +2049,7 @@ No_CursorRight_Key:
     LDR R1,explosion_x + 4
     LDR R2,explosion_y + 4
     ADD R2,R2,#1
-    CMP R2,#208
+    CMP R2,#CLIP_BOTTOM
     MOVGE R2,#-32
     STR R2,explosion_y + 4
 
@@ -2063,7 +2064,7 @@ No_CursorRight_Key:
     LDR R1,explosion_x + 8
     LDR R2,explosion_y + 8
     ADD R2,R2,#1
-    CMP R2,#208
+    CMP R2,#CLIP_BOTTOM
     MOVGE R2,#-32
     STR R2,explosion_y + 8
 
@@ -2078,7 +2079,7 @@ No_CursorRight_Key:
     LDR R1,explosion_x + 12
     LDR R2,explosion_y + 12
     ADD R2,R2,#1
-    CMP R2,#208
+    CMP R2,#CLIP_BOTTOM
     MOVGE R2,#-32
     STR R2,explosion_y + 12
 
@@ -2093,7 +2094,7 @@ No_CursorRight_Key:
     LDR R1,explosion_x + 16
     LDR R2,explosion_y + 16
     ADD R2,R2,#1
-    CMP R2,#208
+    CMP R2,#CLIP_BOTTOM
     MOVGE R2,#-32
     STR R2,explosion_y + 16
 
@@ -2108,7 +2109,7 @@ No_CursorRight_Key:
     LDR R1,explosion_x + 20
     LDR R2,explosion_y + 20
     ADD R2,R2,#1
-    CMP R2,#208
+    CMP R2,#CLIP_BOTTOM
     MOVGE R2,#-32
     STR R2,explosion_y + 20
 
@@ -2123,7 +2124,7 @@ No_CursorRight_Key:
     LDR R1,explosion_x + 24
     LDR R2,explosion_y + 24
     ADD R2,R2,#1
-    CMP R2,#208
+    CMP R2,#CLIP_BOTTOM
     MOVGE R2,#-32
     STR R2,explosion_y + 24
 
@@ -2138,11 +2139,22 @@ No_CursorRight_Key:
     LDR R1,explosion_x + 28
     LDR R2,explosion_y + 28
     ADD R2,R2,#1
-    CMP R2,#208
+    CMP R2,#CLIP_BOTTOM
     MOVGE R2,#-32
     STR R2,explosion_y + 28
 
     BL draw_explosion_sprite
+
+    MOV R0,#1
+    MOV R1,#0
+    MOV R2,#CLIP_BOTTOM - 16
+draw_intro_font_loop:
+    BL draw_intro_font_sprite
+    ADD R0,R0,#1
+    ADD R1,R1,#9
+    SUB R2,R2,#1
+    CMP R1,#320
+    BLT draw_intro_font_loop
 
     STMFD SP!,{R0-R1}
     MOV R1,#0b000011110000
@@ -2364,15 +2376,6 @@ status_bar:
 ;   ----------------------------------------------------------------
 palette_fade:
     .incbin "build/palette_fade.bin"
-
-
-;   ****************************************************************
-;       intro_font
-;   ----------------------------------------------------------------
-;       Bitmap for introduction screen font tileset
-;   ----------------------------------------------------------------
-intro_font:
-    .incbin "build/intro_font.bin"
 
 
 ;   ****************************************************************

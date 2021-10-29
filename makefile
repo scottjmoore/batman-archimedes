@@ -15,7 +15,8 @@ build/intro_font.bin: build/intro_font.asm
 	vasmarm_std build/intro_font.asm -a2 -m2 -opt-ldrpc -opt-adr -L build/intro_font.lst -Fbin -o build/intro_font.bin
 
 build/intro_font.asm: assets/tiles/intro_font.png
-	./scripts/png2asm.py -i assets/tiles/intro_font.png -o build/intro_font.asm -sw 8 -sh 8
+# ./scripts/png2asm.py -i assets/tiles/intro_font.png -o build/intro_font.asm -sw 8 -sh 8
+	./scripts/compilesprite.py -i assets/tiles/intro_font.png -o build/intro_font.asm -sw 8 -sh 8
 
 build/main_title.bin: build/main_title.asm
 	vasmarm_std build/main_title.asm -a2 -m2 -opt-ldrpc -opt-adr -L build/main_title.lst -Fbin -o build/main_title.bin
