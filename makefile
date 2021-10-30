@@ -2,7 +2,7 @@ ARCULATOR = ../../sarah-walker-pcem/arculator/hostfs
 
 all: build/batman
 
-build/batman: src/batman.asm src/tiles.asm build/level-1.bin build/main_title.bin build/intro_screen.bin build/intro_font.bin build/status_bar.bin build/palette_fade.bin build/level_1_map.asm build/batman_sprites.asm build/explosion.asm
+build/batman: src/batman.asm src/tiles.asm src/vidc.asm src/memc.asm build/level-1.bin build/main_title.bin build/intro_screen.bin build/intro_font.bin build/status_bar.bin build/palette_fade.bin build/level_1_map.asm build/batman_sprites.asm build/explosion.asm build/sincos.asm
 	vasmarm_std src/batman.asm -a2 -m2 -opt-ldrpc -opt-adr -L build/batman.lst -Fbin -o build/batman
 
 build/level-1.bin: build/level-1.asm
@@ -34,7 +34,7 @@ build/status_bar.bin: build/status_bar.asm
 	vasmarm_std build/status_bar.asm -a2 -m2 -opt-ldrpc -opt-adr -L build/status_bar.lst -Fbin -o build/status_bar.bin
 
 build/status_bar.asm: assets/images/status_bar.png
-	./scripts/png2asm.py -i assets/images/status_bar.png -o build/status_bar.asm -sw 320 -sh 48
+	./scripts/png2asm.py -i assets/images/status_bar.png -o build/status_bar.asm -sw 336 -sh 48
 
 build/palette_fade.bin: build/palette_fade.asm
 	vasmarm_std build/palette_fade.asm -a2 -m2 -opt-ldrpc -opt-adr -L build/palette_fade.lst -Fbin -o build/palette_fade.bin
@@ -50,6 +50,9 @@ build/batman_sprites.asm: assets/sprites/batman.png
 
 build/explosion.asm: assets/sprites/explosion.png
 	./scripts/compilesprite.py -i assets/sprites/explosion.png -o build/explosion.asm -sw 32 -sh 32
+
+build/sincos.asm:
+	./scripts/sincos.py
 
 clean:
 	@rm -f build/*

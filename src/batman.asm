@@ -41,6 +41,10 @@ stack:
 .include "build/explosion.asm"
 .include "build/intro_font.asm"
 
+.include "build/sincos.asm"
+
+.set    SCANLINE,   336
+
 swap_display_buffers:
     STMFD SP!, {R0-R2,R14}
 
@@ -405,7 +409,7 @@ copy_16x16_tile_to_screen:
     MOV R7,#16*16*4         ; put the size of a single tile in bytes into R7
     MLA R12,R0,R7,R1        ; calculate the address of the start of the tile [source = (tile number * (16 * 16)) + address of tileset]
     ADD R12,R12,R8,LSL #8   ; add 4 pixel x coordinate offset * (16*16) to get pre-shifted tile
-    MOV R7,#320             ; put the width of a scanline into R7
+    MOV R7,#SCANLINE             ; put the width of a scanline into R7
     MLA R11,R3,R7,R4        ; calculate the address of the destination [destination = (y * 320) + address of screen or buffer]
     ADD R11,R11,R2          ; add x to the destination address
 
@@ -418,7 +422,7 @@ copy_16x16_tile_to_screen_uncropped_top:
 
     CMP R2,#0
     BLT copy_16x16_tile_to_screen_cropped_start_of_scanline
-    CMP R2,#320-16
+    CMP R2,#SCANLINE-16
     BGE copy_16x16_tile_to_screen_cropped_end_of_scanline
     CMP R8,#0b00
     BEQ copy_16x16_tile_to_screen_full_tile_00
@@ -435,7 +439,7 @@ copy_16x16_tile_to_screen_cropped_start_of_scanline:
     MOV PC,R14              ; return from function
 
 copy_16x16_tile_to_screen_cropped_end_of_scanline:
-    CMP R2,#320
+    CMP R2,#SCANLINE
     BGE copy_16x16_tile_to_screen_cropped_end_of_scanline_exit
     MOV R3,#319
     SUB R1,R3,R2
@@ -482,7 +486,7 @@ copy_16x16_tile_to_screen_cropped_end_of_scanline_store:
     LDRB R2,[R12,#0]
     STRB R2,[R11,#0]
     ADD R12,R12,#16
-    ADD R11,R11,#320
+    ADD R11,R11,#SCANLINE
     SUBS R3,R3,#1
     BNE copy_16x16_tile_to_screen_cropped_end_of_scanline_loop
 copy_16x16_tile_to_screen_cropped_end_of_scanline_exit:
@@ -492,52 +496,52 @@ copy_16x16_tile_to_screen_cropped_end_of_scanline_exit:
 copy_16x16_tile_to_screen_full_tile_00:
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMFD SP!, {R0-R12}     ; restore all the registers from the stack
     MOV PC,R14              ; return from function
@@ -552,7 +556,7 @@ copy_16x16_tile_to_screen_full_tile_01:
     AND R5,R5,#0xffffff00
     ORR R5,R5,R0
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     ; AND R4,R4,#0xffffff00
@@ -563,7 +567,7 @@ copy_16x16_tile_to_screen_full_tile_01:
     AND R5,R5,#0xffffff00
     ORR R5,R5,R0
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     ; AND R4,R4,#0xffffff00
@@ -574,7 +578,7 @@ copy_16x16_tile_to_screen_full_tile_01:
     AND R5,R5,#0xffffff00
     ORR R5,R5,R0
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     ; AND R4,R4,#0xffffff00
@@ -585,7 +589,7 @@ copy_16x16_tile_to_screen_full_tile_01:
     AND R5,R5,#0xffffff00
     ORR R5,R5,R0
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     ; AND R4,R4,#0xffffff00
@@ -596,7 +600,7 @@ copy_16x16_tile_to_screen_full_tile_01:
     AND R5,R5,#0xffffff00
     ORR R5,R5,R0
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     ; AND R4,R4,#0xffffff00
@@ -607,7 +611,7 @@ copy_16x16_tile_to_screen_full_tile_01:
     AND R5,R5,#0xffffff00
     ORR R5,R5,R0
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     ; AND R4,R4,#0xffffff00
@@ -618,7 +622,7 @@ copy_16x16_tile_to_screen_full_tile_01:
     AND R5,R5,#0xffffff00
     ORR R5,R5,R0
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     ; AND R4,R4,#0xffffff00
@@ -629,7 +633,7 @@ copy_16x16_tile_to_screen_full_tile_01:
     AND R5,R5,#0xffffff00
     ORR R5,R5,R0
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     ; AND R4,R4,#0xffffff00
@@ -640,7 +644,7 @@ copy_16x16_tile_to_screen_full_tile_01:
     AND R5,R5,#0xffffff00
     ORR R5,R5,R0
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     ; AND R4,R4,#0xffffff00
@@ -651,7 +655,7 @@ copy_16x16_tile_to_screen_full_tile_01:
     AND R5,R5,#0xffffff00
     ORR R5,R5,R0
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     ; AND R4,R4,#0xffffff00
@@ -662,7 +666,7 @@ copy_16x16_tile_to_screen_full_tile_01:
     AND R5,R5,#0xffffff00
     ORR R5,R5,R0
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     ; AND R4,R4,#0xffffff00
@@ -673,7 +677,7 @@ copy_16x16_tile_to_screen_full_tile_01:
     AND R5,R5,#0xffffff00
     ORR R5,R5,R0
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     ; AND R4,R4,#0xffffff00
@@ -684,7 +688,7 @@ copy_16x16_tile_to_screen_full_tile_01:
     AND R5,R5,#0xffffff00
     ORR R5,R5,R0
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     ; AND R4,R4,#0xffffff00
@@ -695,7 +699,7 @@ copy_16x16_tile_to_screen_full_tile_01:
     AND R5,R5,#0xffffff00
     ORR R5,R5,R0
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     ; AND R4,R4,#0xffffff00
@@ -706,7 +710,7 @@ copy_16x16_tile_to_screen_full_tile_01:
     AND R5,R5,#0xffffff00
     ORR R5,R5,R0
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     ; AND R4,R4,#0xffffff00
@@ -717,7 +721,7 @@ copy_16x16_tile_to_screen_full_tile_01:
     AND R5,R5,#0xffffff00
     ORR R5,R5,R0
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     ; LDMIA R11,{R0} ;,R1,R2,R3,R4}
     ; AND R0,R0,#0x000000ff
@@ -728,7 +732,7 @@ copy_16x16_tile_to_screen_full_tile_01:
     ; AND R5,R5,#0xffffff00
     ; ORR R5,R5,R0
     ; STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ; ADD R11,R11,#320        ; move destination address to the next scanline
+    ; ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     ; LDMIA R11,{R0} ;,R1,R2,R3,R4}
     ; AND R0,R0,#0x000000ff
@@ -739,7 +743,7 @@ copy_16x16_tile_to_screen_full_tile_01:
     ; AND R5,R5,#0xffffff00
     ; ORR R5,R5,R0
     ; STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ; ADD R11,R11,#320        ; move destination address to the next scanline
+    ; ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     ; LDMIA R11,{R0} ;,R1,R2,R3,R4}
     ; AND R0,R0,#0x000000ff
@@ -750,7 +754,7 @@ copy_16x16_tile_to_screen_full_tile_01:
     ; AND R5,R5,#0xffffff00
     ; ORR R5,R5,R0
     ; STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ; ADD R11,R11,#320        ; move destination address to the next scanline
+    ; ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     ; LDMIA R11,{R0} ;,R1,R2,R3,R4}
     ; AND R0,R0,#0x000000ff
@@ -761,7 +765,7 @@ copy_16x16_tile_to_screen_full_tile_01:
     ; AND R5,R5,#0xffffff00
     ; ORR R5,R5,R0
     ; STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ; ADD R11,R11,#320        ; move destination address to the next scanline
+    ; ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     ; LDMIA R11,{R0} ;,R1,R2,R3,R4}
     ; AND R0,R0,#0x000000ff
@@ -772,7 +776,7 @@ copy_16x16_tile_to_screen_full_tile_01:
     ; AND R5,R5,#0xffffff00
     ; ORR R5,R5,R0
     ; STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ; ADD R11,R11,#320        ; move destination address to the next scanline
+    ; ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     ; LDMIA R11,{R0} ;,R1,R2,R3,R4}
     ; AND R0,R0,#0x000000ff
@@ -783,7 +787,7 @@ copy_16x16_tile_to_screen_full_tile_01:
     ; AND R5,R5,#0xffffff00
     ; ORR R5,R5,R0
     ; STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ; ADD R11,R11,#320        ; move destination address to the next scanline
+    ; ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     ; LDMIA R11,{R0} ;,R1,R2,R3,R4}
     ; AND R0,R0,#0x000000ff
@@ -794,7 +798,7 @@ copy_16x16_tile_to_screen_full_tile_01:
     ; AND R5,R5,#0xffffff00
     ; ORR R5,R5,R0
     ; STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ; ADD R11,R11,#320        ; move destination address to the next scanline
+    ; ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     ; LDMIA R11,{R0} ;,R1,R2,R3,R4}
     ; AND R0,R0,#0x000000ff
@@ -805,7 +809,7 @@ copy_16x16_tile_to_screen_full_tile_01:
     ; AND R5,R5,#0xffffff00
     ; ORR R5,R5,R0
     ; STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ; ADD R11,R11,#320        ; move destination address to the next scanline
+    ; ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     ; LDMIA R11,{R0} ;,R1,R2,R3,R4}
     ; AND R0,R0,#0x000000ff
@@ -816,7 +820,7 @@ copy_16x16_tile_to_screen_full_tile_01:
     ; AND R5,R5,#0xffffff00
     ; ORR R5,R5,R0
     ; STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ; ADD R11,R11,#320        ; move destination address to the next scanline
+    ; ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     ; LDMIA R11,{R0} ;,R1,R2,R3,R4}
     ; AND R0,R0,#0x000000ff
@@ -827,7 +831,7 @@ copy_16x16_tile_to_screen_full_tile_01:
     ; AND R5,R5,#0xffffff00
     ; ORR R5,R5,R0
     ; STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ; ADD R11,R11,#320        ; move destination address to the next scanline
+    ; ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     ; LDMIA R11,{R0} ;,R1,R2,R3,R4}
     ; AND R0,R0,#0x000000ff
@@ -838,7 +842,7 @@ copy_16x16_tile_to_screen_full_tile_01:
     ; AND R5,R5,#0xffffff00
     ; ORR R5,R5,R0
     ; STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ; ADD R11,R11,#320        ; move destination address to the next scanline
+    ; ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     ; LDMIA R11,{R0} ;,R1,R2,R3,R4}
     ; AND R0,R0,#0x000000ff
@@ -849,7 +853,7 @@ copy_16x16_tile_to_screen_full_tile_01:
     ; AND R5,R5,#0xffffff00
     ; ORR R5,R5,R0
     ; STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ; ADD R11,R11,#320        ; move destination address to the next scanline
+    ; ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     ; LDMIA R11,{R0} ;,R1,R2,R3,R4}
     ; AND R0,R0,#0x000000ff
@@ -860,7 +864,7 @@ copy_16x16_tile_to_screen_full_tile_01:
     ; AND R5,R5,#0xffffff00
     ; ORR R5,R5,R0
     ; STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ; ADD R11,R11,#320        ; move destination address to the next scanline
+    ; ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     ; LDMIA R11,{R0} ;,R1,R2,R3,R4}
     ; AND R0,R0,#0x000000ff
@@ -871,7 +875,7 @@ copy_16x16_tile_to_screen_full_tile_01:
     ; AND R5,R5,#0xffffff00
     ; ORR R5,R5,R0
     ; STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ; ADD R11,R11,#320        ; move destination address to the next scanline
+    ; ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     ; LDMIA R11,{R0} ;,R1,R2,R3,R4}
     ; AND R0,R0,#0x000000ff
@@ -882,7 +886,7 @@ copy_16x16_tile_to_screen_full_tile_01:
     ; AND R5,R5,#0xffffff00
     ; ORR R5,R5,R0
     ; STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ; ADD R11,R11,#320        ; move destination address to the next scanline
+    ; ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMFD SP!, {R0-R12}     ; restore all the registers from the stack
     MOV PC,R14              ; return from function
@@ -898,7 +902,7 @@ copy_16x16_tile_to_screen_full_tile_10:
     MOV R5,R5,LSL #16
     ORR R5,R5,R0,LSR #16
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     MOV R0,R0,LSL #16
@@ -911,7 +915,7 @@ copy_16x16_tile_to_screen_full_tile_10:
     MOV R5,R5,LSL #16
     ORR R5,R5,R0,LSR #16
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     MOV R0,R0,LSL #16
@@ -924,7 +928,7 @@ copy_16x16_tile_to_screen_full_tile_10:
     MOV R5,R5,LSL #16
     ORR R5,R5,R0,LSR #16
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     MOV R0,R0,LSL #16
@@ -937,7 +941,7 @@ copy_16x16_tile_to_screen_full_tile_10:
     MOV R5,R5,LSL #16
     ORR R5,R5,R0,LSR #16
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     MOV R0,R0,LSL #16
@@ -950,7 +954,7 @@ copy_16x16_tile_to_screen_full_tile_10:
     MOV R5,R5,LSL #16
     ORR R5,R5,R0,LSR #16
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     MOV R0,R0,LSL #16
@@ -963,7 +967,7 @@ copy_16x16_tile_to_screen_full_tile_10:
     MOV R5,R5,LSL #16
     ORR R5,R5,R0,LSR #16
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     MOV R0,R0,LSL #16
@@ -976,7 +980,7 @@ copy_16x16_tile_to_screen_full_tile_10:
     MOV R5,R5,LSL #16
     ORR R5,R5,R0,LSR #16
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     MOV R0,R0,LSL #16
@@ -989,7 +993,7 @@ copy_16x16_tile_to_screen_full_tile_10:
     MOV R5,R5,LSL #16
     ORR R5,R5,R0,LSR #16
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     MOV R0,R0,LSL #16
@@ -1002,7 +1006,7 @@ copy_16x16_tile_to_screen_full_tile_10:
     MOV R5,R5,LSL #16
     ORR R5,R5,R0,LSR #16
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     MOV R0,R0,LSL #16
@@ -1015,7 +1019,7 @@ copy_16x16_tile_to_screen_full_tile_10:
     MOV R5,R5,LSL #16
     ORR R5,R5,R0,LSR #16
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     MOV R0,R0,LSL #16
@@ -1028,7 +1032,7 @@ copy_16x16_tile_to_screen_full_tile_10:
     MOV R5,R5,LSL #16
     ORR R5,R5,R0,LSR #16
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     MOV R0,R0,LSL #16
@@ -1041,7 +1045,7 @@ copy_16x16_tile_to_screen_full_tile_10:
     MOV R5,R5,LSL #16
     ORR R5,R5,R0,LSR #16
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     MOV R0,R0,LSL #16
@@ -1054,7 +1058,7 @@ copy_16x16_tile_to_screen_full_tile_10:
     MOV R5,R5,LSL #16
     ORR R5,R5,R0,LSR #16
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     MOV R0,R0,LSL #16
@@ -1067,7 +1071,7 @@ copy_16x16_tile_to_screen_full_tile_10:
     MOV R5,R5,LSL #16
     ORR R5,R5,R0,LSR #16
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     MOV R0,R0,LSL #16
@@ -1080,7 +1084,7 @@ copy_16x16_tile_to_screen_full_tile_10:
     MOV R5,R5,LSL #16
     ORR R5,R5,R0,LSR #16
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     MOV R0,R0,LSL #16
@@ -1093,7 +1097,7 @@ copy_16x16_tile_to_screen_full_tile_10:
     MOV R5,R5,LSL #16
     ORR R5,R5,R0,LSR #16
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMFD SP!, {R0-R12}     ; restore all the registers from the stack
     MOV PC,R14              ; return from function
@@ -1107,7 +1111,7 @@ copy_16x16_tile_to_screen_full_tile_11:
     AND R5,R5,#0xff000000
     ORR R5,R5,R0
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     AND R0,R0,#0x00ffffff
@@ -1118,7 +1122,7 @@ copy_16x16_tile_to_screen_full_tile_11:
     AND R5,R5,#0xff000000
     ORR R5,R5,R0
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     AND R0,R0,#0x00ffffff
@@ -1129,7 +1133,7 @@ copy_16x16_tile_to_screen_full_tile_11:
     AND R5,R5,#0xff000000
     ORR R5,R5,R0
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     AND R0,R0,#0x00ffffff
@@ -1140,7 +1144,7 @@ copy_16x16_tile_to_screen_full_tile_11:
     AND R5,R5,#0xff000000
     ORR R5,R5,R0
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     AND R0,R0,#0x00ffffff
@@ -1151,7 +1155,7 @@ copy_16x16_tile_to_screen_full_tile_11:
     AND R5,R5,#0xff000000
     ORR R5,R5,R0
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     AND R0,R0,#0x00ffffff
@@ -1162,7 +1166,7 @@ copy_16x16_tile_to_screen_full_tile_11:
     AND R5,R5,#0xff000000
     ORR R5,R5,R0
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     AND R0,R0,#0x00ffffff
@@ -1173,7 +1177,7 @@ copy_16x16_tile_to_screen_full_tile_11:
     AND R5,R5,#0xff000000
     ORR R5,R5,R0
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     AND R0,R0,#0x00ffffff
@@ -1184,7 +1188,7 @@ copy_16x16_tile_to_screen_full_tile_11:
     AND R5,R5,#0xff000000
     ORR R5,R5,R0
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     AND R0,R0,#0x00ffffff
@@ -1195,7 +1199,7 @@ copy_16x16_tile_to_screen_full_tile_11:
     AND R5,R5,#0xff000000
     ORR R5,R5,R0
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     AND R0,R0,#0x00ffffff
@@ -1206,7 +1210,7 @@ copy_16x16_tile_to_screen_full_tile_11:
     AND R5,R5,#0xff000000
     ORR R5,R5,R0
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     AND R0,R0,#0x00ffffff
@@ -1217,7 +1221,7 @@ copy_16x16_tile_to_screen_full_tile_11:
     AND R5,R5,#0xff000000
     ORR R5,R5,R0
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     AND R0,R0,#0x00ffffff
@@ -1228,7 +1232,7 @@ copy_16x16_tile_to_screen_full_tile_11:
     AND R5,R5,#0xff000000
     ORR R5,R5,R0
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     AND R0,R0,#0x00ffffff
@@ -1239,7 +1243,7 @@ copy_16x16_tile_to_screen_full_tile_11:
     AND R5,R5,#0xff000000
     ORR R5,R5,R0
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     AND R0,R0,#0x00ffffff
@@ -1250,7 +1254,7 @@ copy_16x16_tile_to_screen_full_tile_11:
     AND R5,R5,#0xff000000
     ORR R5,R5,R0
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     AND R0,R0,#0x00ffffff
@@ -1261,7 +1265,7 @@ copy_16x16_tile_to_screen_full_tile_11:
     AND R5,R5,#0xff000000
     ORR R5,R5,R0
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0} ;,R1,R2,R3,R4}
     AND R0,R0,#0x00ffffff
@@ -1272,7 +1276,7 @@ copy_16x16_tile_to_screen_full_tile_11:
     AND R5,R5,#0xff000000
     ORR R5,R5,R0
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMFD SP!, {R0-R12}     ; restore all the registers from the stack
     MOV PC,R14              ; return from function
@@ -1286,82 +1290,82 @@ copy_16x16_tile_to_screen_cropped_tile:
 copy_16x16_tile_to_screen_cropped_tile_start:
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     SUBS R6,R6,#1
     BEQ copy_16x16_tile_to_screen_exit_cropped_tile
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     SUBS R6,R6,#1
     BEQ copy_16x16_tile_to_screen_exit_cropped_tile
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     SUBS R6,R6,#1
     BEQ copy_16x16_tile_to_screen_exit_cropped_tile
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     SUBS R6,R6,#1
     BEQ copy_16x16_tile_to_screen_exit_cropped_tile
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     SUBS R6,R6,#1
     BEQ copy_16x16_tile_to_screen_exit_cropped_tile
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     SUBS R6,R6,#1
     BEQ copy_16x16_tile_to_screen_exit_cropped_tile
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     SUBS R6,R6,#1
     BEQ copy_16x16_tile_to_screen_exit_cropped_tile
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     SUBS R6,R6,#1
     BEQ copy_16x16_tile_to_screen_exit_cropped_tile
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     SUBS R6,R6,#1
     BEQ copy_16x16_tile_to_screen_exit_cropped_tile
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     SUBS R6,R6,#1
     BEQ copy_16x16_tile_to_screen_exit_cropped_tile
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     SUBS R6,R6,#1
     BEQ copy_16x16_tile_to_screen_exit_cropped_tile
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     SUBS R6,R6,#1
     BEQ copy_16x16_tile_to_screen_exit_cropped_tile
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     SUBS R6,R6,#1
     BEQ copy_16x16_tile_to_screen_exit_cropped_tile
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     SUBS R6,R6,#1
     BEQ copy_16x16_tile_to_screen_exit_cropped_tile
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     SUBS R6,R6,#1
     BEQ copy_16x16_tile_to_screen_exit_cropped_tile
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
 copy_16x16_tile_to_screen_exit_cropped_tile:
 
@@ -1413,30 +1417,30 @@ copy_8x8_tile_to_screen:
 
     MOV R5,#8*8             ; put the size of a single tile in bytes into R5
     MLA R12,R0,R5,R1        ; calculate the address of the start of the tile [source = (tile number * (8 * 8)) + address of tileset]
-    MOV R5,#320             ; put the width of a scanline into R5
+    MOV R5,#SCANLINE             ; put the width of a scanline into R5
     MLA R11,R3,R5,R4        ; calculate the address of the destination [destination = (y * 320) + address of screen or buffer]
     ADD R11,R11,R2          ; add x to the destination address
 
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R1}       ; store first 8 bytes from R0-R1 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     STMIA R11,{R2-R3}       ; store second 8 bytes from R2-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R1}       ; store first 8 bytes from R0-R1 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     STMIA R11,{R2-R3}       ; store second 8 bytes from R2-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R1}       ; store first 8 bytes from R0-R1 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     STMIA R11,{R2-R3}       ; store second 8 bytes from R2-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R1}       ; store first 8 bytes from R0-R1 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     STMIA R11,{R2-R3}       ; store second 8 bytes from R2-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMFD SP!, {R0-R12}     ; restore all registers from the stack
     MOV PC,R14              ; return from function
@@ -1564,7 +1568,7 @@ copy_8x8_tile_to_screen:
 ;     BL copy_8x8_tile_to_screen          ; draw the tile onto screen or display buffer
 ; draw_intro_font_text_skip_tile:         ; skip tile section
 ;     ADD R2,R2,#8                        ; move destination up by 8 bytes (width of 1 character)
-;     CMP R2,#320                         ; check to see if we've overflowed a line
+;     CMP R2,#SCANLINE                         ; check to see if we've overflowed a line
 ;     BLT draw_intro_font_text_loop       ; if not go back to start of loop
 ; draw_intro_font_text_nextline:          ; next line section
 ;     MOV R2,#0                           ; go to start of scanline
@@ -1630,6 +1634,7 @@ draw_tile_map:
     MOV R4,R2
     MOV R7,#0
     SUB R2,R7,R5
+    ADD R2,R2,#16
     SUB R3,R7,R6
 
 draw_tile_map_loop:
@@ -1692,10 +1697,10 @@ draw_tile_map_loop:
     ADD R2,R2,#16
     LDRB R0,[R10,#19]
     BL draw_16x16_tile
-    ADD R2,R2,#16
-    LDRB R0,[R10,#20]
-    BL draw_16x16_tile
-    SUB R2,R2,#320
+    ; ADD R2,R2,#16
+    ; LDRB R0,[R10,#20]
+    ; BL draw_16x16_tile
+    SUB R2,R2,#19 * 16
     ADD R3,R3,#16
     ADD R10,R10,#128
     CMP R3,#CLIP_BOTTOM
@@ -1769,7 +1774,9 @@ main:
     MOV R12,R1
 
     LDR R1,[R12,#0]
-    ADD R1,R1,#320*256
+    ADD R1,R1,#SCANLINE
+    STR R1,[R12,#0]
+    ADD R1,R1,#SCANLINE*256
     STR R1,[R12,#4]
 
         B main_draw_tile_map
@@ -1793,7 +1800,7 @@ main:
     ADRL R0,intro_screen
     MOV R2,#1
     MOV R3,#255
-    MOV R4,#320
+    MOV R4,#SCANLINE
     MUL R5,R3,R4
 intro_screen_loop:
     STMFD SP!, {R0-R2}
@@ -1803,7 +1810,7 @@ intro_screen_loop:
     LDR R1,[R12]
     ADD R1,R1,R5
     BL copy_buffer_to_screen
-    SUB R5,R5,#320
+    SUB R5,R5,#SCANLINE
     ADD R2,R2,#1
     CMP R2,#200
     BNE intro_screen_skip_1
@@ -1853,11 +1860,11 @@ main_draw_tile_map:
     ADRL R0,status_bar
     LDR R1,[R12]
     MOV R2,#CLIP_BOTTOM
-    MOV R3,#320
+    MOV R3,#SCANLINE
     MLA R1,R2,R3,R1
     MOV R2,#48
     BL copy_buffer_to_screen
-    ADD R1,R1,#320*256
+    ADD R1,R1,#SCANLINE*256
     BL copy_buffer_to_screen
 
 main_draw_tile_map_loop:
@@ -1973,13 +1980,10 @@ No_CursorRight_Key:
     SWI OS_Mouse
 
     MOV R2,R0,LSR #2
-    SUB R2,R2,#24
     MOV R3,R1,LSR #2
     EOR R3,R3,#0b11111111
-    SUB R3,R3,#24
-    MOV R0,#70
-    ADRL R1,level_1_tiles
-    LDR R4,[R12]
+    STR R2,mouse_x
+    STR R3,mouse_y
 
     STMFD SP!,{R0-R1}
     MOV R1,#0b000011111111
@@ -2145,21 +2149,126 @@ No_CursorRight_Key:
 
     BL draw_explosion_sprite
 
-    MOV R0,#1
-    MOV R1,#0
-    MOV R2,#CLIP_BOTTOM - 16
+    MOV R1,#0b111111110000
+    BL vidc_set_border_colour
+
+    MOV R0,#0
+    ADR R3,sin
+    ADR R4,cos
+    MOV R6,#96
+    LDR R7,intro_font_angle
+    ADD R7,R7,#1
+    CMP R7,#1024
+    MOVGT R7,#0
+    STR R7,intro_font_angle
 draw_intro_font_loop:
+    MOV R6,R7
+    AND R6,R6,#127
+    MOV R5,R0,LSL #6
+    ADD R5,R5,R7,LSL #3
+    MOV R5,R5,LSL #20
+    MOV R5,R5,LSR #20
+    LDR R1,[R3,R5]
+    MUL R1,R6,R1
+    MOV R1,R1,ASR #20
+    LDR R2,[R4,R5]
+    MUL R2,R6,R2
+    MOV R2,R2,ASR #20
+    LDR R6,mouse_x
+    ADD R1,R1,R6
+    LDR R6,mouse_y
+    ADD R2,R2,R6
     BL draw_intro_font_sprite
     ADD R0,R0,#1
-    ADD R1,R1,#9
-    SUB R2,R2,#1
-    CMP R1,#320
+    CMP R0,#64
     BLT draw_intro_font_loop
 
-    STMFD SP!,{R0-R1}
+    MOV R1,#0b111100001111
+    BL vidc_set_border_colour
+
+    LDR R11,[R12]
+    ADD R10,R11,#SCANLINE-16
+
+    EOR R0,R0,R0
+    MOV R1,R0
+    MOV R2,R0
+    MOV R3,R0
+    MOV R9,#13
+
+Clear_Edges_Loop:
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    SUBS R9,R9,#1
+    BNE Clear_Edges_Loop
+    STMIA R11,{R0-R3}
+
     MOV R1,#0b000011110000
     BL vidc_set_border_colour
-    LDMFD SP!,{R0-R1}
+
+    MOV R1,#45
+    BL vidc_set_HDSR
 
     LDMFD SP!, {R0,R1,R11}
     LDMFD SP!, {R0-R8}
@@ -2177,12 +2286,21 @@ exit:
     MOV   R0,R0
     LDMFD SP!, {PC}
 
+mouse_x:
+    .4byte  0
+
+mouse_y:
+    .4byte  0
+
 batman_x:
     .4byte  140
 batman_y:
     .4byte  104
 
 batman_frame:
+    .4byte 0
+
+intro_font_angle:
     .4byte 0
 
 explosion_x:
@@ -2330,8 +2448,8 @@ vdu_variables_screen_start_buffer:
     .4byte 0x00000000
 
 memc_address_screen_start:
-    .4byte 0x00005000
-    .4byte 0x00000000
+    .4byte (SCANLINE * 257) >> 2
+    .4byte SCANLINE >> 2
 
     .align 4
     .nolist

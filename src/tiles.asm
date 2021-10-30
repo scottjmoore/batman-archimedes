@@ -15,6 +15,8 @@
 .set    CLIP_LEFT,      0
 .set    CLIP_RIGHT,     320
 
+.set    SCANLINE,       336
+
 ;   ****************************************************************
 ;       draw_16x16_tile
 ;   ----------------------------------------------------------------
@@ -70,7 +72,7 @@ draw_16x16_tile_unclipped:
     MOV R7,#16*16*4         ; put the size of a single tile in bytes into R7
     MLA R12,R0,R7,R1        ; calculate the address of the start of the tile [source = (tile number * (16 * 16)) + address of tileset]
     ADD R12,R12,R8,LSL #8   ; add 4 pixel x coordinate offset * (16*16) to get pre-shifted tile
-    MOV R7,#320             ; put the width of a scanline into R7
+    MOV R7,#SCANLINE             ; put the width of a scanline into R7
     MLA R11,R3,R7,R4        ; calculate the address of the destination [destination = (y * 320) + address of screen or buffer]
     ADD R11,R11,R2          ; add x to the destination address
 
@@ -86,49 +88,49 @@ draw_16x16_tile_unclipped:
 draw_16x16_tile_unclipped_00:
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R3}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
     
@@ -142,7 +144,7 @@ draw_16x16_tile_unclipped_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -151,7 +153,7 @@ draw_16x16_tile_unclipped_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -160,7 +162,7 @@ draw_16x16_tile_unclipped_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -169,7 +171,7 @@ draw_16x16_tile_unclipped_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -178,7 +180,7 @@ draw_16x16_tile_unclipped_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -187,7 +189,7 @@ draw_16x16_tile_unclipped_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -196,7 +198,7 @@ draw_16x16_tile_unclipped_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -205,7 +207,7 @@ draw_16x16_tile_unclipped_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -214,7 +216,7 @@ draw_16x16_tile_unclipped_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -223,7 +225,7 @@ draw_16x16_tile_unclipped_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -232,7 +234,7 @@ draw_16x16_tile_unclipped_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -241,7 +243,7 @@ draw_16x16_tile_unclipped_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -250,7 +252,7 @@ draw_16x16_tile_unclipped_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -259,7 +261,7 @@ draw_16x16_tile_unclipped_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -268,7 +270,7 @@ draw_16x16_tile_unclipped_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -290,7 +292,7 @@ draw_16x16_tile_unclipped_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -301,7 +303,7 @@ draw_16x16_tile_unclipped_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -312,7 +314,7 @@ draw_16x16_tile_unclipped_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -323,7 +325,7 @@ draw_16x16_tile_unclipped_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -334,7 +336,7 @@ draw_16x16_tile_unclipped_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -345,7 +347,7 @@ draw_16x16_tile_unclipped_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -356,7 +358,7 @@ draw_16x16_tile_unclipped_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -367,7 +369,7 @@ draw_16x16_tile_unclipped_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -378,7 +380,7 @@ draw_16x16_tile_unclipped_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -389,7 +391,7 @@ draw_16x16_tile_unclipped_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -400,7 +402,7 @@ draw_16x16_tile_unclipped_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -411,7 +413,7 @@ draw_16x16_tile_unclipped_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -422,7 +424,7 @@ draw_16x16_tile_unclipped_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -433,7 +435,7 @@ draw_16x16_tile_unclipped_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -444,7 +446,7 @@ draw_16x16_tile_unclipped_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -455,7 +457,7 @@ draw_16x16_tile_unclipped_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     B draw_16x16_tile_exit  ; branch to exit function
 
@@ -467,7 +469,7 @@ draw_16x16_tile_unclipped_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -476,7 +478,7 @@ draw_16x16_tile_unclipped_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -485,7 +487,7 @@ draw_16x16_tile_unclipped_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -494,7 +496,7 @@ draw_16x16_tile_unclipped_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -503,7 +505,7 @@ draw_16x16_tile_unclipped_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -512,7 +514,7 @@ draw_16x16_tile_unclipped_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -521,7 +523,7 @@ draw_16x16_tile_unclipped_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -530,7 +532,7 @@ draw_16x16_tile_unclipped_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -539,7 +541,7 @@ draw_16x16_tile_unclipped_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -548,7 +550,7 @@ draw_16x16_tile_unclipped_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -557,7 +559,7 @@ draw_16x16_tile_unclipped_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -566,7 +568,7 @@ draw_16x16_tile_unclipped_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -575,7 +577,7 @@ draw_16x16_tile_unclipped_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -584,7 +586,7 @@ draw_16x16_tile_unclipped_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -593,7 +595,7 @@ draw_16x16_tile_unclipped_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -602,7 +604,7 @@ draw_16x16_tile_unclipped_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     B draw_16x16_tile_exit  ; branch to exit function
 
@@ -619,7 +621,7 @@ draw_16x16_tile_clipped_top_unclipped_left_right:
     MOV R7,#16*16*4         ; put the size of a single tile in bytes into R7
     MLA R12,R0,R7,R1        ; calculate the address of the start of the tile [source = (tile number * (16 * 16)) + address of tileset]
     ADD R12,R12,R8,LSL #8   ; add 4 pixel x coordinate offset * (16*16) to get pre-shifted tile
-    MOV R7,#320             ; put the width of a scanline into R7
+    MOV R7,#SCANLINE             ; put the width of a scanline into R7
     MOV R11,R4              ; move destination address into R11
     ADD R11,R11,R2          ; add x to the destination address
     MOV R7,#CLIP_TOP        ; move 0 into R7
@@ -685,7 +687,7 @@ draw_16x16_tile_clipped_bottom_unclipped_left_right:
     MOV R7,#16*16*4         ; put the size of a single tile in bytes into R7
     MLA R12,R0,R7,R1        ; calculate the address of the start of the tile [source = (tile number * (16 * 16)) + address of tileset]
     ADD R12,R12,R8,LSL #8   ; add 4 pixel x coordinate offset * (16*16) to get pre-shifted tile
-    MOV R7,#320             ; put the width of a scanline into R7
+    MOV R7,#SCANLINE             ; put the width of a scanline into R7
     MLA R11,R3,R7,R4        ; calculate the address of the destination [destination = (y * 320) + address of screen or buffer]
     ADD R11,R11,R2          ; add x to the destination address
     MOV R7,#CLIP_BOTTOM     ; move clip bottom scanline into R7
@@ -747,7 +749,7 @@ draw_16x16_tile_clipped_left_00:
     MOV R7,#16*16*4         ; put the size of a single tile in bytes into R7
     MLA R12,R0,R7,R1        ; calculate the address of the start of the tile [source = (tile number * (16 * 16)) + address of tileset]
     ADD R12,R12,R8,LSL #8   ; add 4 pixel x coordinate offset * (16*16) to get pre-shifted tile
-    MOV R7,#320             ; put the width of a scanline into R7
+    MOV R7,#SCANLINE             ; put the width of a scanline into R7
     MLA R11,R3,R7,R4        ; calculate the address of the destination [destination = (y * 320) + address of screen or buffer]
 
     TEQ R9,#0b1100
@@ -760,49 +762,49 @@ draw_16x16_tile_clipped_left_00:
 draw_16x16_tile_clipped_left_00_00:
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0}
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0}
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0}
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0}
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0}
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0}
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0}
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0}
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0}
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0}
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0}
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0}
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0}
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0}
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0}
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0}
     
@@ -812,63 +814,63 @@ draw_16x16_tile_clipped_left_00_01:
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R3}
     STR R0,[R11,#4]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R3}
     STR R0,[R11,#4]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R3}
     STR R0,[R11,#4]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R3}
     STR R0,[R11,#4]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R3}
     STR R0,[R11,#4]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R3}
     STR R0,[R11,#4]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R3}
     STR R0,[R11,#4]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R3}
     STR R0,[R11,#4]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R3}
     STR R0,[R11,#4]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R3}
     STR R0,[R11,#4]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R3}
     STR R0,[R11,#4]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R3}
     STR R0,[R11,#4]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R3}
     STR R0,[R11,#4]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R3}
     STR R0,[R11,#4]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R3}
     STR R0,[R11,#4]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R3}
     STR R0,[R11,#4]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
@@ -879,63 +881,63 @@ draw_16x16_tile_clipped_left_00_10:
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R2-R3}
     STR R0,[R11,#8]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R2-R3}
     STR R0,[R11,#8]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R2-R3}
     STR R0,[R11,#8]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R2-R3}
     STR R0,[R11,#8]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R2-R3}
     STR R0,[R11,#8]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R2-R3}
     STR R0,[R11,#8]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R2-R3}
     STR R0,[R11,#8]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R2-R3}
     STR R0,[R11,#8]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R2-R3}
     STR R0,[R11,#8]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R2-R3}
     STR R0,[R11,#8]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R2-R3}
     STR R0,[R11,#8]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R2-R3}
     STR R0,[R11,#8]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R2-R3}
     STR R0,[R11,#8]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R2-R3}
     STR R0,[R11,#8]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R2-R3}
     STR R0,[R11,#8]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R2-R3}
     STR R0,[R11,#8]       ; store 12 bytes from R1-R3 to the destination address without incrementing it
@@ -946,63 +948,63 @@ draw_16x16_tile_clipped_left_00_11:
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R1-R3}       ; store 12 bytes from R1-R3 to the destination address without incrementing it
     STR R0,[R11,#12]        ; store pre-shifted end of tile
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R1-R3}       ; store 12 bytes from R1-R3 to the destination address without incrementing it
     STR R0,[R11,#12]        ; store pre-shifted end of tile
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R1-R3}       ; store 12 bytes from R1-R3 to the destination address without incrementing it
     STR R0,[R11,#12]        ; store pre-shifted end of tile
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R1-R3}       ; store 12 bytes from R1-R3 to the destination address without incrementing it
     STR R0,[R11,#12]        ; store pre-shifted end of tile
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R1-R3}       ; store 12 bytes from R1-R3 to the destination address without incrementing it
     STR R0,[R11,#12]        ; store pre-shifted end of tile
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R1-R3}       ; store 12 bytes from R1-R3 to the destination address without incrementing it
     STR R0,[R11,#12]        ; store pre-shifted end of tile
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R1-R3}       ; store 12 bytes from R1-R3 to the destination address without incrementing it
     STR R0,[R11,#12]        ; store pre-shifted end of tile
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R1-R3}       ; store 12 bytes from R1-R3 to the destination address without incrementing it
     STR R0,[R11,#12]        ; store pre-shifted end of tile
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R1-R3}       ; store 12 bytes from R1-R3 to the destination address without incrementing it
     STR R0,[R11,#12]        ; store pre-shifted end of tile
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R1-R3}       ; store 12 bytes from R1-R3 to the destination address without incrementing it
     STR R0,[R11,#12]        ; store pre-shifted end of tile
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R1-R3}       ; store 12 bytes from R1-R3 to the destination address without incrementing it
     STR R0,[R11,#12]        ; store pre-shifted end of tile
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R1-R3}       ; store 12 bytes from R1-R3 to the destination address without incrementing it
     STR R0,[R11,#12]        ; store pre-shifted end of tile
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R1-R3}       ; store 12 bytes from R1-R3 to the destination address without incrementing it
     STR R0,[R11,#12]        ; store pre-shifted end of tile
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R1-R3}       ; store 12 bytes from R1-R3 to the destination address without incrementing it
     STR R0,[R11,#12]        ; store pre-shifted end of tile
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R1-R3}       ; store 12 bytes from R1-R3 to the destination address without incrementing it
     STR R0,[R11,#12]        ; store pre-shifted end of tile
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R1-R3}       ; store 12 bytes from R1-R3 to the destination address without incrementing it
     STR R0,[R11,#12]        ; store pre-shifted end of tile
@@ -1018,7 +1020,7 @@ draw_16x16_tile_clipped_right:
     MOV R7,#16*16*4         ; put the size of a single tile in bytes into R7
     MLA R12,R0,R7,R1        ; calculate the address of the start of the tile [source = (tile number * (16 * 16)) + address of tileset]
     ADD R12,R12,R8,LSL #8   ; add 4 pixel x coordinate offset * (16*16) to get pre-shifted tile
-    MOV R7,#320             ; put the width of a scanline into R7
+    MOV R7,#SCANLINE             ; put the width of a scanline into R7
     MLA R11,R3,R7,R4        ; calculate the address of the destination [destination = (y * 320) + address of screen or buffer]
     ADD R11,R11,R2          ; add x to the destination address
 
@@ -1042,49 +1044,49 @@ draw_16x16_tile_clipped_right_00:
 draw_16x16_tile_clipped_right_00_00:
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R2}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R2}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R2}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R2}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R2}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R2}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R2}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R2}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R2}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R2}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R2}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R2}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R2}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R2}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R2}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R2}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
     
@@ -1098,7 +1100,7 @@ draw_16x16_tile_clipped_right_00_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -1107,7 +1109,7 @@ draw_16x16_tile_clipped_right_00_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -1116,7 +1118,7 @@ draw_16x16_tile_clipped_right_00_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -1125,7 +1127,7 @@ draw_16x16_tile_clipped_right_00_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -1134,7 +1136,7 @@ draw_16x16_tile_clipped_right_00_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -1143,7 +1145,7 @@ draw_16x16_tile_clipped_right_00_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -1152,7 +1154,7 @@ draw_16x16_tile_clipped_right_00_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -1161,7 +1163,7 @@ draw_16x16_tile_clipped_right_00_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -1170,7 +1172,7 @@ draw_16x16_tile_clipped_right_00_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -1179,7 +1181,7 @@ draw_16x16_tile_clipped_right_00_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -1188,7 +1190,7 @@ draw_16x16_tile_clipped_right_00_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -1197,7 +1199,7 @@ draw_16x16_tile_clipped_right_00_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -1206,7 +1208,7 @@ draw_16x16_tile_clipped_right_00_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -1215,7 +1217,7 @@ draw_16x16_tile_clipped_right_00_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -1224,7 +1226,7 @@ draw_16x16_tile_clipped_right_00_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -1246,7 +1248,7 @@ draw_16x16_tile_clipped_right_00_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -1257,7 +1259,7 @@ draw_16x16_tile_clipped_right_00_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -1268,7 +1270,7 @@ draw_16x16_tile_clipped_right_00_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -1279,7 +1281,7 @@ draw_16x16_tile_clipped_right_00_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -1290,7 +1292,7 @@ draw_16x16_tile_clipped_right_00_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -1301,7 +1303,7 @@ draw_16x16_tile_clipped_right_00_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -1312,7 +1314,7 @@ draw_16x16_tile_clipped_right_00_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -1323,7 +1325,7 @@ draw_16x16_tile_clipped_right_00_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -1334,7 +1336,7 @@ draw_16x16_tile_clipped_right_00_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -1345,7 +1347,7 @@ draw_16x16_tile_clipped_right_00_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -1356,7 +1358,7 @@ draw_16x16_tile_clipped_right_00_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -1367,7 +1369,7 @@ draw_16x16_tile_clipped_right_00_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -1378,7 +1380,7 @@ draw_16x16_tile_clipped_right_00_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -1389,7 +1391,7 @@ draw_16x16_tile_clipped_right_00_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -1400,7 +1402,7 @@ draw_16x16_tile_clipped_right_00_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -1411,7 +1413,7 @@ draw_16x16_tile_clipped_right_00_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     B draw_16x16_tile_exit  ; branch to exit function
 
@@ -1423,7 +1425,7 @@ draw_16x16_tile_clipped_right_00_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -1432,7 +1434,7 @@ draw_16x16_tile_clipped_right_00_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -1441,7 +1443,7 @@ draw_16x16_tile_clipped_right_00_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -1450,7 +1452,7 @@ draw_16x16_tile_clipped_right_00_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -1459,7 +1461,7 @@ draw_16x16_tile_clipped_right_00_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -1468,7 +1470,7 @@ draw_16x16_tile_clipped_right_00_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -1477,7 +1479,7 @@ draw_16x16_tile_clipped_right_00_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -1486,7 +1488,7 @@ draw_16x16_tile_clipped_right_00_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -1495,7 +1497,7 @@ draw_16x16_tile_clipped_right_00_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -1504,7 +1506,7 @@ draw_16x16_tile_clipped_right_00_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -1513,7 +1515,7 @@ draw_16x16_tile_clipped_right_00_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -1522,7 +1524,7 @@ draw_16x16_tile_clipped_right_00_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -1531,7 +1533,7 @@ draw_16x16_tile_clipped_right_00_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -1540,7 +1542,7 @@ draw_16x16_tile_clipped_right_00_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -1549,7 +1551,7 @@ draw_16x16_tile_clipped_right_00_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -1558,7 +1560,7 @@ draw_16x16_tile_clipped_right_00_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     B draw_16x16_tile_exit  ; branch to exit function
 
@@ -1575,49 +1577,49 @@ draw_16x16_tile_clipped_right_11:
 draw_16x16_tile_clipped_right_11_00:
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
 
@@ -1631,7 +1633,7 @@ draw_16x16_tile_clipped_right_11_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -1640,7 +1642,7 @@ draw_16x16_tile_clipped_right_11_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -1649,7 +1651,7 @@ draw_16x16_tile_clipped_right_11_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -1658,7 +1660,7 @@ draw_16x16_tile_clipped_right_11_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -1667,7 +1669,7 @@ draw_16x16_tile_clipped_right_11_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -1676,7 +1678,7 @@ draw_16x16_tile_clipped_right_11_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -1685,7 +1687,7 @@ draw_16x16_tile_clipped_right_11_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -1694,7 +1696,7 @@ draw_16x16_tile_clipped_right_11_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -1703,7 +1705,7 @@ draw_16x16_tile_clipped_right_11_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -1712,7 +1714,7 @@ draw_16x16_tile_clipped_right_11_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -1721,7 +1723,7 @@ draw_16x16_tile_clipped_right_11_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -1730,7 +1732,7 @@ draw_16x16_tile_clipped_right_11_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -1739,7 +1741,7 @@ draw_16x16_tile_clipped_right_11_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -1748,7 +1750,7 @@ draw_16x16_tile_clipped_right_11_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -1757,7 +1759,7 @@ draw_16x16_tile_clipped_right_11_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -1779,7 +1781,7 @@ draw_16x16_tile_clipped_right_11_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -1790,7 +1792,7 @@ draw_16x16_tile_clipped_right_11_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -1801,7 +1803,7 @@ draw_16x16_tile_clipped_right_11_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -1812,7 +1814,7 @@ draw_16x16_tile_clipped_right_11_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -1823,7 +1825,7 @@ draw_16x16_tile_clipped_right_11_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -1834,7 +1836,7 @@ draw_16x16_tile_clipped_right_11_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -1845,7 +1847,7 @@ draw_16x16_tile_clipped_right_11_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -1856,7 +1858,7 @@ draw_16x16_tile_clipped_right_11_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -1867,7 +1869,7 @@ draw_16x16_tile_clipped_right_11_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -1878,7 +1880,7 @@ draw_16x16_tile_clipped_right_11_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -1889,7 +1891,7 @@ draw_16x16_tile_clipped_right_11_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -1900,7 +1902,7 @@ draw_16x16_tile_clipped_right_11_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -1911,7 +1913,7 @@ draw_16x16_tile_clipped_right_11_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -1922,7 +1924,7 @@ draw_16x16_tile_clipped_right_11_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -1933,7 +1935,7 @@ draw_16x16_tile_clipped_right_11_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -1944,7 +1946,7 @@ draw_16x16_tile_clipped_right_11_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     B draw_16x16_tile_exit  ; branch to exit function
 
@@ -1956,7 +1958,7 @@ draw_16x16_tile_clipped_right_11_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -1965,7 +1967,7 @@ draw_16x16_tile_clipped_right_11_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -1974,7 +1976,7 @@ draw_16x16_tile_clipped_right_11_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -1983,7 +1985,7 @@ draw_16x16_tile_clipped_right_11_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -1992,7 +1994,7 @@ draw_16x16_tile_clipped_right_11_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -2001,7 +2003,7 @@ draw_16x16_tile_clipped_right_11_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -2010,7 +2012,7 @@ draw_16x16_tile_clipped_right_11_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -2019,7 +2021,7 @@ draw_16x16_tile_clipped_right_11_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -2028,7 +2030,7 @@ draw_16x16_tile_clipped_right_11_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -2037,7 +2039,7 @@ draw_16x16_tile_clipped_right_11_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -2046,7 +2048,7 @@ draw_16x16_tile_clipped_right_11_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -2055,7 +2057,7 @@ draw_16x16_tile_clipped_right_11_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -2064,7 +2066,7 @@ draw_16x16_tile_clipped_right_11_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -2073,7 +2075,7 @@ draw_16x16_tile_clipped_right_11_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -2082,7 +2084,7 @@ draw_16x16_tile_clipped_right_11_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -2091,7 +2093,7 @@ draw_16x16_tile_clipped_right_11_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     B draw_16x16_tile_exit  ; branch to exit function
 
@@ -2108,49 +2110,49 @@ draw_16x16_tile_clipped_right_10:
 draw_16x16_tile_clipped_right_10_00:
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R1}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R1}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R1}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R1}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R1}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R1}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R1}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R1}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R1}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R1}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R1}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R1}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R1}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R1}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R1}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R1}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
 
@@ -2164,7 +2166,7 @@ draw_16x16_tile_clipped_right_10_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -2173,7 +2175,7 @@ draw_16x16_tile_clipped_right_10_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -2182,7 +2184,7 @@ draw_16x16_tile_clipped_right_10_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -2191,7 +2193,7 @@ draw_16x16_tile_clipped_right_10_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -2200,7 +2202,7 @@ draw_16x16_tile_clipped_right_10_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -2209,7 +2211,7 @@ draw_16x16_tile_clipped_right_10_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -2218,7 +2220,7 @@ draw_16x16_tile_clipped_right_10_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -2227,7 +2229,7 @@ draw_16x16_tile_clipped_right_10_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -2236,7 +2238,7 @@ draw_16x16_tile_clipped_right_10_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -2245,7 +2247,7 @@ draw_16x16_tile_clipped_right_10_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -2254,7 +2256,7 @@ draw_16x16_tile_clipped_right_10_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -2263,7 +2265,7 @@ draw_16x16_tile_clipped_right_10_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -2272,7 +2274,7 @@ draw_16x16_tile_clipped_right_10_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -2281,7 +2283,7 @@ draw_16x16_tile_clipped_right_10_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -2290,7 +2292,7 @@ draw_16x16_tile_clipped_right_10_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -2312,7 +2314,7 @@ draw_16x16_tile_clipped_right_10_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -2323,7 +2325,7 @@ draw_16x16_tile_clipped_right_10_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -2334,7 +2336,7 @@ draw_16x16_tile_clipped_right_10_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -2345,7 +2347,7 @@ draw_16x16_tile_clipped_right_10_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -2356,7 +2358,7 @@ draw_16x16_tile_clipped_right_10_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -2367,7 +2369,7 @@ draw_16x16_tile_clipped_right_10_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -2378,7 +2380,7 @@ draw_16x16_tile_clipped_right_10_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -2389,7 +2391,7 @@ draw_16x16_tile_clipped_right_10_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -2400,7 +2402,7 @@ draw_16x16_tile_clipped_right_10_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -2411,7 +2413,7 @@ draw_16x16_tile_clipped_right_10_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -2422,7 +2424,7 @@ draw_16x16_tile_clipped_right_10_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -2433,7 +2435,7 @@ draw_16x16_tile_clipped_right_10_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -2444,7 +2446,7 @@ draw_16x16_tile_clipped_right_10_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -2455,7 +2457,7 @@ draw_16x16_tile_clipped_right_10_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -2466,7 +2468,7 @@ draw_16x16_tile_clipped_right_10_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -2477,7 +2479,7 @@ draw_16x16_tile_clipped_right_10_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     B draw_16x16_tile_exit  ; branch to exit function
 
@@ -2489,7 +2491,7 @@ draw_16x16_tile_clipped_right_10_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -2498,7 +2500,7 @@ draw_16x16_tile_clipped_right_10_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -2507,7 +2509,7 @@ draw_16x16_tile_clipped_right_10_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -2516,7 +2518,7 @@ draw_16x16_tile_clipped_right_10_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -2525,7 +2527,7 @@ draw_16x16_tile_clipped_right_10_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -2534,7 +2536,7 @@ draw_16x16_tile_clipped_right_10_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -2543,7 +2545,7 @@ draw_16x16_tile_clipped_right_10_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -2552,7 +2554,7 @@ draw_16x16_tile_clipped_right_10_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -2561,7 +2563,7 @@ draw_16x16_tile_clipped_right_10_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -2570,7 +2572,7 @@ draw_16x16_tile_clipped_right_10_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -2579,7 +2581,7 @@ draw_16x16_tile_clipped_right_10_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -2588,7 +2590,7 @@ draw_16x16_tile_clipped_right_10_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -2597,7 +2599,7 @@ draw_16x16_tile_clipped_right_10_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -2606,7 +2608,7 @@ draw_16x16_tile_clipped_right_10_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -2615,7 +2617,7 @@ draw_16x16_tile_clipped_right_10_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -2624,7 +2626,7 @@ draw_16x16_tile_clipped_right_10_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     B draw_16x16_tile_exit  ; branch to exit function
 draw_16x16_tile_clipped_right_01:
@@ -2640,49 +2642,49 @@ draw_16x16_tile_clipped_right_01:
 draw_16x16_tile_clipped_right_01_00:
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R2}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R2}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R2}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R2}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R2}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R2}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R2}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R2}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R2}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R2}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R2}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R2}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R2}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R2}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R2}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
     STMIA R11,{R0-R2}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
 
@@ -2695,7 +2697,7 @@ draw_16x16_tile_clipped_right_01_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -2704,7 +2706,7 @@ draw_16x16_tile_clipped_right_01_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -2713,7 +2715,7 @@ draw_16x16_tile_clipped_right_01_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -2722,7 +2724,7 @@ draw_16x16_tile_clipped_right_01_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -2731,7 +2733,7 @@ draw_16x16_tile_clipped_right_01_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -2740,7 +2742,7 @@ draw_16x16_tile_clipped_right_01_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -2749,7 +2751,7 @@ draw_16x16_tile_clipped_right_01_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -2758,7 +2760,7 @@ draw_16x16_tile_clipped_right_01_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -2767,7 +2769,7 @@ draw_16x16_tile_clipped_right_01_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -2776,7 +2778,7 @@ draw_16x16_tile_clipped_right_01_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -2785,7 +2787,7 @@ draw_16x16_tile_clipped_right_01_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -2794,7 +2796,7 @@ draw_16x16_tile_clipped_right_01_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -2803,7 +2805,7 @@ draw_16x16_tile_clipped_right_01_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -2812,7 +2814,7 @@ draw_16x16_tile_clipped_right_01_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -2821,7 +2823,7 @@ draw_16x16_tile_clipped_right_01_01:
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
@@ -2843,7 +2845,7 @@ draw_16x16_tile_clipped_right_01_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -2854,7 +2856,7 @@ draw_16x16_tile_clipped_right_01_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -2865,7 +2867,7 @@ draw_16x16_tile_clipped_right_01_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -2876,7 +2878,7 @@ draw_16x16_tile_clipped_right_01_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -2887,7 +2889,7 @@ draw_16x16_tile_clipped_right_01_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -2898,7 +2900,7 @@ draw_16x16_tile_clipped_right_01_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -2909,7 +2911,7 @@ draw_16x16_tile_clipped_right_01_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -2920,7 +2922,7 @@ draw_16x16_tile_clipped_right_01_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -2931,7 +2933,7 @@ draw_16x16_tile_clipped_right_01_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -2942,7 +2944,7 @@ draw_16x16_tile_clipped_right_01_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -2953,7 +2955,7 @@ draw_16x16_tile_clipped_right_01_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -2964,7 +2966,7 @@ draw_16x16_tile_clipped_right_01_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -2975,7 +2977,7 @@ draw_16x16_tile_clipped_right_01_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -2986,7 +2988,7 @@ draw_16x16_tile_clipped_right_01_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -2997,7 +2999,7 @@ draw_16x16_tile_clipped_right_01_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
@@ -3008,7 +3010,7 @@ draw_16x16_tile_clipped_right_01_10:
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     B draw_16x16_tile_exit  ; branch to exit function
 draw_16x16_tile_clipped_right_01_11:
@@ -3019,7 +3021,7 @@ draw_16x16_tile_clipped_right_01_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -3028,7 +3030,7 @@ draw_16x16_tile_clipped_right_01_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -3037,7 +3039,7 @@ draw_16x16_tile_clipped_right_01_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -3046,7 +3048,7 @@ draw_16x16_tile_clipped_right_01_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -3055,7 +3057,7 @@ draw_16x16_tile_clipped_right_01_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -3064,7 +3066,7 @@ draw_16x16_tile_clipped_right_01_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -3073,7 +3075,7 @@ draw_16x16_tile_clipped_right_01_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -3082,7 +3084,7 @@ draw_16x16_tile_clipped_right_01_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -3091,7 +3093,7 @@ draw_16x16_tile_clipped_right_01_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -3100,7 +3102,7 @@ draw_16x16_tile_clipped_right_01_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -3109,7 +3111,7 @@ draw_16x16_tile_clipped_right_01_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -3118,7 +3120,7 @@ draw_16x16_tile_clipped_right_01_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -3127,7 +3129,7 @@ draw_16x16_tile_clipped_right_01_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -3136,7 +3138,7 @@ draw_16x16_tile_clipped_right_01_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -3145,7 +3147,7 @@ draw_16x16_tile_clipped_right_01_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
@@ -3154,7 +3156,7 @@ draw_16x16_tile_clipped_right_01_11:
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 16 bytes from R0-R3 to the destination address with incrementing it
-    ADD R11,R11,#320        ; move destination address to the next scanline
+    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     B draw_16x16_tile_exit  ; branch to exit function
 

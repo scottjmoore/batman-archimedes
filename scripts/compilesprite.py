@@ -10,6 +10,7 @@ from PIL import Image
 from array import *
 
 CLIP_BOTTOM=208
+SCANLINE=336
 
 parser = argparse.ArgumentParser(description='Compile indexed color PNG sprite to Acorn ARM assembler.')
 parser.add_argument('-i', '--infile', nargs='+', type=argparse.FileType('rb'),default=sys.stdin)
@@ -53,9 +54,9 @@ for infile, outfile in zip(args.infile, args.outfile):
     f_out.write('\ndraw_'+label_name+'_sprite:\n')
 
     f_out.write('\tSTMFD SP!, {R0-R2,R11}\n')
-    f_out.write('\tCMP R1,#0\n')
+    f_out.write('\tCMP R1,#-16\n')
     f_out.write('\tBLT draw_'+label_name+'_sprite_exit\n')
-    f_out.write('\tCMP R1,#'+f'{320 - sprite_width}\n')
+    f_out.write('\tCMP R1,#'+f'{SCANLINE - 16}\n')
     f_out.write('\tBGE draw_'+label_name+'_sprite_exit\n')
     f_out.write('\tCMP R2,#'+f'{CLIP_BOTTOM}\n')
     f_out.write('\tBGE draw_'+label_name+'_sprite_exit\n')
@@ -67,7 +68,7 @@ for infile, outfile in zip(args.infile, args.outfile):
     f_out.write('\tMOVGE R0,#0\n')
     f_out.write('\tMOV R0,R0,LSL #2\n')
     f_out.write('\tADD R11,R11,R1\n')
-    f_out.write('\tMOV R1,#320\n')
+    f_out.write('\tMOV R1,#'+f'{SCANLINE}\n')
     f_out.write('\tCMP R2,#0\n')
     f_out.write('\tMLAGT R11,R1,R2,R11\n')
     f_out.write('\tADR R1,'+label_name+'_sprites\n')
@@ -125,7 +126,7 @@ for infile, outfile in zip(args.infile, args.outfile):
                         for x in frame[i,j]:
                             f_out.write('\tSTRB R0,[R11,#'+f'{x:d}]\n')
                         
-                f_out.write('\tADD R11,R11,#320\n')
+                f_out.write('\tADD R11,R11,#'+f'{SCANLINE}\n')
                 f_out.write('\tADD R2,R2,#1\n')
                 f_out.write('\tCMP R2,#'+f'{CLIP_BOTTOM}\n')
                 f_out.write('\tBEQ '+label_name+f'_sprite_{tile}_exit\n')

@@ -58,3 +58,35 @@ vidc_set_border_colour:
     STR R0,[R1]
     MOV PC,R14
 
+vidc_set_HBSR:
+    MOV R0,#0b10001000 << 24
+    MOV R1,R1,LSL #22
+    ORR R0,R0,R1,LSR #8
+    MOV R1,#VIDC
+    STR R0,[R1]
+    MOV PC,R14
+
+vidc_set_HDSR:
+    MOV R0,#0x8c << 24
+    MOV R1,R1,LSL #22
+    ORR R0,R0,R1,LSR #8
+    MOV R1,#VIDC
+    STR R0,[R1]
+    MOV PC,R14
+
+vidc_set_HBER:
+    MOV R0,#0b10010100 << 24
+    MOV R1,R1,LSL #22
+    ORR R0,R0,R1,LSR #8
+    MOV R1,#VIDC
+    STR R0,[R1]
+    MOV PC,R14
+
+vidc_set_HDER:
+    MOV R0,#0b10010000 << 24
+    MOV R1,R1,LSL #22
+    ORR R0,R0,R1,LSR #8
+    MOV R1,#VIDC
+    STR R0,[R1]
+    MOV PC,R14
+
