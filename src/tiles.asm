@@ -11,11 +11,11 @@
 ;   ****************************************************************
 
 .set    CLIP_TOP,       0
-.set    CLIP_BOTTOM,    208
+.set    CLIP_BOTTOM,    184
 .set    CLIP_LEFT,      0
-.set    CLIP_RIGHT,     320
+.set    CLIP_RIGHT,     352
 
-.set    SCANLINE,       336
+.set    SCANLINE,       352
 
 ;   ****************************************************************
 ;       draw_16x16_tile

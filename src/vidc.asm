@@ -90,3 +90,19 @@ vidc_set_HDER:
     STR R0,[R1]
     MOV PC,R14
 
+vidc_set_VDSR:
+    MOV R0,#0xac << 24
+    MOV R1,R1,LSL #22
+    ORR R0,R0,R1,LSR #8
+    MOV R1,#VIDC
+    STR R0,[R1]
+    MOV PC,R14
+
+vidc_set_VDER:
+    MOV R0,#0xb0 << 24
+    MOV R1,R1,LSL #22
+    ORR R0,R0,R1,LSR #8
+    MOV R1,#VIDC
+    STR R0,[R1]
+    MOV PC,R14
+

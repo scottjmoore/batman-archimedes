@@ -43,7 +43,7 @@ stack:
 
 .include "build/sincos.asm"
 
-.set    SCANLINE,   336
+.set    SCANLINE,   352
 
 swap_display_buffers:
     STMFD SP!, {R0-R2,R14}
@@ -1697,10 +1697,10 @@ draw_tile_map_loop:
     ADD R2,R2,#16
     LDRB R0,[R10,#19]
     BL draw_16x16_tile
-    ; ADD R2,R2,#16
-    ; LDRB R0,[R10,#20]
-    ; BL draw_16x16_tile
-    SUB R2,R2,#19 * 16
+    ADD R2,R2,#16
+    LDRB R0,[R10,#20]
+    BL draw_16x16_tile
+    SUB R2,R2,#20 * 16
     ADD R3,R3,#16
     ADD R10,R10,#128
     CMP R3,#CLIP_BOTTOM
@@ -1776,8 +1776,17 @@ main:
     LDR R1,[R12,#0]
     ADD R1,R1,#SCANLINE
     STR R1,[R12,#0]
-    ADD R1,R1,#SCANLINE*256
+    ADD R1,R1,#SCANLINE*233
     STR R1,[R12,#4]
+
+    MOV R1,#45
+    BL vidc_set_HDSR
+    MOV R1,#221
+    BL vidc_set_HDER
+    MOV R1,#47
+    BL vidc_set_VDSR
+    MOV R1,#279
+    BL vidc_set_VDER
 
         B main_draw_tile_map
 
@@ -1864,7 +1873,7 @@ main_draw_tile_map:
     MLA R1,R2,R3,R1
     MOV R2,#48
     BL copy_buffer_to_screen
-    ADD R1,R1,#SCANLINE*256
+    ADD R1,R1,#SCANLINE*233
     BL copy_buffer_to_screen
 
 main_draw_tile_map_loop:
@@ -2267,9 +2276,6 @@ Clear_Edges_Loop:
     MOV R1,#0b000011110000
     BL vidc_set_border_colour
 
-    MOV R1,#45
-    BL vidc_set_HDSR
-
     LDMFD SP!, {R0,R1,R11}
     LDMFD SP!, {R0-R8}
 
@@ -2448,7 +2454,7 @@ vdu_variables_screen_start_buffer:
     .4byte 0x00000000
 
 memc_address_screen_start:
-    .4byte (SCANLINE * 257) >> 2
+    .4byte (SCANLINE * 234) >> 2
     .4byte SCANLINE >> 2
 
     .align 4

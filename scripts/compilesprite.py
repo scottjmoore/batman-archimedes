@@ -9,8 +9,8 @@ from pathlib import Path
 from PIL import Image
 from array import *
 
-CLIP_BOTTOM=208
-SCANLINE=336
+CLIP_BOTTOM=184
+SCANLINE=352
 
 parser = argparse.ArgumentParser(description='Compile indexed color PNG sprite to Acorn ARM assembler.')
 parser.add_argument('-i', '--infile', nargs='+', type=argparse.FileType('rb'),default=sys.stdin)
