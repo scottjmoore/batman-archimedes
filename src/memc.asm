@@ -15,8 +15,7 @@
 ;   ****************************************************************
 ;       memc_set_display_start
 ;   ----------------------------------------------------------------
-;       Copy 4 bytes from a register to the screen or display
-;       buffer, function assumes a 320 byte wide scanline width.
+;       Sets the MEMC register for video display start.
 ;   ----------------------------------------------------------------
 ;       Parameters
 ;   ----------------------------------------------------------------
