@@ -198,6 +198,7 @@ copy_buffer_to_screen_loop:     ; start of copy loop
     STMIA R11!,{R0-R9}          ; store 40 bytes from R0-R9 to destination address
     LDMIA R12!,{R0-R9}          ; load 40 bytes from source into R0-R9
     STMIA R11!,{R0-R9}          ; store 40 bytes from R0-R9 to destination address
+    ADD R11,R11,#SCANLINE-320
     SUBS R10,R10,#1             ; decrease number of scanlines to copy by 1
     BNE copy_buffer_to_screen_loop      ; if number of scanlines left to copy is not zero branch back to start of loop
 
@@ -1868,6 +1869,7 @@ main_draw_tile_map:
 
     ADRL R0,status_bar
     LDR R1,[R12]
+    ADD R1,R1,#16
     MOV R2,#CLIP_BOTTOM
     MOV R3,#SCANLINE
     MLA R1,R2,R3,R1
@@ -2202,7 +2204,7 @@ draw_intro_font_loop:
     MOV R1,R0
     MOV R2,R0
     MOV R3,R0
-    MOV R9,#13
+    MOV R9,#11
 
 Clear_Edges_Loop:
     STMIA R11,{R0-R3}
@@ -2271,6 +2273,37 @@ Clear_Edges_Loop:
     ADD R10,R10,#SCANLINE
     SUBS R9,R9,#1
     BNE Clear_Edges_Loop
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
     STMIA R11,{R0-R3}
 
     MOV R1,#0b000011110000

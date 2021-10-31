@@ -34,7 +34,7 @@ build/status_bar.bin: build/status_bar.asm
 	vasmarm_std build/status_bar.asm -a2 -m2 -opt-ldrpc -opt-adr -L build/status_bar.lst -Fbin -o build/status_bar.bin
 
 build/status_bar.asm: assets/images/status_bar.png
-	./scripts/png2asm.py -i assets/images/status_bar.png -o build/status_bar.asm -sw 352 -sh 48
+	./scripts/png2asm.py -i assets/images/status_bar.png -o build/status_bar.asm -sw 320 -sh 48
 
 build/palette_fade.bin: build/palette_fade.asm
 	vasmarm_std build/palette_fade.asm -a2 -m2 -opt-ldrpc -opt-adr -L build/palette_fade.lst -Fbin -o build/palette_fade.bin
