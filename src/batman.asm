@@ -708,10 +708,10 @@ fade_screen_to_black:
 ;   ----------------------------------------------------------------
 main:
 
-    ADRL SP,stack       ; load stack pointer with our stack address
-    STMFD SP!, {R14}    ; store link register R14 onto the stack
+    ADRL SP,stack           ; load stack pointer with our stack address
+    STMFD SP!, {R14}        ; store link register R14 onto the stack
 
-    SWI OS_EnterOS      ; enter supervisor mode
+    SWI OS_EnterOS          ; enter supervisor mode
 
     VDU VDU_SelectScreenMode,15,-1,-1,-1,-1,-1,-1,-1,-1     ; change to mode 13 (320x256 256 colours) for A3000
     VDU VDU_SelectScreenMode,13,-1,-1,-1,-1,-1,-1,-1,-1     ; change to mode 13 (320x256 256 colours) for A3000
@@ -1268,9 +1268,11 @@ Clear_Edges_Loop:
 exit:
 
     BL fade_screen_to_black
+    VDU VDU_SelectScreenMode,13,-1,-1,-1,-1,-1,-1,-1,-1     ; change to mode 13 (320x256 256 colours) for A3000
 
     TEQP  PC,#0
     MOV   R0,R0
+
     LDMFD SP!, {PC}
 
 mouse_x:
