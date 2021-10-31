@@ -656,7 +656,7 @@ draw_tile_map_loop:
     ADD R3,R3,#16
     ADD R10,R10,#128
     CMP R3,#CLIP_BOTTOM
-    BLE draw_tile_map_loop
+    BLT draw_tile_map_loop
 
 draw_tile_map_exit:              ; exit loop
 
@@ -672,34 +672,31 @@ fade_screen_to_black:
     LDR R1,[R12,#0]
     LDR R2,[R12,#4]
     BL fade_buffer_with_lookup
-    MOV R0,#80*256
-    BL memc_set_display_start
-
+    BL swap_display_buffers
+    
     ADRL R0,palette_fade
-    LDR R1,[R12,#4]
-    LDR R2,[R12,#0]
+    LDR R1,[R12,#0]
+    LDR R2,[R12,#4]
     BL fade_buffer_with_lookup
-    MOV R0,#0
-    BL memc_set_display_start
+    BL swap_display_buffers
 
     ADRL R0,palette_fade
     LDR R1,[R12,#0]
     LDR R2,[R12,#4]
     BL fade_buffer_with_lookup
-    MOV R0,#80*256
-    BL memc_set_display_start
+    BL swap_display_buffers
 
     ADRL R0,palette_fade
-    LDR R1,[R12,#4]
-    LDR R2,[R12,#0]
+    LDR R1,[R12,#0]
+    LDR R2,[R12,#4]
     BL fade_buffer_with_lookup
-    MOV R0,#0
-    BL memc_set_display_start
+    BL swap_display_buffers
 
     EOR R0,R0,R0
-    LDR R1,[R12]
-    MOV R2,#256
+    LDR R1,[R12,#4]
+    MOV R2,#232
     BL copy_4byte_to_screen
+    BL swap_display_buffers
 
     LDMFD SP!, {R0-R12,R14}     ; restore all registers from the stack, including R14 Link registger
     MOV PC,R14
