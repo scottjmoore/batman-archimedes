@@ -1025,7 +1025,7 @@ No_CursorLeft_Key:
     STR R0,batman_x
     LDR R0,batman_frame
     ADD R0,R0,#1
-    CMP R0,#56
+    CMP R0,#28
     MOVEQ R0,#0
     STR R0,batman_frame
 No_CursorRight_Key:
@@ -1056,7 +1056,7 @@ No_CursorRight_Key:
     STMFD SP!, {R0,R1,R11}
     LDR R11,[R12]
     LDR R0,batman_frame
-    MOV R0,R0,LSR #3
+    MOV R0,R0,LSR #2
     LDR R1,batman_x
     LDR R2,batman_y
 
@@ -1078,6 +1078,10 @@ No_CursorRight_Key:
     SUB R1,R1,#12
     SUB R2,R2,#12
     MOV R3,#0xffff
+    BL draw_batman_sprite
+    ADD R1,R1,#32
+    SUB R2,R2,#48
+    MOV R3,#0xff00
     BL draw_batman_sprite
 
     MOV R0,#0
