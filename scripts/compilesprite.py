@@ -121,6 +121,8 @@ for infile, outfile in zip(args.infile, args.outfile):
                     if len(frame[i,j]) > 0:
                         if jj != j:
                             f_out.write('\tMOV R0,#'+f'0x{j:02x}\n')
+                            f_out.write('\tORR R0,R0,R3\n')
+                            f_out.write('\tAND R0,R0,R3,LSR #8\n')
                             ii = i
                         
                         for x in frame[i,j]:

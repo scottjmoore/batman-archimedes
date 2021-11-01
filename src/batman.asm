@@ -37,12 +37,6 @@ stack:
 .include "vidc.asm"
 .include "tiles.asm"
 
-.include "build/batman_sprites.asm"
-.include "build/explosion.asm"
-.include "build/intro_font.asm"
-
-.include "build/sincos.asm"
-
 .set    SCANLINE,   352
 
 swap_display_buffers:
@@ -956,191 +950,64 @@ No_CursorRight_Key:
     LDR R1,batman_x
     LDR R2,batman_y
 
-    BL draw_batman_sprite
-    ADD R0,R0,#1
-    AND R0,R0,#7
-    ADD R1,R1,#24
-    BL draw_batman_sprite
-    ADD R0,R0,#1
-    AND R0,R0,#7
-    ADD R1,R1,#24
-    BL draw_batman_sprite
-    ADD R0,R0,#1
-    AND R0,R0,#7
-    ADD R1,R1,#24
-    BL draw_batman_sprite
-    ADD R0,R0,#1
-    AND R0,R0,#7
-    ADD R1,R1,#24
-    BL draw_batman_sprite
-    ADD R0,R0,#1
-    AND R0,R0,#7
-    ADD R1,R1,#24
-    BL draw_batman_sprite
-    ADD R0,R0,#1
-    AND R0,R0,#7
-    ADD R1,R1,#24
-    BL draw_batman_sprite
-    ADD R0,R0,#1
-    AND R0,R0,#7
-    ADD R1,R1,#24
-    BL draw_batman_sprite
 
+    MOV R3,#0x00ff
+    BL draw_batman_sprite
+    SUB R1,R1,#12
+    SUB R2,R2,#12
+    MOV R3,#0xf800
+    BL draw_batman_sprite
+    SUB R1,R1,#12
+    SUB R2,R2,#12
+    MOV R3,#0xff00
+    BL draw_batman_sprite
+    SUB R1,R1,#12
+    SUB R2,R2,#12
+    MOV R3,#0xff03
+    BL draw_batman_sprite
+    SUB R1,R1,#12
+    SUB R2,R2,#12
+    MOV R3,#0xffff
+    BL draw_batman_sprite
+    ; SUB R1,R1,#12
+    ; SUB R2,R2,#12
+    ; TST R4,#0x1
+    ; BLEQ draw_batman_sprite
+
+    MOV R4,#0
+    MOV R6,#0
+    ADR R7,explosion_frame
+    ADR R8,explosion_x
+    ADR R9,explosion_y
+    ADR R10,explosion_yd
     LDR R11,[R12]
 
-    LDR R0,explosion_frame + 0
+animate_explosion_loop:
+    LDR R0,[R7,R6,LSL #2]
+    LDR R1,[R8,R6,LSL #2]
+    LDR R2,[R9,R6,LSL #2]
+    LDR R3,[R10,R6,LSL #2]
     ADD R0,R0,#1
     CMP R0,#40
     MOVEQ R0,#0
-    STR R0,explosion_frame + 0
+    ADD R2,R2,R3,ASR #16
+    CMP R2,#CLIP_BOTTOM - 24
+    ADDLT R3,R3,#1 << 13
+    ADDGE R3,R3,R3,ASR #1
+    SUBGE R3,R4,R3,ASR #1
+    MOVGE R2,#CLIP_BOTTOM - 24
+    STR R0,[R7,R6,LSL #2]
+    STR R2,[R9,R6,LSL #2]
+    STR R3,[R10,R6,LSL #2]
     MOV R0,R0,LSR #3
-    LDR R1,explosion_x + 0
-    LDR R2,explosion_y + 0
-    ADD R2,R2,#1
-    CMP R2,#CLIP_BOTTOM
-    MOVGE R2,#-32
-    STR R2,explosion_y + 0
-
+    MOV R3,#0xff00
     BL draw_explosion_sprite
-
-    LDR R0,explosion_frame + 4
-    ADD R0,R0,#1
-    CMP R0,#40
-    MOVEQ R0,#0
-    STR R0,explosion_frame + 4
-    MOV R0,R0,LSR #3
-    LDR R1,explosion_x + 4
-    LDR R2,explosion_y + 4
-    ADD R2,R2,#1
-    CMP R2,#CLIP_BOTTOM
-    MOVGE R2,#-32
-    STR R2,explosion_y + 4
-
-    BL draw_explosion_sprite
-
-    LDR R0,explosion_frame + 8
-    ADD R0,R0,#1
-    CMP R0,#40
-    MOVEQ R0,#0
-    STR R0,explosion_frame + 8
-    MOV R0,R0,LSR #3
-    LDR R1,explosion_x + 8
-    LDR R2,explosion_y + 8
-    ADD R2,R2,#1
-    CMP R2,#CLIP_BOTTOM
-    MOVGE R2,#-32
-    STR R2,explosion_y + 8
-
-    BL draw_explosion_sprite
-
-    LDR R0,explosion_frame + 12
-    ADD R0,R0,#1
-    CMP R0,#40
-    MOVEQ R0,#0
-    STR R0,explosion_frame + 12
-    MOV R0,R0,LSR #3
-    LDR R1,explosion_x + 12
-    LDR R2,explosion_y + 12
-    ADD R2,R2,#1
-    CMP R2,#CLIP_BOTTOM
-    MOVGE R2,#-32
-    STR R2,explosion_y + 12
-
-    BL draw_explosion_sprite
-
-    LDR R0,explosion_frame + 16
-    ADD R0,R0,#1
-    CMP R0,#40
-    MOVEQ R0,#0
-    STR R0,explosion_frame + 16
-    MOV R0,R0,LSR #3
-    LDR R1,explosion_x + 16
-    LDR R2,explosion_y + 16
-    ADD R2,R2,#1
-    CMP R2,#CLIP_BOTTOM
-    MOVGE R2,#-32
-    STR R2,explosion_y + 16
-
-    BL draw_explosion_sprite
-
-    LDR R0,explosion_frame + 20
-    ADD R0,R0,#1
-    CMP R0,#40
-    MOVEQ R0,#0
-    STR R0,explosion_frame + 20
-    MOV R0,R0,LSR #3
-    LDR R1,explosion_x + 20
-    LDR R2,explosion_y + 20
-    ADD R2,R2,#1
-    CMP R2,#CLIP_BOTTOM
-    MOVGE R2,#-32
-    STR R2,explosion_y + 20
-
-    BL draw_explosion_sprite
-
-    LDR R0,explosion_frame + 24
-    ADD R0,R0,#1
-    CMP R0,#40
-    MOVEQ R0,#0
-    STR R0,explosion_frame + 24
-    MOV R0,R0,LSR #3
-    LDR R1,explosion_x + 24
-    LDR R2,explosion_y + 24
-    ADD R2,R2,#1
-    CMP R2,#CLIP_BOTTOM
-    MOVGE R2,#-32
-    STR R2,explosion_y + 24
-
-    BL draw_explosion_sprite
-
-    LDR R0,explosion_frame + 28
-    ADD R0,R0,#1
-    CMP R0,#40
-    MOVEQ R0,#0
-    STR R0,explosion_frame + 28
-    MOV R0,R0,LSR #3
-    LDR R1,explosion_x + 28
-    LDR R2,explosion_y + 28
-    ADD R2,R2,#1
-    CMP R2,#CLIP_BOTTOM
-    MOVGE R2,#-32
-    STR R2,explosion_y + 28
-
-    BL draw_explosion_sprite
+    ADD R6,R6,#1
+    CMP R6,#11
+    BNE animate_explosion_loop
 
     MOV R1,#0b111111110000
     BL vidc_set_border_colour
-
-    MOV R0,#0
-    ADR R3,sin
-    ADR R4,cos
-    MOV R6,#96
-    LDR R7,intro_font_angle
-    ADD R7,R7,#2
-    CMP R7,#1024
-    MOVGT R7,#0
-    STR R7,intro_font_angle
-draw_intro_font_loop:
-    MOV R6,R7,LSR #1
-    AND R6,R6,#127
-    MOV R5,R0,LSL #6
-    ADD R5,R5,R7,LSL #3
-    MOV R5,R5,LSL #20
-    MOV R5,R5,LSR #20
-    LDR R1,[R3,R5]
-    MUL R1,R6,R1
-    MOV R1,R1,ASR #20
-    LDR R2,[R4,R5]
-    MUL R2,R6,R2
-    MOV R2,R2,ASR #20
-    LDR R6,mouse_x
-    ADD R1,R1,R6
-    LDR R6,mouse_y
-    ADD R2,R2,R6
-    BL draw_intro_font_sprite
-    ADD R0,R0,#1
-    CMP R0,#64
-    BLT draw_intro_font_loop
 
     MOV R1,#0b111100001111
     BL vidc_set_border_colour
@@ -1260,8 +1127,14 @@ Clear_Edges_Loop:
     LDMFD SP!, {R0,R1,R11}
     LDMFD SP!, {R0-R8}
 
+    LDR R11,[R12]
+    LDR R0,frame_count
+    ADD R0,R0,#1
+    STR R0,frame_count
+
     MOV R0,#19
     SWI OS_Byte
+
     BL swap_display_buffers
 
     B main_draw_tile_map_loop
@@ -1274,6 +1147,9 @@ exit:
     MOV   R0,R0
 
     LDMFD SP!, {PC}
+
+frame_count:
+    .4byte  0
 
 mouse_x:
     .4byte  0
@@ -1293,14 +1169,17 @@ intro_font_angle:
     .4byte 0
 
 explosion_x:
-    .4byte  16 + (32 * 0)
-    .4byte  16 + (32 * 1)
-    .4byte  16 + (32 * 2)
-    .4byte  16 + (32 * 3)
-    .4byte  16 + (32 * 4)
-    .4byte  16 + (32 * 5)
-    .4byte  16 + (32 * 6)
-    .4byte  16 + (32 * 7)
+    .4byte  (32 * 0)
+    .4byte  (32 * 1)
+    .4byte  (32 * 2)
+    .4byte  (32 * 3)
+    .4byte  (32 * 4)
+    .4byte  (32 * 5)
+    .4byte  (32 * 6)
+    .4byte  (32 * 7)
+    .4byte  (32 * 8)
+    .4byte  (32 * 9)
+    .4byte  (32 * 10)
 explosion_y:
     .4byte  -32 - (8 * 0)
     .4byte  -32 - (8 * 1)
@@ -1310,6 +1189,22 @@ explosion_y:
     .4byte  -32 - (8 * 5)
     .4byte  -32 - (8 * 6)
     .4byte  -32 - (8 * 7)
+    .4byte  -32 - (8 * 8)
+    .4byte  -32 - (8 * 9)
+    .4byte  -32 - (8 * 10)
+
+explosion_yd:
+    .4byte  0
+    .4byte  0
+    .4byte  0
+    .4byte  0
+    .4byte  0
+    .4byte  0
+    .4byte  0
+    .4byte  0
+    .4byte  0
+    .4byte  0
+    .4byte  0
 
 explosion_frame:
     .4byte 0 << 2
@@ -1320,6 +1215,9 @@ explosion_frame:
     .4byte 5 << 2
     .4byte 6 << 2
     .4byte 7 << 2
+    .4byte 0 << 2
+    .4byte 1 << 2
+    .4byte 2 << 2
 
 ;   ****************************************************************
 ;       DATA section
@@ -1453,8 +1351,8 @@ memc_address_screen_start:
 ;   ----------------------------------------------------------------
 ;       Bitmap for status bar
 ;   ----------------------------------------------------------------
-status_bar:
     .align 4
+status_bar:
     .incbin "build/status_bar.bin"
 
 
@@ -1463,8 +1361,8 @@ status_bar:
 ;   ----------------------------------------------------------------
 ;       Bitmap for main title screen
 ;   ----------------------------------------------------------------
-main_title:
     .align 4
+main_title:
     .incbin "build/main_title.bin"
 
 
@@ -1473,8 +1371,8 @@ main_title:
 ;   ----------------------------------------------------------------
 ;       Bitmap for introduction screen
 ;   ----------------------------------------------------------------
-intro_screen:
     .align 4
+intro_screen:
     .incbin "build/intro_screen.bin"
 
 
@@ -1483,8 +1381,8 @@ intro_screen:
 ;   ----------------------------------------------------------------
 ;       Bitmap for palette fade lookup table
 ;   ----------------------------------------------------------------
-palette_fade:
     .align 4
+palette_fade:
     .incbin "build/palette_fade.bin"
 
 
@@ -1493,6 +1391,13 @@ palette_fade:
 ;   ----------------------------------------------------------------
 ;       Bitmap for level 1 tileset
 ;   ----------------------------------------------------------------
-level_1_tiles:
     .align 4
+level_1_tiles:
     .incbin "build/level-1.bin"
+
+    .include "build/batman_sprites.asm"
+    .include "build/explosion.asm"
+    .include "build/intro_font.asm"
+
+    .include "build/sincos.asm"
+
