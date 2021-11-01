@@ -114,14 +114,15 @@ copy_4byte_to_screen:
     MOV R9,R0       ; move the 4 bytes to write into R1-R9
 
 copy_4byte_to_screen_loop:      ; start of copy loop
-    STMIA R11!,{R0-R9}          ; move the 4 bytes intto 40 bytes of the destination
-    STMIA R11!,{R0-R9}          ; move the 4 bytes intto 40 bytes of the destination
-    STMIA R11!,{R0-R9}          ; move the 4 bytes intto 40 bytes of the destination
-    STMIA R11!,{R0-R9}          ; move the 4 bytes intto 40 bytes of the destination
-    STMIA R11!,{R0-R9}          ; move the 4 bytes intto 40 bytes of the destination
-    STMIA R11!,{R0-R9}          ; move the 4 bytes intto 40 bytes of the destination
-    STMIA R11!,{R0-R9}          ; move the 4 bytes intto 40 bytes of the destination
-    STMIA R11!,{R0-R9}          ; move the 4 bytes intto 40 bytes of the destination
+    STMIA R11!,{R0-R9}          ; move the 4 bytes into 40 bytes of the destination
+    STMIA R11!,{R0-R9}          ; move the 4 bytes into 40 bytes of the destination
+    STMIA R11!,{R0-R9}          ; move the 4 bytes into 40 bytes of the destination
+    STMIA R11!,{R0-R9}          ; move the 4 bytes into 40 bytes of the destination
+    STMIA R11!,{R0-R9}          ; move the 4 bytes into 40 bytes of the destination
+    STMIA R11!,{R0-R9}          ; move the 4 bytes into 40 bytes of the destination
+    STMIA R11!,{R0-R9}          ; move the 4 bytes into 40 bytes of the destination
+    STMIA R11!,{R0-R9}          ; move the 4 bytes into 40 bytes of the destination
+    STMIA R11!,{R0-R7}          ; move the 4 bytes into 32 bytes of the destination
     SUBS R10,R10,#1             ; decrease number of scanlines to copy by 1
     BNE copy_4byte_to_screen_loop   ; if the number of scanlines left to copy is not zero, branch back to start of loop
 
@@ -432,26 +433,25 @@ copy_8x8_tile_to_screen:
 ;       R11     :   Unchanged
 ;   ****************************************************************
 
-; intro_font_lookup:
+intro_font_lookup:
 
-;     STMFD SP!, {R1-R12}     ; store all the registers onto the stack
+    STMFD SP!, {R1-R3}     ; store all the registers onto the stack
 
-;     ADRL R1,intro_font_lookup_table     ; load address of intro font conversion lookup table into R1
-;     MOV R3,#0                           ; move 0 into R3
+    ADRL R1,intro_font_lookup_table     ; load address of intro font conversion lookup table into R1
+    MOV R3,#0                           ; move 0 into R3
 
-; intro_font_lookup_loop:         ; start of loop
-;     LDRB R2,[R1]                ; load byte from lookup table into R2
-;     CMP R2,R0                   ; compare with ascii character to convert
-;     BEQ intro_font_lookup_exit  ; if R2==R0 then exit loop
-;     ADD R1,R1,#1                ; increase address of lookup table by 1 byte
-;     ADD R3,R3,#1                ; increase tile index by 1
-;     B intro_font_lookup_loop    ; go back to start of loop
+intro_font_lookup_loop:         ; start of loop
+    LDRB R2,[R1,R3]                ; load byte from lookup table into R2
+    CMP R2,R0                   ; compare with ascii character to convert
+    BEQ intro_font_lookup_exit  ; if R2==R0 then exit loop
+    ADD R3,R3,#1                ; increase tile index by 1
+    B intro_font_lookup_loop    ; go back to start of loop
 
-; intro_font_lookup_exit:     ; found character in lookup table
-;     MOV R0,R3               ; move tile index into R0
+intro_font_lookup_exit:     ; found character in lookup table
+    MOV R0,R3               ; move tile index into R0
 
-;     LDMFD SP!, {R1-R12}     ; restore all registers from the stack
-;     MOV PC,R14              ; return from function
+    LDMFD SP!, {R1-R3}     ; restore all registers from the stack
+    MOV PC,R14              ; return from function
 
 
 ;   ****************************************************************
@@ -464,10 +464,10 @@ copy_8x8_tile_to_screen:
 ;       Parameters
 ;   ----------------------------------------------------------------
 ;       R0      :   ascii string to draw
-;       R1      :   address of the tileset
-;       R2      :   x coordinate to draw string to
-;       R3      :   y coordinate to draw string to
-;       R4      :   destination address of screen or display buffer
+;       R1      :   x coordinate to draw string to
+;       R2      :   y coordinate to draw string to
+;       R3      :   N/A
+;       R4      :   N/A
 ;       R5      :   N/A
 ;       R6      :   N/A
 ;       R7      :   N/A
@@ -475,7 +475,7 @@ copy_8x8_tile_to_screen:
 ;       R9      :   N/A
 ;       R10     :   N/A
 ;       R11     :   N/A
-;       R11     :   N/A
+;       R11     :   destination address of screen or display buffer 
 ;   ----------------------------------------------------------------
 ;       Returns
 ;   ----------------------------------------------------------------
@@ -494,37 +494,35 @@ copy_8x8_tile_to_screen:
 ;       R11     :   Unchanged
 ;   ****************************************************************
 
-; draw_intro_font_text:
+draw_intro_font_string:
 
-;     STMFD SP!, {R0-R12,R14}     ; store all registers onto the stack
+    STMFD SP!, {R0-R12,R14}     ; store all registers onto the stack
 
-;     MOV R10,R0      ; move address of ascii string into R10
-;     EOR R0,R0,R0    ; clear R0 to zero
+    MOV R10,R0      ; move address of ascii string into R10
+    MOV R9,R1       ; keep orignal x-coordinate
 
-; draw_intro_font_text_loop:              ; start of loop
-;     LDRB R0,[R10]                       ; load 1 byte from ascii string into R0
-;     ADD R10,R10,#1                      ; increase address for ascii string by 1 byte
-;     CMP R0,#0                           ; check to see if we are at the end of a string
-;     BEQ draw_intro_font_text_exit       ; if byte is zero exit loop
-;     CMP R0,#0x0a                        ; check to see if we need to move down to the next line
-;     BEQ draw_intro_font_text_nextline   ; if byte == 0x0a goto next line section
-;     BL intro_font_lookup                ; lookup tile number from ascii character in string
-;     CMP R0,#0                           ; if tile number == 0
-;     BEQ draw_intro_font_text_skip_tile  ; skip this tile
-;     BL copy_8x8_tile_to_screen          ; draw the tile onto screen or display buffer
-; draw_intro_font_text_skip_tile:         ; skip tile section
-;     ADD R2,R2,#8                        ; move destination up by 8 bytes (width of 1 character)
-;     CMP R2,#SCANLINE                         ; check to see if we've overflowed a line
-;     BLT draw_intro_font_text_loop       ; if not go back to start of loop
-; draw_intro_font_text_nextline:          ; next line section
-;     MOV R2,#0                           ; go to start of scanline
-;     ADD R3,R3,#8                        ; increase scanline to draw to by 8 (height of 1 character)
-;     B draw_intro_font_text_loop         ; go back to start of loop
+draw_intro_font_string_loop:                ; start of loop
+    LDRB R0,[R10]                           ; load 1 byte from ascii string into R0
+    ADD R10,R10,#1                          ; increase address for ascii string by 1 byte
+    CMP R0,#0                               ; check to see if we are at the end of a string
+    BEQ draw_intro_font_string_exit         ; if byte is zero exit loop
+    CMP R0,#0x0a                            ; check to see if we need to move down to the next line
+    BEQ draw_intro_font_string_nextline     ; if byte == 0x0a goto next line section
+    BL intro_font_lookup                    ; lookup tile number from ascii character in string
+    CMP R0,#0                               ; if tile number == 0
+    BLNE draw_intro_font_sprite             ; draw the tile onto screen or display buffer
+    ADD R1,R1,#8                            ; move destination up by 8 bytes (width of 1 character)
+    CMP R1,#SCANLINE                        ; check to see if we've overflowed a line
+    BLT draw_intro_font_string_loop         ; if not go back to start of loop
+draw_intro_font_string_nextline:            ; next line section
+    MOV R1,R9                               ; go to start of scanline
+    ADD R2,R2,#8                            ; increase scanline to draw to by 8 (height of 1 character)
+    B draw_intro_font_string_loop           ; go back to start of loop
 
-; draw_intro_font_text_exit:              ; exit loop
+draw_intro_font_string_exit:                ; exit loop
 
-;     LDMFD SP!, {R0-R12,R14}     ; restore all registers from the stack, including R14 Link registger
-;     MOV PC,R14                  ; exit function
+    LDMFD SP!, {R0-R12,R14}     ; restore all registers from the stack, including R14 Link registger
+    MOV PC,R14                  ; exit function
 
 
 ;   ****************************************************************
@@ -695,6 +693,122 @@ fade_screen_to_black:
     LDMFD SP!, {R0-R12,R14}     ; restore all registers from the stack, including R14 Link registger
     MOV PC,R14
 
+clear_edges:
+    STMFD SP!, {R0-R12,R14}     ; store all registers onto the stack
+
+    LDR R11,[R12]
+    ADD R10,R11,#SCANLINE-16
+
+    EOR R0,R0,R0
+    MOV R1,R0
+    MOV R2,R0
+    MOV R3,R0
+    MOV R9,#11
+
+clear_edges_loop:
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    SUBS R9,R9,#1
+    BNE clear_edges_loop
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    ADD R10,R10,#SCANLINE
+    STMIA R11,{R0-R3}
+    STMIA R10,{R0-R3}
+    ADD R11,R11,#SCANLINE
+    STMIA R11,{R0-R3}
+
+clear_edges_exit:
+    LDMFD SP!, {R0-R12,R14}     ; restore all registers from the stack, including R14 Link registger
+    MOV PC,R14
+
 ;   ****************************************************************
 ;       main
 ;   ----------------------------------------------------------------
@@ -726,83 +840,79 @@ main:
     BL vidc_set_HDSR
     MOV R1,#221
     BL vidc_set_HDER
-    MOV R1,#47
-    BL vidc_set_VDSR
-    MOV R1,#279
-    BL vidc_set_VDER
 
-        B main_draw_tile_map
+        ; B main_draw_tile_map
 
     ADRL R0,main_title
     LDR R1,[R12]
+    ADD R1,R1,#16
     MOV R2,#256
     BL copy_buffer_to_screen
 
     SWI OS_ReadC
 
-    BL fade_screen_to_black
+    MOV R0,#0
+    LDR R1,[R12]
+    MOV R2,#256
+    BL copy_4byte_to_screen
+    BL swap_display_buffers    
+    BL copy_4byte_to_screen
 
-    ADRL R0,intro_text_1
-    ; ADRL R1,intro_font
-    MOV R2,#0
-    MOV R3,#40
-    ADRL R4,intro_screen
-    ;BL draw_intro_font_text
+    ; BL fade_screen_to_black
+
+    MOV R1,#47
+    BL vidc_set_VDSR
+    MOV R1,#279
+    BL vidc_set_VDER
 
     ADRL R0,intro_screen
     MOV R2,#1
-    MOV R3,#255
+    MOV R3,#231
     MOV R4,#SCANLINE
     MUL R5,R3,R4
 intro_screen_loop:
+    LDR R1,[R12]
+    MOV R11,R1
+    ADD R1,R1,#16
+    ADD R1,R1,R5
+    BL copy_buffer_to_screen
     STMFD SP!, {R0-R2}
+    CMP R2,#231
+    BGT intro_text_2_skip
+    ADRL R0,intro_text_2
+intro_text_2_skip:
+    CMP R2,#168
+    BGT intro_text_1_skip
+    ADRL R0,intro_text_1
+intro_text_1_skip:
+    MOV R1,#16
+    MOV R2,#64
+    MOV R3,#0xff00
+    BL draw_intro_font_string
     MOV R0,#19
     SWI OS_Byte
     LDMFD SP!, {R0-R2}
-    LDR R1,[R12]
-    ADD R1,R1,R5
-    BL copy_buffer_to_screen
+    BL swap_display_buffers
     SUB R5,R5,#SCANLINE
     ADD R2,R2,#1
-    CMP R2,#200
-    BNE intro_screen_skip_1
-
-    STMFD SP!,{R0-R4}
-    ADRL R0,intro_text_1_clear
-    ; ADRL R1,intro_font
-    MOV R2,#0
-    MOV R3,#40
-    ADRL R4,intro_screen
-    ;BL draw_intro_font_text
-    ADRL R0,intro_text_2
-    ; ADRL R1,intro_font
-    MOV R2,#0
-    MOV R3,#72
-    ADRL R4,intro_screen
-    ;BL draw_intro_font_text
-    LDMFD SP!,{R0-R4}
-
-intro_screen_skip_1:
-    CMP R2,#256
+    CMP R2,#232
     BLE intro_screen_loop
-
-    ADRL R0,intro_text_2_clear
-    ; ADRL R1,intro_font
-    MOV R2,#0
-    MOV R3,#72
-    LDR R4,[R12]
-    ;BL draw_intro_font_text
-
     ADRL R0,intro_text_3
-    ; ADRL R1,intro_font
-    MOV R2,#0
-    MOV R3,#32
-    LDR R4,[R12]
-    ;BL draw_intro_font_text
+    MOV R1,#16
+    MOV R2,#64
+    MOV R3,#0xff00
+    BL draw_intro_font_string
 
     SWI OS_ReadC
 
-    BL fade_screen_to_black
+    MOV R0,#0
+    LDR R1,[R12]
+    MOV R2,#232
+    BL copy_4byte_to_screen
+    BL swap_display_buffers    
+    BL copy_4byte_to_screen
+
+    ; BL fade_screen_to_black
 
 main_draw_tile_map:
 
@@ -969,10 +1079,80 @@ No_CursorRight_Key:
     SUB R2,R2,#12
     MOV R3,#0xffff
     BL draw_batman_sprite
-    ; SUB R1,R1,#12
-    ; SUB R2,R2,#12
-    ; TST R4,#0x1
-    ; BLEQ draw_batman_sprite
+
+    MOV R0,#0
+    LDR R1,mouse_x
+    LDR R2,mouse_y
+    MOV R3,#0xff00
+    SUB R2,R2,#24
+    BL draw_enemies_sprite
+    ADD R0,R0,#1
+    ADD R1,R1,#32
+    BL draw_enemies_sprite
+    ADD R0,R0,#1
+    ADD R1,R1,#32
+    BL draw_enemies_sprite
+    ADD R0,R0,#1
+    ADD R1,R1,#32
+    BL draw_enemies_sprite
+
+    MOV R0,#0
+    ADD R1,R1,#32
+    ADD R2,R2,#21
+    LDR R4,frame_count
+    AND R4,R4,#7
+    ADD R1,R1,R4
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
 
     MOV R4,#0
     MOV R6,#0
@@ -1006,120 +1186,10 @@ animate_explosion_loop:
     CMP R6,#11
     BNE animate_explosion_loop
 
-    MOV R1,#0b111111110000
-    BL vidc_set_border_colour
-
     MOV R1,#0b111100001111
     BL vidc_set_border_colour
 
-    LDR R11,[R12]
-    ADD R10,R11,#SCANLINE-16
-
-    EOR R0,R0,R0
-    MOV R1,R0
-    MOV R2,R0
-    MOV R3,R0
-    MOV R9,#11
-
-Clear_Edges_Loop:
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
-    ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
-    ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
-    ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
-    ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
-    ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
-    ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
-    ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
-    ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
-    ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
-    ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
-    ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
-    ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
-    ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
-    ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
-    ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
-    ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    SUBS R9,R9,#1
-    BNE Clear_Edges_Loop
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
-    ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
-    ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
-    ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
-    ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
-    ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
-    ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
-    ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
-    ADD R11,R11,#SCANLINE
-    STMIA R11,{R0-R3}
+    BL clear_edges
 
     MOV R1,#0b000011110000
     BL vidc_set_border_colour
@@ -1224,8 +1294,7 @@ explosion_frame:
 ;   ----------------------------------------------------------------
 ;       All data goes here, start by aligning to a 16 byte boundary
 ;   ----------------------------------------------------------------
-    .align 4
-
+    
 
 ;   ****************************************************************
 ;       intro_font_lookup_table
@@ -1234,8 +1303,9 @@ explosion_frame:
 ;           c = copyright symbol
 ;           b = blank character symbol
 ;   ----------------------------------------------------------------
+    .align 4
 intro_font_lookup_table:
-    .byte " 0123456789.!&cbABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    .byte " 0123456789.!&c,ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     .byte 0x00
 
 
@@ -1256,22 +1326,6 @@ intro_text_1:
 
 
 ;   ****************************************************************
-;       intro_text_1_clear
-;   ----------------------------------------------------------------
-;       Introduction screen clear part 1 text
-;   ----------------------------------------------------------------
-intro_text_1_clear:
-    .byte "         bbbbbbbbbbbbbbbbbbbbbbb       ",0x0a
-    .byte 0x0a
-    .byte 0x0a
-    .byte 0x0a
-    .byte "              bbbbbbbbbbbbb            ",0x0a
-    .byte 0x0a
-    .byte "               bbbbbbbbbbb             ",0x0a
-    .byte 0x00
-
-
-;   ****************************************************************
 ;       intro_text_2
 ;   ----------------------------------------------------------------
 ;       Introduction screen text part 2
@@ -1280,17 +1334,6 @@ intro_text_2:
     .byte "                 BATMAN                ",0x0a
     .byte 0x0a
     .byte "               THE MOVIE.              ",0
-
-
-;   ****************************************************************
-;       intro_text_2_clear
-;   ----------------------------------------------------------------
-;       Introduction screen clear part 2 text
-;   ----------------------------------------------------------------
-intro_text_2_clear:
-    .byte "                 bbbbbb                ",0x0a
-    .byte 0x0a
-    .byte "               bbbbbbbbbb              ",0
 
 
 ;   ****************************************************************
@@ -1397,6 +1440,8 @@ level_1_tiles:
 
     .include "build/batman_sprites.asm"
     .include "build/explosion.asm"
+    .include "build/enemies.asm"
+    .include "build/bullets.asm"
     .include "build/intro_font.asm"
 
     .include "build/sincos.asm"

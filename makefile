@@ -2,7 +2,7 @@ ARCULATOR = ../../sarah-walker-pcem/arculator/hostfs
 
 all: build/batman
 
-build/batman: src/batman.asm src/tiles.asm src/vidc.asm src/memc.asm build/level-1.bin build/main_title.bin build/intro_screen.bin build/intro_font.bin build/status_bar.bin build/palette_fade.bin build/level_1_map.asm build/batman_sprites.asm build/explosion.asm build/sincos.asm
+build/batman: src/batman.asm src/tiles.asm src/vidc.asm src/memc.asm build/level-1.bin build/main_title.bin build/intro_screen.bin build/intro_font.bin build/status_bar.bin build/palette_fade.bin build/level_1_map.asm build/batman_sprites.asm build/explosion.asm build/enemies.asm build/bullets.asm build/sincos.asm
 	vasmarm_std src/batman.asm -a2 -m2 -opt-ldrpc -opt-adr -L build/batman.lst -Fbin -o build/batman
 
 build/level-1.bin: build/level-1.asm
@@ -50,6 +50,12 @@ build/batman_sprites.asm: assets/sprites/batman.png
 
 build/explosion.asm: assets/sprites/explosion.png
 	./scripts/compilesprite.py -i assets/sprites/explosion.png -o build/explosion.asm -sw 32 -sh 32
+
+build/enemies.asm: assets/sprites/enemies.png
+	./scripts/compilesprite.py -i assets/sprites/enemies.png -o build/enemies.asm -sw 32 -sh 48
+
+build/bullets.asm: assets/sprites/bullets.png
+	./scripts/compilesprite.py -i assets/sprites/bullets.png -o build/bullets.asm -sw 4 -sh 4
 
 build/sincos.asm:
 	./scripts/sincos.py
