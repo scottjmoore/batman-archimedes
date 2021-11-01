@@ -571,7 +571,7 @@ draw_tile_map:
     AND R6,R4,#0b1111   ; get scanline in tile to start from
     MOV R3,R3,LSR #4    ; divide tilemap x coordinate by 16
     MOV R4,R4,LSR #4    ; divide tilemap y coordinate by 16
-    MOV R7,#128         ; move width of tilemap into R5
+    MOV R7,#256         ; move width of tilemap into R5
     MLA R10,R4,R7,R0    ; calculate top left of tilemap to draw from (source = (y * 128) + tilemap_address)
     ADD R10,R10,R3      ; add x tile to start from to tilemap source address
 
@@ -646,7 +646,7 @@ draw_tile_map_loop:
     BL draw_16x16_tile
     SUB R2,R2,#20 * 16
     ADD R3,R3,#16
-    ADD R10,R10,#128
+    ADD R10,R10,#256
     CMP R3,#CLIP_BOTTOM
     BLT draw_tile_map_loop
 
@@ -961,7 +961,7 @@ No_Z_Key:
     CMP R2,#255
     BNE No_X_Key
     ADD R3,R3,#1
-    CMP R3,#128*16
+    CMP R3,#256*16
     MOVEQ R3,#0
 No_X_Key:
     MOV R0,#129
@@ -971,7 +971,7 @@ No_X_Key:
     CMP R2,#255
     BNE No_L_Key
     ADD R4,R4,#1
-    CMP R4,#64*16
+    CMP R4,#48*16
     MOVEQ R4,#0
 No_L_Key:
     MOV R0,#129
