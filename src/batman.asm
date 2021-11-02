@@ -697,113 +697,72 @@ clear_edges:
     STMFD SP!, {R0-R12,R14}     ; store all registers onto the stack
 
     LDR R11,[R12]
-    ADD R10,R11,#SCANLINE-16
 
     EOR R0,R0,R0
     MOV R1,R0
     MOV R2,R0
     MOV R3,R0
+    MOV R4,R0
+    MOV R5,R0
+    MOV R6,R0
+    MOV R7,R0
     MOV R9,#11
 
+    STMIA R11,{R0-R3}
+    ADD R11,R11,#SCANLINE - 16
+
 clear_edges_loop:
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
+    STMIA R11,{R0-R7}
     ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
+    STMIA R11,{R0-R7}
     ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
+    STMIA R11,{R0-R7}
     ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
+    STMIA R11,{R0-R7}
     ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
+    STMIA R11,{R0-R7}
     ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
+    STMIA R11,{R0-R7}
     ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
+    STMIA R11,{R0-R7}
     ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
+    STMIA R11,{R0-R7}
     ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
+    STMIA R11,{R0-R7}
     ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
+    STMIA R11,{R0-R7}
     ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
+    STMIA R11,{R0-R7}
     ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
+    STMIA R11,{R0-R7}
     ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
+    STMIA R11,{R0-R7}
     ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
+    STMIA R11,{R0-R7}
     ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
+    STMIA R11,{R0-R7}
     ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
+    STMIA R11,{R0-R7}
     ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
     SUBS R9,R9,#1
     BNE clear_edges_loop
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
+    STMIA R11,{R0-R7}
     ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
+    STMIA R11,{R0-R7}
     ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
+    STMIA R11,{R0-R7}
     ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
+    STMIA R11,{R0-R7}
     ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
+    STMIA R11,{R0-R7}
     ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
+    STMIA R11,{R0-R7}
     ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
+    STMIA R11,{R0-R7}
     ADD R11,R11,#SCANLINE
-    ADD R10,R10,#SCANLINE
-    STMIA R11,{R0-R3}
-    STMIA R10,{R0-R3}
+    STMIA R11,{R0-R7}
     ADD R11,R11,#SCANLINE
-    STMIA R11,{R0-R3}
+    STMIA R11,{R0-R7}
 
 clear_edges_exit:
     LDMFD SP!, {R0-R12,R14}     ; restore all registers from the stack, including R14 Link registger
@@ -841,8 +800,6 @@ main:
     MOV R1,#221
     BL vidc_set_HDER
 
-        ; B main_draw_tile_map
-
     ADRL R0,main_title
     LDR R1,[R12]
     ADD R1,R1,#16
@@ -857,13 +814,14 @@ main:
     BL copy_4byte_to_screen
     BL swap_display_buffers    
     BL copy_4byte_to_screen
-
-    ; BL fade_screen_to_black
+    BL swap_display_buffers    
 
     MOV R1,#47
     BL vidc_set_VDSR
     MOV R1,#279
     BL vidc_set_VDER
+
+        B main_draw_tile_map
 
     ADRL R0,intro_screen
     MOV R2,#1
@@ -1077,11 +1035,19 @@ No_CursorRight_Key:
     BL draw_batman_sprite
     SUB R1,R1,#12
     SUB R2,R2,#12
-    MOV R3,#0xffff
+    MOV R3,#0xff10              ; 0x10 = pinkish ; 0x20 = greenish ; 0x40 = vivid greenish ; 0x80 = blueish
     BL draw_batman_sprite
-    ADD R1,R1,#32
-    SUB R2,R2,#48
-    MOV R3,#0xff00
+    SUB R1,R1,#12
+    SUB R2,R2,#12
+    MOV R3,#0xff40              ; 0x10 = pinkish ; 0x20 = greenish ; 0x40 = vivid greenish ; 0x80 = blueish
+    BL draw_batman_sprite
+    SUB R1,R1,#12
+    SUB R2,R2,#12
+    MOV R3,#0xff80              ; 0x10 = pinkish ; 0x20 = greenish ; 0x40 = vivid greenish ; 0x80 = blueish
+    BL draw_batman_sprite
+    SUB R1,R1,#12
+    SUB R2,R2,#12
+    MOV R3,#0xffff              ; 0x10 = pinkish ; 0x20 = greenish ; 0x40 = vivid greenish ; 0x80 = blueish
     BL draw_batman_sprite
 
     MOV R0,#0
