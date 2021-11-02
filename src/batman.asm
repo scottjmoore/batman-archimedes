@@ -1172,7 +1172,7 @@ animate_explosion_loop:
     LDR R2,[R9,R6,LSL #2]
     LDR R3,[R10,R6,LSL #2]
     ADD R0,R0,#1
-    CMP R0,#40
+    CMP R0,#80
     MOVEQ R0,#0
     ADD R2,R2,R3,ASR #16
     CMP R2,#CLIP_BOTTOM - 24
