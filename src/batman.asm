@@ -698,7 +698,7 @@ clear_edges:
 
     LDR R11,[R12]
 
-    EOR R0,R0,R0
+    MOV R0,#0
     MOV R1,R0
     MOV R2,R0
     MOV R3,R0
@@ -761,9 +761,7 @@ clear_edges_loop:
     STMIA R11,{R0-R7}
     ADD R11,R11,#SCANLINE
     STMIA R11,{R0-R7}
-    ADD R11,R11,#SCANLINE
-    STMIA R11,{R0-R7}
-
+    
 clear_edges_exit:
     LDMFD SP!, {R0-R12,R14}     ; restore all registers from the stack, including R14 Link registger
     MOV PC,R14
