@@ -35,7 +35,7 @@ for child in root:
         for data in child:
             if data.attrib.get("encoding") == "csv":
                 f_out.write(f"{filename.replace('-','_')}_{layer_name.lower()}:\n\t.nolist\n")
-                layer_data = [int(e) if e.isdigit() else e for e in data.text.replace("\n","0").split(",")]
+                layer_data = [int(e) if e.isdigit() else e for e in data.text.replace("\n","").split(",")]
 
                 i = 0
                 for d in layer_data:
@@ -51,46 +51,9 @@ for child in root:
                         f_out.write(f'0x{u:02x}\n')
                     else:
                         f_out.write(f'0x{u:02x},')
-                    
+
                     i = i + 1
 
                 f_out.write("\t.list\n\n")
 
 f_out.close()
-        
-# for layer in root.findall("./layer/[@name='tile_map']/data/"):
-#     try:
-#         tile_map.append(int(tile.attrib['gid'])-1)
-#     except:
-#         tile_map.append(0)
-
-# f_out = args.outfile
-
-# for tilesets in root.findall("./tileset"):
-#     f_out.write(filename+"_"+tilesets.get('name')+":\t\t\tequ $"+f'{int(tilesets.get("firstgid"))-1:04x}'+"\n")
-
-# f_out.write("\n")
-
-# if len(tile_map) > 0:
-#     f_out.write(filename+':\n')
-
-#     i = 0
-#     y = 0
-
-#     while (y < map_height):
-#         x = 0
-#         f_out.write('\t\t.byte\t$')
-
-#         while (x < map_width):
-#             f_out.write(f'{tile_map[i]:02x}')
-#             if ((x % 2) == 1) & (x < (map_width - 1)):
-#                     f_out.write(',$')
-#             x = x + 1
-#             i = i + 1
-
-#         f_out.write('\n')
-#         y = y + 1
-
-#     f_out.write(filename+'_end:\n\n')
-
-# f_out.close()

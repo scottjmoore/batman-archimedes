@@ -589,13 +589,13 @@ draw_tile_map_x_loop:
     BL draw_16x16_tile
     ADD R2,R2,#16
     ADD R8,R8,#1
-    CMP R8,#256
-    SUBEQ R8,R8,#256
+    AND R8,R8,#255
     SUBS R7,R7,#1
     BNE draw_tile_map_x_loop
     SUB R2,R2,#21 * 16
     ADD R3,R3,#16
     SUB R8,R8,#21
+    AND R8,R8,#255
     ADD R9,R9,#1
     ADD R10,R10,#256
     CMP R9,#48
@@ -826,9 +826,6 @@ intro_text_1_skip:
 
 main_draw_tile_map:
 
-    MOV R3,#0
-    MOV R4,#0
-
     ADRL R0,status_bar
     LDR R1,[R12]
     ADD R1,R1,#16
@@ -839,6 +836,9 @@ main_draw_tile_map:
     BL copy_buffer_to_screen
     ADD R1,R1,#SCANLINE*233
     BL copy_buffer_to_screen
+
+    MOV R3,#232 * 16
+    MOV R4,#47 * 16
 
 main_draw_tile_map_loop:
 
@@ -872,7 +872,7 @@ No_Z_Key:
     BNE No_X_Key
     ADD R3,R3,#1
     CMP R3,#256*16
-    MOVEQ R3,#0
+    SUBGE R3,R3,#256*16
 No_X_Key:
     MOV R0,#129
     MOV R1,#-87
@@ -882,7 +882,7 @@ No_X_Key:
     BNE No_L_Key
     ADD R4,R4,#1
     CMP R4,#48*16
-    MOVEQ R4,#0
+    SUBGE R4,R4,#48*16
 No_L_Key:
     MOV R0,#129
     MOV R1,#-56
