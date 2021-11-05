@@ -1376,7 +1376,7 @@ palette_fade:
 level_1_tiles:
     .incbin "build/level-1.bin"
 
-    .include "build/sprites/batman_sprites.asm"
+    .include "build/sprites/batman.asm"
     .include "build/sprites/explosion.asm"
     .include "build/sprites/enemies.asm"
     .include "build/sprites/bullets.asm"

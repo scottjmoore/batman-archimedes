@@ -9,7 +9,7 @@ BUILD = 	build/level-1.bin \
 			build/status_bar.bin \
 			build/palette_fade.bin
 
-SPRITES =  	build/sprites/batman_sprites.asm \
+SPRITES =  	build/sprites/batman.asm \
 			build/sprites/explosion.asm \
 			build/sprites/enemies.asm \
 			build/sprites/bullets.asm \
@@ -99,10 +99,10 @@ build/palette_fade.asm: assets/images/palette_fade.png
 		-sw 16 -sh 16
 		
 
-build/sprites/batman_sprites.asm: assets/sprites/batman.png
+build/sprites/batman.asm: assets/sprites/batman.png
 	$(COMPILESPRITE) \
 		-i assets/sprites/batman.png \
-		-o build/sprites/batman_sprites.asm \
+		-o build/sprites/batman.asm \
 		-sw 32 -sh 48
 
 
@@ -140,7 +140,7 @@ build/sprites/intro_font.asm: assets/tiles/intro_font.png
 		-o build/sprites/intro_font.asm \
 		-sw 8 -sh 8
 
-		
+
 build/level_1_map.asm: assets/maps/level-1.tmx
 	$(TMX2ASM) \
 		-i assets/maps/level-1.tmx \
