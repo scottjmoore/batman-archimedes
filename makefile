@@ -1,8 +1,30 @@
 ARCULATOR = ../../sarah-walker-pcem/arculator/hostfs
 
+SRC = 		src/batman.asm \
+			src/tiles.asm \
+			src/vidc.asm \
+			src/memc.asm
+
+BUILD = 	build/level-1.bin \
+			build/main_title.bin \
+			build/intro_screen.bin \
+			build/intro_font.bin \
+			build/status_bar.bin \
+			build/palette_fade.bin
+
+SPRITES =  	build/batman_sprites.asm \
+			build/explosion.asm \
+			build/enemies.asm \
+			build/bullets.asm \
+			build/pointers.asm
+
+LEVELS = 	build/level_1_map.asm
+
+LUTS = 		build/sincos.asm
+
 all: build/batman
 
-build/batman: src/batman.asm src/tiles.asm src/vidc.asm src/memc.asm build/level-1.bin build/main_title.bin build/intro_screen.bin build/intro_font.bin build/status_bar.bin build/palette_fade.bin build/level_1_map.asm build/batman_sprites.asm build/explosion.asm build/enemies.asm build/bullets.asm build/pointers.asm build/sincos.asm
+build/batman: $(SRC) $(BUILD) $(SPRITES) $(LEVELS) $(LUTS)
 	vasmarm_std src/batman.asm -a2 -m2 -opt-ldrpc -opt-adr -L build/batman.lst -Fbin -o build/batman
 
 build/level-1.bin: build/level-1.asm
@@ -64,7 +86,9 @@ build/sincos.asm:
 	./scripts/sincos.py
 
 clean:
-	@rm -f build/*
+	@rm -f build/*.asm
+	@rm -f build/*.bin
+	@rm -f build/*.adf
 	@rm -rf $(ARCULATOR)/!Batman
 
 deploy:
