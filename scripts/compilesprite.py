@@ -9,7 +9,7 @@ from pathlib import Path
 from PIL import Image
 from array import *
 
-CLIP_BOTTOM=184
+CLIP_BOTTOM=184 - 16
 SCANLINE=352
 
 parser = argparse.ArgumentParser(description='Compile indexed color PNG sprite to Acorn ARM assembler.')
@@ -54,7 +54,7 @@ for infile, outfile in zip(args.infile, args.outfile):
     f_out.write('\ndraw_'+label_name+'_sprite:\n')
 
     f_out.write('\tSTMFD SP!, {R0-R2,R11}\n')
-    f_out.write('\tCMP R1,#-16\n')
+    f_out.write('\tCMP R1,#'+f'{-16}\n')
     f_out.write('\tBLT draw_'+label_name+'_sprite_exit\n')
     f_out.write('\tCMP R1,#'+f'{SCANLINE - 16}\n')
     f_out.write('\tBGE draw_'+label_name+'_sprite_exit\n')
