@@ -8,15 +8,15 @@ SRC = 		src/batman.asm \
 BUILD = 	build/level-1.bin \
 			build/main_title.bin \
 			build/intro_screen.bin \
-			build/intro_font.bin \
 			build/status_bar.bin \
 			build/palette_fade.bin
 
-SPRITES =  	build/batman_sprites.asm \
-			build/explosion.asm \
-			build/enemies.asm \
-			build/bullets.asm \
-			build/pointers.asm
+SPRITES =  	build/sprites/batman_sprites.asm \
+			build/sprites/explosion.asm \
+			build/sprites/enemies.asm \
+			build/sprites/bullets.asm \
+			build/sprites/pointers.asm \
+			build/sprites/intro_font.asm
 
 LEVELS = 	build/level_1_map.asm
 
@@ -44,11 +44,6 @@ build/intro_screen.bin: build/intro_screen.asm
 build/intro_screen.asm: assets/images/intro_screen.png
 	./scripts/png2asm.py -i assets/images/intro_screen.png -o build/intro_screen.asm -sw 320 -sh 256
 
-build/intro_font.bin: build/intro_font.asm
-	vasmarm_std build/intro_font.asm -a2 -m2 -opt-ldrpc -opt-adr -L build/intro_font.lst -Fbin -o build/intro_font.bin
-build/intro_font.asm: assets/tiles/intro_font.png
-	./scripts/compilesprite.py -i assets/tiles/intro_font.png -o build/intro_font.asm -sw 8 -sh 8
-
 build/status_bar.bin: build/status_bar.asm
 	vasmarm_std build/status_bar.asm -a2 -m2 -opt-ldrpc -opt-adr -L build/status_bar.lst -Fbin -o build/status_bar.bin
 build/status_bar.asm: assets/images/status_bar.png
@@ -60,20 +55,24 @@ build/palette_fade.asm: assets/images/palette_fade.png
 	./scripts/png2asm.py -i assets/images/palette_fade.png -o build/palette_fade.asm -sw 16 -sh 16
 
 
-build/batman_sprites.asm: assets/sprites/batman.png
-	./scripts/compilesprite.py -i assets/sprites/batman.png -o build/batman_sprites.asm -sw 32 -sh 48
+build/sprites/batman_sprites.asm: assets/sprites/batman.png
+	./scripts/compilesprite.py -i assets/sprites/batman.png -o build/sprites/batman_sprites.asm -sw 32 -sh 48
 
-build/explosion.asm: assets/sprites/explosion.png
-	./scripts/compilesprite.py -i assets/sprites/explosion.png -o build/explosion.asm -sw 32 -sh 32
+build/sprites/explosion.asm: assets/sprites/explosion.png
+	./scripts/compilesprite.py -i assets/sprites/explosion.png -o build/sprites/explosion.asm -sw 32 -sh 32
 
-build/enemies.asm: assets/sprites/enemies.png
-	./scripts/compilesprite.py -i assets/sprites/enemies.png -o build/enemies.asm -sw 32 -sh 48
+build/sprites/enemies.asm: assets/sprites/enemies.png
+	./scripts/compilesprite.py -i assets/sprites/enemies.png -o build/sprites/enemies.asm -sw 32 -sh 48
 
-build/bullets.asm: assets/sprites/bullets.png
-	./scripts/compilesprite.py -i assets/sprites/bullets.png -o build/bullets.asm -sw 4 -sh 4
+build/sprites/bullets.asm: assets/sprites/bullets.png
+	./scripts/compilesprite.py -i assets/sprites/bullets.png -o build/sprites/bullets.asm -sw 4 -sh 4
 
-build/pointers.asm: assets/sprites/pointers.png
-	./scripts/compilesprite.py -i assets/sprites/pointers.png -o build/pointers.asm -sw 12 -sh 12
+build/sprites/pointers.asm: assets/sprites/pointers.png
+	./scripts/compilesprite.py -i assets/sprites/pointers.png -o build/sprites/pointers.asm -sw 12 -sh 12
+
+build/sprites/intro_font.asm: assets/tiles/intro_font.png
+	./scripts/compilesprite.py -i assets/tiles/intro_font.png -o build/sprites/intro_font.asm -sw 8 -sh 8
+
 
 
 build/level_1_map.asm: assets/maps/level-1.tmx
@@ -85,6 +84,7 @@ build/sincos.asm:
 
 
 clean:
+	@rm -f build/sprites/*.asm
 	@rm -f build/*.asm
 	@rm -f build/*.bin
 	@rm -f build/*.adf

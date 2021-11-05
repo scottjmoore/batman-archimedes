@@ -1096,6 +1096,9 @@ animate_explosion_loop:
     ADD R0,R0,#1
     CMP R0,#80
     MOVEQ R0,#0
+    ADD R1,R1,#1
+    CMP R1,#CLIP_RIGHT
+    MOVEQ R1,#CLIP_LEFT - 24
     ADD R2,R2,R3,ASR #16
     CMP R2,#CLIP_BOTTOM - 24
     ADDLT R3,R3,#1 << 13
@@ -1103,6 +1106,7 @@ animate_explosion_loop:
     SUBGE R3,R4,R3,ASR #1
     MOVGE R2,#CLIP_BOTTOM - 24
     STR R0,[R7,R6,LSL #2]
+    STR R1,[R8,R6,LSL #2]
     STR R2,[R9,R6,LSL #2]
     STR R3,[R10,R6,LSL #2]
     MOV R0,R0,LSR #3
@@ -1367,12 +1371,12 @@ palette_fade:
 level_1_tiles:
     .incbin "build/level-1.bin"
 
-    .include "build/batman_sprites.asm"
-    .include "build/explosion.asm"
-    .include "build/enemies.asm"
-    .include "build/bullets.asm"
-    .include "build/pointers.asm"
-    .include "build/intro_font.asm"
+    .include "build/sprites/batman_sprites.asm"
+    .include "build/sprites/explosion.asm"
+    .include "build/sprites/enemies.asm"
+    .include "build/sprites/bullets.asm"
+    .include "build/sprites/pointers.asm"
+    .include "build/sprites/intro_font.asm"
 
     .include "build/sincos.asm"
 
