@@ -22,11 +22,13 @@ LEVELS = 	build/level_1_map.asm
 
 LUTS = 		build/sincos.asm
 
+DEBUG =		-D DEBUG=0
+
 all: build/batman
 
 
 build/batman: $(SRC) $(BUILD) $(SPRITES) $(LEVELS) $(LUTS)
-	vasmarm_std src/batman.asm -a2 -m2 -opt-ldrpc -opt-adr -L build/batman.lst -Fbin -o build/batman
+	vasmarm_std src/batman.asm $(DEBUG) -a2 -m2 -opt-ldrpc -opt-adr -L build/batman.lst -Fbin -o build/batman
 
 
 build/level-1.bin: build/level-1.asm

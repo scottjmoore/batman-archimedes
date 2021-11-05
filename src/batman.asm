@@ -842,10 +842,10 @@ main_draw_tile_map:
 
 main_draw_tile_map_loop:
 
-    STMFD SP!, {R0,R1}
-    MOV R1,#15 << 8
-    BL vidc_set_border_colour
-    LDMFD SP!, {R0,R1}
+    .ifne DEBUG
+        MOV R1,#0b111100000000
+        BL vidc_set_border_colour
+    .endif
 
     ADRL R0,level_1_map_tilemap
     ADRL R1,level_1_tiles
@@ -959,12 +959,13 @@ No_CursorRight_Key:
     STR R2,mouse_x
     STR R3,mouse_y
 
-    STMFD SP!,{R0-R1}
-    MOV R1,#0b000011111111
-    BL vidc_set_border_colour
-    LDMFD SP!,{R0-R1}
+    STMFD SP!,{R0-R1,R11}
 
-    STMFD SP!, {R0,R1,R11}
+    .ifne DEBUG
+        MOV R1,#0b000011111111
+        BL vidc_set_border_colour
+    .endif
+
     LDR R11,[R12]
     LDR R0,batman_frame
     MOV R0,R0,LSR #2
@@ -1116,13 +1117,17 @@ animate_explosion_loop:
     CMP R6,#11
     BNE animate_explosion_loop
 
-    MOV R1,#0b111100001111
-    BL vidc_set_border_colour
+    .ifne DEBUG
+        MOV R1,#0b111100001111
+        BL vidc_set_border_colour
+    .endif
 
     BL clear_edges
 
-    MOV R1,#0b000011110000
-    BL vidc_set_border_colour
+    .ifne DEBUG
+        MOV R1,#0b000011110000
+        BL vidc_set_border_colour
+    .endif
 
     LDMFD SP!, {R0,R1,R11}
     LDMFD SP!, {R0-R8}
