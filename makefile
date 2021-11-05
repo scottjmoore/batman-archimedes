@@ -23,36 +23,37 @@ LEVELS = 	build/level_1_map.asm
 LUTS = 		build/sincos.asm
 
 DEBUG =		-D DEBUG=0
+OPTS =		-a2 -m2 -opt-ldrpc -opt-adr -Fbin
 
 all: build/batman
 
 
 build/batman: $(SRC) $(BUILD) $(SPRITES) $(LEVELS) $(LUTS)
-	vasmarm_std src/batman.asm $(DEBUG) -a2 -m2 -opt-ldrpc -opt-adr -L build/batman.lst -Fbin -o build/batman
+	vasmarm_std src/batman.asm $(DEBUG) $(OPTS) -L build/batman.lst -o build/batman
 
 
 build/level-1.bin: build/level-1.asm
-	vasmarm_std build/level-1.asm -a2 -m2 -opt-ldrpc -opt-adr -L build/level-1.lst -Fbin -o build/level-1.bin
+	vasmarm_std build/level-1.asm $(OPTS) -L build/level-1.lst -o build/level-1.bin
 build/level-1.asm: assets/tiles/level-1.png
 	./scripts/png2asm.py -i assets/tiles/level-1.png -o build/level-1.asm -sw 16 -sh 16 -ss
 
 build/main_title.bin: build/main_title.asm
-	vasmarm_std build/main_title.asm -a2 -m2 -opt-ldrpc -opt-adr -L build/main_title.lst -Fbin -o build/main_title.bin
+	vasmarm_std build/main_title.asm $(OPTS) -L build/main_title.lst -o build/main_title.bin
 build/main_title.asm: assets/images/main_title.png
 	./scripts/png2asm.py -i assets/images/main_title.png -o build/main_title.asm -sw 320 -sh 256
 
 build/intro_screen.bin: build/intro_screen.asm
-	vasmarm_std build/intro_screen.asm -a2 -m2 -opt-ldrpc -opt-adr -L build/intro_screen.lst -Fbin -o build/intro_screen.bin
+	vasmarm_std build/intro_screen.asm $(OPTS) -L build/intro_screen.lst -o build/intro_screen.bin
 build/intro_screen.asm: assets/images/intro_screen.png
 	./scripts/png2asm.py -i assets/images/intro_screen.png -o build/intro_screen.asm -sw 320 -sh 256
 
 build/status_bar.bin: build/status_bar.asm
-	vasmarm_std build/status_bar.asm -a2 -m2 -opt-ldrpc -opt-adr -L build/status_bar.lst -Fbin -o build/status_bar.bin
+	vasmarm_std build/status_bar.asm $(OPTS) -L build/status_bar.lst -o build/status_bar.bin
 build/status_bar.asm: assets/images/status_bar.png
 	./scripts/png2asm.py -i assets/images/status_bar.png -o build/status_bar.asm -sw 320 -sh 48
 
 build/palette_fade.bin: build/palette_fade.asm
-	vasmarm_std build/palette_fade.asm -a2 -m2 -opt-ldrpc -opt-adr -L build/palette_fade.lst -Fbin -o build/palette_fade.bin
+	vasmarm_std build/palette_fade.asm $(OPTS) -L build/palette_fade.lst -o build/palette_fade.bin
 build/palette_fade.asm: assets/images/palette_fade.png
 	./scripts/png2asm.py -i assets/images/palette_fade.png -o build/palette_fade.asm -sw 16 -sh 16
 

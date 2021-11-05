@@ -768,11 +768,6 @@ main:
     BL copy_4byte_to_screen
     BL swap_display_buffers    
 
-    MOV R1,#47 + 8
-    BL vidc_set_VDSR
-    MOV R1,#279 - 8
-    BL vidc_set_VDER
-
         B main_draw_tile_map
 
     ADRL R0,intro_screen
@@ -825,6 +820,11 @@ intro_text_1_skip:
     ; BL fade_screen_to_black
 
 main_draw_tile_map:
+
+    MOV R1,#47 + 8
+    BL vidc_set_VDSR
+    MOV R1,#279 - 8
+    BL vidc_set_VDER
 
     ADRL R0,status_bar
     LDR R1,[R12]
