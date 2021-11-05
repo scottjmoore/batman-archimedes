@@ -1097,7 +1097,7 @@ animate_explosion_loop:
     CMP R0,#80
     MOVEQ R0,#0
     ADD R1,R1,#1
-    CMP R1,#CLIP_RIGHT
+    CMP R1,#CLIP_RIGHT - 16
     MOVEQ R1,#CLIP_LEFT - 24
     ADD R2,R2,R3,ASR #16
     CMP R2,#CLIP_BOTTOM - 24
