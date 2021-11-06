@@ -46,11 +46,6 @@ for infile, outfile in zip(args.infile, args.outfile):
 
     label_name = image_name.replace("-","_")
 
-    f_out.write('\n'+label_name+'_sprites:\n')
-    
-    for frame in range(0,sprite_frames):
-        f_out.write('\t.4byte\t\t'+label_name+f'_sprite_{frame}\n')
-
     f_out.write('\ndraw_'+label_name+'_sprite:\n')
 
     f_out.write('\tSTMFD SP!, {R0-R2,R11}\n')
@@ -76,6 +71,11 @@ for infile, outfile in zip(args.infile, args.outfile):
     f_out.write('\ndraw_'+label_name+'_sprite_exit:\n')
     f_out.write('\tLDMFD SP!, {R0-R2,R11}\n')
     f_out.write('\tMOV PC, R14\n')
+
+    f_out.write('\n'+label_name+'_sprites:\n')
+    
+    for frame in range(0,sprite_frames):
+        f_out.write('\t.4byte\t\t'+label_name+f'_sprite_{frame}\n')
 
     iy = 0
     tile = 0
