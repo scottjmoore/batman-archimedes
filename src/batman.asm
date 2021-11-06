@@ -975,32 +975,32 @@ No_CursorRight_Key:
 
     MOV R3,#0x00ff
     BL draw_batman_sprite
-    SUB R1,R1,#12
-    SUB R2,R2,#12
+    SUB R1,R1,#24
+    ; SUB R2,R2,#12
     MOV R3,#0xf800
     BL draw_batman_sprite
-    SUB R1,R1,#12
-    SUB R2,R2,#12
+    SUB R1,R1,#24
+    ; SUB R2,R2,#12
     MOV R3,#0xff00
     BL draw_batman_sprite
-    SUB R1,R1,#12
-    SUB R2,R2,#12
+    SUB R1,R1,#24
+    ; SUB R2,R2,#12
     MOV R3,#0xff03
     BL draw_batman_sprite
-    SUB R1,R1,#12
-    SUB R2,R2,#12
+    SUB R1,R1,#24
+    ; SUB R2,R2,#12
     MOV R3,#0xff10              ; 0x10 = pinkish ; 0x20 = greenish ; 0x40 = vivid greenish ; 0x80 = blueish
     BL draw_batman_sprite
-    SUB R1,R1,#12
-    SUB R2,R2,#12
+    SUB R1,R1,#24
+    ; SUB R2,R2,#12
     MOV R3,#0xff40              ; 0x10 = pinkish ; 0x20 = greenish ; 0x40 = vivid greenish ; 0x80 = blueish
     BL draw_batman_sprite
-    SUB R1,R1,#12
-    SUB R2,R2,#12
+    SUB R1,R1,#24
+    ; SUB R2,R2,#12
     MOV R3,#0xff80              ; 0x10 = pinkish ; 0x20 = greenish ; 0x40 = vivid greenish ; 0x80 = blueish
     BL draw_batman_sprite
-    SUB R1,R1,#12
-    SUB R2,R2,#12
+    SUB R1,R1,#24
+    ; SUB R2,R2,#12
     MOV R3,#0xffff              ; 0x10 = pinkish ; 0x20 = greenish ; 0x40 = vivid greenish ; 0x80 = blueish
     BL draw_batman_sprite
 
