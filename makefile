@@ -163,5 +163,6 @@ deploy:
 	@make
 	@mkdir $(ARCULATOR)/!Batman  > /dev/null 2>&1 || true
 	@cp src/Run $(ARCULATOR)/!Batman/!Run,feb
+	@cp src/Sprites $(ARCULATOR)/!Batman/!Sprites,ff9
 	@cp build/batman $(ARCULATOR)/!Batman/!RunImage,ff8
 	@cp assets/blank.adf build/batman.adf
