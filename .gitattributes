@@ -1,3 +1,5 @@
 *.png filter=lfs diff=lfs merge=lfs -text
 *.aseprite filter=lfs diff=lfs merge=lfs -text
 *.adf filter=lfs diff=lfs merge=lfs -text
+*,ff9 filter=lfs diff=lfs merge=lfs -text
+Sprites filter=lfs diff=lfs merge=lfs -text
