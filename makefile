@@ -103,42 +103,48 @@ build/sprites/batman.asm: assets/sprites/batman.png makefile
 	$(COMPILESPRITE) \
 		-i assets/sprites/batman.png \
 		-o build/sprites/batman.asm \
-		-sw 32 -sh 48
+		-sw 32 -sh 48 \
+		-mi 159
 
 
 build/sprites/explosion.asm: assets/sprites/explosion.png makefile
 	$(COMPILESPRITE) \
 		-i assets/sprites/explosion.png \
 		-o build/sprites/explosion.asm \
-		-sw 32 -sh 32
+		-sw 32 -sh 32 \
+		-mi 159
 
 
 build/sprites/enemies.asm: assets/sprites/enemies.png makefile
 	$(COMPILESPRITE) \
 		-i assets/sprites/enemies.png \
 		-o build/sprites/enemies.asm \
-		-sw 32 -sh 48
+		-sw 32 -sh 48 \
+		-mi 159
 
 
 build/sprites/bullets.asm: assets/sprites/bullets.png makefile
 	$(COMPILESPRITE) \
 		-i assets/sprites/bullets.png \
 		-o build/sprites/bullets.asm \
-		-sw 4 -sh 4
+		-sw 4 -sh 4 \
+		-mi 159
 
 
 build/sprites/pointers.asm: assets/sprites/pointers.png makefile
 	$(COMPILESPRITE) \
 		-i assets/sprites/pointers.png \
 		-o build/sprites/pointers.asm \
-		-sw 12 -sh 12
+		-sw 12 -sh 12 \
+		-mi 159
 
 
 build/sprites/intro_font.asm: assets/tiles/intro_font.png makefile
 	$(COMPILESPRITE) \
 		-i assets/tiles/intro_font.png \
 		-o build/sprites/intro_font.asm \
-		-sw 8 -sh 8
+		-sw 8 -sh 8 \
+		-mi 159
 
 
 build/level_1_map.asm: assets/maps/level-1.tmx makefile

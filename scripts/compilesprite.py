@@ -17,6 +17,7 @@ parser.add_argument('-i', '--infile', nargs='+', type=argparse.FileType('rb'),de
 parser.add_argument('-o', '--outfile', nargs='+', type=argparse.FileType('wt'),default=sys.stdout)
 parser.add_argument('-sw', '--spritewidth', type=int,default=8)
 parser.add_argument('-sh', '--spriteheight', type=int,default=8)
+parser.add_argument('-mi', '--maskindex', type=int,default=0)
 
 args = parser.parse_args()
 
@@ -31,6 +32,8 @@ for infile, outfile in zip(args.infile, args.outfile):
 
     sprite_width = args.spritewidth
     sprite_height = args.spriteheight
+    mask_index = args.maskindex
+
     sprite_frames = int(image_width / sprite_width) * int(image_height / sprite_height)
 
     palette_name = filename + "_palette"
@@ -43,6 +46,7 @@ for infile, outfile in zip(args.infile, args.outfile):
     print("\ncompilesprite: '"+infile.name+"' => '"+outfile.name+"'")
     print("\tImage size   : "+f'{image_width}'+"x"+f'{image_height}')
     print("\tSprite size  : "+f'{sprite_width}'+"x"+f'{sprite_height}'+f' * {sprite_frames} frames')
+    print("\tMask index   : "+f'{mask_index}')
 
     label_name = image_name.replace("-","_")
 
@@ -98,7 +102,7 @@ for infile, outfile in zip(args.infile, args.outfile):
                 x = 0
                 while x < sprite_width:
                     colour = image_pixels[ix + x, iy + y]
-                    if (colour != 159):
+                    if (colour != mask_index):
                         frame[y,colour].append(x)
                     x += 1
                 y += 1
