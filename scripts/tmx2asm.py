@@ -21,8 +21,9 @@ root = tree.getroot()
 map_width = int(root.attrib.get('width'))
 map_height = int(root.attrib.get('height'))
 
-print("tmx2asm: '"+args.infile.name+"' => '"+args.outfile.name+"'")
+print("\ntmx2asm: '"+args.infile.name+"' => '"+args.outfile.name+"'")
 print("\tMap size : "+f'{map_width}'+"x"+f'{map_height}')
+print('')
 
 for child in root:
     if child.tag == "tileset":

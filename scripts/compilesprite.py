@@ -47,6 +47,7 @@ for infile, outfile in zip(args.infile, args.outfile):
     print("\tImage size   : "+f'{image_width}'+"x"+f'{image_height}')
     print("\tSprite size  : "+f'{sprite_width}'+"x"+f'{sprite_height}'+f' * {sprite_frames} frames')
     print("\tMask index   : "+f'{mask_index}')
+    print('')
 
     label_name = image_name.replace("-","_")
 
