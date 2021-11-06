@@ -156,7 +156,7 @@ clean:
 	@rm -f build/*.asm
 	@rm -f build/*.bin
 	@rm -f build/*.adf
-	@rm -rf $(ARCULATOR)/!Batman
+	@rm -rf $(ARCULATOR)/hostfs/!Batman
 
 
 deploy:
