@@ -847,7 +847,7 @@ main_draw_tile_map_loop:
         BL vidc_set_border_colour
     .endif
 
-    ADRL R0,level_1_map_tilemap
+    ADRL R0,level_1_map_types   ; level_1_map_tilemap
     ADRL R1,level_1_tiles
     LDR R2,[R12]
 
