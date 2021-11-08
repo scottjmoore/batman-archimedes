@@ -13,16 +13,19 @@ SPRITES =  	build/sprites/batman.asm \
 			build/sprites/explosion.asm \
 			build/sprites/enemies.asm \
 			build/sprites/bullets.asm \
-			build/sprites/pointers.asm \
-			build/sprites/intro_font.asm
+			build/sprites/pointers.asm
+
+FONTS = 	build/fonts/intro_font.asm \
+			build/fonts/system.asm
+
 
 LEVELS = 	build/level_1_map.asm
 
 LUTS = 		build/sincos.asm
 
 VASM = 		vasmarm_std
-DEBUG =		-D DEBUG=1
-OPTS =		-a2 -m2 -opt-ldrpc -opt-adr -Fbin
+DEBUG =		-D DEBUG=0
+OPTS =		-a3 -m3 -opt-ldrpc -opt-adr -Fbin
 
 PNG2ASM = 			./scripts/png2asm.py
 COMPILESPRITE = 	./scripts/compilesprite.py
@@ -33,7 +36,7 @@ ARCULATOR =			../../sarah-walker-pcem/arculator
 all: build/batman
 
 
-build/batman: $(SRC) $(BUILD) $(SPRITES) $(LEVELS) $(LUTS) makefile
+build/batman: $(SRC) $(BUILD) $(SPRITES) $(FONTS) $(LEVELS) $(LUTS) makefile
 	$(VASM) src/batman.asm $(DEBUG) $(OPTS) \
 		-L build/batman.lst \
 		-o build/batman
@@ -139,10 +142,18 @@ build/sprites/pointers.asm: assets/sprites/pointers.png makefile
 		-mi 159
 
 
-build/sprites/intro_font.asm: assets/tiles/intro_font.png makefile
+build/fonts/intro_font.asm: assets/fonts/intro_font.png makefile
 	$(COMPILESPRITE) \
-		-i assets/tiles/intro_font.png \
+		-i assets/fonts/intro_font.png \
 		-o build/sprites/intro_font.asm \
+		-sw 8 -sh 8 \
+		-mi 159
+
+
+build/fonts/system.asm: assets/fonts/system.png makefile
+	$(COMPILESPRITE) \
+		-i assets/fonts/system.png \
+		-o build/sprites/system.asm \
 		-sw 8 -sh 8 \
 		-mi 159
 
