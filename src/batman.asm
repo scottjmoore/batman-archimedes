@@ -394,7 +394,7 @@ copy_8x8_tile_to_screen:
 
 
 ;   ****************************************************************
-;       intro_font_lookup
+;       font_lookup
 ;   ----------------------------------------------------------------
 ;       Calculate tile number from an ascii charaction for the
 ;       intro font tileset.
@@ -412,7 +412,7 @@ copy_8x8_tile_to_screen:
 ;       R7      :   N/A
 ;       R8      :   N/A
 ;       R9      :   N/A
-;       R10     :   N/A
+;       R10     :   address of conversion lookup table
 ;       R11     :   N/A
 ;       R11     :   N/A
 ;   ----------------------------------------------------------------
@@ -433,29 +433,29 @@ copy_8x8_tile_to_screen:
 ;       R11     :   Unchanged
 ;   ****************************************************************
 
-intro_font_lookup:
+font_lookup:
 
-    STMFD SP!, {R1-R3}     ; store all the registers onto the stack
+    STMFD SP!, {R2-R3}     ; store all the registers onto the stack
 
-    ADRL R1,intro_font_lookup_table     ; load address of intro font conversion lookup table into R1
+    ; ADRL R1,font_lookup_table     ; load address of intro font conversion lookup table into R1
     MOV R3,#0                           ; move 0 into R3
 
-intro_font_lookup_loop:         ; start of loop
-    LDRB R2,[R1,R3]                ; load byte from lookup table into R2
+font_lookup_loop:         ; start of loop
+    LDRB R2,[R10,R3]                ; load byte from lookup table into R2
     CMP R2,R0                   ; compare with ascii character to convert
-    BEQ intro_font_lookup_exit  ; if R2==R0 then exit loop
+    BEQ font_lookup_exit  ; if R2==R0 then exit loop
     ADD R3,R3,#1                ; increase tile index by 1
-    B intro_font_lookup_loop    ; go back to start of loop
+    B font_lookup_loop    ; go back to start of loop
 
-intro_font_lookup_exit:     ; found character in lookup table
+font_lookup_exit:     ; found character in lookup table
     MOV R0,R3               ; move tile index into R0
 
-    LDMFD SP!, {R1-R3}     ; restore all registers from the stack
+    LDMFD SP!, {R2-R3}     ; restore all registers from the stack
     MOV PC,R14              ; return from function
 
 
 ;   ****************************************************************
-;       draw_intro_font_text
+;       draw_font_text
 ;   ----------------------------------------------------------------
 ;       Draw zero terminated ascii string using intro font to the
 ;       screen or display buffer, assumes a scanline width of
@@ -473,9 +473,9 @@ intro_font_lookup_exit:     ; found character in lookup table
 ;       R7      :   N/A
 ;       R8      :   N/A
 ;       R9      :   N/A
-;       R10     :   N/A
-;       R11     :   N/A
-;       R11     :   destination address of screen or display buffer 
+;       R10     :   address of conversion lookup table
+;       R11     :   destination address of screen or display buffer
+;       R12     :   draw character function pointer
 ;   ----------------------------------------------------------------
 ;       Returns
 ;   ----------------------------------------------------------------
@@ -491,35 +491,37 @@ intro_font_lookup_exit:     ; found character in lookup table
 ;       R9      :   Unchanged
 ;       R10     :   Unchanged
 ;       R11     :   Unchanged
-;       R11     :   Unchanged
+;       R12     :   Unchanged
 ;   ****************************************************************
 
-draw_intro_font_string:
+draw_font_string:
 
     STMFD SP!, {R0-R12,R14}     ; store all registers onto the stack
 
-    MOV R10,R0      ; move address of ascii string into R10
     MOV R9,R1       ; keep orignal x-coordinate
+    MOV R8,R0      ; move address of ascii string into R11
 
-draw_intro_font_string_loop:                ; start of loop
-    LDRB R0,[R10]                           ; load 1 byte from ascii string into R0
-    ADD R10,R10,#1                          ; increase address for ascii string by 1 byte
+draw_font_string_loop:                ; start of loop
+    LDRB R0,[R8]                           ; load 1 byte from ascii string into R0
+    ADD R8,R8,#1                          ; increase address for ascii string by 1 byte
     CMP R0,#0                               ; check to see if we are at the end of a string
-    BEQ draw_intro_font_string_exit         ; if byte is zero exit loop
+    BEQ draw_font_string_exit         ; if byte is zero exit loop
     CMP R0,#0x0a                            ; check to see if we need to move down to the next line
-    BEQ draw_intro_font_string_nextline     ; if byte == 0x0a goto next line section
-    BL intro_font_lookup                    ; lookup tile number from ascii character in string
+    BEQ draw_font_string_nextline     ; if byte == 0x0a goto next line section
+    BL font_lookup                    ; lookup tile number from ascii character in string
     CMP R0,#0                               ; if tile number == 0
-    BLNE draw_intro_font_sprite             ; draw the tile onto screen or display buffer
+    ADDNE R14,PC,#0
+    MOVNE PC,R12
+    BLNE draw_system_font_sprite             ; draw the tile onto screen or display buffer
     ADD R1,R1,#8                            ; move destination up by 8 bytes (width of 1 character)
-    CMP R1,#SCANLINE                        ; check to see if we've overflowed a line
-    BLT draw_intro_font_string_loop         ; if not go back to start of loop
-draw_intro_font_string_nextline:            ; next line section
+    CMP R1,#CLIP_RIGHT                        ; check to see if we've overflowed a line
+    BLT draw_font_string_loop         ; if not go back to start of loop
+draw_font_string_nextline:            ; next line section
     MOV R1,R9                               ; go to start of scanline
     ADD R2,R2,#8                            ; increase scanline to draw to by 8 (height of 1 character)
-    B draw_intro_font_string_loop           ; go back to start of loop
+    B draw_font_string_loop           ; go back to start of loop
 
-draw_intro_font_string_exit:                ; exit loop
+draw_font_string_exit:                ; exit loop
 
     LDMFD SP!, {R0-R12,R14}     ; restore all registers from the stack, including R14 Link registger
     MOV PC,R14                  ; exit function
@@ -793,7 +795,7 @@ intro_text_1_skip:
     MOV R1,#16
     MOV R2,#64
     MOV R3,#0xff00
-    BL draw_intro_font_string
+    BL draw_font_string
     MOV R0,#19
     SWI OS_Byte
     LDMFD SP!, {R0-R2}
@@ -806,7 +808,7 @@ intro_text_1_skip:
     MOV R1,#16
     MOV R2,#64
     MOV R3,#0xff00
-    BL draw_intro_font_string
+    BL draw_font_string
 
     SWI OS_ReadC
 
@@ -1101,26 +1103,6 @@ No_CursorRight_Key:
     ADD R1,R1,#8
     BL draw_bullets_sprite
 
-    MOV R0,#1
-    MOV R1,#16
-    MOV R2,#0
-draw_system_sprite_loop:
-    MOV R3,#0x0000
-    ADD R1,R1,#1
-    ADD R2,R2,#1
-    BL draw_system_sprite
-    MOV R3,R0,LSL #8
-    SUB R1,R1,#1
-    SUB R2,R2,#1
-    BL draw_system_sprite
-    ADD R0,R0,#1
-    ADD R1,R1,#8
-    CMP R1,#CLIP_RIGHT
-    MOVGE R1,#0
-    ADDGE R2,R2,#8
-    CMP R0,#256
-    BNE draw_system_sprite_loop
-
     MOV R4,#0
     MOV R6,#0
     ADR R7,explosion_frame
@@ -1156,6 +1138,26 @@ animate_explosion_loop:
     ADD R6,R6,#1
     CMP R6,#11
     BNE animate_explosion_loop
+
+    STMFD SP!,{R12}
+
+    MOV R9,#draw_system_font_sprite & 0xff000000
+    MOV R0,#draw_system_font_sprite & 0x00ff0000
+    ORR R9,R9,R0
+    MOV R0,#draw_system_font_sprite & 0x0000ff00
+    ORR R9,R9,R0
+    MOV R0,#draw_system_font_sprite & 0x000000ff
+    ORR R9,R9,R0
+    ADRL R0,system_font_test_string
+    MOV R1,#32
+    MOV R2,#16
+    ADRL R10,system_font_lookup_table
+    LDR R11,[R12]
+    ;ADRL R12,draw_system_font_sprite
+    MOV R12,R9
+    BL draw_font_string
+
+    LDMFD SP!,{R12}
 
     .ifne DEBUG
         MOV R1,#0b111100001111
@@ -1283,9 +1285,21 @@ explosion_frame:
 ;   ----------------------------------------------------------------
     .align 4
 intro_font_lookup_table:
-    .byte " 0123456789.!&c,ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    .byte 0x00
+    .byte " 0123456789.!&c,ABCDEFGHIJKLMNOPQRSTUVWXYZ",0
 
+;   ****************************************************************
+;       system_font_lookup_table
+;   ----------------------------------------------------------------
+;       Lookup table to convert from ascii to system font tile set
+;   ----------------------------------------------------------------
+    .align 4
+system_font_lookup_table:
+    .byte " !\"#$%&'()*+,-./0123456789:;<>=?ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    .byte "[]\\`_@abcdefghijklmnopqrstuvwxyz{}|",126,169,"£",0
+
+    .align 4
+system_font_test_string:
+    .byte "This is a test string!!!!",0xa,"0x12345678",0xa,"$abcdef12",0
 
 ;   ****************************************************************
 ;       intro_text_1
@@ -1423,7 +1437,7 @@ level_1_tiles:
     .include "build/sprites/bullets.asm"
     .include "build/sprites/pointers.asm"
     .include "build/fonts/intro_font.asm"
-    .include "build/fonts/system.asm"
+    .include "build/fonts/system_font.asm"
 
     .include "build/sincos.asm"
 
