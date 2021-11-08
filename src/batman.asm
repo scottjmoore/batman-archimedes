@@ -1041,8 +1041,9 @@ No_CursorRight_Key:
     ADD R0,R0,#1
     ADD R1,R1,#32
     BL draw_enemies_sprite
-
+    
     MOV R0,#0
+
     ADD R1,R1,#32
     ADD R2,R2,#21
     LDR R4,frame_count
@@ -1099,6 +1100,26 @@ No_CursorRight_Key:
     BL draw_bullets_sprite
     ADD R1,R1,#8
     BL draw_bullets_sprite
+
+    MOV R0,#1
+    MOV R1,#16
+    MOV R2,#0
+draw_system_sprite_loop:
+    MOV R3,#0x0000
+    ADD R1,R1,#1
+    ADD R2,R2,#1
+    BL draw_system_sprite
+    MOV R3,R0,LSL #8
+    SUB R1,R1,#1
+    SUB R2,R2,#1
+    BL draw_system_sprite
+    ADD R0,R0,#1
+    ADD R1,R1,#8
+    CMP R1,#CLIP_RIGHT
+    MOVGE R1,#0
+    ADDGE R2,R2,#8
+    CMP R0,#256
+    BNE draw_system_sprite_loop
 
     MOV R4,#0
     MOV R6,#0
