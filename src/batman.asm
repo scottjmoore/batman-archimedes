@@ -854,6 +854,7 @@ main_draw_tile_map_loop:
     BL draw_tile_map
 
     STMFD SP!,{R0-R2}
+
     MOV R0,#129
     MOV R1,#-114
     MOV R2,#255
@@ -863,7 +864,6 @@ main_draw_tile_map_loop:
     ADRL R0,level_1_map_tilemap
     STR R0,[R12,#8]
 No_F1_Key:
-    STMFD SP!,{R0-R2}
     MOV R0,#129
     MOV R1,#-115
     MOV R2,#255
@@ -963,9 +963,8 @@ No_CursorRight_Key:
     MOV R2,#255
     SWI OS_Byte
     CMP R2,#255
-    BEQ exit
-
     LDMFD SP!,{R0-R2}
+    BEQ exit
 
     STMFD SP!, {R0-R8}
     
@@ -1020,7 +1019,8 @@ No_CursorRight_Key:
     BL draw_batman_sprite
     SUB R1,R1,#24
     ; SUB R2,R2,#12
-    MOV R3,#0xffff              ; 0x10 = pinkish ; 0x20 = greenish ; 0x40 = vivid greenish ; 0x80 = blueish
+    LDR R3,frame_count
+    ORR R3,R3,#0xff00              ; 0x10 = pinkish ; 0x20 = greenish ; 0x40 = vivid greenish ; 0x80 = blueis
     BL draw_batman_sprite
 
     MOV R0,#0
@@ -1030,75 +1030,75 @@ No_CursorRight_Key:
     MOV R3,#0xff00
     BL draw_pointers_sprite
 
-    ; SUB R2,R2,#24
-    ; BL draw_enemies_sprite
-    ; ADD R0,R0,#1
-    ; ADD R1,R1,#32
-    ; BL draw_enemies_sprite
-    ; ADD R0,R0,#1
-    ; ADD R1,R1,#32
-    ; BL draw_enemies_sprite
-    ; ADD R0,R0,#1
-    ; ADD R1,R1,#32
-    ; BL draw_enemies_sprite
+    SUB R2,R2,#24
+    BL draw_enemies_sprite
+    ADD R0,R0,#1
+    ADD R1,R1,#32
+    BL draw_enemies_sprite
+    ADD R0,R0,#1
+    ADD R1,R1,#32
+    BL draw_enemies_sprite
+    ADD R0,R0,#1
+    ADD R1,R1,#32
+    BL draw_enemies_sprite
 
-    ; MOV R0,#0
-    ; ADD R1,R1,#32
-    ; ADD R2,R2,#21
-    ; LDR R4,frame_count
-    ; AND R4,R4,#7
-    ; ADD R1,R1,R4
-    ; BL draw_bullets_sprite
-    ; ADD R1,R1,#8
-    ; BL draw_bullets_sprite
-    ; ADD R1,R1,#8
-    ; BL draw_bullets_sprite
-    ; ADD R1,R1,#8
-    ; BL draw_bullets_sprite
-    ; ADD R1,R1,#8
-    ; BL draw_bullets_sprite
-    ; ADD R1,R1,#8
-    ; BL draw_bullets_sprite
-    ; ADD R1,R1,#8
-    ; BL draw_bullets_sprite
-    ; ADD R1,R1,#8
-    ; BL draw_bullets_sprite
-    ; ADD R1,R1,#8
-    ; BL draw_bullets_sprite
-    ; ADD R1,R1,#8
-    ; BL draw_bullets_sprite
-    ; ADD R1,R1,#8
-    ; BL draw_bullets_sprite
-    ; ADD R1,R1,#8
-    ; BL draw_bullets_sprite
-    ; ADD R1,R1,#8
-    ; BL draw_bullets_sprite
-    ; ADD R1,R1,#8
-    ; BL draw_bullets_sprite
-    ; ADD R1,R1,#8
-    ; BL draw_bullets_sprite
-    ; ADD R1,R1,#8
-    ; BL draw_bullets_sprite
-    ; ADD R1,R1,#8
-    ; BL draw_bullets_sprite
-    ; ADD R1,R1,#8
-    ; BL draw_bullets_sprite
-    ; ADD R1,R1,#8
-    ; BL draw_bullets_sprite
-    ; ADD R1,R1,#8
-    ; BL draw_bullets_sprite
-    ; ADD R1,R1,#8
-    ; BL draw_bullets_sprite
-    ; ADD R1,R1,#8
-    ; BL draw_bullets_sprite
-    ; ADD R1,R1,#8
-    ; BL draw_bullets_sprite
-    ; ADD R1,R1,#8
-    ; BL draw_bullets_sprite
-    ; ADD R1,R1,#8
-    ; BL draw_bullets_sprite
-    ; ADD R1,R1,#8
-    ; BL draw_bullets_sprite
+    MOV R0,#0
+    ADD R1,R1,#32
+    ADD R2,R2,#21
+    LDR R4,frame_count
+    AND R4,R4,#7
+    ADD R1,R1,R4
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
+    ADD R1,R1,#8
+    BL draw_bullets_sprite
 
     MOV R4,#0
     MOV R6,#0
@@ -1401,7 +1401,8 @@ level_1_tiles:
     .include "build/sprites/enemies.asm"
     .include "build/sprites/bullets.asm"
     .include "build/sprites/pointers.asm"
-    .include "build/sprites/intro_font.asm"
+    .include "build/fonts/intro_font.asm"
+    .include "build/fonts/system.asm"
 
     .include "build/sincos.asm"
 

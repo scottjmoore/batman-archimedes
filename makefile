@@ -145,7 +145,7 @@ build/sprites/pointers.asm: assets/sprites/pointers.png makefile
 build/fonts/intro_font.asm: assets/fonts/intro_font.png makefile
 	$(COMPILESPRITE) \
 		-i assets/fonts/intro_font.png \
-		-o build/sprites/intro_font.asm \
+		-o build/fonts/intro_font.asm \
 		-sw 8 -sh 8 \
 		-mi 159
 
@@ -153,7 +153,7 @@ build/fonts/intro_font.asm: assets/fonts/intro_font.png makefile
 build/fonts/system.asm: assets/fonts/system.png makefile
 	$(COMPILESPRITE) \
 		-i assets/fonts/system.png \
-		-o build/sprites/system.asm \
+		-o build/fonts/system.asm \
 		-sw 8 -sh 8 \
 		-mi 159
 
