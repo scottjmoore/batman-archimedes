@@ -21,7 +21,7 @@ LEVELS = 	build/level_1_map.asm
 LUTS = 		build/sincos.asm
 
 VASM = 		vasmarm_std
-DEBUG =		-D DEBUG=0
+DEBUG =		-D DEBUG=1
 OPTS =		-a2 -m2 -opt-ldrpc -opt-adr -Fbin
 
 PNG2ASM = 			./scripts/png2asm.py

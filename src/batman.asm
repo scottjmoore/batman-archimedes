@@ -847,13 +847,32 @@ main_draw_tile_map_loop:
         BL vidc_set_border_colour
     .endif
 
-    ADRL R0,level_1_map_types   ; level_1_map_tilemap
+    LDR R0,[R12,#8] ; level_1_map_types / level_1_map_tilemap
     ADRL R1,level_1_tiles
     LDR R2,[R12]
 
     BL draw_tile_map
 
     STMFD SP!,{R0-R2}
+    MOV R0,#129
+    MOV R1,#-114
+    MOV R2,#255
+    SWI OS_Byte
+    CMP R2,#255
+    BNE No_F1_Key
+    ADRL R0,level_1_map_tilemap
+    STR R0,[R12,#8]
+No_F1_Key:
+    STMFD SP!,{R0-R2}
+    MOV R0,#129
+    MOV R1,#-115
+    MOV R2,#255
+    SWI OS_Byte
+    CMP R2,#255
+    BNE No_F2_Key
+    ADRL R0,level_1_map_types
+    STR R0,[R12,#8]
+No_F2_Key:
     MOV R0,#129
     MOV R1,#-98
     MOV R2,#255
@@ -1314,7 +1333,8 @@ vdu_variables_screen_start:
 vdu_variables_screen_start_buffer:
     .4byte 0x00000000
     .4byte 0x00000000
-
+    .4byte level_1_map_tilemap
+    .4byte level_1_map_types
 memc_address_screen_start:
     .4byte (SCANLINE * 234) >> 2
     .4byte SCANLINE >> 2

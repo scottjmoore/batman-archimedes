@@ -51,7 +51,7 @@
 ;   ****************************************************************
 
 vidc_set_border_colour:
-    MOV R0,#0b01000000 << 24
+    MOV R0,#0x40 << 24
     MOV R1,R1,LSL #20
     ORR R0,R0,R1,LSR #20
     MOV R1,#VIDC
@@ -59,7 +59,7 @@ vidc_set_border_colour:
     MOV PC,R14
 
 vidc_set_HBSR:
-    MOV R0,#0b10001000 << 24
+    MOV R0,#0x88 << 24
     MOV R1,R1,LSL #22
     ORR R0,R0,R1,LSR #8
     MOV R1,#VIDC
@@ -75,7 +75,7 @@ vidc_set_HDSR:
     MOV PC,R14
 
 vidc_set_HBER:
-    MOV R0,#0b10010100 << 24
+    MOV R0,#0x94 << 24
     MOV R1,R1,LSL #22
     ORR R0,R0,R1,LSR #8
     MOV R1,#VIDC
@@ -83,7 +83,7 @@ vidc_set_HBER:
     MOV PC,R14
 
 vidc_set_HDER:
-    MOV R0,#0b10010000 << 24
+    MOV R0,#0x90 << 24
     MOV R1,R1,LSL #22
     ORR R0,R0,R1,LSR #8
     MOV R1,#VIDC
