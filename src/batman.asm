@@ -876,6 +876,22 @@ No_F1_Key:
     STR R0,[R12,#8]
 No_F2_Key:
     MOV R0,#129
+    MOV R1,#-117
+    MOV R2,#255
+    SWI OS_Byte
+    CMP R2,#255
+    BNE No_F5_Key
+    DEBUG_STEP_ON
+No_F5_Key:
+    MOV R0,#129
+    MOV R1,#-118
+    MOV R2,#255
+    SWI OS_Byte
+    CMP R2,#255
+    BNE No_F6_Key
+    DEBUG_STEP_OFF
+No_F6_Key:
+    MOV R0,#129
     MOV R1,#-98
     MOV R2,#255
     SWI OS_Byte
@@ -1140,8 +1156,8 @@ animate_explosion_loop:
     CMP R6,#11
     BNE animate_explosion_loop
 
-    LDR R11,[R12]
-    DEBUG_MEMORY -11
+    ADRL R1,single_step
+    DEBUG_MEMORY -1
     
     .ifne DEBUG
         MOV R1,#0b111100001111
@@ -1169,6 +1185,8 @@ animate_explosion_loop:
     SWI OS_Byte
 
     BL swap_display_buffers
+
+    DEBUG_STEP
 
     B main_draw_tile_map_loop
 exit:
