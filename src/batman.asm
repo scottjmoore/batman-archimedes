@@ -1156,8 +1156,7 @@ animate_explosion_loop:
     CMP R6,#11
     BNE animate_explosion_loop
 
-    ADRL R1,single_step
-    DEBUG_MEMORY -1
+    DEBUG_MEMORY -12    ; debug print memory pointed at by R12
     
     .ifne DEBUG
         MOV R1,#0b111100001111
