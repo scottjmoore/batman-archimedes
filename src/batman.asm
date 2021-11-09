@@ -515,7 +515,7 @@ draw_font_string_loop:                ; start of loop
     MOVNE PC,R12
     ADD R1,R1,#8                            ; move destination up by 8 bytes (width of 1 character)
     CMP R1,#CLIP_RIGHT                        ; check to see if we've overflowed a line
-    BLT draw_font_string_loop         ; if not go back to start of loop
+    BLE draw_font_string_loop         ; if not go back to start of loop
 draw_font_string_nextline:            ; next line section
     MOV R1,R9                               ; go to start of scanline
     ADD R2,R2,#8                            ; increase scanline to draw to by 8 (height of 1 character)
@@ -1140,6 +1140,9 @@ animate_explosion_loop:
     CMP R6,#11
     BNE animate_explosion_loop
 
+    LDR R11,[R12]
+    DEBUG_MEMORY -11
+    
     .ifne DEBUG
         MOV R1,#0b111100001111
         BL vidc_set_border_colour
@@ -1421,6 +1424,7 @@ level_1_tiles:
     .include "build/sprites/pointers.asm"
     .include "build/fonts/intro_font.asm"
     .include "build/fonts/system_font.asm"
+    .include "build/fonts/system_bold_font.asm"
 
     .include "build/sincos.asm"
 

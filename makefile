@@ -17,7 +17,8 @@ SPRITES =  	build/sprites/batman.asm \
 			build/sprites/pointers.asm
 
 FONTS = 	build/fonts/intro_font.asm \
-			build/fonts/system_font.asm
+			build/fonts/system_font.asm \
+			build/fonts/system_bold_font.asm
 
 
 LEVELS = 	build/level_1_map.asm
@@ -155,6 +156,14 @@ build/fonts/system_font.asm: assets/fonts/system_font.png makefile
 	$(COMPILESPRITE) \
 		-i assets/fonts/system_font.png \
 		-o build/fonts/system_font.asm \
+		-sw 8 -sh 8 \
+		-mi 159
+
+
+build/fonts/system_bold_font.asm: assets/fonts/system_bold_font.png makefile
+	$(COMPILESPRITE) \
+		-i assets/fonts/system_bold_font.png \
+		-o build/fonts/system_bold_font.asm \
 		-sw 8 -sh 8 \
 		-mi 159
 
