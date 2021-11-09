@@ -11,3 +11,4 @@
 .set OS_BinaryToDecimal,0x28
 .set OS_ReadVduVariables,0x31
 .set OS_WriteN,0x46
+.set OS_ConvertHex8,0xd4

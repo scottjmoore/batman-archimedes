@@ -32,6 +32,7 @@ stack:
 .include "swi.asm"
 .include "vdu.asm"
 .include "macros.asm"
+.include "debug.asm"
 
 .include "memc.asm"
 .include "vidc.asm"
@@ -970,6 +971,7 @@ No_CursorRight_Key:
     STMFD SP!, {R0-R8}
     
     SWI OS_Mouse
+    DEBUG_REGISTERS
 
     STR R2,mouse_b
     MOV R2,R0,LSR #2
@@ -1138,30 +1140,6 @@ animate_explosion_loop:
     CMP R6,#11
     BNE animate_explosion_loop
 
-    STMFD SP!,{R12}
-
-    MOV R9,#draw_system_font_sprite & 0xff000000
-    MOV R0,#draw_system_font_sprite & 0x00ff0000
-    ORR R9,R9,R0
-    MOV R0,#draw_system_font_sprite & 0x0000ff00
-    ORR R9,R9,R0
-    MOV R0,#draw_system_font_sprite & 0x000000ff
-    ORR R9,R9,R0
-    ADRL R0,font_test_string
-    MOV R1,#24
-    MOV R2,#8
-    ADRL R10,system_font_lookup_table
-    LDR R11,[R12]
-    MOV R12,R9
-    MOV R3,#0x0000
-    BL draw_font_string
-    SUB R1,R1,#1
-    SUB R2,R2,#1
-    MOV R3,#0xff00
-    BL draw_font_string
-
-    LDMFD SP!,{R12}
-
     .ifne DEBUG
         MOV R1,#0b111100001111
         BL vidc_set_border_colour
@@ -1181,6 +1159,8 @@ animate_explosion_loop:
     LDR R0,frame_count
     ADD R0,R0,#1
     STR R0,frame_count
+
+    DRAW_DEBUG
 
     MOV R0,#19
     SWI OS_Byte
