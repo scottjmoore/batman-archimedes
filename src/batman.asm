@@ -512,7 +512,6 @@ draw_font_string_loop:                ; start of loop
     CMP R0,#0                               ; if tile number == 0
     ADDNE R14,PC,#0
     MOVNE PC,R12
-    BLNE draw_system_font_sprite             ; draw the tile onto screen or display buffer
     ADD R1,R1,#8                            ; move destination up by 8 bytes (width of 1 character)
     CMP R1,#CLIP_RIGHT                        ; check to see if we've overflowed a line
     BLT draw_font_string_loop         ; if not go back to start of loop
@@ -1148,13 +1147,17 @@ animate_explosion_loop:
     ORR R9,R9,R0
     MOV R0,#draw_system_font_sprite & 0x000000ff
     ORR R9,R9,R0
-    ADRL R0,system_font_test_string
-    MOV R1,#32
-    MOV R2,#16
+    ADRL R0,font_test_string
+    MOV R1,#24
+    MOV R2,#8
     ADRL R10,system_font_lookup_table
     LDR R11,[R12]
-    ;ADRL R12,draw_system_font_sprite
     MOV R12,R9
+    MOV R3,#0x0000
+    BL draw_font_string
+    SUB R1,R1,#1
+    SUB R2,R2,#1
+    MOV R3,#0xff00
     BL draw_font_string
 
     LDMFD SP!,{R12}
@@ -1298,8 +1301,8 @@ system_font_lookup_table:
     .byte "[]\\`_@abcdefghijklmnopqrstuvwxyz{}|",126,169,"£",0
 
     .align 4
-system_font_test_string:
-    .byte "This is a test string!!!!",0xa,"0x12345678",0xa,"$abcdef12",0
+font_test_string:
+    .byte "THIS IS A TEST STRING!!!!",0xa,"0x12345678",0xa,"$89ABCDEF",0
 
 ;   ****************************************************************
 ;       intro_text_1
