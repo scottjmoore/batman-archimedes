@@ -1047,9 +1047,9 @@ No_CursorRight_Key:
     ADD R1,R1,#16
     LDR R2,mouse_y
     MOV R3,#0xff00
+    ORR R3,R3,#3 << 30
     BL draw_pointers_sprite
 
-    ORR R3,R3,#1 << 30
     SUB R2,R2,#24
     BL draw_enemies_sprite
     ADD R0,R0,#1

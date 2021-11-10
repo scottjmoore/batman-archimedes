@@ -141,7 +141,9 @@ build/sprites/pointers.asm: assets/sprites/pointers.png makefile
 		-i assets/sprites/pointers.png \
 		-o build/sprites/pointers.asm \
 		-sw 12 -sh 12 \
-		-mi 159
+		-mi 159 \
+		-afx true \
+		-afy true
 
 
 build/fonts/intro_font.asm: assets/fonts/intro_font.png makefile

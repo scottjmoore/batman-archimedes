@@ -19,6 +19,8 @@ parser.add_argument('-o', '--outfile', nargs='+', type=argparse.FileType('wt'),d
 parser.add_argument('-sw', '--spritewidth', type=int,default=8)
 parser.add_argument('-sh', '--spriteheight', type=int,default=8)
 parser.add_argument('-mi', '--maskindex', type=int,default=0)
+parser.add_argument('-afx', '--allowflipx', type=bool,default=False)
+parser.add_argument('-afy', '--allowflipy', type=bool,default=False)
 
 args = parser.parse_args()
 
@@ -34,6 +36,8 @@ for infile, outfile in zip(args.infile, args.outfile):
     sprite_width = args.spritewidth
     sprite_height = args.spriteheight
     mask_index = args.maskindex
+    allow_flip_x = args.allowflipx
+    allow_flip_y = args.allowflipy
 
     sprite_frames = int(image_width / sprite_width) * int(image_height / sprite_height)
 
@@ -48,6 +52,8 @@ for infile, outfile in zip(args.infile, args.outfile):
     print("\tImage size   : "+f'{image_width}'+"x"+f'{image_height}')
     print("\tSprite size  : "+f'{sprite_width}'+"x"+f'{sprite_height}'+f' * {sprite_frames} frames')
     print("\tMask index   : "+f'{mask_index}')
+    print("\tAllow flip X : "+f'{allow_flip_x}')
+    print("\tAllow flip Y : "+f'{allow_flip_y}')
     print('')
 
     label_name = image_name.replace("-","_")
@@ -56,8 +62,9 @@ for infile, outfile in zip(args.infile, args.outfile):
 
     f_out.write('\tSTMFD SP!, {R0-R2,R4,R9-R12}\n')
 
-    f_out.write('\tTST R3,#1 << 30\n')
-    f_out.write('\tBNE draw_'+label_name+'_sprite_flip_y\n')
+    if (allow_flip_y == True):
+        f_out.write('\tTST R3,#1 << 30\n')
+        f_out.write('\tBNE draw_'+label_name+'_sprite_flip_y\n')
 
     f_out.write('\tMOV R9,#'+f'{CLIP_BOTTOM}\n')
     f_out.write('\tMOV R10,#1\n')
@@ -79,34 +86,37 @@ for infile, outfile in zip(args.infile, args.outfile):
     f_out.write('\tMOV R1,#'+f'{SCANLINE}\n')
     f_out.write('\tCMP R2,#0\n')
     f_out.write('\tMLAGT R11,R1,R2,R11\n')
-    f_out.write('\tB draw_'+label_name+'_sprite_skip_flip_y\n')
 
-    f_out.write('draw_'+label_name+'_sprite_flip_y:\n')
-    f_out.write('\tADD R2,R2,#'+f'{sprite_height}\n')
-    f_out.write('\tMOV R9,#'+f'{CLIP_TOP-1}\n')
-    f_out.write('\tMOV R10,#-1\n')
-    f_out.write('\tMVN R12,#'+f'{SCANLINE-1}\n')
-    f_out.write('\tCMP R2,#'+f'{CLIP_BOTTOM + sprite_height}\n')
-    f_out.write('\tBGE draw_'+label_name+'_sprite_exit\n')
-    f_out.write('\tCMP R2,#'+f'{0}\n')
-    f_out.write('\tBLE draw_'+label_name+'_sprite_exit\n')
-    f_out.write('\tCMP R1,#'+f'{-16}\n')
-    f_out.write('\tBLT draw_'+label_name+'_sprite_exit\n')
-    f_out.write('\tCMP R1,#'+f'{SCANLINE - 16}\n')
-    f_out.write('\tBGE draw_'+label_name+'_sprite_exit\n')
-    f_out.write('\tCMP R0,#0\n')
-    f_out.write('\tMOVLT R0,#0\n')
-    f_out.write('\tCMP R0,#'+f'{sprite_frames}\n')
-    f_out.write('\tMOVGE R0,#0\n')
-    f_out.write('\tMOV R0,R0,LSL #2\n')
-    f_out.write('\tADD R11,R11,R1\n')
-    f_out.write('\tMOV R1,#'+f'{SCANLINE}\n')
-    f_out.write('\tCMP R2,#'+f'{CLIP_BOTTOM-1}\n')
-    f_out.write('\tMOVGE R4,#'+f'{CLIP_BOTTOM-1}\n')
-    f_out.write('\tMOVLT R4,R2\n')
-    f_out.write('\tMLA R11,R1,R4,R11\n')
+    if (allow_flip_y == True):
+        f_out.write('\tB draw_'+label_name+'_sprite_skip_flip_y\n')
 
-    f_out.write('draw_'+label_name+'_sprite_skip_flip_y:\n')
+        f_out.write('draw_'+label_name+'_sprite_flip_y:\n')
+        f_out.write('\tADD R2,R2,#'+f'{sprite_height}\n')
+        f_out.write('\tMOV R9,#'+f'{CLIP_TOP-1}\n')
+        f_out.write('\tMOV R10,#-1\n')
+        f_out.write('\tMVN R12,#'+f'{SCANLINE-1}\n')
+        f_out.write('\tCMP R2,#'+f'{CLIP_BOTTOM + sprite_height}\n')
+        f_out.write('\tBGE draw_'+label_name+'_sprite_exit\n')
+        f_out.write('\tCMP R2,#'+f'{0}\n')
+        f_out.write('\tBLE draw_'+label_name+'_sprite_exit\n')
+        f_out.write('\tCMP R1,#'+f'{-16}\n')
+        f_out.write('\tBLT draw_'+label_name+'_sprite_exit\n')
+        f_out.write('\tCMP R1,#'+f'{SCANLINE - 16}\n')
+        f_out.write('\tBGE draw_'+label_name+'_sprite_exit\n')
+        f_out.write('\tCMP R0,#0\n')
+        f_out.write('\tMOVLT R0,#0\n')
+        f_out.write('\tCMP R0,#'+f'{sprite_frames}\n')
+        f_out.write('\tMOVGE R0,#0\n')
+        f_out.write('\tMOV R0,R0,LSL #2\n')
+        f_out.write('\tADD R11,R11,R1\n')
+        f_out.write('\tMOV R1,#'+f'{SCANLINE}\n')
+        f_out.write('\tCMP R2,#'+f'{CLIP_BOTTOM-1}\n')
+        f_out.write('\tMOVGE R4,#'+f'{CLIP_BOTTOM-1}\n')
+        f_out.write('\tMOVLT R4,R2\n')
+        f_out.write('\tMLA R11,R1,R4,R11\n')
+
+        f_out.write('draw_'+label_name+'_sprite_skip_flip_y:\n')
+
     f_out.write('\tADR R1,'+label_name+'_sprites\n')
     f_out.write('\tLDR PC,[R1,R0]\n')
     f_out.write('\ndraw_'+label_name+'_sprite_exit:\n')
@@ -146,23 +156,26 @@ for infile, outfile in zip(args.infile, args.outfile):
 
             f_out.write('\n'+label_name+f'_sprite_{tile}:\n')
 
-            f_out.write('\tTST R3,#1 << 30\n')
-            f_out.write('\tBNE '+label_name+f'_sprite_{tile}_flip_y\n')
+            if (allow_flip_y == True):
+                f_out.write('\tTST R3,#1 << 30\n')
+                f_out.write('\tBNE '+label_name+f'_sprite_{tile}_flip_y\n')
 
             f_out.write('\tCMP R2,#0\n')
             f_out.write('\tBGE '+label_name+f'_sprite_{tile}_scanline_0\n')
             f_out.write('\tMOV R0,#0\n')
             f_out.write('\tSUB R0,R0,R2\n')
             f_out.write('\tMOV R0,R0,LSL #2\n')
-            f_out.write('\tB '+label_name+f'_sprite_{tile}_skip_flip_y\n')
 
-            f_out.write(label_name+f'_sprite_{tile}_flip_y:\n')
-            f_out.write('\tCMP R2,#'+f'{CLIP_BOTTOM}\n')
-            f_out.write('\tBLT '+label_name+f'_sprite_{tile}_scanline_0\n')
-            f_out.write('\tMOV R0,#'+f'{CLIP_BOTTOM}\n')
-            f_out.write('\tSUB R0,R2,R0\n')
-            f_out.write('\tMOV R0,R0,LSL #2\n')
-            f_out.write(label_name+f'_sprite_{tile}_skip_flip_y:\n')
+            if (allow_flip_y == True):
+                f_out.write('\tB '+label_name+f'_sprite_{tile}_skip_flip_y\n')
+
+                f_out.write(label_name+f'_sprite_{tile}_flip_y:\n')
+                f_out.write('\tCMP R2,#'+f'{CLIP_BOTTOM}\n')
+                f_out.write('\tBLT '+label_name+f'_sprite_{tile}_scanline_0\n')
+                f_out.write('\tMOV R0,#'+f'{CLIP_BOTTOM}\n')
+                f_out.write('\tSUB R0,R2,R0\n')
+                f_out.write('\tMOV R0,R0,LSL #2\n')
+                f_out.write(label_name+f'_sprite_{tile}_skip_flip_y:\n')
 
             f_out.write('\tADR R1,'+label_name+f'_sprite_{tile}_scanlines\n')
             f_out.write('\tLDR PC,[R1,R0]\n')
@@ -170,6 +183,10 @@ for infile, outfile in zip(args.infile, args.outfile):
             for i in range(0,sprite_height):
                 jj = -1
                 f_out.write('\n'+label_name+f'_sprite_{tile}_scanline_{i}:\n')
+
+                if (allow_flip_x == True):
+                    f_out.write('\tTST R3,#1 << 31\n')
+                    f_out.write('\tBNE '+label_name+f'_sprite_{tile}_scanline_{i}_flip_x\n')
 
                 for j in range(0,256):
                     if len(frame[i,j]) > 0:
@@ -186,6 +203,28 @@ for infile, outfile in zip(args.infile, args.outfile):
                 f_out.write('\tADD R2,R2,R10\n')
                 f_out.write('\tCMP R2,R9\n')
                 f_out.write('\tBEQ '+label_name+f'_sprite_{tile}_exit\n')
+
+                if (allow_flip_x == True):
+                    f_out.write('\tB '+label_name+f'_sprite_{tile}_scanline_{i}_skip_flip_x\n')
+                    f_out.write(label_name+f'_sprite_{tile}_scanline_{i}_flip_x:\n')
+
+                    for j in range(0,256):
+                        if len(frame[i,j]) > 0:
+                            if jj != j:
+                                f_out.write('\tMOV R0,#'+f'0x{j:02x}\n')
+                                f_out.write('\tORR R0,R0,R3\n')
+                                f_out.write('\tAND R0,R0,R3,LSR #8\n')
+                                ii = i
+                            
+                            for x in frame[i,j]:
+                                f_out.write('\tSTRB R0,[R11,#'+f'{sprite_width - x:d}]\n')
+                            
+                    f_out.write('\tADD R11,R11,R12\n')
+                    f_out.write('\tADD R2,R2,R10\n')
+                    f_out.write('\tCMP R2,R9\n')
+                    f_out.write('\tBEQ '+label_name+f'_sprite_{tile}_exit\n')
+
+                    f_out.write(label_name+f'_sprite_{tile}_scanline_{i}_skip_flip_x:\n')
 
             f_out.write('\n'+label_name+f'_sprite_{tile}_exit:\n')
             f_out.write('\tLDMFD SP!, {R0-R2,R4,R9-R12}\n')
