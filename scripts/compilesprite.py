@@ -65,8 +65,10 @@ for infile, outfile in zip(args.infile, args.outfile):
     print("\tScanline width : "+f'{scanline_width}')
     print("\tSprite size    : "+f'{sprite_width}'+"x"+f'{sprite_height}'+f' * {sprite_frames} frames')
     print("\tMask index     : "+f'{mask_index}')
-    print("\tAllow tint     : "+f'{allow_tint}'+"\tAllow mask     : "+f'{allow_mask}')
-    print("\tAllow flip X   : "+f'{allow_flip_x}'+"\tAllow flip Y   : "+f'{allow_flip_y}')
+    print("\tAllow tint     : "+('\u001b[32m' if allow_tint else '\u001b[31m') +f'{allow_tint}\u001b[37m' \
+        +"\tAllow mask     : "+('\u001b[32m' if allow_mask else '\u001b[31m')+f'{allow_mask}\u001b[37m')
+    print("\tAllow flip X   : "+('\u001b[32m' if allow_flip_x else '\u001b[31m')+f'{allow_flip_x}\u001b[37m' \
+        +"\tAllow flip Y   : "+('\u001b[32m' if allow_flip_y else '\u001b[31m')+f'{allow_flip_y}\u001b[37m')
     print('')
 
     label_name = image_name.replace("-","_")
