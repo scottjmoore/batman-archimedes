@@ -163,7 +163,9 @@ build/fonts/system_font.asm: assets/fonts/system_font.png makefile
 		-i assets/fonts/system_font.png \
 		-o build/fonts/system_font.asm \
 		-sw 8 -sh 8 \
-		-mi 159
+		-mi 159 \
+		-at true \
+		-am true
 
 
 build/fonts/system_bold_font.asm: assets/fonts/system_bold_font.png makefile
@@ -171,7 +173,9 @@ build/fonts/system_bold_font.asm: assets/fonts/system_bold_font.png makefile
 		-i assets/fonts/system_bold_font.png \
 		-o build/fonts/system_bold_font.asm \
 		-sw 8 -sh 8 \
-		-mi 159
+		-mi 159 \
+		-at true \
+		-am true
 
 
 build/level_1_map.asm: assets/maps/level-1.tmx makefile
