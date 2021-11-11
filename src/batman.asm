@@ -1011,6 +1011,7 @@ No_CursorRight_Key:
 
 
     MOV R3,#0x00ff
+    ORR R3,R3,#3 << 30
     BL draw_batman_sprite
     SUB R1,R1,#24
     ; SUB R2,R2,#12
@@ -1019,6 +1020,7 @@ No_CursorRight_Key:
     SUB R1,R1,#24
     ; SUB R2,R2,#12
     MOV R3,#0xff00
+    ORR R3,R3,#3 << 30
     BL draw_batman_sprite
     SUB R1,R1,#24
     ; SUB R2,R2,#12
@@ -1027,6 +1029,7 @@ No_CursorRight_Key:
     SUB R1,R1,#24
     ; SUB R2,R2,#12
     MOV R3,#0xff10              ; 0x10 = pinkish ; 0x20 = greenish ; 0x40 = vivid greenish ; 0x80 = blueish
+    ORR R3,R3,#3 << 30
     BL draw_batman_sprite
     SUB R1,R1,#24
     ; SUB R2,R2,#12
@@ -1035,6 +1038,7 @@ No_CursorRight_Key:
     SUB R1,R1,#24
     ; SUB R2,R2,#12
     MOV R3,#0xff80              ; 0x10 = pinkish ; 0x20 = greenish ; 0x40 = vivid greenish ; 0x80 = blueish
+    ORR R3,R3,#3 << 30
     BL draw_batman_sprite
     SUB R1,R1,#24
     ; SUB R2,R2,#12
