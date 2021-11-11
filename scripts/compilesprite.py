@@ -20,6 +20,7 @@ parser.add_argument('-slw', '--scanlinewidth', type=int,default=SCANLINE_WIDTH)
 parser.add_argument('-sw', '--spritewidth', type=int,default=-1)
 parser.add_argument('-sh', '--spriteheight', type=int,default=-1)
 parser.add_argument('-mi', '--maskindex', type=int,default=0)
+parser.add_argument('-at', '--allowtint', type=bool,default=False)
 parser.add_argument('-afx', '--allowflipx', type=bool,default=False)
 parser.add_argument('-afy', '--allowflipy', type=bool,default=False)
 
@@ -38,6 +39,7 @@ for infile, outfile in zip(args.infile, args.outfile):
     sprite_width = args.spritewidth
     sprite_height = args.spriteheight
     mask_index = args.maskindex
+    allow_tint = args.allowtint
     allow_flip_x = args.allowflipx
     allow_flip_y = args.allowflipy
 
@@ -61,6 +63,7 @@ for infile, outfile in zip(args.infile, args.outfile):
     print("\tScanline width : "+f'{scanline_width}')
     print("\tSprite size    : "+f'{sprite_width}'+"x"+f'{sprite_height}'+f' * {sprite_frames} frames')
     print("\tMask index     : "+f'{mask_index}')
+    print("\tAllow tint     : "+f'{allow_tint}')
     print("\tAllow flip X   : "+f'{allow_flip_x}')
     print("\tAllow flip Y   : "+f'{allow_flip_y}')
     print('')
@@ -201,8 +204,9 @@ for infile, outfile in zip(args.infile, args.outfile):
                     if len(frame[i,j]) > 0:
                         if jj != j:
                             f_out.write('\tMOV R0,#'+f'0x{j:02x}\n')
-                            f_out.write('\tORR R0,R0,R3\n')
-                            f_out.write('\tAND R0,R0,R3,LSR #8\n')
+                            if (allow_tint == True):
+                                f_out.write('\tORR R0,R0,R3\n')
+                                f_out.write('\tAND R0,R0,R3,LSR #8\n')
                             ii = i
                         
                         for x in frame[i,j]:
@@ -221,8 +225,9 @@ for infile, outfile in zip(args.infile, args.outfile):
                         if len(frame[i,j]) > 0:
                             if jj != j:
                                 f_out.write('\tMOV R0,#'+f'0x{j:02x}\n')
-                                f_out.write('\tORR R0,R0,R3\n')
-                                f_out.write('\tAND R0,R0,R3,LSR #8\n')
+                                if (allow_tint == True):
+                                    f_out.write('\tORR R0,R0,R3\n')
+                                    f_out.write('\tAND R0,R0,R3,LSR #8\n')
                                 ii = i
                             
                             for x in frame[i,j]:

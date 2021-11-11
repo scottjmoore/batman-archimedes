@@ -110,6 +110,7 @@ build/sprites/batman.asm: assets/sprites/batman.png makefile
 		-o build/sprites/batman.asm \
 		-sw 32 \
 		-mi 159 \
+		-at true \
 		-afx true \
 		-afy true
 
