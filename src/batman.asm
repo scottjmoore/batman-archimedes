@@ -1052,13 +1052,13 @@ No_CursorRight_Key:
     LDR R4,old_mouse_x
     STR R1,old_mouse_x
     CMP R1,R4
-    ORRGE R3,R3,#1 << 31
+    ORRGT R3,R3,#1 << 31
     ADD R1,R1,#16
     LDR R2,mouse_y
     LDR R4,old_mouse_y
     STR R2,old_mouse_y
     CMP R2,R4
-    ORRGE R3,R3,#1 << 30
+    ORRGT R3,R3,#1 << 30
     BL draw_pointers_sprite
 
     SUB R2,R2,#24
