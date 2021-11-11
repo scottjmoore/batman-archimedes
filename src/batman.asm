@@ -1048,8 +1048,12 @@ No_CursorRight_Key:
 
     MOV R0,#0
     LDR R1,mouse_x
+    LDR R4,old_mouse_x
+    STR R1,old_mouse_x
     ADD R1,R1,#16
     LDR R2,mouse_y
+    LDR R4,old_mouse_y
+    STR R2,old_mouse_y
     MOV R3,#0xff00
     ORR R3,R3,#3 << 30
     BL draw_pointers_sprite
@@ -1210,6 +1214,12 @@ mouse_x:
     .4byte  0
 
 mouse_y:
+    .4byte  0
+
+old_mouse_x:
+    .4byte  0
+
+old_mouse_y:
     .4byte  0
 
 mouse_b:
