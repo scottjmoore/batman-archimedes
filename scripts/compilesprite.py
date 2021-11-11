@@ -40,10 +40,10 @@ for infile, outfile in zip(args.infile, args.outfile):
     allow_flip_y = args.allowflipy
 
     if sprite_width == -1:
-        sprite_width == image_width
+        sprite_width = image_width
 
     if sprite_height == -1:
-        sprite_width == image_height
+        sprite_height = image_height
 
     sprite_frames = int(image_width / sprite_width) * int(image_height / sprite_height)
 

@@ -108,7 +108,7 @@ build/sprites/batman.asm: assets/sprites/batman.png makefile
 	$(COMPILESPRITE) \
 		-i assets/sprites/batman.png \
 		-o build/sprites/batman.asm \
-		-sw 32 -sh 42 \
+		-sw 32 \
 		-mi 159 \
 		-afx true \
 		-afy true
