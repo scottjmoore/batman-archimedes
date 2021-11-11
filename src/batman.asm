@@ -1047,18 +1047,23 @@ No_CursorRight_Key:
     BL draw_batman_sprite
 
     MOV R0,#0
-    MOV R3,#0xff00
+    LDR R3,pointer_mask
     LDR R1,mouse_x
     LDR R4,old_mouse_x
     STR R1,old_mouse_x
     CMP R1,R4
     ORRGT R3,R3,#1 << 31
+    ORRLT R3,R3,#1 << 31
+    EORLT R3,R3,#1 << 31
     ADD R1,R1,#16
     LDR R2,mouse_y
     LDR R4,old_mouse_y
     STR R2,old_mouse_y
     CMP R2,R4
     ORRGT R3,R3,#1 << 30
+    ORRLT R3,R3,#1 << 30
+    EORLT R3,R3,#1 << 30
+    STR R3,pointer_mask
     BL draw_pointers_sprite
 
     SUB R2,R2,#24
@@ -1227,6 +1232,9 @@ old_mouse_y:
 
 mouse_b:
     .4byte  0
+
+pointer_mask:
+    .4byte 0x0000ff00
 
 batman_x:
     .4byte  140
