@@ -16,8 +16,8 @@ SCANLINE=352
 parser = argparse.ArgumentParser(description='Compile indexed color PNG sprite to Acorn ARM assembler.')
 parser.add_argument('-i', '--infile', nargs='+', type=argparse.FileType('rb'),default=sys.stdin)
 parser.add_argument('-o', '--outfile', nargs='+', type=argparse.FileType('wt'),default=sys.stdout)
-parser.add_argument('-sw', '--spritewidth', type=int,default=8)
-parser.add_argument('-sh', '--spriteheight', type=int,default=8)
+parser.add_argument('-sw', '--spritewidth', type=int,default=-1)
+parser.add_argument('-sh', '--spriteheight', type=int,default=-1)
 parser.add_argument('-mi', '--maskindex', type=int,default=0)
 parser.add_argument('-afx', '--allowflipx', type=bool,default=False)
 parser.add_argument('-afy', '--allowflipy', type=bool,default=False)
@@ -38,6 +38,12 @@ for infile, outfile in zip(args.infile, args.outfile):
     mask_index = args.maskindex
     allow_flip_x = args.allowflipx
     allow_flip_y = args.allowflipy
+
+    if sprite_width == -1:
+        sprite_width == image_width
+
+    if sprite_height == -1:
+        sprite_width == image_height
 
     sprite_frames = int(image_width / sprite_width) * int(image_height / sprite_height)
 
