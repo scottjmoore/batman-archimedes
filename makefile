@@ -183,10 +183,17 @@ build/sincos.asm: makefile
 
 
 clean:
-	@rm -f build/sprites/*.asm
+	@rm -f build/batman
 	@rm -f build/*.asm
 	@rm -f build/*.bin
+	@rm -f build/*.lst
 	@rm -f build/*.adf
+	@rm -f build/sprites/*.asm
+	@rm -f build/sprites/*.bin
+	@rm -f build/sprites/*.lst
+	@rm -f build/fonts/*.asm
+	@rm -f build/fonts/*.bin
+	@rm -f build/fonts/*.lst
 	@rm -rf $(ARCULATOR)/hostfs/!Batman
 
 

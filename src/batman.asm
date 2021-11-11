@@ -1066,6 +1066,7 @@ No_CursorRight_Key:
     STR R3,pointer_mask
     BL draw_pointers_sprite
 
+    ADD R1,R1,#8
     SUB R2,R2,#24
     BL draw_enemies_sprite
     ADD R0,R0,#1

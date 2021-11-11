@@ -11,11 +11,12 @@ from array import *
 
 CLIP_TOP=0
 CLIP_BOTTOM=184 - 16
-SCANLINE=352
+SCANLINE_WIDTH=352
 
 parser = argparse.ArgumentParser(description='Compile indexed color PNG sprite to Acorn ARM assembler.')
 parser.add_argument('-i', '--infile', nargs='+', type=argparse.FileType('rb'),default=sys.stdin)
 parser.add_argument('-o', '--outfile', nargs='+', type=argparse.FileType('wt'),default=sys.stdout)
+parser.add_argument('-slw', '--scanlinewidth', type=int,default=SCANLINE_WIDTH)
 parser.add_argument('-sw', '--spritewidth', type=int,default=-1)
 parser.add_argument('-sh', '--spriteheight', type=int,default=-1)
 parser.add_argument('-mi', '--maskindex', type=int,default=0)
@@ -33,6 +34,7 @@ for infile, outfile in zip(args.infile, args.outfile):
     image_name = filename
     image_width,image_height = image.size
 
+    scanline_width = args.scanlinewidth
     sprite_width = args.spritewidth
     sprite_height = args.spriteheight
     mask_index = args.maskindex
@@ -54,12 +56,13 @@ for infile, outfile in zip(args.infile, args.outfile):
 
     image_pixels = image.load()
 
-    print("\ncompilesprite: '"+infile.name+"' => '"+outfile.name+"'")
-    print("\tImage size   : "+f'{image_width}'+"x"+f'{image_height}')
-    print("\tSprite size  : "+f'{sprite_width}'+"x"+f'{sprite_height}'+f' * {sprite_frames} frames')
-    print("\tMask index   : "+f'{mask_index}')
-    print("\tAllow flip X : "+f'{allow_flip_x}')
-    print("\tAllow flip Y : "+f'{allow_flip_y}')
+    print("\ncompilesprite  : '"+infile.name+"' => '"+outfile.name+"'")
+    print("\tImage size     : "+f'{image_width}'+"x"+f'{image_height}')
+    print("\tScanline width : "+f'{scanline_width}')
+    print("\tSprite size    : "+f'{sprite_width}'+"x"+f'{sprite_height}'+f' * {sprite_frames} frames')
+    print("\tMask index     : "+f'{mask_index}')
+    print("\tAllow flip X   : "+f'{allow_flip_x}')
+    print("\tAllow flip Y   : "+f'{allow_flip_y}')
     print('')
 
     label_name = image_name.replace("-","_")
@@ -74,14 +77,14 @@ for infile, outfile in zip(args.infile, args.outfile):
 
     f_out.write('\tMOV R9,#'+f'{CLIP_BOTTOM}\n')
     f_out.write('\tMOV R10,#1\n')
-    f_out.write('\tMOV R12,#'+f'{SCANLINE}\n')
+    f_out.write('\tMOV R12,#'+f'{scanline_width}\n')
     f_out.write('\tCMP R2,#'+f'{CLIP_BOTTOM}\n')
     f_out.write('\tBGE draw_'+label_name+'_sprite_exit\n')
     f_out.write('\tCMP R2,#'+f'{0 - sprite_height}\n')
     f_out.write('\tBLE draw_'+label_name+'_sprite_exit\n')
     f_out.write('\tCMP R1,#'+f'{-16}\n')
     f_out.write('\tBLT draw_'+label_name+'_sprite_exit\n')
-    f_out.write('\tCMP R1,#'+f'{SCANLINE - 16}\n')
+    f_out.write('\tCMP R1,#'+f'{scanline_width - 16}\n')
     f_out.write('\tBGE draw_'+label_name+'_sprite_exit\n')
     f_out.write('\tCMP R0,#0\n')
     f_out.write('\tMOVLT R0,#0\n')
@@ -89,7 +92,7 @@ for infile, outfile in zip(args.infile, args.outfile):
     f_out.write('\tMOVGE R0,#0\n')
     f_out.write('\tMOV R0,R0,LSL #2\n')
     f_out.write('\tADD R11,R11,R1\n')
-    f_out.write('\tMOV R1,#'+f'{SCANLINE}\n')
+    f_out.write('\tMOV R1,#'+f'{scanline_width}\n')
     f_out.write('\tCMP R2,#0\n')
     f_out.write('\tMLAGT R11,R1,R2,R11\n')
 
@@ -100,14 +103,14 @@ for infile, outfile in zip(args.infile, args.outfile):
         f_out.write('\tADD R2,R2,#'+f'{sprite_height}\n')
         f_out.write('\tMOV R9,#'+f'{CLIP_TOP-1}\n')
         f_out.write('\tMOV R10,#-1\n')
-        f_out.write('\tMVN R12,#'+f'{SCANLINE-1}\n')
+        f_out.write('\tMVN R12,#'+f'{scanline_width-1}\n')
         f_out.write('\tCMP R2,#'+f'{CLIP_BOTTOM + sprite_height}\n')
         f_out.write('\tBGE draw_'+label_name+'_sprite_exit\n')
         f_out.write('\tCMP R2,#'+f'{0}\n')
         f_out.write('\tBLE draw_'+label_name+'_sprite_exit\n')
         f_out.write('\tCMP R1,#'+f'{-16}\n')
         f_out.write('\tBLT draw_'+label_name+'_sprite_exit\n')
-        f_out.write('\tCMP R1,#'+f'{SCANLINE - 16}\n')
+        f_out.write('\tCMP R1,#'+f'{scanline_width - 16}\n')
         f_out.write('\tBGE draw_'+label_name+'_sprite_exit\n')
         f_out.write('\tCMP R0,#0\n')
         f_out.write('\tMOVLT R0,#0\n')
@@ -115,7 +118,7 @@ for infile, outfile in zip(args.infile, args.outfile):
         f_out.write('\tMOVGE R0,#0\n')
         f_out.write('\tMOV R0,R0,LSL #2\n')
         f_out.write('\tADD R11,R11,R1\n')
-        f_out.write('\tMOV R1,#'+f'{SCANLINE}\n')
+        f_out.write('\tMOV R1,#'+f'{scanline_width}\n')
         f_out.write('\tCMP R2,#'+f'{CLIP_BOTTOM-1}\n')
         f_out.write('\tMOVGE R4,#'+f'{CLIP_BOTTOM-1}\n')
         f_out.write('\tMOVLT R4,R2\n')
