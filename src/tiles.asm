@@ -139,8 +139,8 @@ draw_16x16_tile_unclipped_00:
 draw_16x16_tile_unclipped_01:
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address
@@ -148,8 +148,8 @@ draw_16x16_tile_unclipped_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address
@@ -157,8 +157,8 @@ draw_16x16_tile_unclipped_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address
@@ -166,8 +166,8 @@ draw_16x16_tile_unclipped_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address
@@ -175,8 +175,8 @@ draw_16x16_tile_unclipped_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address
@@ -184,8 +184,8 @@ draw_16x16_tile_unclipped_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address
@@ -193,8 +193,8 @@ draw_16x16_tile_unclipped_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address
@@ -202,8 +202,8 @@ draw_16x16_tile_unclipped_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address
@@ -211,8 +211,8 @@ draw_16x16_tile_unclipped_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address
@@ -220,8 +220,8 @@ draw_16x16_tile_unclipped_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address
@@ -229,8 +229,8 @@ draw_16x16_tile_unclipped_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address
@@ -238,8 +238,8 @@ draw_16x16_tile_unclipped_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address
@@ -247,8 +247,8 @@ draw_16x16_tile_unclipped_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address
@@ -256,8 +256,8 @@ draw_16x16_tile_unclipped_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address
@@ -265,8 +265,8 @@ draw_16x16_tile_unclipped_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address
@@ -274,8 +274,8 @@ draw_16x16_tile_unclipped_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address
@@ -463,8 +463,8 @@ draw_16x16_tile_unclipped_10:
 
 draw_16x16_tile_unclipped_11:
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -472,8 +472,8 @@ draw_16x16_tile_unclipped_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -481,8 +481,8 @@ draw_16x16_tile_unclipped_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -490,8 +490,8 @@ draw_16x16_tile_unclipped_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -499,8 +499,8 @@ draw_16x16_tile_unclipped_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -508,8 +508,8 @@ draw_16x16_tile_unclipped_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -517,8 +517,8 @@ draw_16x16_tile_unclipped_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -526,8 +526,8 @@ draw_16x16_tile_unclipped_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -535,8 +535,8 @@ draw_16x16_tile_unclipped_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -544,8 +544,8 @@ draw_16x16_tile_unclipped_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -553,8 +553,8 @@ draw_16x16_tile_unclipped_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -562,8 +562,8 @@ draw_16x16_tile_unclipped_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -571,8 +571,8 @@ draw_16x16_tile_unclipped_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -580,8 +580,8 @@ draw_16x16_tile_unclipped_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -589,8 +589,8 @@ draw_16x16_tile_unclipped_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -598,8 +598,8 @@ draw_16x16_tile_unclipped_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -1095,8 +1095,8 @@ draw_16x16_tile_clipped_right_00_00:
 draw_16x16_tile_clipped_right_00_01:
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address
@@ -1104,8 +1104,8 @@ draw_16x16_tile_clipped_right_00_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address
@@ -1113,8 +1113,8 @@ draw_16x16_tile_clipped_right_00_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address
@@ -1122,8 +1122,8 @@ draw_16x16_tile_clipped_right_00_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address
@@ -1131,8 +1131,8 @@ draw_16x16_tile_clipped_right_00_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address
@@ -1140,8 +1140,8 @@ draw_16x16_tile_clipped_right_00_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address
@@ -1149,8 +1149,8 @@ draw_16x16_tile_clipped_right_00_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address
@@ -1158,8 +1158,8 @@ draw_16x16_tile_clipped_right_00_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address
@@ -1167,8 +1167,8 @@ draw_16x16_tile_clipped_right_00_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address
@@ -1176,8 +1176,8 @@ draw_16x16_tile_clipped_right_00_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address
@@ -1185,8 +1185,8 @@ draw_16x16_tile_clipped_right_00_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address
@@ -1194,8 +1194,8 @@ draw_16x16_tile_clipped_right_00_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address
@@ -1203,8 +1203,8 @@ draw_16x16_tile_clipped_right_00_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address
@@ -1212,8 +1212,8 @@ draw_16x16_tile_clipped_right_00_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address
@@ -1221,8 +1221,8 @@ draw_16x16_tile_clipped_right_00_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address
@@ -1230,8 +1230,8 @@ draw_16x16_tile_clipped_right_00_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address
@@ -1419,8 +1419,8 @@ draw_16x16_tile_clipped_right_00_10:
 
 draw_16x16_tile_clipped_right_00_11:
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -1428,8 +1428,8 @@ draw_16x16_tile_clipped_right_00_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -1437,8 +1437,8 @@ draw_16x16_tile_clipped_right_00_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -1446,8 +1446,8 @@ draw_16x16_tile_clipped_right_00_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -1455,8 +1455,8 @@ draw_16x16_tile_clipped_right_00_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -1464,8 +1464,8 @@ draw_16x16_tile_clipped_right_00_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -1473,8 +1473,8 @@ draw_16x16_tile_clipped_right_00_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -1482,8 +1482,8 @@ draw_16x16_tile_clipped_right_00_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -1491,8 +1491,8 @@ draw_16x16_tile_clipped_right_00_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -1500,8 +1500,8 @@ draw_16x16_tile_clipped_right_00_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -1509,8 +1509,8 @@ draw_16x16_tile_clipped_right_00_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -1518,8 +1518,8 @@ draw_16x16_tile_clipped_right_00_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -1527,8 +1527,8 @@ draw_16x16_tile_clipped_right_00_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -1536,8 +1536,8 @@ draw_16x16_tile_clipped_right_00_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -1545,8 +1545,8 @@ draw_16x16_tile_clipped_right_00_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -1554,8 +1554,8 @@ draw_16x16_tile_clipped_right_00_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -1628,8 +1628,8 @@ draw_16x16_tile_clipped_right_11_00:
 draw_16x16_tile_clipped_right_11_01:
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address
@@ -1637,8 +1637,8 @@ draw_16x16_tile_clipped_right_11_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address
@@ -1646,8 +1646,8 @@ draw_16x16_tile_clipped_right_11_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address
@@ -1655,8 +1655,8 @@ draw_16x16_tile_clipped_right_11_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address
@@ -1664,8 +1664,8 @@ draw_16x16_tile_clipped_right_11_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address
@@ -1673,8 +1673,8 @@ draw_16x16_tile_clipped_right_11_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address
@@ -1682,8 +1682,8 @@ draw_16x16_tile_clipped_right_11_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address
@@ -1691,8 +1691,8 @@ draw_16x16_tile_clipped_right_11_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address
@@ -1700,8 +1700,8 @@ draw_16x16_tile_clipped_right_11_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address
@@ -1709,8 +1709,8 @@ draw_16x16_tile_clipped_right_11_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address
@@ -1718,8 +1718,8 @@ draw_16x16_tile_clipped_right_11_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address
@@ -1727,8 +1727,8 @@ draw_16x16_tile_clipped_right_11_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address
@@ -1736,8 +1736,8 @@ draw_16x16_tile_clipped_right_11_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address
@@ -1745,8 +1745,8 @@ draw_16x16_tile_clipped_right_11_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address
@@ -1754,8 +1754,8 @@ draw_16x16_tile_clipped_right_11_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address
@@ -1763,8 +1763,8 @@ draw_16x16_tile_clipped_right_11_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address
@@ -1952,8 +1952,8 @@ draw_16x16_tile_clipped_right_11_10:
 
 draw_16x16_tile_clipped_right_11_11:
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -1961,8 +1961,8 @@ draw_16x16_tile_clipped_right_11_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -1970,8 +1970,8 @@ draw_16x16_tile_clipped_right_11_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -1979,8 +1979,8 @@ draw_16x16_tile_clipped_right_11_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -1988,8 +1988,8 @@ draw_16x16_tile_clipped_right_11_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -1997,8 +1997,8 @@ draw_16x16_tile_clipped_right_11_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -2006,8 +2006,8 @@ draw_16x16_tile_clipped_right_11_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -2015,8 +2015,8 @@ draw_16x16_tile_clipped_right_11_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -2024,8 +2024,8 @@ draw_16x16_tile_clipped_right_11_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -2033,8 +2033,8 @@ draw_16x16_tile_clipped_right_11_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -2042,8 +2042,8 @@ draw_16x16_tile_clipped_right_11_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -2051,8 +2051,8 @@ draw_16x16_tile_clipped_right_11_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -2060,8 +2060,8 @@ draw_16x16_tile_clipped_right_11_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -2069,8 +2069,8 @@ draw_16x16_tile_clipped_right_11_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -2078,8 +2078,8 @@ draw_16x16_tile_clipped_right_11_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -2087,8 +2087,8 @@ draw_16x16_tile_clipped_right_11_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -2161,8 +2161,8 @@ draw_16x16_tile_clipped_right_10_00:
 draw_16x16_tile_clipped_right_10_01:
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address
@@ -2170,8 +2170,8 @@ draw_16x16_tile_clipped_right_10_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address
@@ -2179,8 +2179,8 @@ draw_16x16_tile_clipped_right_10_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address
@@ -2188,8 +2188,8 @@ draw_16x16_tile_clipped_right_10_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address
@@ -2197,8 +2197,8 @@ draw_16x16_tile_clipped_right_10_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address
@@ -2206,8 +2206,8 @@ draw_16x16_tile_clipped_right_10_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address
@@ -2215,8 +2215,8 @@ draw_16x16_tile_clipped_right_10_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address
@@ -2224,8 +2224,8 @@ draw_16x16_tile_clipped_right_10_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address
@@ -2233,8 +2233,8 @@ draw_16x16_tile_clipped_right_10_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address
@@ -2242,8 +2242,8 @@ draw_16x16_tile_clipped_right_10_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address
@@ -2251,8 +2251,8 @@ draw_16x16_tile_clipped_right_10_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address
@@ -2260,8 +2260,8 @@ draw_16x16_tile_clipped_right_10_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address
@@ -2269,8 +2269,8 @@ draw_16x16_tile_clipped_right_10_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address
@@ -2278,8 +2278,8 @@ draw_16x16_tile_clipped_right_10_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address
@@ -2287,8 +2287,8 @@ draw_16x16_tile_clipped_right_10_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address
@@ -2296,8 +2296,8 @@ draw_16x16_tile_clipped_right_10_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address
@@ -2485,8 +2485,8 @@ draw_16x16_tile_clipped_right_10_10:
 
 draw_16x16_tile_clipped_right_10_11:
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -2494,8 +2494,8 @@ draw_16x16_tile_clipped_right_10_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -2503,8 +2503,8 @@ draw_16x16_tile_clipped_right_10_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -2512,8 +2512,8 @@ draw_16x16_tile_clipped_right_10_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -2521,8 +2521,8 @@ draw_16x16_tile_clipped_right_10_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -2530,8 +2530,8 @@ draw_16x16_tile_clipped_right_10_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -2539,8 +2539,8 @@ draw_16x16_tile_clipped_right_10_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -2548,8 +2548,8 @@ draw_16x16_tile_clipped_right_10_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -2557,8 +2557,8 @@ draw_16x16_tile_clipped_right_10_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -2566,8 +2566,8 @@ draw_16x16_tile_clipped_right_10_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -2575,8 +2575,8 @@ draw_16x16_tile_clipped_right_10_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -2584,8 +2584,8 @@ draw_16x16_tile_clipped_right_10_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -2593,8 +2593,8 @@ draw_16x16_tile_clipped_right_10_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -2602,8 +2602,8 @@ draw_16x16_tile_clipped_right_10_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -2611,8 +2611,8 @@ draw_16x16_tile_clipped_right_10_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -2620,8 +2620,8 @@ draw_16x16_tile_clipped_right_10_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -2692,8 +2692,8 @@ draw_16x16_tile_clipped_right_01_00:
 draw_16x16_tile_clipped_right_01_01:
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address
@@ -2701,8 +2701,8 @@ draw_16x16_tile_clipped_right_01_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address
@@ -2710,8 +2710,8 @@ draw_16x16_tile_clipped_right_01_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address
@@ -2719,8 +2719,8 @@ draw_16x16_tile_clipped_right_01_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address
@@ -2728,8 +2728,8 @@ draw_16x16_tile_clipped_right_01_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address
@@ -2737,8 +2737,8 @@ draw_16x16_tile_clipped_right_01_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address
@@ -2746,8 +2746,8 @@ draw_16x16_tile_clipped_right_01_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address
@@ -2755,8 +2755,8 @@ draw_16x16_tile_clipped_right_01_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address
@@ -2764,8 +2764,8 @@ draw_16x16_tile_clipped_right_01_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address
@@ -2773,8 +2773,8 @@ draw_16x16_tile_clipped_right_01_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address
@@ -2782,8 +2782,8 @@ draw_16x16_tile_clipped_right_01_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address
@@ -2791,8 +2791,8 @@ draw_16x16_tile_clipped_right_01_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address
@@ -2800,8 +2800,8 @@ draw_16x16_tile_clipped_right_01_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address
@@ -2809,8 +2809,8 @@ draw_16x16_tile_clipped_right_01_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address
@@ -2818,8 +2818,8 @@ draw_16x16_tile_clipped_right_01_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address
@@ -2827,8 +2827,8 @@ draw_16x16_tile_clipped_right_01_01:
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
-    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R9,R5,#0x000000ff   ; get the shifted end of the tile into R9
+    AND R0,R0,#0x000000ff   ; mask out the destination we want to keep
     AND R5,R5,#0xffffff00   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address
@@ -3015,8 +3015,8 @@ draw_16x16_tile_clipped_right_01_10:
     B draw_16x16_tile_exit  ; branch to exit function
 draw_16x16_tile_clipped_right_01_11:
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -3024,8 +3024,8 @@ draw_16x16_tile_clipped_right_01_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -3033,8 +3033,8 @@ draw_16x16_tile_clipped_right_01_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -3042,8 +3042,8 @@ draw_16x16_tile_clipped_right_01_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -3051,8 +3051,8 @@ draw_16x16_tile_clipped_right_01_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -3060,8 +3060,8 @@ draw_16x16_tile_clipped_right_01_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -3069,8 +3069,8 @@ draw_16x16_tile_clipped_right_01_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -3078,8 +3078,8 @@ draw_16x16_tile_clipped_right_01_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -3087,8 +3087,8 @@ draw_16x16_tile_clipped_right_01_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -3096,8 +3096,8 @@ draw_16x16_tile_clipped_right_01_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -3105,8 +3105,8 @@ draw_16x16_tile_clipped_right_01_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -3114,8 +3114,8 @@ draw_16x16_tile_clipped_right_01_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -3123,8 +3123,8 @@ draw_16x16_tile_clipped_right_01_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -3132,8 +3132,8 @@ draw_16x16_tile_clipped_right_01_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -3141,8 +3141,8 @@ draw_16x16_tile_clipped_right_01_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep
@@ -3150,8 +3150,8 @@ draw_16x16_tile_clipped_right_01_11:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    AND R0,R0,#0x00ffffff   ; mask out the destination we want to keep
     AND R9,R5,#0x00ffffff   ; get the shifted end of the tile into R9
     AND R5,R5,#0xff000000   ; mask out the shifted end of the tile
     ORR R5,R5,R0            ; put back the destination pixels we need to keep

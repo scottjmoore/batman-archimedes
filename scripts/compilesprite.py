@@ -216,8 +216,8 @@ for infile, outfile in zip(args.infile, args.outfile):
                         for x in frame[i,j]:
                             f_out.write('\tSTRB R0,[R11,#'+f'{x:d}]\n')
                         
-                f_out.write('\tADD R11,R11,R12\n')
                 f_out.write('\tADD R2,R2,R10\n')
+                f_out.write('\tADD R11,R11,R12\n')
                 f_out.write('\tCMP R2,R9\n')
                 f_out.write('\tBEQ '+label_name+f'_sprite_{tile}_exit\n')
 
@@ -238,8 +238,8 @@ for infile, outfile in zip(args.infile, args.outfile):
                             for x in frame[i,j]:
                                 f_out.write('\tSTRB R0,[R11,#'+f'{sprite_width - x:d}]\n')
                             
-                    f_out.write('\tADD R11,R11,R12\n')
                     f_out.write('\tADD R2,R2,R10\n')
+                    f_out.write('\tADD R11,R11,R12\n')
                     f_out.write('\tCMP R2,R9\n')
                     f_out.write('\tBEQ '+label_name+f'_sprite_{tile}_exit\n')
 
