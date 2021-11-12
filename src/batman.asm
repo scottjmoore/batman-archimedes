@@ -987,7 +987,12 @@ No_CursorRight_Key:
     STMFD SP!, {R0-R8}
     
     SWI OS_Mouse
-    ; DEBUG_REGISTERS
+    LDR R4,monotonic_time
+    STR R3,monotonic_time
+    SUB R3,R3,R4
+    STR R3,monotonic_time_delta
+
+    DEBUG_REGISTERS
 
     STR R2,mouse_b
     MOV R2,R0,LSR #2
@@ -1174,7 +1179,8 @@ animate_explosion_loop:
     CMP R6,#11
     BNE animate_explosion_loop
 
-    ; DEBUG_MEMORY -12    ; debug print memory pointed at by R12
+    ADRL R1,monotonic_time
+    DEBUG_MEMORY -1
     
     .ifne DEBUG
         MOV R1,#0b111100001111
@@ -1196,7 +1202,7 @@ animate_explosion_loop:
     ADD R0,R0,#1
     STR R0,frame_count
 
-    ; DRAW_DEBUG
+    DRAW_DEBUG
 
     MOV R0,#19
     SWI OS_Byte
@@ -1233,6 +1239,12 @@ old_mouse_y:
 
 mouse_b:
     .4byte  0
+
+monotonic_time:
+    .4byte 0
+
+monotonic_time_delta:
+    .4byte 0
 
 pointer_mask:
     .4byte 0x0000ff00
