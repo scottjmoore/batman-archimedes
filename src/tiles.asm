@@ -287,8 +287,8 @@ draw_16x16_tile_unclipped_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -298,8 +298,8 @@ draw_16x16_tile_unclipped_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -309,8 +309,8 @@ draw_16x16_tile_unclipped_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -320,8 +320,8 @@ draw_16x16_tile_unclipped_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -331,8 +331,8 @@ draw_16x16_tile_unclipped_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -342,8 +342,8 @@ draw_16x16_tile_unclipped_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -353,8 +353,8 @@ draw_16x16_tile_unclipped_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -364,8 +364,8 @@ draw_16x16_tile_unclipped_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -375,8 +375,8 @@ draw_16x16_tile_unclipped_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -386,8 +386,8 @@ draw_16x16_tile_unclipped_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -397,8 +397,8 @@ draw_16x16_tile_unclipped_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -408,8 +408,8 @@ draw_16x16_tile_unclipped_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -419,8 +419,8 @@ draw_16x16_tile_unclipped_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -430,8 +430,8 @@ draw_16x16_tile_unclipped_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -441,8 +441,8 @@ draw_16x16_tile_unclipped_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -452,8 +452,8 @@ draw_16x16_tile_unclipped_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R9}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -1243,8 +1243,8 @@ draw_16x16_tile_clipped_right_00_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -1254,8 +1254,8 @@ draw_16x16_tile_clipped_right_00_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -1265,8 +1265,8 @@ draw_16x16_tile_clipped_right_00_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -1276,8 +1276,8 @@ draw_16x16_tile_clipped_right_00_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -1287,8 +1287,8 @@ draw_16x16_tile_clipped_right_00_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -1298,8 +1298,8 @@ draw_16x16_tile_clipped_right_00_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -1309,8 +1309,8 @@ draw_16x16_tile_clipped_right_00_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -1320,8 +1320,8 @@ draw_16x16_tile_clipped_right_00_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -1331,8 +1331,8 @@ draw_16x16_tile_clipped_right_00_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -1342,8 +1342,8 @@ draw_16x16_tile_clipped_right_00_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -1353,8 +1353,8 @@ draw_16x16_tile_clipped_right_00_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -1364,8 +1364,8 @@ draw_16x16_tile_clipped_right_00_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -1375,8 +1375,8 @@ draw_16x16_tile_clipped_right_00_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -1386,8 +1386,8 @@ draw_16x16_tile_clipped_right_00_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -1397,8 +1397,8 @@ draw_16x16_tile_clipped_right_00_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -1408,8 +1408,8 @@ draw_16x16_tile_clipped_right_00_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R8}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -1776,8 +1776,8 @@ draw_16x16_tile_clipped_right_11_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -1787,8 +1787,8 @@ draw_16x16_tile_clipped_right_11_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -1798,8 +1798,8 @@ draw_16x16_tile_clipped_right_11_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -1809,8 +1809,8 @@ draw_16x16_tile_clipped_right_11_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -1820,8 +1820,8 @@ draw_16x16_tile_clipped_right_11_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -1831,8 +1831,8 @@ draw_16x16_tile_clipped_right_11_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -1842,8 +1842,8 @@ draw_16x16_tile_clipped_right_11_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -1853,8 +1853,8 @@ draw_16x16_tile_clipped_right_11_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -1864,8 +1864,8 @@ draw_16x16_tile_clipped_right_11_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -1875,8 +1875,8 @@ draw_16x16_tile_clipped_right_11_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -1886,8 +1886,8 @@ draw_16x16_tile_clipped_right_11_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -1897,8 +1897,8 @@ draw_16x16_tile_clipped_right_11_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -1908,8 +1908,8 @@ draw_16x16_tile_clipped_right_11_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -1919,8 +1919,8 @@ draw_16x16_tile_clipped_right_11_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -1930,8 +1930,8 @@ draw_16x16_tile_clipped_right_11_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -1941,8 +1941,8 @@ draw_16x16_tile_clipped_right_11_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -2309,8 +2309,8 @@ draw_16x16_tile_clipped_right_10_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -2320,8 +2320,8 @@ draw_16x16_tile_clipped_right_10_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -2331,8 +2331,8 @@ draw_16x16_tile_clipped_right_10_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -2342,8 +2342,8 @@ draw_16x16_tile_clipped_right_10_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -2353,8 +2353,8 @@ draw_16x16_tile_clipped_right_10_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -2364,8 +2364,8 @@ draw_16x16_tile_clipped_right_10_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -2375,8 +2375,8 @@ draw_16x16_tile_clipped_right_10_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -2386,8 +2386,8 @@ draw_16x16_tile_clipped_right_10_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -2397,8 +2397,8 @@ draw_16x16_tile_clipped_right_10_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -2408,8 +2408,8 @@ draw_16x16_tile_clipped_right_10_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -2419,8 +2419,8 @@ draw_16x16_tile_clipped_right_10_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -2430,8 +2430,8 @@ draw_16x16_tile_clipped_right_10_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -2441,8 +2441,8 @@ draw_16x16_tile_clipped_right_10_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -2452,8 +2452,8 @@ draw_16x16_tile_clipped_right_10_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -2463,8 +2463,8 @@ draw_16x16_tile_clipped_right_10_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -2474,8 +2474,8 @@ draw_16x16_tile_clipped_right_10_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R6}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -2840,8 +2840,8 @@ draw_16x16_tile_clipped_right_01_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -2851,8 +2851,8 @@ draw_16x16_tile_clipped_right_01_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -2862,8 +2862,8 @@ draw_16x16_tile_clipped_right_01_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -2873,8 +2873,8 @@ draw_16x16_tile_clipped_right_01_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -2884,8 +2884,8 @@ draw_16x16_tile_clipped_right_01_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -2895,8 +2895,8 @@ draw_16x16_tile_clipped_right_01_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -2906,8 +2906,8 @@ draw_16x16_tile_clipped_right_01_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -2917,8 +2917,8 @@ draw_16x16_tile_clipped_right_01_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -2928,8 +2928,8 @@ draw_16x16_tile_clipped_right_01_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -2939,8 +2939,8 @@ draw_16x16_tile_clipped_right_01_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -2950,8 +2950,8 @@ draw_16x16_tile_clipped_right_01_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -2961,8 +2961,8 @@ draw_16x16_tile_clipped_right_01_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -2972,8 +2972,8 @@ draw_16x16_tile_clipped_right_01_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -2983,8 +2983,8 @@ draw_16x16_tile_clipped_right_01_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -2994,8 +2994,8 @@ draw_16x16_tile_clipped_right_01_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
@@ -3005,8 +3005,8 @@ draw_16x16_tile_clipped_right_01_10:
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
     MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
-    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
+    MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSL #16       ; shift back to the right bit position
     ORR R5,R5,R0,LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11,{R5-R7}       ; store 20 bytes from R5-R9 to the destination address with incrementing it
