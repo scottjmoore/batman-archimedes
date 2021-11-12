@@ -284,8 +284,8 @@ draw_16x16_tile_unclipped_01:
 
 draw_16x16_tile_unclipped_10:
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -295,8 +295,8 @@ draw_16x16_tile_unclipped_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -306,8 +306,8 @@ draw_16x16_tile_unclipped_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -317,8 +317,8 @@ draw_16x16_tile_unclipped_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -328,8 +328,8 @@ draw_16x16_tile_unclipped_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -339,8 +339,8 @@ draw_16x16_tile_unclipped_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -350,8 +350,8 @@ draw_16x16_tile_unclipped_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -361,8 +361,8 @@ draw_16x16_tile_unclipped_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -372,8 +372,8 @@ draw_16x16_tile_unclipped_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -383,8 +383,8 @@ draw_16x16_tile_unclipped_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -394,8 +394,8 @@ draw_16x16_tile_unclipped_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -405,8 +405,8 @@ draw_16x16_tile_unclipped_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -416,8 +416,8 @@ draw_16x16_tile_unclipped_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -427,8 +427,8 @@ draw_16x16_tile_unclipped_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -438,8 +438,8 @@ draw_16x16_tile_unclipped_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -449,8 +449,8 @@ draw_16x16_tile_unclipped_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -1240,8 +1240,8 @@ draw_16x16_tile_clipped_right_00_01:
 
 draw_16x16_tile_clipped_right_00_10:
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -1251,8 +1251,8 @@ draw_16x16_tile_clipped_right_00_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -1262,8 +1262,8 @@ draw_16x16_tile_clipped_right_00_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -1273,8 +1273,8 @@ draw_16x16_tile_clipped_right_00_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -1284,8 +1284,8 @@ draw_16x16_tile_clipped_right_00_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -1295,8 +1295,8 @@ draw_16x16_tile_clipped_right_00_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -1306,8 +1306,8 @@ draw_16x16_tile_clipped_right_00_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -1317,8 +1317,8 @@ draw_16x16_tile_clipped_right_00_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -1328,8 +1328,8 @@ draw_16x16_tile_clipped_right_00_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -1339,8 +1339,8 @@ draw_16x16_tile_clipped_right_00_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -1350,8 +1350,8 @@ draw_16x16_tile_clipped_right_00_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -1361,8 +1361,8 @@ draw_16x16_tile_clipped_right_00_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -1372,8 +1372,8 @@ draw_16x16_tile_clipped_right_00_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -1383,8 +1383,8 @@ draw_16x16_tile_clipped_right_00_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -1394,8 +1394,8 @@ draw_16x16_tile_clipped_right_00_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -1405,8 +1405,8 @@ draw_16x16_tile_clipped_right_00_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -1773,8 +1773,8 @@ draw_16x16_tile_clipped_right_11_01:
 
 draw_16x16_tile_clipped_right_11_10:
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -1784,8 +1784,8 @@ draw_16x16_tile_clipped_right_11_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -1795,8 +1795,8 @@ draw_16x16_tile_clipped_right_11_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -1806,8 +1806,8 @@ draw_16x16_tile_clipped_right_11_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -1817,8 +1817,8 @@ draw_16x16_tile_clipped_right_11_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -1828,8 +1828,8 @@ draw_16x16_tile_clipped_right_11_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -1839,8 +1839,8 @@ draw_16x16_tile_clipped_right_11_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -1850,8 +1850,8 @@ draw_16x16_tile_clipped_right_11_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -1861,8 +1861,8 @@ draw_16x16_tile_clipped_right_11_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -1872,8 +1872,8 @@ draw_16x16_tile_clipped_right_11_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -1883,8 +1883,8 @@ draw_16x16_tile_clipped_right_11_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -1894,8 +1894,8 @@ draw_16x16_tile_clipped_right_11_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -1905,8 +1905,8 @@ draw_16x16_tile_clipped_right_11_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -1916,8 +1916,8 @@ draw_16x16_tile_clipped_right_11_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -1927,8 +1927,8 @@ draw_16x16_tile_clipped_right_11_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -1938,8 +1938,8 @@ draw_16x16_tile_clipped_right_11_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -2306,8 +2306,8 @@ draw_16x16_tile_clipped_right_10_01:
 
 draw_16x16_tile_clipped_right_10_10:
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -2317,8 +2317,8 @@ draw_16x16_tile_clipped_right_10_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -2328,8 +2328,8 @@ draw_16x16_tile_clipped_right_10_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -2339,8 +2339,8 @@ draw_16x16_tile_clipped_right_10_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -2350,8 +2350,8 @@ draw_16x16_tile_clipped_right_10_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -2361,8 +2361,8 @@ draw_16x16_tile_clipped_right_10_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -2372,8 +2372,8 @@ draw_16x16_tile_clipped_right_10_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -2383,8 +2383,8 @@ draw_16x16_tile_clipped_right_10_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -2394,8 +2394,8 @@ draw_16x16_tile_clipped_right_10_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -2405,8 +2405,8 @@ draw_16x16_tile_clipped_right_10_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -2416,8 +2416,8 @@ draw_16x16_tile_clipped_right_10_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -2427,8 +2427,8 @@ draw_16x16_tile_clipped_right_10_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -2438,8 +2438,8 @@ draw_16x16_tile_clipped_right_10_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -2449,8 +2449,8 @@ draw_16x16_tile_clipped_right_10_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -2460,8 +2460,8 @@ draw_16x16_tile_clipped_right_10_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -2471,8 +2471,8 @@ draw_16x16_tile_clipped_right_10_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -2837,8 +2837,8 @@ draw_16x16_tile_clipped_right_01_01:
 
 draw_16x16_tile_clipped_right_01_10:
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -2848,8 +2848,8 @@ draw_16x16_tile_clipped_right_01_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -2859,8 +2859,8 @@ draw_16x16_tile_clipped_right_01_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -2870,8 +2870,8 @@ draw_16x16_tile_clipped_right_01_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -2881,8 +2881,8 @@ draw_16x16_tile_clipped_right_01_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -2892,8 +2892,8 @@ draw_16x16_tile_clipped_right_01_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -2903,8 +2903,8 @@ draw_16x16_tile_clipped_right_01_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -2914,8 +2914,8 @@ draw_16x16_tile_clipped_right_01_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -2925,8 +2925,8 @@ draw_16x16_tile_clipped_right_01_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -2936,8 +2936,8 @@ draw_16x16_tile_clipped_right_01_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -2947,8 +2947,8 @@ draw_16x16_tile_clipped_right_01_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -2958,8 +2958,8 @@ draw_16x16_tile_clipped_right_01_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -2969,8 +2969,8 @@ draw_16x16_tile_clipped_right_01_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -2980,8 +2980,8 @@ draw_16x16_tile_clipped_right_01_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -2991,8 +2991,8 @@ draw_16x16_tile_clipped_right_01_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
@@ -3002,8 +3002,8 @@ draw_16x16_tile_clipped_right_01_10:
     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
     LDMIA R11,{R0}          ; load the destination word so we can keep some of it
-    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     LDMIA R12!,{R5-R8}      ; load 16 bytes from the soure address into R5-R8
+    MOV R0,R0,LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9,R5,LSL #16       ; get the shifted end of the tile into R9
     MOV R9,R9,LSR #16       ; shift back to the right bit position
     MOV R5,R5,LSR #16       ; mask out the shifted end of the tile
