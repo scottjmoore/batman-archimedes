@@ -106,7 +106,7 @@ for infile, outfile in zip(args.infile, args.outfile):
         f_out.write('\tB draw_'+label_name+'_sprite_skip_flip_y\n')
 
         f_out.write('\ndraw_'+label_name+'_sprite_flip_y:\n')
-        f_out.write('\tADD R2,R2,#'+f'{sprite_height}\n')
+        f_out.write('\tADD R2,R2,#'+f'{sprite_height-1}\n')
         f_out.write('\tMOV R9,#'+f'{CLIP_TOP-1}\n')
         f_out.write('\tMOV R10,#-1\n')
         f_out.write('\tMVN R12,#'+f'{scanline_width-1}\n')

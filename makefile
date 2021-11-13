@@ -1,5 +1,6 @@
 SRC = 		src/batman.asm \
 			src/tiles.asm \
+			src/sprites.asm \
 			src/vidc.asm \
 			src/memc.asm \
 			src/debug.asm
@@ -26,7 +27,7 @@ LEVELS = 	build/level_1_map.asm
 LUTS = 		build/sincos.asm
 
 VASM = 		vasmarm_std
-DEBUG =		-D DEBUG=1
+DEBUG =		-D DEBUG=0
 OPTS =		-a3 -m3 -opt-ldrpc -opt-adr -Fbin
 
 PNG2ASM = 			./scripts/png2asm.py

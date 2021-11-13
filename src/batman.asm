@@ -36,7 +36,9 @@ stack:
 
 .include "memc.asm"
 .include "vidc.asm"
+
 .include "tiles.asm"
+.include "sprites.asm"
 
 .set    SCANLINE,   352
 
@@ -1018,6 +1020,9 @@ No_CursorRight_Key:
     MOV R3,#0x00ff
     ORR R3,R3,#3 << 30
     BL draw_batman_sprite
+    MOV R4,#32
+    MOV R5,#42
+    BL draw_sprite_outline
     SUB R1,R1,#24
     ; SUB R2,R2,#12
     MOV R3,#0xf800
@@ -1065,8 +1070,8 @@ No_CursorRight_Key:
     LDR R4,old_mouse_y
     STR R2,old_mouse_y
     CMP R2,R4
-    ORRGT R3,R3,#1 << 30
-    ORRLT R3,R3,#1 << 30
+    ORRNE R3,R3,#1 << 30
+    ; ORRLT R3,R3,#1 << 30
     EORLT R3,R3,#1 << 30
     STR R3,pointer_mask
     BL draw_pointers_sprite
