@@ -841,6 +841,32 @@ main_draw_tile_map:
     ADD R1,R1,#SCANLINE*233
     BL copy_buffer_to_screen
 
+    ADRL R1,draw_batman_sprite
+    STR R1,sprite_00_function
+    MOV R1,#0
+    STR R1,sprite_00_frame
+    MOV R1,#160
+    STR R1,sprite_00_x
+    MOV R1,#128
+    STR R1,sprite_00_y
+    MOV R1,#32
+    STR R1,sprite_00_width
+    MOV R1,#42
+    STR R1,sprite_00_height
+
+    ADRL R1,draw_batman_sprite
+    STR R1,sprite_31_function
+    MOV R1,#0
+    STR R1,sprite_31_frame
+    MOV R1,#160
+    STR R1,sprite_31_x
+    MOV R1,#128
+    STR R1,sprite_31_y
+    MOV R1,#32
+    STR R1,sprite_31_width
+    MOV R1,#42
+    STR R1,sprite_31_height
+
     MOV R3,#232 * 16
     MOV R4,#47 * 16
 
@@ -994,8 +1020,6 @@ No_CursorRight_Key:
     SUB R3,R3,R4
     STR R3,monotonic_time_delta
 
-    DEBUG_REGISTERS
-
     STR R2,mouse_b
     MOV R2,R0,LSR #2
     MOV R3,R1,LSR #2
@@ -1003,189 +1027,16 @@ No_CursorRight_Key:
     STR R2,mouse_x
     STR R3,mouse_y
 
-    STMFD SP!,{R0-R1,R11}
-
     .ifne DEBUG
         MOV R1,#0b000011111111
         BL vidc_set_border_colour
     .endif
 
-    LDR R11,[R12]
-    LDR R0,batman_frame
-    MOV R0,R0,LSR #2
-    LDR R1,batman_x
-    LDR R2,batman_y
-
-
-    MOV R3,#0x00ff
-    ORR R3,R3,#3 << 30
-    BL draw_batman_sprite
-    MOV R4,#32
-    MOV R5,#42
-    BL draw_sprite_outline
-    SUB R1,R1,#24
-    ; SUB R2,R2,#12
-    MOV R3,#0xf800
-    BL draw_batman_sprite
-    SUB R1,R1,#24
-    ; SUB R2,R2,#12
-    MOV R3,#0xff00
-    ORR R3,R3,#3 << 30
-    BL draw_batman_sprite
-    SUB R1,R1,#24
-    ; SUB R2,R2,#12
-    MOV R3,#0xff03
-    BL draw_batman_sprite
-    SUB R1,R1,#24
-    ; SUB R2,R2,#12
-    MOV R3,#0xff10              ; 0x10 = pinkish ; 0x20 = greenish ; 0x40 = vivid greenish ; 0x80 = blueish
-    ORR R3,R3,#3 << 30
-    BL draw_batman_sprite
-    SUB R1,R1,#24
-    ; SUB R2,R2,#12
-    MOV R3,#0xff40              ; 0x10 = pinkish ; 0x20 = greenish ; 0x40 = vivid greenish ; 0x80 = blueish
-    BL draw_batman_sprite
-    SUB R1,R1,#24
-    ; SUB R2,R2,#12
-    MOV R3,#0xff80              ; 0x10 = pinkish ; 0x20 = greenish ; 0x40 = vivid greenish ; 0x80 = blueish
-    ORR R3,R3,#3 << 30
-    BL draw_batman_sprite
-    SUB R1,R1,#24
-    ; SUB R2,R2,#12
-    LDR R3,frame_count
-    ORR R3,R3,#0xff00              ; 0x10 = pinkish ; 0x20 = greenish ; 0x40 = vivid greenish ; 0x80 = blueis
-    BL draw_batman_sprite
-
-    MOV R0,#0
-    LDR R3,pointer_mask
-    LDR R1,mouse_x
-    LDR R4,old_mouse_x
-    STR R1,old_mouse_x
-    CMP R1,R4
-    ORRGT R3,R3,#1 << 31
-    ORRLT R3,R3,#1 << 31
-    EORLT R3,R3,#1 << 31
-    ADD R1,R1,#16
-    LDR R2,mouse_y
-    LDR R4,old_mouse_y
-    STR R2,old_mouse_y
-    CMP R2,R4
-    ORRNE R3,R3,#1 << 30
-    ; ORRLT R3,R3,#1 << 30
-    EORLT R3,R3,#1 << 30
-    STR R3,pointer_mask
-    BL draw_pointers_sprite
-
-    ADD R1,R1,#8
-    SUB R2,R2,#24
-    BL draw_enemies_sprite
-    ADD R0,R0,#1
-    ADD R1,R1,#32
-    BL draw_enemies_sprite
-    ADD R0,R0,#1
-    ADD R1,R1,#32
-    BL draw_enemies_sprite
-    ADD R0,R0,#1
-    ADD R1,R1,#32
-    BL draw_enemies_sprite
-    
-    MOV R0,#0
-
-    ADD R1,R1,#32
-    ADD R2,R2,#21
-    LDR R4,frame_count
-    AND R4,R4,#7
-    ADD R1,R1,R4
-    BL draw_bullets_sprite
-    ADD R1,R1,#8
-    BL draw_bullets_sprite
-    ADD R1,R1,#8
-    BL draw_bullets_sprite
-    ADD R1,R1,#8
-    BL draw_bullets_sprite
-    ADD R1,R1,#8
-    BL draw_bullets_sprite
-    ADD R1,R1,#8
-    BL draw_bullets_sprite
-    ADD R1,R1,#8
-    BL draw_bullets_sprite
-    ADD R1,R1,#8
-    BL draw_bullets_sprite
-    ADD R1,R1,#8
-    BL draw_bullets_sprite
-    ADD R1,R1,#8
-    BL draw_bullets_sprite
-    ADD R1,R1,#8
-    BL draw_bullets_sprite
-    ADD R1,R1,#8
-    BL draw_bullets_sprite
-    ADD R1,R1,#8
-    BL draw_bullets_sprite
-    ADD R1,R1,#8
-    BL draw_bullets_sprite
-    ADD R1,R1,#8
-    BL draw_bullets_sprite
-    ADD R1,R1,#8
-    BL draw_bullets_sprite
-    ADD R1,R1,#8
-    BL draw_bullets_sprite
-    ADD R1,R1,#8
-    BL draw_bullets_sprite
-    ADD R1,R1,#8
-    BL draw_bullets_sprite
-    ADD R1,R1,#8
-    BL draw_bullets_sprite
-    ADD R1,R1,#8
-    BL draw_bullets_sprite
-    ADD R1,R1,#8
-    BL draw_bullets_sprite
-    ADD R1,R1,#8
-    BL draw_bullets_sprite
-    ADD R1,R1,#8
-    BL draw_bullets_sprite
-    ADD R1,R1,#8
-    BL draw_bullets_sprite
-    ADD R1,R1,#8
-    BL draw_bullets_sprite
-
-    MOV R4,#0
-    MOV R6,#0
-    ADR R7,explosion_frame
-    ADR R8,explosion_x
-    ADR R9,explosion_y
-    ADR R10,explosion_yd
-    LDR R11,[R12]
-
-animate_explosion_loop:
-    LDR R0,[R7,R6,LSL #2]
-    LDR R1,[R8,R6,LSL #2]
-    LDR R2,[R9,R6,LSL #2]
-    LDR R3,[R10,R6,LSL #2]
-    ADD R0,R0,#1
-    CMP R0,#80
-    MOVEQ R0,#0
-    ADD R1,R1,#1
-    CMP R1,#CLIP_RIGHT - 16
-    MOVEQ R1,#CLIP_LEFT - 24
-    ADD R2,R2,R3,ASR #16
-    CMP R2,#CLIP_BOTTOM - 24
-    ADDLT R3,R3,#1 << 13
-    ADDGE R3,R3,R3,ASR #1
-    SUBGE R3,R4,R3,ASR #1
-    MOVGE R2,#CLIP_BOTTOM - 24
-    STR R0,[R7,R6,LSL #2]
-    STR R1,[R8,R6,LSL #2]
-    STR R2,[R9,R6,LSL #2]
-    STR R3,[R10,R6,LSL #2]
-    MOV R0,R0,LSR #3
-    MOV R3,#0xff00
-    BL draw_explosion_sprite
-    ADD R6,R6,#1
-    CMP R6,#11
-    BNE animate_explosion_loop
-
-    ADRL R1,monotonic_time
+    ADRL R1,sprites
     DEBUG_MEMORY -1
+
+    LDR R11,[R12]
+    BL draw_sprites
     
     .ifne DEBUG
         MOV R1,#0b111100001111
@@ -1199,7 +1050,6 @@ animate_explosion_loop:
         BL vidc_set_border_colour
     .endif
 
-    LDMFD SP!, {R0,R1,R11}
     LDMFD SP!, {R0-R8}
 
     LDR R11,[R12]
@@ -1254,68 +1104,9 @@ monotonic_time_delta:
 pointer_mask:
     .4byte 0x0000ff00
 
-batman_x:
-    .4byte  140
-batman_y:
-    .4byte  104
-
-batman_frame:
-    .4byte 0
-
-intro_font_angle:
-    .4byte 0
-
-explosion_x:
-    .4byte  (32 * 0)
-    .4byte  (32 * 1)
-    .4byte  (32 * 2)
-    .4byte  (32 * 3)
-    .4byte  (32 * 4)
-    .4byte  (32 * 5)
-    .4byte  (32 * 6)
-    .4byte  (32 * 7)
-    .4byte  (32 * 8)
-    .4byte  (32 * 9)
-    .4byte  (32 * 10)
-
-explosion_y:
-    .4byte  -32 - (8 * 0)
-    .4byte  -32 - (8 * 1)
-    .4byte  -32 - (8 * 2)
-    .4byte  -32 - (8 * 3)
-    .4byte  -32 - (8 * 4)
-    .4byte  -32 - (8 * 5)
-    .4byte  -32 - (8 * 6)
-    .4byte  -32 - (8 * 7)
-    .4byte  -32 - (8 * 8)
-    .4byte  -32 - (8 * 9)
-    .4byte  -32 - (8 * 10)
-
-explosion_yd:
-    .4byte  0
-    .4byte  0
-    .4byte  0
-    .4byte  0
-    .4byte  0
-    .4byte  0
-    .4byte  0
-    .4byte  0
-    .4byte  0
-    .4byte  0
-    .4byte  0
-
-explosion_frame:
-    .4byte 0 << 2
-    .4byte 1 << 2
-    .4byte 2 << 2
-    .4byte 3 << 2
-    .4byte 4 << 2
-    .4byte 5 << 2
-    .4byte 6 << 2
-    .4byte 7 << 2
-    .4byte 0 << 2
-    .4byte 1 << 2
-    .4byte 2 << 2
+.set batman_frame, sprite_00_frame
+.set batman_x,  sprite_00_x
+.set batman_y,  sprite_00_y
 
 ;   ****************************************************************
 ;       DATA section
@@ -1418,7 +1209,6 @@ vdu_variables_screen_start_buffer:
     .4byte 0x00000000
     .4byte level_1_map_tilemap
     .4byte level_1_map_types
-    
 memc_address_screen_start:
     .4byte (SCANLINE * 234) >> 2
     .4byte SCANLINE >> 2
