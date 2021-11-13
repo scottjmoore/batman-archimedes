@@ -45,22 +45,25 @@
 draw_sprite_outline:
     STMFD SP!,{R0-R5,R10,R11}
 
-    CMP R1,#CLIP_LEFT
+    CMP R1,#CLIP_LEFT + 16
     BGE draw_sprite_outline_noclip_left
     ADD R4,R4,R1
-    MOV R1,#CLIP_LEFT
+    SUB R4,R4,#16
+    MOV R1,#CLIP_LEFT + 16
     CMP R4,#0
     BLE draw_sprite_outline_exit
+
 draw_sprite_outline_noclip_left:
-    CMP R1,#CLIP_RIGHT
+    CMP R1,#CLIP_RIGHT - 16
     BGE draw_sprite_outline_exit
     ADD R3,R1,R4
-    CMP R3,#CLIP_RIGHT
+    CMP R3,#CLIP_RIGHT - 16
     BLE draw_sprite_outline_noclip_right
-    SUB R3,R3,#CLIP_RIGHT
+    SUB R3,R3,#CLIP_RIGHT - 16
     SUB R4,R4,R3
     CMP R4,#0
     BLE draw_sprite_outline_exit
+
 draw_sprite_outline_noclip_right:
     CMP R2,#CLIP_TOP
     BGE draw_sprite_outline_noclip_top
@@ -68,6 +71,7 @@ draw_sprite_outline_noclip_right:
     MOV R2,#CLIP_TOP
     CMP R5,#0
     BLE draw_sprite_outline_exit
+
 draw_sprite_outline_noclip_top:
     CMP R2,#CLIP_BOTTOM
     BGE draw_sprite_outline_exit
@@ -78,8 +82,8 @@ draw_sprite_outline_noclip_top:
     SUB R5,R5,R3
     CMP R5,#0
     BLE draw_sprite_outline_exit
-draw_sprite_outline_noclip_bottom:
 
+draw_sprite_outline_noclip_bottom:
     MOV R0,#255
     ADD R11,R11,R1
     MOV R3,#SCANLINE

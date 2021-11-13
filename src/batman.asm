@@ -1277,6 +1277,7 @@ explosion_x:
     .4byte  (32 * 8)
     .4byte  (32 * 9)
     .4byte  (32 * 10)
+
 explosion_y:
     .4byte  -32 - (8 * 0)
     .4byte  -32 - (8 * 1)
@@ -1417,6 +1418,7 @@ vdu_variables_screen_start_buffer:
     .4byte 0x00000000
     .4byte level_1_map_tilemap
     .4byte level_1_map_types
+    
 memc_address_screen_start:
     .4byte (SCANLINE * 234) >> 2
     .4byte SCANLINE >> 2
