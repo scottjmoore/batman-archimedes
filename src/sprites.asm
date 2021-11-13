@@ -1,5 +1,5 @@
 ;   ****************************************************************
-;       tiles.asm
+;       sprites.asm
 ;   ----------------------------------------------------------------
 ;       Copyright (c) 2021 Scott Moore, all rights reserved.
 ;   ****************************************************************
@@ -14,7 +14,7 @@
 ;       R0      :   byte/colour to store in framebuffer
 ;       R1      :   x coordinate of sprite
 ;       R2      :   y coordinate of sprite
-;       R3      :   NA
+;       R3      :   N/A
 ;       R4      :   width of sprite
 ;       R5      :   height of sprite
 ;       R6      :   N/A
@@ -41,6 +41,7 @@
 ;       R11     :   Unchanged
 ;       R11     :   Unchanged
 ;   ****************************************************************
+
 draw_sprite_outline:
     STMFD SP!,{R0-R5,R10,R11}
 
