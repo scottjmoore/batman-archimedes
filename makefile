@@ -145,7 +145,7 @@ build/sprites/pointers.asm: assets/sprites/pointers.png makefile
 	$(COMPILESPRITE) \
 		-i assets/sprites/pointers.png \
 		-o build/sprites/pointers.asm \
-		-sw 12 -sh 12 \
+		-sw 11 -sh 11 \
 		-mi 159 \
 		-afx true \
 		-afy true
