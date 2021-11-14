@@ -566,12 +566,14 @@ draw_sprites_loop:
     BEQ draw_sprites_skip
     ADD R14,PC,#0
     MOV PC,R12
-    CMP R6,#0
-    MOVEQ R0,#255
-    MOVNE R0,#23
+
     .ifne SPRITE_DEBUG
+        CMP R6,#0
+        MOVEQ R0,#255
+        MOVNE R0,#23
         BL draw_sprite_outline
     .endif
+    
 draw_sprites_skip:
     SUBS R9,R9,#1
     BNE draw_sprites_loop
