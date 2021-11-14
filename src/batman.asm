@@ -867,8 +867,8 @@ main_draw_tile_map:
     MOV R1,#42
     STR R1,sprite_31_height
 
-    MOV R3,#232 * 16
-    MOV R4,#47 * 16
+    MOV R3,#0
+    MOV R4,#0
 
 main_draw_tile_map_loop:
 
@@ -882,6 +882,10 @@ main_draw_tile_map_loop:
     LDR R2,[R12]
 
     BL draw_tile_map
+    STR R3,sprite_offset_x
+    STR R4,sprite_offset_y
+    LDR R11,[R12]
+    BL draw_sprites
 
     STMFD SP!,{R0-R2}
 
@@ -927,7 +931,7 @@ No_F6_Key:
     BNE No_Z_Key
     SUB R3,R3,#1
     CMP R3,#0
-    ADDLT R3,R3,#256*16
+    MOVLE R3,#0
 No_Z_Key:
     MOV R0,#129
     MOV R1,#-67
@@ -957,7 +961,7 @@ No_L_Key:
     BNE No_P_Key
     SUB R4,R4,#1
     CMP R4,#0
-    ADDLT R4,R4,#48*16
+    MOVLE R4,#0
 No_P_Key:
     MOV R0,#129
     MOV R1,#-58
@@ -988,6 +992,14 @@ No_CursorDown_Key:
     LDR R0,batman_x
     SUB R0,R0,#1
     STR R0,batman_x
+    LDR R0,batman_attributes
+    ORR R0,R0,#1<<31
+    STR R0,batman_attributes
+    LDR R0,batman_frame
+    ADD R0,R0,#1
+    CMP R0,#8 * 4
+    MOVEQ R0,#0
+    STR R0,batman_frame
 No_CursorLeft_Key:
     MOV R0,#129
     MOV R1,#-122
@@ -998,9 +1010,13 @@ No_CursorLeft_Key:
     LDR R0,batman_x
     ADD R0,R0,#1
     STR R0,batman_x
+    LDR R0,batman_attributes
+    ORR R0,R0,#1<<31
+    EOR R0,R0,#1<<31
+    STR R0,batman_attributes
     LDR R0,batman_frame
     ADD R0,R0,#1
-    CMP R0,#28
+    CMP R0,#8 * 4
     MOVEQ R0,#0
     STR R0,batman_frame
 No_CursorRight_Key:
@@ -1032,12 +1048,6 @@ No_CursorRight_Key:
         BL vidc_set_border_colour
     .endif
 
-    ADRL R1,sprites
-    DEBUG_MEMORY -1
-
-    LDR R11,[R12]
-    BL draw_sprites
-    
     .ifne DEBUG
         MOV R1,#0b111100001111
         BL vidc_set_border_colour
@@ -1107,6 +1117,7 @@ pointer_mask:
 .set batman_frame, sprite_00_frame
 .set batman_x,  sprite_00_x
 .set batman_y,  sprite_00_y
+.set batman_attributes, sprite_00_attributes
 
 ;   ****************************************************************
 ;       DATA section
