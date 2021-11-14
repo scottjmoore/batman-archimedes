@@ -841,23 +841,30 @@ main_draw_tile_map:
     ADD R1,R1,#SCANLINE*233
     BL copy_buffer_to_screen
 
-    ADRL R1,draw_batman_sprite
+    MOV R1,#draw_batman_sprite & 0x0000ffff
+    ORR R1,R1,#draw_batman_sprite & 0xffff0000
     STR R1,sprite_00_function
     MOV R1,#0
     STR R1,sprite_00_frame
+    STR R1,sprite_00_offset_x
+    STR R1,sprite_00_offset_y
     MOV R1,#160
     STR R1,sprite_00_x
     MOV R1,#128
     STR R1,sprite_00_y
-    MOV R1,#32
+    MOV R1,#28
     STR R1,sprite_00_width
     MOV R1,#42
     STR R1,sprite_00_height
 
-    ADRL R1,draw_batman_sprite
+    MOV R1,#draw_batman_sprite & 0x0000ffff
+    ORR R1,R1,#draw_batman_sprite & 0xffff0000
     STR R1,sprite_31_function
     MOV R1,#0
+    STR R1,sprite_31_function
     STR R1,sprite_31_frame
+    STR R1,sprite_31_offset_x
+    STR R1,sprite_31_offset_y
     MOV R1,#160
     STR R1,sprite_31_x
     MOV R1,#128
@@ -882,8 +889,8 @@ main_draw_tile_map_loop:
     LDR R2,[R12]
 
     BL draw_tile_map
-    STR R3,sprite_offset_x
-    STR R4,sprite_offset_y
+    STR R3,sprite_world_offset_x
+    STR R4,sprite_world_offset_y
     LDR R11,[R12]
     BL draw_sprites
 
@@ -969,9 +976,9 @@ No_P_Key:
     SWI OS_Byte
     CMP R2,#255
     BNE No_CursorUp_Key
-    LDR R0,batman_y
+    LDR R0,sprite_00_y
     SUB R0,R0,#1
-    STR R0,batman_y
+    STR R0,sprite_00_y
 No_CursorUp_Key:
     MOV R0,#129
     MOV R1,#-42
@@ -979,9 +986,9 @@ No_CursorUp_Key:
     SWI OS_Byte
     CMP R2,#255
     BNE No_CursorDown_Key
-    LDR R0,batman_y
+    LDR R0,sprite_00_y
     ADD R0,R0,#1
-    STR R0,batman_y
+    STR R0,sprite_00_y
 No_CursorDown_Key:
     MOV R0,#129
     MOV R1,#-26
@@ -989,17 +996,19 @@ No_CursorDown_Key:
     SWI OS_Byte
     CMP R2,#255
     BNE No_CursorLeft_Key
-    LDR R0,batman_x
+    ADRL R1,sprite_00
+    LDR R0,[R1,#sprite_x]
+    DEBUG_REGISTERS
     SUB R0,R0,#1
-    STR R0,batman_x
-    LDR R0,batman_attributes
+    STR R0,[R1,#sprite_x]
+    LDR R0,[R1,#sprite_attributes]
     ORR R0,R0,#1<<31
-    STR R0,batman_attributes
-    LDR R0,batman_frame
+    STR R0,[R1,#sprite_attributes]
+    LDR R0,[R1,#sprite_frame]
     ADD R0,R0,#1
     CMP R0,#8 * 4
     MOVEQ R0,#0
-    STR R0,batman_frame
+    STR R0,[R1,#sprite_frame]
 No_CursorLeft_Key:
     MOV R0,#129
     MOV R1,#-122
@@ -1007,18 +1016,19 @@ No_CursorLeft_Key:
     SWI OS_Byte
     CMP R2,#255
     BNE No_CursorRight_Key
-    LDR R0,batman_x
+    ADRL R1,sprite_00
+    LDR R0,[R1,#sprite_x]
     ADD R0,R0,#1
-    STR R0,batman_x
-    LDR R0,batman_attributes
+    STR R0,[R1,#sprite_x]
+    LDR R0,[R1,#sprite_attributes]
     ORR R0,R0,#1<<31
     EOR R0,R0,#1<<31
-    STR R0,batman_attributes
-    LDR R0,batman_frame
+    STR R0,[R1,#sprite_attributes]
+    LDR R0,[R1,#sprite_frame]
     ADD R0,R0,#1
     CMP R0,#8 * 4
     MOVEQ R0,#0
-    STR R0,batman_frame
+    STR R0,[R1,#sprite_frame]
 No_CursorRight_Key:
     MOV R0,#129
     MOV R1,#-113
