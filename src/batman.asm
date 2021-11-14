@@ -846,16 +846,18 @@ main_draw_tile_map:
     STR R1,sprite_00_function
     MOV R1,#0
     STR R1,sprite_00_frame
-    STR R1,sprite_00_offset_x
-    STR R1,sprite_00_offset_y
     MOV R1,#160
     STR R1,sprite_00_x
-    MOV R1,#128
+    MOV R1,#10*16
     STR R1,sprite_00_y
-    MOV R1,#28
+    MOV R1,#32
     STR R1,sprite_00_width
+    MOV R1,R1,LSR #1
+    STR R1,sprite_00_offset_x
     MOV R1,#42
     STR R1,sprite_00_height
+    MOV R1,#42
+    STR R1,sprite_00_offset_y
 
     MOV R1,#draw_batman_sprite & 0x0000ffff
     ORR R1,R1,#draw_batman_sprite & 0xffff0000

@@ -569,7 +569,9 @@ draw_sprites_loop:
     CMP R6,#0
     MOVEQ R0,#255
     MOVNE R0,#23
-    BL draw_sprite_outline
+    .ifne SPRITE_DEBUG
+        BL draw_sprite_outline
+    .endif
 draw_sprites_skip:
     SUBS R9,R9,#1
     BNE draw_sprites_loop
