@@ -361,39 +361,39 @@ fade_buffer_with_lookup_loop:
     LDMFD SP!, {R0-R12}     ; restore all the registers from the stack
     MOV PC,R14              ; return from function
 
-copy_8x8_tile_to_screen:
+; copy_8x8_tile_to_screen:
 
-    STMFD SP!, {R0-R12}     ; store all registers onto the stack
+;     STMFD SP!, {R0-R12}     ; store all registers onto the stack
 
-    MOV R5,#8*8             ; put the size of a single tile in bytes into R5
-    MLA R12,R0,R5,R1        ; calculate the address of the start of the tile [source = (tile number * (8 * 8)) + address of tileset]
-    MOV R5,#SCANLINE             ; put the width of a scanline into R5
-    MLA R11,R3,R5,R4        ; calculate the address of the destination [destination = (y * 320) + address of screen or buffer]
-    ADD R11,R11,R2          ; add x to the destination address
+;     MOV R5,#8*8             ; put the size of a single tile in bytes into R5
+;     MLA R12,R0,R5,R1        ; calculate the address of the start of the tile [source = (tile number * (8 * 8)) + address of tileset]
+;     MOV R5,#SCANLINE             ; put the width of a scanline into R5
+;     MLA R11,R3,R5,R4        ; calculate the address of the destination [destination = (y * 320) + address of screen or buffer]
+;     ADD R11,R11,R2          ; add x to the destination address
 
-    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
-    STMIA R11,{R0-R1}       ; store first 8 bytes from R0-R1 to the destination address with incrementing it
-    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
-    STMIA R11,{R2-R3}       ; store second 8 bytes from R2-R3 to the destination address with incrementing it
-    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
-    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
-    STMIA R11,{R0-R1}       ; store first 8 bytes from R0-R1 to the destination address with incrementing it
-    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
-    STMIA R11,{R2-R3}       ; store second 8 bytes from R2-R3 to the destination address with incrementing it
-    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
-    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
-    STMIA R11,{R0-R1}       ; store first 8 bytes from R0-R1 to the destination address with incrementing it
-    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
-    STMIA R11,{R2-R3}       ; store second 8 bytes from R2-R3 to the destination address with incrementing it
-    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
-    LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
-    STMIA R11,{R0-R1}       ; store first 8 bytes from R0-R1 to the destination address with incrementing it
-    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
-    STMIA R11,{R2-R3}       ; store second 8 bytes from R2-R3 to the destination address with incrementing it
-    ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
+;     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+;     STMIA R11,{R0-R1}       ; store first 8 bytes from R0-R1 to the destination address with incrementing it
+;     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
+;     STMIA R11,{R2-R3}       ; store second 8 bytes from R2-R3 to the destination address with incrementing it
+;     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
+;     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+;     STMIA R11,{R0-R1}       ; store first 8 bytes from R0-R1 to the destination address with incrementing it
+;     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
+;     STMIA R11,{R2-R3}       ; store second 8 bytes from R2-R3 to the destination address with incrementing it
+;     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
+;     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+;     STMIA R11,{R0-R1}       ; store first 8 bytes from R0-R1 to the destination address with incrementing it
+;     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
+;     STMIA R11,{R2-R3}       ; store second 8 bytes from R2-R3 to the destination address with incrementing it
+;     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
+;     LDMIA R12!,{R0-R3}      ; load 16 bytes from the soure address into R0-R3
+;     STMIA R11,{R0-R1}       ; store first 8 bytes from R0-R1 to the destination address with incrementing it
+;     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
+;     STMIA R11,{R2-R3}       ; store second 8 bytes from R2-R3 to the destination address with incrementing it
+;     ADD R11,R11,#SCANLINE        ; move destination address to the next scanline
 
-    LDMFD SP!, {R0-R12}     ; restore all registers from the stack
-    MOV PC,R14              ; return from function
+;     LDMFD SP!, {R0-R12}     ; restore all registers from the stack
+;     MOV PC,R14              ; return from function
 
 
 ;   ****************************************************************
@@ -528,6 +528,65 @@ draw_font_string_exit:                ; exit loop
     LDMFD SP!, {R0-R12,R14}     ; restore all registers from the stack, including R14 Link registger
     MOV PC,R14                  ; exit function
 
+
+;   ****************************************************************
+;       lookup_tilemap_tile
+;   ----------------------------------------------------------------
+;       Lookup tile at world x/y
+;   ----------------------------------------------------------------
+;       Parameters
+;   ----------------------------------------------------------------
+;       R0      :   address of tilemap to lookup
+;       R1      :   N/A
+;       R2      :   N/A
+;       R3      :   world x coordinate of tilemap to lookup tile at
+;       R4      :   world y coordinate of tilemap to lookup tile at
+;       R5      :   N/A
+;       R6      :   N/A
+;       R7      :   N/A
+;       R8      :   N/A
+;       R9      :   N/A
+;       R10     :   N/A
+;       R11     :   N/A
+;       R11     :   N/A
+;   ----------------------------------------------------------------
+;       Returns
+;   ----------------------------------------------------------------
+;       R0      :   Unchanged
+;       R1      :   Tile number at world x/y
+;       R2      :   Address of tile at world x/y
+;       R3      :   Unchanged
+;       R4      :   Unchanged
+;       R5      :   Unchanged
+;       R6      :   Unchanged
+;       R7      :   Unchanged
+;       R8      :   Unchanged
+;       R9      :   Unchanged
+;       R10     :   Unchanged
+;       R11     :   Unchanged
+;       R11     :   Unchanged
+;   ****************************************************************
+
+lookup_tilemap_tile:
+    STMFD SP!, {R3-R4}     ; store all registers onto the stack
+
+    MOV R3,R3,LSR #4
+    MOV R4,R4,LSR #4
+    CMP R3,#0
+    BLT lookup_tilemap_tile_exit
+    CMP R3,#256
+    BGE lookup_tilemap_tile_exit
+    CMP R4,#0
+    BLT lookup_tilemap_tile_exit
+    CMP R4,#256
+    BGE lookup_tilemap_tile_exit
+    ADD R2,R0,R3
+    ADD R2,R2,R4,LSL #8
+    LDRB R1,[R2]
+
+lookup_tilemap_tile_exit:
+    LDMFD SP!, {R3-R4}     ; store all registers onto the stack
+    MOV PC,R14
 
 ;   ****************************************************************
 ;       draw_tile_map
@@ -846,16 +905,16 @@ main_draw_tile_map:
     STR R1,sprite_00_function
     MOV R1,#0
     STR R1,sprite_00_frame
-    MOV R1,#160
+    MOV R1,#4 * 16
     STR R1,sprite_00_x
-    MOV R1,#160
+    MOV R1,#3 * 16
     STR R1,sprite_00_y
     MOV R1,#32
     STR R1,sprite_00_width
-    MOV R1,R1,LSR #1
-    STR R1,sprite_00_offset_x
     MOV R1,#42
     STR R1,sprite_00_height
+    MOV R1,#0
+    STR R1,sprite_00_offset_x
     MOV R1,#42
     STR R1,sprite_00_offset_y
 
@@ -864,8 +923,6 @@ main_draw_tile_map:
     STR R1,sprite_31_function
     MOV R1,#0
     STR R1,sprite_31_frame
-    STR R1,sprite_31_offset_x
-    STR R1,sprite_31_offset_y
     MOV R1,#160
     STR R1,sprite_31_x
     MOV R1,#160
@@ -874,6 +931,10 @@ main_draw_tile_map:
     STR R1,sprite_31_width
     MOV R1,#11
     STR R1,sprite_31_height
+    MOV R1,#-16
+    STR R1,sprite_31_offset_x
+    MOV R1,#0
+    STR R1,sprite_31_offset_y
 
     MOV R3,#0
     MOV R4,#0
@@ -997,6 +1058,9 @@ No_CursorDown_Key:
     SWI OS_Byte
     CMP R2,#255
     BNE No_CursorLeft_Key
+    LDR R0,batman_blocked
+    TST R0,#0b00000001
+    BNE No_CursorLeft_Key
     ADRL R1,sprite_00
     LDR R0,[R1,#sprite_x]
     DEBUG_REGISTERS
@@ -1016,6 +1080,9 @@ No_CursorLeft_Key:
     MOV R2,#255
     SWI OS_Byte
     CMP R2,#255
+    BNE No_CursorRight_Key
+    LDR R0,batman_blocked
+    TST R0,#0b00000010
     BNE No_CursorRight_Key
     ADRL R1,sprite_00
     LDR R0,[R1,#sprite_x]
@@ -1047,16 +1114,39 @@ No_CursorRight_Key:
     SUB R3,R3,R4
     STR R3,monotonic_time_delta
 
-    DEBUG_REGISTERS
-    
     MOV R2,R2,LSL #2
     STR R2,sprite_31_frame
     MOV R2,R0,LSR #2
     MOV R3,R1,LSR #2
     EOR R3,R3,#0b11111111
-    ADD R2,R2,#16
     STR R2,sprite_31_x
     STR R3,sprite_31_y
+
+    ADRL R0,level_1_map_types
+    ADRL R10,sprite_00
+    MOV R5,#0b00000000
+    LDR R3,[R10,#sprite_x]
+    LDR R4,[R10,#sprite_y]
+    BL lookup_tilemap_tile
+    CMP R1,#0xf0
+    ORREQ R5,R5,#0b10000000
+    SUB R3,R3,#12
+    SUB R4,R4,#21
+    BL lookup_tilemap_tile
+    CMP R1,#0xff
+    ORREQ R5,R5,#0b00000001
+    ADD R3,R3,#24
+    BL lookup_tilemap_tile
+    CMP R1,#0xff
+    ORREQ R5,R5,#0b00000010
+    STR R5,batman_blocked
+
+    LDR R4,[R10,#sprite_y]
+    TST R5,#0b10000000
+    ADDNE R4,R4,#1
+    STR R4,[R10,#sprite_y]
+    
+    DEBUG_REGISTERS
 
     .ifne DEBUG
         MOV R1,#0b000011111111
@@ -1105,20 +1195,23 @@ exit:
 frame_count:
     .4byte  0
 
-mouse_x:
+batman_blocked:
     .4byte  0
 
-mouse_y:
-    .4byte  0
+; mouse_x:
+;     .4byte  0
 
-old_mouse_x:
-    .4byte  0
+; mouse_y:
+;     .4byte  0
 
-old_mouse_y:
-    .4byte  0
+; old_mouse_x:
+;     .4byte  0
 
-mouse_b:
-    .4byte  0
+; old_mouse_y:
+;     .4byte  0
+
+; mouse_b:
+;     .4byte  0
 
 monotonic_time:
     .4byte 0
@@ -1126,8 +1219,8 @@ monotonic_time:
 monotonic_time_delta:
     .4byte 0
 
-pointer_mask:
-    .4byte 0x0000ff00
+; pointer_mask:
+;     .4byte 0x0000ff00
 
 .set batman_frame, sprite_00_frame
 .set batman_x,  sprite_00_x
