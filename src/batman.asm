@@ -848,7 +848,7 @@ main_draw_tile_map:
     STR R1,sprite_00_frame
     MOV R1,#160
     STR R1,sprite_00_x
-    MOV R1,#10*16
+    MOV R1,#160
     STR R1,sprite_00_y
     MOV R1,#32
     STR R1,sprite_00_width
@@ -859,21 +859,20 @@ main_draw_tile_map:
     MOV R1,#42
     STR R1,sprite_00_offset_y
 
-    MOV R1,#draw_batman_sprite & 0x0000ffff
-    ORR R1,R1,#draw_batman_sprite & 0xffff0000
+    MOV R1,#draw_pointers_sprite & 0x0000ffff
+    ORR R1,R1,#draw_pointers_sprite & 0xffff0000
     STR R1,sprite_31_function
     MOV R1,#0
-    STR R1,sprite_31_function
     STR R1,sprite_31_frame
     STR R1,sprite_31_offset_x
     STR R1,sprite_31_offset_y
     MOV R1,#160
     STR R1,sprite_31_x
-    MOV R1,#128
+    MOV R1,#160
     STR R1,sprite_31_y
-    MOV R1,#32
+    MOV R1,#11
     STR R1,sprite_31_width
-    MOV R1,#42
+    MOV R1,#11
     STR R1,sprite_31_height
 
     MOV R3,#0
@@ -1048,12 +1047,16 @@ No_CursorRight_Key:
     SUB R3,R3,R4
     STR R3,monotonic_time_delta
 
-    STR R2,mouse_b
+    DEBUG_REGISTERS
+    
+    MOV R2,R2,LSL #2
+    STR R2,sprite_31_frame
     MOV R2,R0,LSR #2
     MOV R3,R1,LSR #2
     EOR R3,R3,#0b11111111
-    STR R2,mouse_x
-    STR R3,mouse_y
+    ADD R2,R2,#16
+    STR R2,sprite_31_x
+    STR R3,sprite_31_y
 
     .ifne DEBUG
         MOV R1,#0b000011111111
