@@ -1038,6 +1038,9 @@ No_P_Key:
     SWI OS_Byte
     CMP R2,#255
     BNE No_CursorUp_Key
+    LDR R0,batman_blocked
+    TST R0,#0b10000000
+    BNE No_CursorUp_Key
     LDR R0,sprite_00_y
     SUB R0,R0,#1
     STR R0,sprite_00_y
@@ -1048,6 +1051,9 @@ No_CursorUp_Key:
     SWI OS_Byte
     CMP R2,#255
     BNE No_CursorDown_Key
+    LDR R0,batman_blocked
+    TST R0,#0b00000100
+    BEQ No_CursorDown_Key
     LDR R0,sprite_00_y
     ADD R0,R0,#1
     STR R0,sprite_00_y
@@ -1059,11 +1065,10 @@ No_CursorDown_Key:
     CMP R2,#255
     BNE No_CursorLeft_Key
     LDR R0,batman_blocked
-    TST R0,#0b00000001
-    BNE No_CursorLeft_Key
+    TST R0,#0b10000001
+    BNE No_CursorRight_Key
     ADRL R1,sprite_00
     LDR R0,[R1,#sprite_x]
-    DEBUG_REGISTERS
     SUB R0,R0,#1
     STR R0,[R1,#sprite_x]
     LDR R0,[R1,#sprite_attributes]
@@ -1074,6 +1079,7 @@ No_CursorDown_Key:
     CMP R0,#8 * 4
     MOVEQ R0,#0
     STR R0,[R1,#sprite_frame]
+    B No_CursorRight_Key
 No_CursorLeft_Key:
     MOV R0,#129
     MOV R1,#-122
@@ -1082,7 +1088,7 @@ No_CursorLeft_Key:
     CMP R2,#255
     BNE No_CursorRight_Key
     LDR R0,batman_blocked
-    TST R0,#0b00000010
+    TST R0,#0b10000010
     BNE No_CursorRight_Key
     ADRL R1,sprite_00
     LDR R0,[R1,#sprite_x]
@@ -1130,8 +1136,23 @@ No_CursorRight_Key:
     BL lookup_tilemap_tile
     CMP R1,#0xf0
     ORREQ R5,R5,#0b10000000
+    CMP R1,#0xfe
+    ORREQ R5,R5,#0b00000100
+    ADD R4,R4,#1
+    BL lookup_tilemap_tile
+    CMP R1,#0xf0
+    ORREQ R5,R5,#0b10000000
+    CMP R1,#0xfd
+    BNE batman_cant_drop
+    ORR R5,R5,#0b00000100
+    SUB R4,R4,#2
+    BL lookup_tilemap_tile
+    CMP R1,#0xfd
+    ORREQ R5,R5,#0b10000000
+
+batman_cant_drop:
     SUB R3,R3,#12
-    SUB R4,R4,#21
+    SUB R4,R4,#22
     BL lookup_tilemap_tile
     CMP R1,#0xff
     ORREQ R5,R5,#0b00000001
@@ -1139,15 +1160,14 @@ No_CursorRight_Key:
     BL lookup_tilemap_tile
     CMP R1,#0xff
     ORREQ R5,R5,#0b00000010
-    STR R5,batman_blocked
 
     LDR R4,[R10,#sprite_y]
     TST R5,#0b10000000
     ADDNE R4,R4,#1
+    ANDNE R5,R5,#0b11111011
     STR R4,[R10,#sprite_y]
+    STR R5,batman_blocked
     
-    DEBUG_REGISTERS
-
     .ifne DEBUG
         MOV R1,#0b000011111111
         BL vidc_set_border_colour
