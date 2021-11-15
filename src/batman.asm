@@ -1410,7 +1410,7 @@ main_title:
 ;   ----------------------------------------------------------------
     .align 4
 intro_screen:
-    .incbin "build/intro_screen.bin"
+    ; .incbin "build/intro_screen.bin"
 
 
 ;   ****************************************************************
