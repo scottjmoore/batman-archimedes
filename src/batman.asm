@@ -909,7 +909,7 @@ main_draw_tile_map:
     STR R1,sprite_00_x
     MOV R1,#3 * 16
     STR R1,sprite_00_y
-    MOV R1,#32
+    MOV R1,#24
     STR R1,sprite_00_width
     MOV R1,#42
     STR R1,sprite_00_height
@@ -1130,11 +1130,12 @@ No_CursorRight_Key:
 
     ADRL R0,level_1_map_types
     ADRL R10,sprite_00
+    MOV R5,#0b00000000
     .ifne SPRITE_DEBUG
         LDR R6,[R10,#sprite_attributes]
         AND R6,R6,#0xffffff00
     .endif
-    MOV R5,#0b00000000
+    LDR R7,[R10,#sprite_width]
     LDR R3,[R10,#sprite_x]
     LDR R4,[R10,#sprite_y]
     BL lookup_tilemap_tile
@@ -1167,13 +1168,13 @@ No_CursorRight_Key:
     .endif
 
 batman_cant_drop:
-    SUB R3,R3,#16
+    SUB R3,R3,R7,LSR #1
     SUB R4,R4,#22
     BL lookup_tilemap_tile
     CMP R1,#0xff
     ORREQ R5,R5,#0b00000001
     ORREQ R6,R6,#20
-    ADD R3,R3,#32
+    ADD R3,R3,R7
     BL lookup_tilemap_tile
     CMP R1,#0xff
     ORREQ R5,R5,#0b00000010
