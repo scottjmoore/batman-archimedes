@@ -1130,18 +1130,31 @@ No_CursorRight_Key:
 
     ADRL R0,level_1_map_types
     ADRL R10,sprite_00
+    .ifne SPRITE_DEBUG
+        LDR R6,[R10,#sprite_attributes]
+        AND R6,R6,#0xffffff00
+    .endif
     MOV R5,#0b00000000
     LDR R3,[R10,#sprite_x]
     LDR R4,[R10,#sprite_y]
     BL lookup_tilemap_tile
     CMP R1,#0xf0
     ORREQ R5,R5,#0b10000000
+    .ifne SPRITE_DEBUG
+        ORREQ R6,R6,#116
+    .endif
     CMP R1,#0xfe
     ORREQ R5,R5,#0b00000100
+    .ifne SPRITE_DEBUG
+        ORREQ R6,R6,#100
+    .endif
     ADD R4,R4,#1
     BL lookup_tilemap_tile
     CMP R1,#0xf0
     ORREQ R5,R5,#0b10000000
+    .ifne SPRITE_DEBUG
+        ORREQ R6,R6,#116
+    .endif
     CMP R1,#0xfd
     BNE batman_cant_drop
     ORR R5,R5,#0b00000100
@@ -1149,17 +1162,24 @@ No_CursorRight_Key:
     BL lookup_tilemap_tile
     CMP R1,#0xfd
     ORREQ R5,R5,#0b10000000
+    .ifne SPRITE_DEBUG
+        ORREQ R6,R6,#116
+    .endif
 
 batman_cant_drop:
-    SUB R3,R3,#12
+    SUB R3,R3,#16
     SUB R4,R4,#22
     BL lookup_tilemap_tile
     CMP R1,#0xff
     ORREQ R5,R5,#0b00000001
-    ADD R3,R3,#24
+    ORREQ R6,R6,#20
+    ADD R3,R3,#32
     BL lookup_tilemap_tile
     CMP R1,#0xff
     ORREQ R5,R5,#0b00000010
+    .ifne SPRITE_DEBUG
+        ORREQ R6,R6,#20
+    .endif
 
     LDR R4,[R10,#sprite_y]
     TST R5,#0b10000000
@@ -1167,6 +1187,9 @@ batman_cant_drop:
     ANDNE R5,R5,#0b11111011
     STR R4,[R10,#sprite_y]
     STR R5,batman_blocked
+    .ifne SPRITE_DEBUG
+        STR R6,[R10,#sprite_attributes]
+    .endif
     
     .ifne DEBUG
         MOV R1,#0b000011111111
