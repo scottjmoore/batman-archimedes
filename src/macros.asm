@@ -10,3 +10,8 @@
     MOV \r,#\a
     MOV PC,\r
 .endm
+
+.macro MVL r,a
+    MOV \r,#\a & 0x0000ffff
+    ORR \r,\r,#\a & 0xffff0000
+.endm

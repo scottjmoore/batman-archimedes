@@ -1216,6 +1216,42 @@ batman_cant_drop:
         BL vidc_set_border_colour
     .endif
 
+    ADRL R0,bat_bullets
+    MOV R1,#0
+    MVL R6,draw_bat_bullet_sprite
+    MVL R10,sprite_01
+update_bat_bullets_loop:
+    LDMIA R0,{R2-R5}
+    DEBUG_MEMORY -10
+    CMP R2,#-1
+    BEQ disable_bat_bullet
+    ADD R2,R2,R4
+    ADD R3,R3,R5
+    MVL R6,draw_bat_bullet_sprite
+    STR R6,[R10,#sprite_function]
+    STR R2,[R10,#sprite_x]
+    STR R3,[R10,#sprite_y]
+    MOV R6,#7
+    STR R6,[R10,#sprite_width]
+    MOV R6,#4
+    STR R6,[R10,#sprite_height]
+    DEBUG_REGISTERS
+    BAL update_bat_bullets_next
+disable_bat_bullet:
+    MOV R6,#0
+    STR R6,[R10,#sprite_function]
+update_bat_bullets_next:
+    ADD R10,R10,#40
+    STMIA R0!,{R2-R5}
+    ADD R1,R1,#1
+    CMP R1,#8
+    BNE update_bat_bullets_loop
+
+    LDR R11,[R12]
+    LDR R0,frame_count
+    ADD R0,R0,#1
+    STR R0,frame_count
+
     LDMFD SP!, {R0-R8}
 
     ADRL R0,level_1_map_types
@@ -1236,12 +1272,6 @@ batman_cant_drop:
     MOVLT R4,#0
     CMP R2,#144
     ADDGE R4,R4,#1
-
-
-    LDR R11,[R12]
-    LDR R0,frame_count
-    ADD R0,R0,#1
-    STR R0,frame_count
 
     DRAW_DEBUG
 
@@ -1269,21 +1299,39 @@ frame_count:
 batman_blocked:
     .4byte  0
 
-; mouse_x:
-;     .4byte  0
-
-; mouse_y:
-;     .4byte  0
-
-; old_mouse_x:
-;     .4byte  0
-
-; old_mouse_y:
-;     .4byte  0
-
-; mouse_b:
-;     .4byte  0
-
+bat_bullets:
+    bat_bullet_0_x:    .4byte  64
+    bat_bullet_0_y:    .4byte  64
+    bat_bullet_0_xd:   .4byte  1
+    bat_bullet_0_xy:   .4byte  1
+    bat_bullet_1_x:    .4byte  -1
+    bat_bullet_1_y:    .4byte  -1
+    bat_bullet_1_xd:   .4byte  0
+    bat_bullet_1_xy:   .4byte  0
+    bat_bullet_2_x:    .4byte  -1
+    bat_bullet_2_y:    .4byte  -1
+    bat_bullet_2_xd:   .4byte  0
+    bat_bullet_2_xy:   .4byte  0
+    bat_bullet_3_x:    .4byte  -1
+    bat_bullet_3_y:    .4byte  -1
+    bat_bullet_3_xd:   .4byte  0
+    bat_bullet_3_xy:   .4byte  0
+    bat_bullet_4_x:    .4byte  -1
+    bat_bullet_4_y:    .4byte  -1
+    bat_bullet_4_xd:   .4byte  0
+    bat_bullet_4_xy:   .4byte  0
+    bat_bullet_5_x:    .4byte  -1
+    bat_bullet_5_y:    .4byte  -1
+    bat_bullet_5_xd:   .4byte  0
+    bat_bullet_5_xy:   .4byte  0
+    bat_bullet_6_x:    .4byte  -1
+    bat_bullet_6_y:    .4byte  -1
+    bat_bullet_6_xd:   .4byte  0
+    bat_bullet_6_xy:   .4byte  0
+    bat_bullet_7_x:    .4byte  -1
+    bat_bullet_7_y:    .4byte  -1
+    bat_bullet_7_xd:   .4byte  0
+    bat_bullet_7_xy:   .4byte  0
 monotonic_time:
     .4byte 0
 
@@ -1464,6 +1512,7 @@ level_1_tiles:
     .include "build/sprites/explosion.asm"
     .include "build/sprites/enemies.asm"
     .include "build/sprites/bullets.asm"
+    .include "build/sprites/bat_bullet.asm"
     .include "build/sprites/pointers.asm"
     .include "build/fonts/intro_font.asm"
     .include "build/fonts/system_font.asm"

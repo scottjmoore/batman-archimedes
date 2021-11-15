@@ -15,6 +15,7 @@ SPRITES =  	build/sprites/batman.asm \
 			build/sprites/explosion.asm \
 			build/sprites/enemies.asm \
 			build/sprites/bullets.asm \
+			build/sprites/bat_bullet.asm \
 			build/sprites/pointers.asm
 
 FONTS = 	build/fonts/intro_font.asm \
@@ -27,7 +28,7 @@ LEVELS = 	build/level_1_map.asm
 LUTS = 		build/sincos.asm
 
 VASM = 		vasmarm_std
-DEBUG =		-D DEBUG=0 -D SPRITE_DEBUG=0
+DEBUG =		-D DEBUG=0 -D SPRITE_DEBUG=1
 OPTS =		-a2 -m2 -Fbin
 
 PNG2ASM = 			./scripts/png2asm.py
@@ -138,6 +139,14 @@ build/sprites/bullets.asm: assets/sprites/bullets.png makefile
 		-i assets/sprites/bullets.png \
 		-o build/sprites/bullets.asm \
 		-sw 4 -sh 4 \
+		-mi 159
+
+
+build/sprites/bat_bullet.asm: assets/sprites/bat_bullet.png makefile
+	$(COMPILESPRITE) \
+		-i assets/sprites/bat_bullet.png \
+		-o build/sprites/bat_bullet.asm \
+		-sw 7 -sh 4 \
 		-mi 159
 
 
