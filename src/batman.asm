@@ -909,7 +909,7 @@ main_draw_tile_map:
     STR R1,sprite_00_x
     MOV R1,#3 * 16
     STR R1,sprite_00_y
-    MOV R1,#24
+    MOV R1,#32
     STR R1,sprite_00_width
     MOV R1,#42
     STR R1,sprite_00_height
