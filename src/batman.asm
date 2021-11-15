@@ -1166,19 +1166,20 @@ No_CursorRight_Key:
     BL lookup_tilemap_tile
     CMP R1,#0xfd
     ORREQ R5,R5,#0b10000000
+    MOVEQ R8,#0
     .ifne SPRITE_DEBUG
         ORREQ R6,R6,#116
     .endif
 
 batman_cant_drop:
-    SUB R3,R3,R7,LSR #1
+    SUB R3,R3,R7,LSR #2
     SUB R4,R4,#22
     BL lookup_tilemap_tile
     CMP R1,#0xff
     ORREQ R5,R5,#0b00000001
     ORREQ R6,R6,#20
     MOVEQ R8,#0
-    ADD R3,R3,R7
+    ADD R3,R3,R7,LSR #1
     BL lookup_tilemap_tile
     CMP R1,#0xff
     ORREQ R5,R5,#0b00000010
