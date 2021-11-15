@@ -1105,6 +1105,25 @@ No_CursorLeft_Key:
     STR R0,[R1,#sprite_frame]
 No_CursorRight_Key:
     MOV R0,#129
+    MOV R1,#-99
+    MOV R2,#255
+    SWI OS_Byte
+    CMP R2,#255
+    BNE No_SpaceBar_Key
+    ADRL R1,sprite_00
+    LDR R0,[R1,#sprite_x]
+    LDR R2,[R1,#sprite_y]
+    ADRL R1,bat_bullet_0_x
+    ADD R0,R0,#20
+    SUB R2,R2,#26
+    STR R0,[R1,#0]
+    STR R2,[R1,#4]
+    MOV R0,#2
+    STR R0,[R1,#8]
+    MOV R0,#0
+    STR R0,[R1,#12]
+No_SpaceBar_Key:
+    MOV R0,#129
     MOV R1,#-113
     MOV R2,#255
     SWI OS_Byte
@@ -1303,7 +1322,7 @@ bat_bullets:
     bat_bullet_0_x:    .4byte  64
     bat_bullet_0_y:    .4byte  64
     bat_bullet_0_xd:   .4byte  1
-    bat_bullet_0_xy:   .4byte  1
+    bat_bullet_0_xy:   .4byte  0
     bat_bullet_1_x:    .4byte  -1
     bat_bullet_1_y:    .4byte  -1
     bat_bullet_1_xd:   .4byte  0
