@@ -1217,6 +1217,26 @@ batman_cant_drop:
 
     LDMFD SP!, {R0-R8}
 
+    ADRL R0,level_1_map_types
+    ADRL R10,sprite_00
+    LDR R1,[R10,#sprite_x]
+    LDR R2,[R10,#sprite_y]
+    SUB R1,R1,R3
+    SUB R2,R2,R4
+    CMP R1,#96
+    SUBLT R3,R3,#1
+    CMP R3,#0
+    MOVLT R3,#0
+    CMP R1,#224
+    ADDGE R3,R3,#1
+    CMP R2,#32
+    SUBLT R4,R4,#1
+    CMP R4,#0
+    MOVLT R4,#0
+    CMP R2,#128
+    ADDGE R4,R4,#1
+
+
     LDR R11,[R12]
     LDR R0,frame_count
     ADD R0,R0,#1
