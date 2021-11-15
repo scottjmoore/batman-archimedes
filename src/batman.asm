@@ -911,11 +911,11 @@ main_draw_tile_map:
     STR R1,sprite_00_y
     MOV R1,#32
     STR R1,sprite_00_width
-    MOV R1,#42
+    MOV R1,#48
     STR R1,sprite_00_height
     MOV R1,#0
     STR R1,sprite_00_offset_x
-    MOV R1,#42
+    MOV R1,#48
     STR R1,sprite_00_offset_y
 
     MOV R1,#draw_pointers_sprite & 0x0000ffff
