@@ -1038,12 +1038,9 @@ No_P_Key:
     SWI OS_Byte
     CMP R2,#255
     BNE No_CursorUp_Key
-    LDR R0,batman_blocked
-    TST R0,#0b10000000
-    BNE No_CursorUp_Key
-    LDR R0,sprite_00_y
-    SUB R0,R0,#1
-    STR R0,sprite_00_y
+    ;   ...
+    ;   TODO
+    ;   ...
 No_CursorUp_Key:
     MOV R0,#129
     MOV R1,#-42
@@ -1125,9 +1122,9 @@ No_CursorRight_Key:
     LDR R8,bat_bullet_index
     MOV R8,R8,LSL #4
     ADRL R1,bat_bullet_0_x
-    ADD R0,R0,#16
-    ADD R0,R0,R7,LSL #2
-    SUB R2,R2,#26
+    ADD R0,R0,#13
+    ADD R0,R0,R7,ASL #2
+    SUB R2,R2,#27
     STR R0,[R1,R8]
     ADD R8,R8,#4
     STR R2,[R1,R8]
