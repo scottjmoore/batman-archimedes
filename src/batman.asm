@@ -951,8 +951,6 @@ main_draw_tile_map_loop:
     LDR R2,[R12]
 
     BL draw_tile_map
-    STR R3,sprite_world_offset_x
-    STR R4,sprite_world_offset_y
     LDR R11,[R12]
     BL draw_sprites
 
@@ -1032,6 +1030,8 @@ No_L_Key:
     CMP R4,#0
     MOVLE R4,#0
 No_P_Key:
+    STR R3,sprite_world_offset_x
+    STR R4,sprite_world_offset_y
     MOV R0,#129
     MOV R1,#-58
     MOV R2,#255
@@ -1158,11 +1158,16 @@ SpaceBar_Debounce:
     SUB R3,R3,R4
     STR R3,monotonic_time_delta
 
+    MVL R3,sprite_world_offset_x
+    LDR R4,[R3,#0]
+    LDR R5,[R3,#4]
     MOV R2,R2,LSL #2
     STR R2,sprite_31_frame
     MOV R2,R0,LSR #2
     MOV R3,R1,LSR #2
     EOR R3,R3,#0b11111111
+    ADD R2,R2,R4
+    ADD R3,R3,R5
     STR R2,sprite_31_x
     STR R3,sprite_31_y
 
@@ -1282,9 +1287,9 @@ update_bat_bullets_loop:
     SUBLT R2,R2,#1
     AND R2,R2,#0b11111
     STR R2,[R10,#sprite_frame]
-    MOV R2,#7
+    MOV R2,#9
     STR R2,[R10,#sprite_width]
-    MOV R2,#7
+    MOV R2,#9
     STR R2,[R10,#sprite_height]
     DEBUG_REGISTERS
     BAL update_bat_bullets_next
