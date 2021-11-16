@@ -1110,19 +1110,41 @@ No_CursorRight_Key:
     SWI OS_Byte
     CMP R2,#255
     BNE No_SpaceBar_Key
+    LDR R1,bat_bullet_debounce
+    CMP R1,#0
+    BNE SpaceBar_Debounce
+    MOV R1,#-1
+    STR R1,bat_bullet_debounce
     ADRL R1,sprite_00
     LDR R0,[R1,#sprite_x]
     LDR R2,[R1,#sprite_y]
+    LDR R8,[R1,#sprite_attributes]
+    TST R8,#1 << 31
+    MOVEQ R7,#2
+    MOVNE R7,#-2
+    LDR R8,bat_bullet_index
+    MOV R8,R8,LSL #4
     ADRL R1,bat_bullet_0_x
-    ADD R0,R0,#20
+    ADD R0,R0,#16
+    ADD R0,R0,R7,LSL #2
     SUB R2,R2,#26
-    STR R0,[R1,#0]
-    STR R2,[R1,#4]
-    MOV R0,#2
-    STR R0,[R1,#8]
+    STR R0,[R1,R8]
+    ADD R8,R8,#4
+    STR R2,[R1,R8]
+    ADD R8,R8,#4
+    STR R7,[R1,R8]
+    ADD R8,R8,#4
     MOV R0,#0
-    STR R0,[R1,#12]
+    STR R0,[R1,R8]
+    LDR R8,bat_bullet_index
+    ADD R8,R8,#1
+    AND R8,R8,#0b111
+    STR R8,bat_bullet_index
+    B SpaceBar_Debounce
 No_SpaceBar_Key:
+    MOV R1,#0
+    STR R1,bat_bullet_debounce
+SpaceBar_Debounce:
     MOV R0,#129
     MOV R1,#-113
     MOV R2,#255
@@ -1235,35 +1257,48 @@ batman_cant_drop:
         BL vidc_set_border_colour
     .endif
 
-    ADRL R0,bat_bullets
-    MOV R1,#0
+    ADRL R0,level_1_map_types
+    ADRL R9,bat_bullets
+    MOV R8,#0
     MVL R6,draw_bat_bullet_sprite
     MVL R10,sprite_01
 update_bat_bullets_loop:
-    LDMIA R0,{R2-R5}
+    LDMIA R9,{R3-R6}
     DEBUG_MEMORY -10
-    CMP R2,#-1
+    CMP R3,#-1
     BEQ disable_bat_bullet
-    ADD R2,R2,R4
     ADD R3,R3,R5
-    MVL R6,draw_bat_bullet_sprite
-    STR R6,[R10,#sprite_function]
-    STR R2,[R10,#sprite_x]
-    STR R3,[R10,#sprite_y]
-    MOV R6,#7
-    STR R6,[R10,#sprite_width]
-    MOV R6,#4
-    STR R6,[R10,#sprite_height]
+    ADD R4,R4,R6
+    MVL R2,draw_bat_bullet_sprite
+    STR R2,[R10,#sprite_function]
+    STR R3,[R10,#sprite_x]
+    STR R4,[R10,#sprite_y]
+    SUB R3,R3,#12
+    BL lookup_tilemap_tile
+    ADD R3,R3,#12
+    CMP R1,#0xf0
+    CMPNE R1,#0xfe
+    MOVNE R3,#-1
+    LDR R2,[R10,#sprite_frame]
+    CMP R5,#0
+    ADDGT R2,R2,#1
+    SUBLT R2,R2,#1
+    AND R2,R2,#0b11111
+    STR R2,[R10,#sprite_frame]
+    MOV R2,#7
+    STR R2,[R10,#sprite_width]
+    MOV R2,#7
+    STR R2,[R10,#sprite_height]
     DEBUG_REGISTERS
     BAL update_bat_bullets_next
 disable_bat_bullet:
-    MOV R6,#0
+    MOV R2,#0
     STR R6,[R10,#sprite_function]
 update_bat_bullets_next:
     ADD R10,R10,#40
-    STMIA R0!,{R2-R5}
-    ADD R1,R1,#1
-    CMP R1,#8
+    STMIA R9!,{R3-R6}
+    ADD R8,R8,#1
+    CMP R8,#8
     BNE update_bat_bullets_loop
 
     LDR R11,[R12]
@@ -1318,10 +1353,14 @@ frame_count:
 batman_blocked:
     .4byte  0
 
+bat_bullet_index:
+    .4byte  0
+bat_bullet_debounce:
+    .4byte  0
 bat_bullets:
-    bat_bullet_0_x:    .4byte  64
-    bat_bullet_0_y:    .4byte  64
-    bat_bullet_0_xd:   .4byte  1
+    bat_bullet_0_x:    .4byte  -1
+    bat_bullet_0_y:    .4byte  -1
+    bat_bullet_0_xd:   .4byte  0
     bat_bullet_0_xy:   .4byte  0
     bat_bullet_1_x:    .4byte  -1
     bat_bullet_1_y:    .4byte  -1

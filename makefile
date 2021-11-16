@@ -146,7 +146,7 @@ build/sprites/bat_bullet.asm: assets/sprites/bat_bullet.png makefile
 	$(COMPILESPRITE) \
 		-i assets/sprites/bat_bullet.png \
 		-o build/sprites/bat_bullet.asm \
-		-sw 7 -sh 4 \
+		-sw 7 -sh 7 \
 		-mi 159
 
 
