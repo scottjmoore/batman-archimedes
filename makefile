@@ -67,7 +67,7 @@ build/main_title.asm: assets/images/main_title.png makefile
 	$(PNG2ASM) \
 		-i assets/images/main_title.png \
 		-o build/main_title.asm \
-		-sw 320 -sh 256
+		-sw 352 -sh 256
 
 
 build/intro_screen.bin: build/intro_screen.asm makefile
@@ -79,7 +79,7 @@ build/intro_screen.asm: assets/images/intro_screen.png makefile
 	$(PNG2ASM) \
 		-i assets/images/intro_screen.png \
 		-o build/intro_screen.asm \
-		-sw 320 -sh 256
+		-sw 352 -sh 256
 
 
 build/status_bar.bin: build/status_bar.asm makefile
@@ -220,4 +220,5 @@ deploy:
 	@cp src/Sprites $(ARCULATOR)/hostfs/!Batman/!Sprites,ff9
 	@cp build/batman $(ARCULATOR)/hostfs/!Batman/!RunImage,ff8
 	@cp build/main_title.bin ${ARCULATOR}/hostfs/!Batman/MainTitle,ffd
+	@cp build/intro_screen.bin ${ARCULATOR}/hostfs/!Batman/IntroScreen,ffd
 	@cp assets/blank.adf build/batman.adf

@@ -780,8 +780,8 @@ clear_edges_loop:
     STMIA R11,{R0-R7}
     
 clear_edges_exit:
-    LDMFD SP!, {R0-R12,R14}     ; restore all registers from the stack, including R14 Link registger
-    MOV PC,R14
+    LDMFD SP!, {R0-R12,PC}     ; restore all registers from the stack, and load saved R14 link registger into PC
+
 
 ;   ****************************************************************
 ;       initialise
@@ -805,90 +805,112 @@ initialise:
     STR R0,[R1,#4]
 
 initialise_exit:
-    LDMFD SP!,{R0-R12,R14}
-    MOV PC,R14
+    LDMFD SP!,{R0-R12,PC}     ; restore all registers from the stack, and load saved R14 link registger into PC
+
 
 ;   ****************************************************************
 ;       draw_title_screen
 ;   ----------------------------------------------------------------
-;       Draw title screen, wait for a key, then clear display
+;       Draw title screen, then wait for a key
 ;   ----------------------------------------------------------------
-
 draw_title_screen:
     STMFD SP!,{R0-R12,R14}
 
     ADRL R12,vdu_variables_buffer    ; load address of vdu_variables_buffer into R12
     
     MOV R0,#16                      ; OS_File 16 : Load named file without path
-    ADRL R1,main_title_filename      ; load address of filename string into R1
+    ADRL R1,main_title_filename     ; load address of filename string into R1
     LDR R2,[R12,#0]                 ; load address of display start from vdu_variables_buffer
-    SUB R2,R2,#32                   ; subtract 32 bytes as we are using the full width of display
     MOV R3,#0                       ; set R3 to 0 to use load address in R2
 
     SWI OS_File                     ; load file
     SWI OS_ReadC                    ; wait for keypress
 
 draw_title_screen_exit:
-    LDMFD SP!,{R0-R12,R14}
-    MOV PC,R14
+    LDMFD SP!,{R0-R12,PC}
 
+
+;   ****************************************************************
+;       draw_intro_screen
+;   ----------------------------------------------------------------
+;       Scroll intro screen onto display and show intro text,
+;       wait for a key
+;   ----------------------------------------------------------------
 draw_intro_screen:
     STMFD SP!,{R0-R12,R14}
 
-    ADRL R0,intro_screen
     ADRL R12,vdu_variables_buffer
 
-    MOV R2,#1
-    MOV R3,#231
-    MOV R4,#SCANLINE
-    MUL R5,R3,R4
-draw_intro_screen_loop:
-    LDR R1,[R12]
-    MOV R11,R1
-    ADD R1,R1,#16
-    ADD R1,R1,R5
-    BL copy_buffer_to_screen
-    STMFD SP!, {R0-R2}
-    CMP R2,#231
-    BGT draw_intro_screen_text_2_skip
-    ADRL R0,draw_intro_screen_text_2
-draw_intro_screen_text_2_skip:
-    CMP R2,#168
-    BGT draw_intro_screen_text_1_skip
-    ADRL R0,draw_intro_screen_text_1
-draw_intro_screen_text_1_skip:
-    MOV R1,#16
-    MOV R2,#64
-    MOV R3,#0xff00
-    BL draw_font_string
-    MOV R0,#19
-    SWI OS_Byte
-    LDMFD SP!, {R0-R2}
-    BL swap_display_buffers
-    SUB R5,R5,#SCANLINE
-    ADD R2,R2,#1
-    CMP R2,#232
-    BLE draw_intro_screen_loop
-    ADRL R0,draw_intro_screen_text_3
-    MOV R1,#16
-    MOV R2,#64
-    MOV R3,#0xff00
-    BL draw_font_string
+    MOV R0,#16                      ; OS_File 16 : Load named file without path
+    ADRL R1,intro_screen_filename   ; load address of filename string into R1
+    LDR R2,[R12,#0]                 ; load address of display start from vdu_variables_buffer
+    MOV R3,#0                       ; set R3 to 0 to use load address in R2
 
-    SWI OS_ReadC
+    SWI OS_File                     ; load file
+    SWI OS_ReadC                    ; wait for keypress
 
-    MOV R0,#0
-    LDR R1,[R12]
-    MOV R2,#232
-    BL copy_4byte_to_screen
-    BL swap_display_buffers    
-    BL copy_4byte_to_screen
-
-    BL fade_screen_to_black
+    ;   TODO
+    ;   Scroll intro screen onto display and draw intro text as it scrolls up
 
 draw_intro_screen_exit:
-    LDMFD SP!,{R0-R12,R14}
-    MOV PC,R14
+    LDMFD SP!,{R0-R12,PC}     ; restore all registers from the stack, and load saved R14 link registger into PC
+
+
+clear_display_buffers:
+    STMFD SP!,{R0-R12,R14}
+
+    ADRL R12,vdu_variables_buffer
+
+    MOV R0,#0
+    LDR R1,[R12,#0]                 
+    MOV R2,#232
+    BL copy_4byte_to_screen
+    MOV R0,#0
+    LDR R1,[R12,#4]                 
+    MOV R2,#232
+    BL copy_4byte_to_screen
+
+clear_display_buffers_exit:
+    LDMFD SP!,{R0-R12,PC}     ; restore all registers from the stack, and load saved R14 link registger into PC
+
+
+;   ****************************************************************
+;       setup_custom_display_mode_352x256
+;   ----------------------------------------------------------------
+;       Setup our custom VIDC display mode (352x256)
+;   ----------------------------------------------------------------
+setup_custom_display_mode_352x256:
+    STMFD SP!,{R0-R12,R14}
+
+    MOV R1,#45
+    BL vidc_set_HDSR
+    MOV R1,#221
+    BL vidc_set_HDER
+
+setup_custom_display_mode_352x256_exit:
+    LDMFD SP!,{R0-R12,PC}     ; restore all registers from the stack, and load saved R14 link registger into PC
+
+
+;   ****************************************************************
+;       setup_custom_display_mode_352x216
+;   ----------------------------------------------------------------
+;       Setup our custom VIDC display mode (352x216)
+;   ----------------------------------------------------------------
+setup_custom_display_mode_352x216:
+    STMFD SP!,{R0-R12,R14}
+
+    MOV R1,#45
+    BL vidc_set_HDSR
+    MOV R1,#221
+    BL vidc_set_HDER
+    MOV R1,#55
+    BL vidc_set_VDSR
+    MOV R1,#271
+    BL vidc_set_VDER
+
+setup_custom_display_mode_352x216_exit:
+    LDMFD SP!,{R0-R12,PC}     ; restore all registers from the stack, and load saved R14 link registger into PC
+
 
 ;   ****************************************************************
 ;       main
@@ -902,25 +924,13 @@ main:
     SWI OS_EnterOS          ; enter supervisor mode
 
     BL initialise
+    BL setup_custom_display_mode_352x256
     BL draw_title_screen
-    ; BL draw_intro_screen
-    ; BL main_exit
+    BL draw_intro_screen
+    BL setup_custom_display_mode_352x216
+    BL clear_display_buffers
 
-    MOV R1,#45
-    BL vidc_set_HDSR
-    MOV R1,#221
-    BL vidc_set_HDER
-    MOV R1,#47 + 8
-    BL vidc_set_VDSR
-    MOV R1,#279 - 8
-    BL vidc_set_VDER
-    
     ADRL R12,vdu_variables_buffer
-
-    MOV R0,#0
-    LDR R1,[R12,#0]                 
-    MOV R2,#232
-    BL copy_4byte_to_screen
 
     ADRL R0,status_bar
     LDR R1,[R12]
@@ -1569,15 +1579,16 @@ status_bar:
 main_title_filename:
     .byte "<Batman$Dir>.MainTitle",0
 
+
 ;   ****************************************************************
-;       intro_screen
+;       intro_screen_filename
 ;   ----------------------------------------------------------------
 ;       Bitmap for introduction screen
 ;   ----------------------------------------------------------------
     .align 4
-intro_screen:
-    ; .incbin "build/intro_screen.bin"
-
+intro_screen_filename:
+    .byte "<Batman$Dir>.IntroScreen",0
+    
 
 ;   ****************************************************************
 ;       palette_fade
@@ -1597,7 +1608,6 @@ palette_fade:
     .align 4
 level_1_tiles:
     .incbin "build/level-1.bin"
-
     .include "build/sprites/batman.asm"
     .include "build/sprites/explosion.asm"
     .include "build/sprites/enemies.asm"
@@ -1607,6 +1617,4 @@ level_1_tiles:
     .include "build/fonts/intro_font.asm"
     .include "build/fonts/system_font.asm"
     .include "build/fonts/system_bold_font.asm"
-
     .include "build/sincos.asm"
-
