@@ -554,7 +554,7 @@ draw_sprites:
 draw_sprites_loop:
     LDR R12,[R10],#4
     LDMFD R10!,{R0-R8}
-    MOV R0,R0,LSR #2
+    MOV R0,R0,LSR #4
     SUB R1,R1,R7
     SUB R2,R2,R8
     LDR R7,sprite_world_offset_x

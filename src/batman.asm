@@ -913,6 +913,56 @@ setup_custom_display_mode_352x216_exit:
 
 
 ;   ****************************************************************
+;       update_game_loop_key_state
+;   ----------------------------------------------------------------
+;       Update values of game loop key state variables
+;   ----------------------------------------------------------------
+update_game_loop_key_state:
+    STMFD SP!,{R0-R12,R14}
+
+    MVL R12,game_loop_key_state
+
+    MOV R0,#129
+    MOV R1,#-58     ; cursor up inkey value
+    MOV R2,#255
+    SWI OS_Byte
+    STR R2,[R12,#game_loop_key_state_up_offset]
+
+    MOV R0,#129
+    MOV R1,#-42     ; cursor down inkey value
+    MOV R2,#255
+    SWI OS_Byte
+    STR R2,[R12,#game_loop_key_state_down_offset]
+
+    MOV R0,#129
+    MOV R1,#-26     ; cursor left inkey value
+    MOV R2,#255
+    SWI OS_Byte
+    STR R2,[R12,#game_loop_key_state_left_offset]
+
+    MOV R0,#129
+    MOV R1,#-122     ; cursor right inkey value
+    MOV R2,#255
+    SWI OS_Byte
+    STR R2,[R12,#game_loop_key_state_right_offset]
+
+    MOV R0,#129
+    MOV R1,#-99     ; space bar inkey value
+    MOV R2,#255
+    SWI OS_Byte
+    STR R2,[R12,#game_loop_key_state_fire_offset]
+
+    MOV R0,#129
+    MOV R1,#-113    ; escape inkey value
+    MOV R2,#255
+    SWI OS_Byte
+    STR R2,[R12,#game_loop_key_state_quit_offset]
+
+update_game_loop_key_state_exit:
+    LDMFD SP!,{R0-R12,PC}     ; restore all registers from the stack, and load saved R14 link registger into PC
+
+
+;   ****************************************************************
 ;       main
 ;   ----------------------------------------------------------------
 ;       Entry point of applicataion
@@ -1031,6 +1081,7 @@ No_F5_Key:
     BNE No_F6_Key
     DEBUG_STEP_OFF
 No_F6_Key:
+
     MOV R0,#129
     MOV R1,#-98
     MOV R2,#255
@@ -1073,21 +1124,18 @@ No_L_Key:
 No_P_Key:
     STR R3,sprite_world_offset_x
     STR R4,sprite_world_offset_y
-    MOV R0,#129
-    MOV R1,#-58
-    MOV R2,#255
-    SWI OS_Byte
-    CMP R2,#255
+
+    BL update_game_loop_key_state
+
+    MVL R0,game_loop_key_state
+    LDR R1,[R0,#game_loop_key_state_up_offset]
+    CMP R1,#255
     BNE No_CursorUp_Key
-    ;   ...
     ;   TODO
-    ;   ...
 No_CursorUp_Key:
-    MOV R0,#129
-    MOV R1,#-42
-    MOV R2,#255
-    SWI OS_Byte
-    CMP R2,#255
+    MVL R0,game_loop_key_state
+    LDR R1,[R0,#game_loop_key_state_down_offset]
+    CMP R1,#255
     BNE No_CursorDown_Key
     LDR R0,batman_blocked
     TST R0,#0b00000100
@@ -1096,11 +1144,9 @@ No_CursorUp_Key:
     ADD R0,R0,#1
     STR R0,sprite_00_y
 No_CursorDown_Key:
-    MOV R0,#129
-    MOV R1,#-26
-    MOV R2,#255
-    SWI OS_Byte
-    CMP R2,#255
+    MVL R0,game_loop_key_state
+    LDR R1,[R0,#game_loop_key_state_left_offset]
+    CMP R1,#255
     BNE No_CursorLeft_Key
     LDR R0,batman_blocked
     TST R0,#0b10000001
@@ -1113,17 +1159,15 @@ No_CursorDown_Key:
     ORR R0,R0,#1<<31
     STR R0,[R1,#sprite_attributes]
     LDR R0,[R1,#sprite_frame]
-    ADD R0,R0,#1
-    CMP R0,#8 * 4
-    MOVEQ R0,#0
+    ADD R0,R0,#4
+    CMP R0,#8 * 16
+    SUBGE R0,R0,#8 * 16
     STR R0,[R1,#sprite_frame]
     B No_CursorRight_Key
 No_CursorLeft_Key:
-    MOV R0,#129
-    MOV R1,#-122
-    MOV R2,#255
-    SWI OS_Byte
-    CMP R2,#255
+    MVL R0,game_loop_key_state
+    LDR R1,[R0,#game_loop_key_state_right_offset]
+    CMP R1,#255
     BNE No_CursorRight_Key
     LDR R0,batman_blocked
     TST R0,#0b10000010
@@ -1137,9 +1181,9 @@ No_CursorLeft_Key:
     EOR R0,R0,#1<<31
     STR R0,[R1,#sprite_attributes]
     LDR R0,[R1,#sprite_frame]
-    ADD R0,R0,#1
-    CMP R0,#8 * 4
-    MOVEQ R0,#0
+    ADD R0,R0,#4
+    CMP R0,#8 * 16
+    SUBGE R0,R0,#8 * 16
     STR R0,[R1,#sprite_frame]
 No_CursorRight_Key:
     MOV R0,#129
@@ -1183,12 +1227,12 @@ No_SpaceBar_Key:
     MOV R1,#0
     STR R1,bat_bullet_debounce
 SpaceBar_Debounce:
-    MOV R0,#129
-    MOV R1,#-113
-    MOV R2,#255
-    SWI OS_Byte
-    CMP R2,#255
+
     LDMFD SP!,{R0-R2}
+
+    MVL R0,game_loop_key_state
+    LDR R1,[R0,#game_loop_key_state_quit_offset]
+    CMP R1,#255
     BEQ main_exit
 
     STMFD SP!, {R0-R8}
@@ -1324,9 +1368,9 @@ update_bat_bullets_loop:
     MOVNE R3,#-1
     LDR R2,[R10,#sprite_frame]
     CMP R5,#0
-    ADDGT R2,R2,#1
-    SUBLT R2,R2,#1
-    AND R2,R2,#0b11111
+    ADDGT R2,R2,#2
+    SUBLT R2,R2,#2
+    AND R2,R2,#0b1111111
     STR R2,[R10,#sprite_frame]
     MOV R2,#9
     STR R2,[R10,#sprite_width]
@@ -1450,6 +1494,27 @@ monotonic_time_delta:
 ;   ----------------------------------------------------------------
 ;       All data goes here, start by aligning to a 16 byte boundary
 ;   ----------------------------------------------------------------
+
+;   ****************************************************************
+;       game_loop_key_state
+;   ----------------------------------------------------------------
+;       Game loop key state variables
+;   ----------------------------------------------------------------
+    .align 4
+game_loop_key_state:
+game_loop_key_state_left:      .4byte  0
+game_loop_key_state_right:     .4byte  0
+game_loop_key_state_up:        .4byte  0
+game_loop_key_state_down:      .4byte  0
+game_loop_key_state_fire:      .4byte  0
+game_loop_key_state_quit:      .4byte  0
+
+    .set game_loop_key_state_left_offset,      game_loop_key_state_left - game_loop_key_state
+    .set game_loop_key_state_right_offset,     game_loop_key_state_right - game_loop_key_state
+    .set game_loop_key_state_up_offset,        game_loop_key_state_up - game_loop_key_state
+    .set game_loop_key_state_down_offset,      game_loop_key_state_down - game_loop_key_state
+    .set game_loop_key_state_fire_offset,      game_loop_key_state_fire - game_loop_key_state
+    .set game_loop_key_state_quit_offset,      game_loop_key_state_quit - game_loop_key_state
     
 
 ;   ****************************************************************
@@ -1608,6 +1673,13 @@ palette_fade:
     .align 4
 level_1_tiles:
     .incbin "build/level-1.bin"
+
+
+;   ****************************************************************
+;       compiled sprite files
+;   ----------------------------------------------------------------
+;       Include the compiled sprite files and other LUTs
+;   ----------------------------------------------------------------
     .include "build/sprites/batman.asm"
     .include "build/sprites/explosion.asm"
     .include "build/sprites/enemies.asm"
