@@ -45,7 +45,7 @@ stack:
 swap_display_buffers:
     STMFD SP!, {R0-R2,R14}
 
-    ADRL R2,vdu_variables_screen_start_buffer
+    ADRL R2,vdu_variables_buffer
     LDR R0,[R2,#0]
     LDR R1,[R2,#4]
     STR R1,[R2,#0]
@@ -784,61 +784,65 @@ clear_edges_exit:
     MOV PC,R14
 
 ;   ****************************************************************
-;       main
+;       initialise
 ;   ----------------------------------------------------------------
-;       Entry point of applicataion
+;       Initialise hardware and game state
 ;   ----------------------------------------------------------------
-main:
-
-    ADRL SP,stack           ; load stack pointer with our stack address
-    STMFD SP!, {R14}        ; store link register R14 onto the stack
-
-    SWI OS_EnterOS          ; enter supervisor mode
+initialise:
+    STMFD SP!,{R0-R12,R14}
 
     VDU VDU_SelectScreenMode,15,-1,-1,-1,-1,-1,-1,-1,-1     ; change to mode 13 (320x256 256 colours) for A3000
     VDU VDU_SelectScreenMode,13,-1,-1,-1,-1,-1,-1,-1,-1     ; change to mode 13 (320x256 256 colours) for A3000
-    VDU VDU_MultiPurpose,1,0,0,0,0,0,0,0,0,0
-    ADRL R0,vdu_variables_screen_start
-    ADRL R1,vdu_variables_screen_start_buffer
-    SWI OS_ReadVduVariables
+    VDU VDU_MultiPurpose,1,0,0,0,0,0,0,0,0,0                ; hide the disaply cursor
+    ADRL R0,vdu_variables_screen_start                      ; load address of OS_ReadVduVariables input block into R0
+    ADRL R1,vdu_variables_buffer                            ; load address of OS_ReadVduVariables output block into R1
+    SWI OS_ReadVduVariables                                 ; Call OS_ReadVduVariables SWI
 
-    MOV R12,R1
+    LDR R0,[R1,#0]
+    ADD R0,R0,#SCANLINE
+    STR R0,[R1,#0]
+    ADD R0,R0,#SCANLINE*233
+    STR R0,[R1,#4]
 
-    LDR R1,[R12,#0]
-    ADD R1,R1,#SCANLINE
-    STR R1,[R12,#0]
-    ADD R1,R1,#SCANLINE*233
-    STR R1,[R12,#4]
+initialise_exit:
+    LDMFD SP!,{R0-R12,R14}
+    MOV PC,R14
 
-    MOV R1,#45
-    BL vidc_set_HDSR
-    MOV R1,#221
-    BL vidc_set_HDER
+;   ****************************************************************
+;       draw_title_screen
+;   ----------------------------------------------------------------
+;       Draw title screen, wait for a key, then clear display
+;   ----------------------------------------------------------------
 
-    ADRL R0,main_title
-    LDR R1,[R12]
-    ADD R1,R1,#16
-    MOV R2,#256
-    BL copy_buffer_to_screen
+draw_title_screen:
+    STMFD SP!,{R0-R12,R14}
 
-    SWI OS_ReadC
+    ADRL R12,vdu_variables_buffer    ; load address of vdu_variables_buffer into R12
+    
+    MOV R0,#16                      ; OS_File 16 : Load named file without path
+    ADRL R1,main_title_filename      ; load address of filename string into R1
+    LDR R2,[R12,#0]                 ; load address of display start from vdu_variables_buffer
+    SUB R2,R2,#32                   ; subtract 32 bytes as we are using the full width of display
+    MOV R3,#0                       ; set R3 to 0 to use load address in R2
 
-    MOV R0,#0
-    LDR R1,[R12]
-    MOV R2,#256
-    BL copy_4byte_to_screen
-    BL swap_display_buffers    
-    BL copy_4byte_to_screen
-    BL swap_display_buffers    
+    SWI OS_File                     ; load file
+    SWI OS_ReadC                    ; wait for keypress
 
-        B main_draw_tile_map
+draw_title_screen_exit:
+    LDMFD SP!,{R0-R12,R14}
+    MOV PC,R14
+
+draw_intro_screen:
+    STMFD SP!,{R0-R12,R14}
 
     ADRL R0,intro_screen
+    ADRL R12,vdu_variables_buffer
+
     MOV R2,#1
     MOV R3,#231
     MOV R4,#SCANLINE
     MUL R5,R3,R4
-intro_screen_loop:
+draw_intro_screen_loop:
     LDR R1,[R12]
     MOV R11,R1
     ADD R1,R1,#16
@@ -846,13 +850,13 @@ intro_screen_loop:
     BL copy_buffer_to_screen
     STMFD SP!, {R0-R2}
     CMP R2,#231
-    BGT intro_text_2_skip
-    ADRL R0,intro_text_2
-intro_text_2_skip:
+    BGT draw_intro_screen_text_2_skip
+    ADRL R0,draw_intro_screen_text_2
+draw_intro_screen_text_2_skip:
     CMP R2,#168
-    BGT intro_text_1_skip
-    ADRL R0,intro_text_1
-intro_text_1_skip:
+    BGT draw_intro_screen_text_1_skip
+    ADRL R0,draw_intro_screen_text_1
+draw_intro_screen_text_1_skip:
     MOV R1,#16
     MOV R2,#64
     MOV R3,#0xff00
@@ -864,8 +868,8 @@ intro_text_1_skip:
     SUB R5,R5,#SCANLINE
     ADD R2,R2,#1
     CMP R2,#232
-    BLE intro_screen_loop
-    ADRL R0,intro_text_3
+    BLE draw_intro_screen_loop
+    ADRL R0,draw_intro_screen_text_3
     MOV R1,#16
     MOV R2,#64
     MOV R3,#0xff00
@@ -880,14 +884,43 @@ intro_text_1_skip:
     BL swap_display_buffers    
     BL copy_4byte_to_screen
 
-    ; BL fade_screen_to_black
+    BL fade_screen_to_black
 
-main_draw_tile_map:
+draw_intro_screen_exit:
+    LDMFD SP!,{R0-R12,R14}
+    MOV PC,R14
 
+;   ****************************************************************
+;       main
+;   ----------------------------------------------------------------
+;       Entry point of applicataion
+;   ----------------------------------------------------------------
+main:
+
+    ADRL SP,stack            ; load stack pointer with our stack address
+    STMFD SP!, {R14}        ; store link register R14 onto the stack
+    SWI OS_EnterOS          ; enter supervisor mode
+
+    BL initialise
+    BL draw_title_screen
+    ; BL draw_intro_screen
+    ; BL main_exit
+
+    MOV R1,#45
+    BL vidc_set_HDSR
+    MOV R1,#221
+    BL vidc_set_HDER
     MOV R1,#47 + 8
     BL vidc_set_VDSR
     MOV R1,#279 - 8
     BL vidc_set_VDER
+    
+    ADRL R12,vdu_variables_buffer
+
+    MOV R0,#0
+    LDR R1,[R12,#0]                 
+    MOV R2,#232
+    BL copy_4byte_to_screen
 
     ADRL R0,status_bar
     LDR R1,[R12]
@@ -900,8 +933,7 @@ main_draw_tile_map:
     ADD R1,R1,#SCANLINE*233
     BL copy_buffer_to_screen
 
-    MOV R1,#draw_batman_sprite & 0x0000ffff
-    ORR R1,R1,#draw_batman_sprite & 0xffff0000
+    MVL R1,draw_batman_sprite
     STR R1,sprite_00_function
     MOV R1,#0
     STR R1,sprite_00_frame
@@ -918,8 +950,7 @@ main_draw_tile_map:
     MOV R1,#48
     STR R1,sprite_00_offset_y
 
-    MOV R1,#draw_pointers_sprite & 0x0000ffff
-    ORR R1,R1,#draw_pointers_sprite & 0xffff0000
+    ADRL R1,draw_pointers_sprite
     STR R1,sprite_31_function
     MOV R1,#0
     STR R1,sprite_31_frame
@@ -1148,7 +1179,7 @@ SpaceBar_Debounce:
     SWI OS_Byte
     CMP R2,#255
     LDMFD SP!,{R0-R2}
-    BEQ exit
+    BEQ main_exit
 
     STMFD SP!, {R0-R8}
     
@@ -1158,7 +1189,7 @@ SpaceBar_Debounce:
     SUB R3,R3,R4
     STR R3,monotonic_time_delta
 
-    MVL R3,sprite_world_offset_x
+    ADRL R3,sprite_world_offset_x
     LDR R4,[R3,#0]
     LDR R5,[R3,#4]
     MOV R2,R2,LSL #2
@@ -1262,8 +1293,8 @@ batman_cant_drop:
     ADRL R0,level_1_map_types
     ADRL R9,bat_bullets
     MOV R8,#0
-    MVL R6,draw_bat_bullet_sprite
-    MVL R10,sprite_01
+    ADRL R6,draw_bat_bullet_sprite
+    ADRL R10,sprite_01
 update_bat_bullets_loop:
     LDMIA R9,{R3-R6}
     DEBUG_MEMORY -10
@@ -1271,7 +1302,7 @@ update_bat_bullets_loop:
     BEQ disable_bat_bullet
     ADD R3,R3,R5
     ADD R4,R4,R6
-    MVL R2,draw_bat_bullet_sprite
+    ADRL R2,draw_bat_bullet_sprite
     STR R2,[R10,#sprite_function]
     STR R3,[R10,#sprite_x]
     STR R4,[R10,#sprite_y]
@@ -1339,15 +1370,13 @@ update_bat_bullets_next:
     ; DEBUG_STEP
 
     B main_draw_tile_map_loop
-exit:
 
-    BL fade_screen_to_black
-    VDU VDU_SelectScreenMode,13,-1,-1,-1,-1,-1,-1,-1,-1     ; change to mode 13 (320x256 256 colours) for A3000
+main_exit:
+    VDU VDU_SelectScreenMode,13,-1,-1,-1,-1,-1,-1,-1,-1     ; change to mode 13 (320x256 256 colours)
+    TEQP  PC,#0                                             ; switch cpu back to user mode
+    MOV   R0,R0                                             ; nop
 
-    TEQP  PC,#0
-    MOV   R0,R0
-
-    LDMFD SP!, {PC}
+    LDMFD SP!, {PC}                                         ; load PC from stack
 
 frame_count:
     .4byte  0
@@ -1439,11 +1468,12 @@ font_test_string:
     .byte "THIS IS A TEST STRING!!!!",0xa,"0x12345678",0xa,"$89ABCDEF",0
 
 ;   ****************************************************************
-;       intro_text_1
+;       draw_intro_screen_text_1
 ;   ----------------------------------------------------------------
 ;       Introduction screen text part 1
 ;   ----------------------------------------------------------------
-intro_text_1:
+    .align 4
+draw_intro_screen_text_1:
     .byte "         OCEAN SOFTWARE PRESENTS       ",0x0a
     .byte 0x0a
     .byte 0x0a
@@ -1455,22 +1485,24 @@ intro_text_1:
 
 
 ;   ****************************************************************
-;       intro_text_2
+;       draw_intro_screen_text_2
 ;   ----------------------------------------------------------------
 ;       Introduction screen text part 2
 ;   ----------------------------------------------------------------
-intro_text_2:
+    .align 4
+draw_intro_screen_text_2:
     .byte "                 BATMAN                ",0x0a
     .byte 0x0a
     .byte "               THE MOVIE.              ",0
 
 
 ;   ****************************************************************
-;       intro_text_3
+;       draw_intro_screen_text_3
 ;   ----------------------------------------------------------------
 ;       Introduction screen text part 3
 ;   ----------------------------------------------------------------
-intro_text_3:
+    .align 4
+draw_intro_screen_text_3:
     .byte "          TM & c DC COMICS INC.         ",0x0a
     .byte "                  1989                  ",0x0a
     .byte 0x0a
@@ -1489,20 +1521,19 @@ intro_text_3:
 ;           +04   :   -1 to end lookup table
 ;   ----------------------------------------------------------------
     .align 4
-
 vdu_variables_screen_start:
     .4byte 0x00000095       ; display memory start address
     .4byte 0x00000095       ; display memory start address
     .4byte 0xffffffff
 
 ;   ****************************************************************
-;       vdu_variables_screen_start_buffer
+;       vdu_variables_buffer
 ;   ----------------------------------------------------------------
 ;       VDU variables lookup table, terminated by -1
 ;           +00   :   start of display memory address buffer #1
 ;           +04   :   start of display memory address buffer #2
 ;   ----------------------------------------------------------------
-vdu_variables_screen_start_buffer:
+vdu_variables_buffer:
     .4byte 0x00000000
     .4byte 0x00000000
     .4byte level_1_map_tilemap
@@ -1530,14 +1561,13 @@ status_bar:
 
 
 ;   ****************************************************************
-;       main_title
+;       main_title_filename
 ;   ----------------------------------------------------------------
-;       Bitmap for main title screen
+;       filename for bitmap for main title screen
 ;   ----------------------------------------------------------------
     .align 4
-main_title:
-    .incbin "build/main_title.bin"
-
+main_title_filename:
+    .byte "<Batman$Dir>.MainTitle",0
 
 ;   ****************************************************************
 ;       intro_screen

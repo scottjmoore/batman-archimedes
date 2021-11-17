@@ -29,7 +29,7 @@ LUTS = 		build/sincos.asm
 
 VASM = 		vasmarm_std
 DEBUG =		-D DEBUG=0 -D SPRITE_DEBUG=0
-OPTS =		-a2 -m2 -Fbin
+OPTS =		-a2 -m2 -opt-ldrpc -opt-adr -Fbin
 
 PNG2ASM = 			./scripts/png2asm.py
 COMPILESPRITE = 	./scripts/compilesprite.py
@@ -219,4 +219,5 @@ deploy:
 	@cp src/Run $(ARCULATOR)/hostfs/!Batman/!Run,feb
 	@cp src/Sprites $(ARCULATOR)/hostfs/!Batman/!Sprites,ff9
 	@cp build/batman $(ARCULATOR)/hostfs/!Batman/!RunImage,ff8
+	@cp build/main_title.bin ${ARCULATOR}/hostfs/!Batman/MainTitle,ffd
 	@cp assets/blank.adf build/batman.adf
