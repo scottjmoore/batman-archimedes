@@ -993,39 +993,8 @@ main:
     ADD R1,R1,#SCANLINE*233
     BL copy_buffer_to_screen
 
-    MVL R1,draw_batman_sprite
-    STR R1,sprite_00_function
-    MOV R1,#0
-    STR R1,sprite_00_frame
-    MOV R1,#4 * 16
-    STR R1,sprite_00_x
-    MOV R1,#3 * 16
-    STR R1,sprite_00_y
-    MOV R1,#32
-    STR R1,sprite_00_width
-    MOV R1,#48
-    STR R1,sprite_00_height
-    MOV R1,#0
-    STR R1,sprite_00_offset_x
-    MOV R1,#48
-    STR R1,sprite_00_offset_y
-
-    ADRL R1,draw_pointers_sprite
-    STR R1,sprite_31_function
-    MOV R1,#0
-    STR R1,sprite_31_frame
-    MOV R1,#160
-    STR R1,sprite_31_x
-    MOV R1,#160
-    STR R1,sprite_31_y
-    MOV R1,#11
-    STR R1,sprite_31_width
-    MOV R1,#11
-    STR R1,sprite_31_height
-    MOV R1,#-16
-    STR R1,sprite_31_offset_x
-    MOV R1,#0
-    STR R1,sprite_31_offset_y
+    SPRITE sprite_00,draw_batman_sprite,0,4*16,3*16,32,48,0,48
+    SPRITE sprite_31,draw_pointers_sprite,0,160,160,11,11,-16,0
 
     MOV R3,#0
     MOV R4,#0
