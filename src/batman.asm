@@ -1230,13 +1230,13 @@ Fire_Debounce:
     ADRL R10,sprite_00
     LDR R3,[R10,#sprite_x]
     LDR R4,[R10,#sprite_y]
+    LDR R7,[R10,#sprite_width]
+    LDR R8,[R10,#sprite_frame]
     MOV R5,#0b00000000
     .ifne SPRITE_DEBUG
         LDR R6,[R10,#sprite_attributes]
         AND R6,R6,#0xffffff00
     .endif
-    LDR R7,[R10,#sprite_width]
-    LDR R8,[R10,#sprite_frame]
     BL lookup_tilemap_tile
     CMP R1,#0xf0
     ORREQ R5,R5,#0b10000000
