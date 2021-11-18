@@ -138,7 +138,7 @@
 
 .ifne DEBUG
     debug_convert_register_to_hex:
-        STMFD SP!,{R0-R3}
+        STMFD SP!,{R0-R3,R14}
 
         MOV R3,#0x0000000f
         AND R2,R3,R0,LSR #28
@@ -184,8 +184,7 @@
 
     debug_convert_register_to_hex_exit:
 
-        LDMFD SP!,{R0-R3}
-        MOV PC,R14
+        LDMFD SP!,{R0-R3,PC}
 
 
     debug_update_register_text:
@@ -474,8 +473,7 @@
         BNE .0007
 
     debug_update_memory_text_exit:
-        LDMFD SP!,{R0-R3,R11,R14}
-        MOV PC,R14
+        LDMFD SP!,{R0-R3,R11,PC}
 
 
     ;   ****************************************************************

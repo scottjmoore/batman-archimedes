@@ -467,71 +467,73 @@ sprite_31_offset_y:     .4byte  0
 ;       R11     :   Unchanged
 ;   ****************************************************************
 
-draw_sprite_outline:
-    STMFD SP!,{R0-R5,R10,R11}
+.ifne SPRITE_DEBUG
+    draw_sprite_outline:
+        STMFD SP!,{R0-R5,R10,R11,R14}
 
-    CMP R1,#CLIP_LEFT + 16
-    BGE draw_sprite_outline_noclip_left
-    ADD R4,R4,R1
-    SUB R4,R4,#16
-    MOV R1,#CLIP_LEFT + 16
-    CMP R4,#0
-    BLE draw_sprite_outline_exit
+        CMP R1,#CLIP_LEFT + 16
+        BGE draw_sprite_outline_noclip_left
+        ADD R4,R4,R1
+        SUB R4,R4,#16
+        MOV R1,#CLIP_LEFT + 16
+        CMP R4,#0
+        BLE draw_sprite_outline_exit
 
-draw_sprite_outline_noclip_left:
-    CMP R1,#CLIP_RIGHT - 16
-    BGE draw_sprite_outline_exit
-    ADD R3,R1,R4
-    CMP R3,#CLIP_RIGHT - 16
-    BLE draw_sprite_outline_noclip_right
-    SUB R3,R3,#CLIP_RIGHT - 16
-    SUB R4,R4,R3
-    CMP R4,#0
-    BLE draw_sprite_outline_exit
+    draw_sprite_outline_noclip_left:
+        CMP R1,#CLIP_RIGHT - 16
+        BGE draw_sprite_outline_exit
+        ADD R3,R1,R4
+        CMP R3,#CLIP_RIGHT - 16
+        BLE draw_sprite_outline_noclip_right
+        SUB R3,R3,#CLIP_RIGHT - 16
+        SUB R4,R4,R3
+        CMP R4,#0
+        BLE draw_sprite_outline_exit
 
-draw_sprite_outline_noclip_right:
-    CMP R2,#CLIP_TOP
-    BGE draw_sprite_outline_noclip_top
-    ADD R5,R5,R2
-    MOV R2,#CLIP_TOP
-    CMP R5,#0
-    BLE draw_sprite_outline_exit
+    draw_sprite_outline_noclip_right:
+        CMP R2,#CLIP_TOP
+        BGE draw_sprite_outline_noclip_top
+        ADD R5,R5,R2
+        MOV R2,#CLIP_TOP
+        CMP R5,#0
+        BLE draw_sprite_outline_exit
 
-draw_sprite_outline_noclip_top:
-    CMP R2,#CLIP_BOTTOM
-    BGE draw_sprite_outline_exit
-    ADD R3,R2,R5
-    CMP R3,#CLIP_BOTTOM
-    BLE draw_sprite_outline_noclip_bottom
-    SUB R3,R3,#CLIP_BOTTOM
-    SUB R5,R5,R3
-    CMP R5,#0
-    BLE draw_sprite_outline_exit
+    draw_sprite_outline_noclip_top:
+        CMP R2,#CLIP_BOTTOM
+        BGE draw_sprite_outline_exit
+        ADD R3,R2,R5
+        CMP R3,#CLIP_BOTTOM
+        BLE draw_sprite_outline_noclip_bottom
+        SUB R3,R3,#CLIP_BOTTOM
+        SUB R5,R5,R3
+        CMP R5,#0
+        BLE draw_sprite_outline_exit
 
-draw_sprite_outline_noclip_bottom:
-    ADD R11,R11,R1
-    MOV R3,#SCANLINE
-    MLA R11,R2,R3,R11
-    MLA R10,R5,R3,R11
-    SUB R10,R10,#SCANLINE
-    SUB R3,R4,#1
+    draw_sprite_outline_noclip_bottom:
+        ADD R11,R11,R1
+        MOV R3,#SCANLINE
+        MLA R11,R2,R3,R11
+        MLA R10,R5,R3,R11
+        SUB R10,R10,#SCANLINE
+        SUB R3,R4,#1
 
-draw_sprite_outline_horizontal:
-    SUBS R4,R4,#1
-    STRB R0,[R11,R4]
-    STRB R0,[R10,R4]
-    BNE draw_sprite_outline_horizontal
+    draw_sprite_outline_horizontal:
+        SUBS R4,R4,#1
+        STRB R0,[R11,R4]
+        STRB R0,[R10,R4]
+        BNE draw_sprite_outline_horizontal
 
-draw_sprite_outline_vertical:
-    STRB R0,[R11]
-    STRB R0,[R11,R3]
-    ADD R11,R11,#SCANLINE
-    SUBS R5,R5,#1
-    BNE draw_sprite_outline_vertical
+    draw_sprite_outline_vertical:
+        STRB R0,[R11]
+        STRB R0,[R11,R3]
+        ADD R11,R11,#SCANLINE
+        SUBS R5,R5,#1
+        BNE draw_sprite_outline_vertical
 
-draw_sprite_outline_exit:
-    LDMFD SP!,{R0-R5,R10,R11}
-    MOV PC,R14
+    draw_sprite_outline_exit:
+        LDMFD SP!,{R0-R5,R10,R11,PC}
+.endif
+
 
 ;   ****************************************************************
 ;       draw_sprites

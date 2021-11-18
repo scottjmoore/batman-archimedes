@@ -1321,7 +1321,7 @@ update_bat_bullets_loop:
     BEQ disable_bat_bullet
     ADD R3,R3,R5
     ADD R4,R4,R6
-    ADRL R2,draw_bat_bullet_sprite
+    MVL R2,draw_bat_bullet_sprite
     STR R2,[R10,#sprite_function]
     STR R3,[R10,#sprite_x]
     STR R4,[R10,#sprite_y]
