@@ -923,37 +923,37 @@ update_game_loop_key_state:
     MVL R12,game_loop_key_state
 
     MOV R0,#129
-    MOV R1,#-58     ; cursor up inkey value
+    MOV R1,#game_loop_key_up
     MOV R2,#255
     SWI OS_Byte
     STR R2,[R12,#game_loop_key_state_up_offset]
 
     MOV R0,#129
-    MOV R1,#-42     ; cursor down inkey value
+    MOV R1,#game_loop_key_down
     MOV R2,#255
     SWI OS_Byte
     STR R2,[R12,#game_loop_key_state_down_offset]
 
     MOV R0,#129
-    MOV R1,#-26     ; cursor left inkey value
+    MOV R1,#game_loop_key_left
     MOV R2,#255
     SWI OS_Byte
     STR R2,[R12,#game_loop_key_state_left_offset]
 
     MOV R0,#129
-    MOV R1,#-122     ; cursor right inkey value
+    MOV R1,#game_loop_key_right
     MOV R2,#255
     SWI OS_Byte
     STR R2,[R12,#game_loop_key_state_right_offset]
 
     MOV R0,#129
-    MOV R1,#-99     ; space bar inkey value
+    MOV R1,#game_loop_key_fire
     MOV R2,#255
     SWI OS_Byte
     STR R2,[R12,#game_loop_key_state_fire_offset]
 
     MOV R0,#129
-    MOV R1,#-113    ; escape inkey value
+    MOV R1,#game_loop_key_quit
     MOV R2,#255
     SWI OS_Byte
     STR R2,[R12,#game_loop_key_state_quit_offset]
@@ -1127,30 +1127,28 @@ No_P_Key:
 
     BL update_game_loop_key_state
 
-    MVL R0,game_loop_key_state
-    LDR R1,[R0,#game_loop_key_state_up_offset]
+    MVL R2,game_loop_key_state
+    LDR R1,[R2,#game_loop_key_state_up_offset]
     CMP R1,#255
-    BNE No_CursorUp_Key
+    BNE No_Up_Pressed
     ;   TODO
-No_CursorUp_Key:
-    MVL R0,game_loop_key_state
-    LDR R1,[R0,#game_loop_key_state_down_offset]
+No_Up_Pressed:
+    LDR R1,[R2,#game_loop_key_state_down_offset]
     CMP R1,#255
-    BNE No_CursorDown_Key
+    BNE No_Down_Pressed
     LDR R0,batman_blocked
     TST R0,#0b00000100
-    BEQ No_CursorDown_Key
+    BEQ No_Down_Pressed
     LDR R0,sprite_00_y
     ADD R0,R0,#1
     STR R0,sprite_00_y
-No_CursorDown_Key:
-    MVL R0,game_loop_key_state
-    LDR R1,[R0,#game_loop_key_state_left_offset]
+No_Down_Pressed:
+    LDR R1,[R2,#game_loop_key_state_left_offset]
     CMP R1,#255
-    BNE No_CursorLeft_Key
+    BNE No_Left_Pressed
     LDR R0,batman_blocked
     TST R0,#0b10000001
-    BNE No_CursorRight_Key
+    BNE No_Right_Pressed
     ADRL R1,sprite_00
     LDR R0,[R1,#sprite_x]
     SUB R0,R0,#1
@@ -1163,15 +1161,14 @@ No_CursorDown_Key:
     CMP R0,#8 * 16
     SUBGE R0,R0,#8 * 16
     STR R0,[R1,#sprite_frame]
-    B No_CursorRight_Key
-No_CursorLeft_Key:
-    MVL R0,game_loop_key_state
-    LDR R1,[R0,#game_loop_key_state_right_offset]
+    B No_Right_Pressed
+No_Left_Pressed:
+    LDR R1,[R2,#game_loop_key_state_right_offset]
     CMP R1,#255
-    BNE No_CursorRight_Key
+    BNE No_Right_Pressed
     LDR R0,batman_blocked
     TST R0,#0b10000010
-    BNE No_CursorRight_Key
+    BNE No_Right_Pressed
     ADRL R1,sprite_00
     LDR R0,[R1,#sprite_x]
     ADD R0,R0,#1
@@ -1185,16 +1182,13 @@ No_CursorLeft_Key:
     CMP R0,#8 * 16
     SUBGE R0,R0,#8 * 16
     STR R0,[R1,#sprite_frame]
-No_CursorRight_Key:
-    MOV R0,#129
-    MOV R1,#-99
-    MOV R2,#255
-    SWI OS_Byte
-    CMP R2,#255
-    BNE No_SpaceBar_Key
+No_Right_Pressed:
+    LDR R1,[R2,#game_loop_key_state_fire_offset]
+    CMP R1,#255
+    BNE No_Fire_Pressed
     LDR R1,bat_bullet_debounce
     CMP R1,#0
-    BNE SpaceBar_Debounce
+    BNE Fire_Debounce
     MOV R1,#-1
     STR R1,bat_bullet_debounce
     ADRL R1,sprite_00
@@ -1222,11 +1216,11 @@ No_CursorRight_Key:
     ADD R8,R8,#1
     AND R8,R8,#0b111
     STR R8,bat_bullet_index
-    B SpaceBar_Debounce
-No_SpaceBar_Key:
+    B Fire_Debounce
+No_Fire_Pressed:
     MOV R1,#0
     STR R1,bat_bullet_debounce
-SpaceBar_Debounce:
+Fire_Debounce:
 
     LDMFD SP!,{R0-R2}
 
@@ -1515,6 +1509,13 @@ game_loop_key_state_quit:      .4byte  0
     .set game_loop_key_state_down_offset,      game_loop_key_state_down - game_loop_key_state
     .set game_loop_key_state_fire_offset,      game_loop_key_state_fire - game_loop_key_state
     .set game_loop_key_state_quit_offset,      game_loop_key_state_quit - game_loop_key_state
+
+    .set game_loop_key_left,    -26
+    .set game_loop_key_right,   -122
+    .set game_loop_key_up,      -58
+    .set game_loop_key_down,    -42
+    .set game_loop_key_fire,    -99
+    .set game_loop_key_quit,    -113
     
 
 ;   ****************************************************************
