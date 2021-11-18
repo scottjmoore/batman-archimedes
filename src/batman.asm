@@ -102,7 +102,7 @@ swap_display_buffers:
 ;   ****************************************************************
 copy_4byte_to_screen:
 
-    STMFD SP!, {R0-R12}     ; store all the registers onto the stack
+    STMFD SP!, {R0-R12,R14}     ; store all the registers onto the stack
 
     MOV R11,R1      ; move destination address into R11
     MOV R10,R2      ; move number of scanlines into R10
@@ -129,8 +129,7 @@ copy_4byte_to_screen_loop:      ; start of copy loop
     SUBS R10,R10,#1             ; decrease number of scanlines to copy by 1
     BNE copy_4byte_to_screen_loop   ; if the number of scanlines left to copy is not zero, branch back to start of loop
 
-    LDMFD SP!, {R0-R12}     ; restore all the registers from the stack
-    MOV PC,R14              ; return from function
+    LDMFD SP!, {R0-R12,PC}     ; restore all the registers from the stack
 
 
 ;   ****************************************************************
@@ -173,7 +172,7 @@ copy_4byte_to_screen_loop:      ; start of copy loop
 ;   ****************************************************************
 copy_buffer_to_screen:
 
-    STMFD SP!, {R0-R12}     ; store all the registers onto the stack
+    STMFD SP!, {R0-R12,R14}     ; store all the registers onto the stack
 
     MOV R12,R0      ; move source address into R11
     MOV R11,R1      ; move destination address into R12
@@ -200,8 +199,7 @@ copy_buffer_to_screen_loop:     ; start of copy loop
     SUBS R10,R10,#1             ; decrease number of scanlines to copy by 1
     BNE copy_buffer_to_screen_loop      ; if number of scanlines left to copy is not zero branch back to start of loop
 
-    LDMFD SP!, {R0-R12}     ; restore all the registers from the stack
-    MOV PC,R14              ; return from function
+    LDMFD SP!, {R0-R12,PC}     ; restore all the registers from the stack
 
 
 ;   ****************************************************************
@@ -244,7 +242,7 @@ copy_buffer_to_screen_loop:     ; start of copy loop
 ;   ****************************************************************
 fade_buffer_with_lookup:
 
-    STMFD SP!, {R0-R12}     ; store all registers onto the stack
+    STMFD SP!, {R0-R12,R14}     ; store all registers onto the stack
 
     MOV R11,R1
     MOV R12,R2
@@ -358,8 +356,8 @@ fade_buffer_with_lookup_loop:
     SUBS R1,R1,#1
     BNE fade_buffer_with_lookup_loop
 
-    LDMFD SP!, {R0-R12}     ; restore all the registers from the stack
-    MOV PC,R14              ; return from function
+    LDMFD SP!, {R0-R12,PC}     ; restore all the registers from the stack
+
 
 ; copy_8x8_tile_to_screen:
 
@@ -438,7 +436,7 @@ fade_buffer_with_lookup_loop:
 
 font_lookup:
 
-    STMFD SP!, {R2-R3}     ; store all the registers onto the stack
+    STMFD SP!, {R2-R3,R14}     ; store all the registers onto the stack
 
     ; ADRL R1,font_lookup_table     ; load address of intro font conversion lookup table into R1
     MOV R3,#0                           ; move 0 into R3
@@ -453,8 +451,7 @@ font_lookup_loop:         ; start of loop
 font_lookup_exit:     ; found character in lookup table
     MOV R0,R3               ; move tile index into R0
 
-    LDMFD SP!, {R2-R3}     ; restore all registers from the stack
-    MOV PC,R14              ; return from function
+    LDMFD SP!, {R2-R3,PC}     ; restore all registers from the stack
 
 
 ;   ****************************************************************
@@ -525,8 +522,7 @@ draw_font_string_nextline:            ; next line section
 
 draw_font_string_exit:                ; exit loop
 
-    LDMFD SP!, {R0-R12,R14}     ; restore all registers from the stack, including R14 Link registger
-    MOV PC,R14                  ; exit function
+    LDMFD SP!, {R0-R12,PC}     ; restore all registers from the stack
 
 
 ;   ****************************************************************
@@ -568,7 +564,7 @@ draw_font_string_exit:                ; exit loop
 ;   ****************************************************************
 
 lookup_tilemap_tile:
-    STMFD SP!, {R3-R4}     ; store all registers onto the stack
+    STMFD SP!, {R3-R4,R14}     ; store all registers onto the stack
 
     MOV R3,R3,LSR #4
     MOV R4,R4,LSR #4
@@ -585,8 +581,8 @@ lookup_tilemap_tile:
     LDRB R1,[R2]
 
 lookup_tilemap_tile_exit:
-    LDMFD SP!, {R3-R4}     ; store all registers onto the stack
-    MOV PC,R14
+    LDMFD SP!, {R3-R4,PC}     ; store all registers onto the stack
+
 
 ;   ****************************************************************
 ;       draw_tile_map
@@ -669,8 +665,7 @@ draw_tile_map_x_loop:
 
 draw_tile_map_exit:              ; exit loop
 
-    LDMFD SP!, {R0-R12,R14}     ; restore all registers from the stack, including R14 Link registger
-    MOV PC,R14                  ; exit function
+    LDMFD SP!, {R0-R12,PC}     ; restore all registers from the stack
 
 
 fade_screen_to_black:
@@ -707,8 +702,8 @@ fade_screen_to_black:
     BL copy_4byte_to_screen
     BL swap_display_buffers
 
-    LDMFD SP!, {R0-R12,R14}     ; restore all registers from the stack, including R14 Link registger
-    MOV PC,R14
+    LDMFD SP!, {R0-R12,PC}     ; restore all registers from the stack
+
 
 clear_edges:
     STMFD SP!, {R0-R12,R14}     ; store all registers onto the stack

@@ -75,7 +75,7 @@ for infile, outfile in zip(args.infile, args.outfile):
 
     f_out.write('\ndraw_'+label_name+'_sprite:\n')
 
-    f_out.write('\tSTMFD SP!, {R0-R2,R4,R9-R12}\n')
+    f_out.write('\tSTMFD SP!, {R0-R2,R4,R9-R12,R14}\n')
 
     if (allow_flip_y == True):
         f_out.write('\tTST R3,#1 << 30\n')
@@ -135,8 +135,7 @@ for infile, outfile in zip(args.infile, args.outfile):
     f_out.write('\tADR R1,'+label_name+'_sprites\n')
     f_out.write('\tLDR PC,[R1,R0]\n')
     f_out.write('\ndraw_'+label_name+'_sprite_exit:\n')
-    f_out.write('\tLDMFD SP!, {R0-R2,R4,R9-R12}\n')
-    f_out.write('\tMOV PC, R14\n')
+    f_out.write('\tLDMFD SP!, {R0-R2,R4,R9-R12,PC}\n')
 
     f_out.write('\n'+label_name+'_sprites:\n')
     
@@ -246,8 +245,7 @@ for infile, outfile in zip(args.infile, args.outfile):
                     f_out.write('\n'+label_name+f'_sprite_{tile}_scanline_{i}_skip_flip_x:\n')
 
             f_out.write('\n'+label_name+f'_sprite_{tile}_exit:\n')
-            f_out.write('\tLDMFD SP!, {R0-R2,R4,R9-R12}\n')
-            f_out.write('\tMOV PC,R14\n')
+            f_out.write('\tLDMFD SP!, {R0-R2,R4,R9-R12,PC}\n')
 
             tile = tile + 1
 
