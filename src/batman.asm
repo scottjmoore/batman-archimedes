@@ -994,6 +994,9 @@ main:
     BL copy_buffer_to_screen
 
     SPRITE sprite_00,draw_batman_sprite,0,4*16,3*16,32,48,0,48
+    SPRITE sprite_28,draw_batman_sprite,1*16,6*16,4*16,32,48,0,48
+    SPRITE sprite_29,draw_batman_sprite,2*16,8*16,5*16,32,48,0,48
+    SPRITE sprite_30,draw_batman_sprite,3*16,10*16,6*16,32,48,0,48
     SPRITE sprite_31,draw_pointers_sprite,0,160,160,11,11,-16,0
 
     MOV R3,#0
@@ -1091,8 +1094,11 @@ No_L_Key:
     CMP R4,#0
     MOVLE R4,#0
 No_P_Key:
-    STR R3,sprite_world_offset_x
-    STR R4,sprite_world_offset_y
+    ADRL R0,sprite_world_offset
+    STR R3,[R0,#0]
+    STR R4,[R0,#4]
+    ; STR R3,sprite_world_offset_x
+    ; STR R4,sprite_world_offset_y
 
     BL update_game_loop_key_state
 
@@ -1108,9 +1114,10 @@ No_Up_Pressed:
     LDR R0,batman_blocked
     TST R0,#0b00000100
     BEQ No_Down_Pressed
-    LDR R0,sprite_00_y
+    ADRL R1,sprite_00
+    LDR R0,[R1,#sprite_y]
     ADD R0,R0,#1
-    STR R0,sprite_00_y
+    STR R0,[R1,#sprite_y]
 No_Down_Pressed:
     LDR R1,[R2,#game_loop_key_state_left_offset]
     CMP R1,#255
@@ -1206,7 +1213,7 @@ Fire_Debounce:
     SUB R3,R3,R4
     STR R3,monotonic_time_delta
 
-    ADRL R3,sprite_world_offset_x
+    ADRL R3,sprite_world_offset
     LDR R4,[R3,#0]
     LDR R5,[R3,#4]
     MOV R2,R2,LSL #2

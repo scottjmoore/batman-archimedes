@@ -15,8 +15,12 @@
 .set    sprite_offset_x,    32
 .set    sprite_offset_y,    36
 
-sprite_world_offset_x:        .4byte  0
-sprite_world_offset_y:        .4byte  0
+sprite_world_offset:
+    .4byte  0
+    .4byte  0
+
+    .set sprite_world_offset_x, 0
+    .set sprite_world_offset_y, 4
 
 sprites:
 
@@ -579,8 +583,8 @@ draw_sprites_loop:
     MOV R0,R0,LSR #4
     SUB R1,R1,R7
     SUB R2,R2,R8
-    LDR R7,sprite_world_offset_x
-    LDR R8,sprite_world_offset_y
+    LDR R7,sprite_world_offset + sprite_world_offset_x
+    LDR R8,sprite_world_offset + sprite_world_offset_y
     SUB R1,R1,R7
     SUB R2,R2,R8
 
