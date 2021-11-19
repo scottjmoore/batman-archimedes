@@ -591,8 +591,7 @@ draw_sprites_loop:
 
     CMP R12,#0
     BEQ draw_sprites_skip
-    ADD R14,PC,#0
-    MOV PC,R12
+    BRL R12
 
     .ifne SPRITE_DEBUG
         CMP R6,#0

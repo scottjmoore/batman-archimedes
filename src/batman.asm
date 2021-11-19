@@ -1314,6 +1314,7 @@ batman_cant_drop:
     MOV R8,#0
     ADRL R6,draw_bat_bullet_sprite
     ADRL R10,sprite_01
+
 update_bat_bullets_loop:
     LDMIA R9,{R3-R6}
     DEBUG_MEMORY -10
@@ -1343,9 +1344,11 @@ update_bat_bullets_loop:
     STR R2,[R10,#sprite_height]
     DEBUG_REGISTERS
     BAL update_bat_bullets_next
+
 disable_bat_bullet:
     MOV R2,#0
     STR R6,[R10,#sprite_function]
+    
 update_bat_bullets_next:
     ADD R10,R10,#40
     STMIA R9!,{R3-R6}

@@ -11,6 +11,15 @@
     MOV PC,\r
 .endm
 
+.macro BRL r
+    ADD R14,PC,#0
+    MOV PC,\r
+.endm    
+
+.macro BR r
+    MOV PC,\r
+.endm    
+
 .macro MVL r,a
     MOV \r,#\a & 0x0000ffff
     ORR \r,\r,#\a & 0xffff0000
