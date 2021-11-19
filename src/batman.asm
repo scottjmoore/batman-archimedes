@@ -988,10 +988,7 @@ main:
     BL copy_buffer_to_screen
 
     SPRITE sprite_00,draw_batman_sprite,0,4*16,3*16,32,48,0,48
-    SPRITE sprite_28,draw_batman_sprite,1*16,6*16,4*16,32,48,0,48
-    SPRITE sprite_29,draw_batman_sprite,2*16,8*16,5*16,32,48,0,48
-    SPRITE sprite_30,draw_batman_sprite,3*16,10*16,6*16,32,48,0,48
-    SPRITE sprite_31,draw_pointers_sprite,0,160,160,11,11,-16,0
+    ; SPRITE sprite_31,draw_pointers_sprite,0,160,160,11,11,-16,0
 
     MOV R3,#0
     MOV R4,#0
