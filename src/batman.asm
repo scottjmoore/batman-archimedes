@@ -1232,31 +1232,31 @@ Fire_Debounce:
         AND R6,R6,#0xffffff00
     .endif
     BL lookup_tilemap_tile
-    CMP R1,#0xf0
+    CMP R1,#0x60
     ORREQ R5,R5,#0b10000000
     MOVEQ R8,#0
     .ifne SPRITE_DEBUG
         ORREQ R6,R6,#116
     .endif
-    CMP R1,#0xfe
+    CMP R1,#0x6e
     ORREQ R5,R5,#0b00000100
     .ifne SPRITE_DEBUG
         ORREQ R6,R6,#100
     .endif
     ADD R4,R4,#1
     BL lookup_tilemap_tile
-    CMP R1,#0xf0
+    CMP R1,#0x60
     ORREQ R5,R5,#0b10000000
     MOVEQ R8,#0
     .ifne SPRITE_DEBUG
         ORREQ R6,R6,#116
     .endif
-    CMP R1,#0xfd
+    CMP R1,#0x6d
     BNE batman_cant_drop
     ORR R5,R5,#0b00000100
     SUB R4,R4,#2
     BL lookup_tilemap_tile
-    CMP R1,#0xfd
+    CMP R1,#0x6d
     ORREQ R5,R5,#0b10000000
     MOVEQ R8,#0
     .ifne SPRITE_DEBUG
@@ -1267,13 +1267,13 @@ batman_cant_drop:
     SUB R3,R3,R7,LSR #2
     SUB R4,R4,#22
     BL lookup_tilemap_tile
-    CMP R1,#0xff
+    CMP R1,#0x6f
     ORREQ R5,R5,#0b00000001
     ORREQ R6,R6,#20
     MOVEQ R8,#0
     ADD R3,R3,R7,LSR #1
     BL lookup_tilemap_tile
-    CMP R1,#0xff
+    CMP R1,#0x6f
     ORREQ R5,R5,#0b00000010
     MOVEQ R8,#0
     .ifne SPRITE_DEBUG
