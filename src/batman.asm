@@ -1342,8 +1342,8 @@ update_bat_bullets_loop:
     SUB R3,R3,#12
     BL lookup_tilemap_tile
     ADD R3,R3,#12
-    CMP R1,#0xf0
-    CMPNE R1,#0xfe
+    CMP R1,#0x90
+    CMPNE R1,#0x9e
     MOVNE R3,#-1
     LDR R2,[R10,#sprite_frame]
     CMP R5,#0
