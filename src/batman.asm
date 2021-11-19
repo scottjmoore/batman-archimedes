@@ -987,7 +987,7 @@ main:
     ADD R1,R1,#SCANLINE*233
     BL copy_buffer_to_screen
 
-    SPRITE sprite_00,draw_batman_sprite,0,4*16,3*16,32,48,0,48
+    SPRITE sprite_00,draw_batman_sprite,0,4*16,3*16,0xff00,32,48,0,48
     ; SPRITE sprite_31,draw_pointers_sprite,0,160,160,11,11,-16,0
 
     MOV R3,#0

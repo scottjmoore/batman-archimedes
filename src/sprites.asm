@@ -407,7 +407,7 @@ sprite_31_collision:    .4byte  0b00000000000000000000000000000000
 sprite_31_offset_x:     .4byte  0
 sprite_31_offset_y:     .4byte  0
 
-.macro  SPRITE p_sprite,p_function,p_frame,p_x,p_y,p_width,p_height,p_offset_x,p_offset_y
+.macro  SPRITE p_sprite,p_function,p_frame,p_x,p_y,p_attributes,p_width,p_height,p_offset_x,p_offset_y
     STMFD SP!,{R0-R1}
     MVL R0,\p_sprite
     MVL R1,\p_function
@@ -418,6 +418,8 @@ sprite_31_offset_y:     .4byte  0
     STR R1,[R0,#sprite_x]
     MOV R1,#\p_y
     STR R1,[R0,#sprite_y]
+    MOV R1,#\p_attributes
+    STR R1,[R0,#sprite_attributes]
     MOV R1,#\p_width
     STR R1,[R0,#sprite_width]
     MOV R1,#\p_height
