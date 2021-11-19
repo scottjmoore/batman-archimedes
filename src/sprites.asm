@@ -590,8 +590,7 @@ draw_sprites_loop:
     SUB R2,R2,R8
 
     CMP R12,#0
-    BEQ draw_sprites_skip
-    BRL R12
+    BRLNE R12
 
     .ifne SPRITE_DEBUG
         CMP R6,#0

@@ -20,6 +20,15 @@
     MOV PC,\r
 .endm    
 
+.macro BRLNE r
+    ADDNE R14,PC,#0
+    MOVNE PC,\r
+.endm    
+
+.macro BRNE r
+    MOVNE PC,\r
+.endm    
+
 .macro MVL r,a
     MOV \r,#\a & 0x0000ffff
     ORR \r,\r,#\a & 0xffff0000
