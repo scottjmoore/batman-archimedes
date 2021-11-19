@@ -1233,6 +1233,7 @@ Fire_Debounce:
     LDR R7,[R10,#sprite_width]
     LDR R8,[R10,#sprite_frame]
     MOV R5,#0b00000000
+    LDR R7,batman_blocked
     .ifne SPRITE_DEBUG
         LDR R6,[R10,#sprite_attributes]
         AND R6,R6,#0xffffff00
@@ -1240,7 +1241,6 @@ Fire_Debounce:
     BL lookup_tilemap_tile
     CMP R1,#0x90
     ORREQ R5,R5,#0b10000000
-    MOVEQ R8,#0
     .ifne SPRITE_DEBUG
         ORREQ R6,R6,#116
     .endif
@@ -1253,7 +1253,6 @@ Fire_Debounce:
     BL lookup_tilemap_tile
     CMP R1,#0x90
     ORREQ R5,R5,#0b10000000
-    MOVEQ R8,#0
     .ifne SPRITE_DEBUG
         ORREQ R6,R6,#116
     .endif
@@ -1303,8 +1302,30 @@ batman_cant_drop:
     .ifne SPRITE_DEBUG
         STR R6,[R10,#sprite_attributes]
     .endif
+    MVL R9,sprite_01
+    TST R5,#0b10000000
+    BEQ batman_not_falling
+    MOV R8,#9 * 16
+    LDMIA R10!,{R0-R4}
+    SUB R1,R1,#16
+    TST R4,#1 << 31
+    SUBEQ R2,R2,#32
+    ADDNE R2,R2,#32
+    STMIA R9!,{R0-R4}
+    LDMIA R10!,{R0-R4}
+    STMIA R9!,{R0-R4}
+    SUB R9,R9,#40
+    SUB R10,R10,#40
+    B batman_is_falling
+
+batman_not_falling:
+    MOV R0,#0
+    STR R0,[R9,#sprite_function]
+    TST R7,#0b10000000
+    MOVNE R8,#10 * 16
+batman_is_falling:
     STR R8,[R10,#sprite_frame]
-    
+
     .ifne DEBUG
         MOV R1,#0b000011111111
         BL vidc_set_border_colour
@@ -1325,8 +1346,8 @@ batman_cant_drop:
     ADRL R0,level_1_map_types
     ADRL R9,bat_bullets
     MOV R8,#0
-    ADRL R6,draw_bat_bullet_sprite
-    ADRL R10,sprite_01
+    MVL R6,draw_bat_bullet_sprite
+    ADRL R10,sprite_02
 
 update_bat_bullets_loop:
     LDMIA R9,{R3-R6}
