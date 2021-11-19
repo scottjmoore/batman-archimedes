@@ -56,7 +56,7 @@
 ;       R11     :   Unchanged
 ;   ****************************************************************
 draw_16x16_tile:
-    STMFD SP!, {R0-R12}     ; store all the registers on the stack
+    STMFD SP!, {R0-R12,R14}     ; store all the registers on the stack
 
     CMP R3,#CLIP_TOP                        ; check to see if y coordinate is
     BLT draw_16x16_tile_clipped_top         ;   less than the top clip line
@@ -3162,6 +3162,4 @@ draw_16x16_tile_clipped_right_01_11:
 
 draw_16x16_tile_exit:       ; exit function code
 
-    LDMFD SP!, {R0-R12}     ; restore all the registers from the stack
-    MOV PC,R14              ; return from function
-
+    LDMFD SP!, {R0-R12,PC}     ; restore all the registers from the stack
