@@ -1100,7 +1100,13 @@ No_P_Key:
     LDR R1,[R2,#game_loop_key_state_up_offset]
     CMP R1,#255
     BNE No_Up_Pressed
-    ;   TODO
+    LDR R0,batman_blocked
+    TST R0,#0b00001000
+    BEQ No_Up_Pressed
+    ADRL R1,sprite_00
+    LDR R0,[R1,#sprite_y]
+    SUB R0,R0,#1
+    STR R0,[R1,#sprite_y]
 No_Up_Pressed:
     LDR R1,[R2,#game_loop_key_state_down_offset]
     CMP R1,#255
@@ -1232,31 +1238,31 @@ Fire_Debounce:
         AND R6,R6,#0xffffff00
     .endif
     BL lookup_tilemap_tile
-    CMP R1,#0x60
+    CMP R1,#0x90
     ORREQ R5,R5,#0b10000000
     MOVEQ R8,#0
     .ifne SPRITE_DEBUG
         ORREQ R6,R6,#116
     .endif
-    CMP R1,#0x6e
+    CMP R1,#0x9e
     ORREQ R5,R5,#0b00000100
     .ifne SPRITE_DEBUG
         ORREQ R6,R6,#100
     .endif
     ADD R4,R4,#1
     BL lookup_tilemap_tile
-    CMP R1,#0x60
+    CMP R1,#0x90
     ORREQ R5,R5,#0b10000000
     MOVEQ R8,#0
     .ifne SPRITE_DEBUG
         ORREQ R6,R6,#116
     .endif
-    CMP R1,#0x6d
+    CMP R1,#0x9d
     BNE batman_cant_drop
     ORR R5,R5,#0b00000100
     SUB R4,R4,#2
     BL lookup_tilemap_tile
-    CMP R1,#0x6d
+    CMP R1,#0x9d
     ORREQ R5,R5,#0b10000000
     MOVEQ R8,#0
     .ifne SPRITE_DEBUG
@@ -1267,17 +1273,25 @@ batman_cant_drop:
     SUB R3,R3,R7,LSR #2
     SUB R4,R4,#22
     BL lookup_tilemap_tile
-    CMP R1,#0x6f
+    CMP R1,#0x9f
     ORREQ R5,R5,#0b00000001
     ORREQ R6,R6,#20
     MOVEQ R8,#0
     ADD R3,R3,R7,LSR #1
     BL lookup_tilemap_tile
-    CMP R1,#0x6f
+    CMP R1,#0x9f
     ORREQ R5,R5,#0b00000010
     MOVEQ R8,#0
     .ifne SPRITE_DEBUG
         ORREQ R6,R6,#20
+    .endif
+    SUB R3,R3,R7,LSR #2
+    ADD R4,R4,#20
+    BL lookup_tilemap_tile
+    CMP R1,#0x9e
+    ORREQ R5,R5,#0b00001000
+    .ifne SPRITE_DEBUG
+        ORREQ R6,R6,#100
     .endif
 
     LDR R4,[R10,#sprite_y]
