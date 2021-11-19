@@ -907,6 +907,30 @@ setup_custom_display_mode_352x216_exit:
 
 
 ;   ****************************************************************
+;       draw_status_bar
+;   ----------------------------------------------------------------
+;       Draw status bar to both display buffers
+;   ----------------------------------------------------------------
+draw_status_bar:
+    STMFD SP!,{R0-R12,R14}
+
+    ADRL R12,vdu_variables_buffer
+    ADRL R0,status_bar
+    LDR R1,[R12]
+    ADD R1,R1,#16
+    MOV R2,#CLIP_BOTTOM
+    MOV R3,#SCANLINE
+    MLA R1,R2,R3,R1
+    MOV R2,#53
+    BL copy_buffer_to_screen
+    ADD R1,R1,#SCANLINE*233
+    BL copy_buffer_to_screen
+
+draw_status_bar_exit:
+    LDMFD SP!,{R0-R12,PC}     ; restore all registers from the stack, and load saved R14 link registger into PC
+
+
+;   ****************************************************************
 ;       update_game_loop_key_state
 ;   ----------------------------------------------------------------
 ;       Update values of game loop key state variables
@@ -973,19 +997,9 @@ main:
     BL draw_intro_screen
     BL setup_custom_display_mode_352x216
     BL clear_display_buffers
+    BL draw_status_bar
 
     ADRL R12,vdu_variables_buffer
-
-    ADRL R0,status_bar
-    LDR R1,[R12]
-    ADD R1,R1,#16
-    MOV R2,#CLIP_BOTTOM
-    MOV R3,#SCANLINE
-    MLA R1,R2,R3,R1
-    MOV R2,#53
-    BL copy_buffer_to_screen
-    ADD R1,R1,#SCANLINE*233
-    BL copy_buffer_to_screen
 
     SPRITE sprite_00,draw_batman_sprite,0,4*16,3*16,0xff00,32,48,0,48
     ; SPRITE sprite_31,draw_pointers_sprite,0,160,160,11,11,-16,0
