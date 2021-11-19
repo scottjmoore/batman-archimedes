@@ -1307,7 +1307,7 @@ batman_cant_drop:
     BEQ batman_not_falling
     MOV R8,#9 * 16
     LDMIA R10!,{R0-R4}
-    SUB R1,R1,#16
+    MOV R1,#8 * 16
     TST R4,#1 << 31
     SUBEQ R2,R2,#32
     ADDNE R2,R2,#32
@@ -1322,7 +1322,7 @@ batman_not_falling:
     MOV R0,#0
     STR R0,[R9,#sprite_function]
     TST R7,#0b10000000
-    MOVNE R8,#10 * 16
+    MOVNEfe R8,#10 * 16
 batman_is_falling:
     STR R8,[R10,#sprite_frame]
 
