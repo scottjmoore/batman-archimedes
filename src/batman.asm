@@ -592,7 +592,7 @@ lookup_tilemap_tile_exit:
 ;   ----------------------------------------------------------------
 ;       R0      :   address of tilemap to draw
 ;       R1      :   address of tileset to draw
-;       R2      :   address of screen or display buffer
+;       R2      :   N/A
 ;       R3      :   x coordinate of tilemap in pixels to start from
 ;       R4      :   y coordinate of tilemap in pixels to start from
 ;       R5      :   N/A
@@ -601,8 +601,8 @@ lookup_tilemap_tile_exit:
 ;       R8      :   N/A
 ;       R9      :   N/A
 ;       R10     :   N/A
-;       R11     :   N/A
-;       R11     :   N/A
+;       R11     :   address of screen or display buffer
+;       R12     :   N/A
 ;   ----------------------------------------------------------------
 ;       Returns
 ;   ----------------------------------------------------------------
@@ -634,7 +634,7 @@ draw_tile_map:
     MOV R8,R3           ; put tilemap start x-coordinate into R8
     MOV R9,R4           ; put tilemap start y-coordinate into R9
 
-    MOV R4,R2
+    MOV R4,R11
     MOV R7,#0
     SUB R2,R7,R5
     ADD R2,R2,#16
@@ -707,7 +707,7 @@ fade_screen_to_black:
 clear_edges:
     STMFD SP!, {R0-R12,R14}     ; store all registers onto the stack
 
-    LDR R11,[R12]
+    ; LDR R11,[R12]
 
     MOV R0,#0
     MOV R1,R0
@@ -1004,8 +1004,8 @@ main:
     SPRITE sprite_00,draw_batman_sprite,0,4*16,3*16,0xff00,32,48,0,48
     ; SPRITE sprite_31,draw_pointers_sprite,0,160,160,11,11,-16,0
 
-    MOV R3,#0
-    MOV R4,#0
+    ; MOV R3,#0
+    ; MOV R4,#0
 
 main_draw_tile_map_loop:
 
@@ -1016,13 +1016,15 @@ main_draw_tile_map_loop:
 
     LDR R0,[R12,#8] ; level_1_map_types / level_1_map_tilemap
     ADRL R1,level_1_tiles
-    LDR R2,[R12]
+    LDR R3,tilemap_x
+    LDR R4,tilemap_y
+    LDR R11,[R12]
 
     BL draw_tile_map
-    LDR R11,[R12]
     BL draw_sprites
+    BL clear_edges
 
-    STMFD SP!,{R0-R2}
+    ; STMFD SP!,{R0-R2}
 
     MOV R0,#129
     MOV R1,#-114
@@ -1099,6 +1101,8 @@ No_L_Key:
     CMP R4,#0
     MOVLE R4,#0
 No_P_Key:
+    STR R3,tilemap_x
+    STR R4,tilemap_y
     ADRL R0,sprite_world_offset
     STR R3,[R0,#0]
     STR R4,[R0,#4]
@@ -1209,7 +1213,7 @@ No_Fire_Pressed:
     STR R1,bat_bullet_debounce
 Fire_Debounce:
 
-    LDMFD SP!,{R0-R2}
+    ; LDMFD SP!,{R0-R2}
 
     MVL R0,game_loop_key_state
     LDR R1,[R0,#game_loop_key_state_quit_offset]
@@ -1347,7 +1351,6 @@ batman_is_falling:
         BL vidc_set_border_colour
     .endif
 
-    BL clear_edges
 
     .ifne DEBUG
         MOV R1,#0b000011110000
@@ -1409,6 +1412,8 @@ update_bat_bullets_next:
     LDMFD SP!, {R0-R8}
 
     ADRL R0,level_1_map_types
+    LDR R3,tilemap_x
+    LDR R4,tilemap_y
     ADRL R10,sprite_00
     LDR R1,[R10,#sprite_x]
     LDR R2,[R10,#sprite_y]
@@ -1426,6 +1431,8 @@ update_bat_bullets_next:
     MOVLT R4,#0
     CMP R2,#144
     ADDGE R4,R4,#1
+    STR R3,tilemap_x
+    STR R4,tilemap_y
 
     DRAW_DEBUG
 
@@ -1636,6 +1643,10 @@ vdu_variables_buffer:
 memc_address_screen_start:
     .4byte (SCANLINE * 234) >> 2
     .4byte SCANLINE >> 2
+
+tilemap_x:      .4byte  0
+tilemap_y:      .4byte  0
+
 
     .nolist
 
