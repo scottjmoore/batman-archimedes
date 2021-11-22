@@ -15,7 +15,7 @@
 .set    sprite_offset_x,    32
 .set    sprite_offset_y,    36
 
-sprite_world_offset:        .4byte  0,0
+sprite_world_offset:        .4byte  0, 0
     ; .4byte  0
 
     .set sprite_world_offset_x, 0
@@ -407,28 +407,28 @@ sprite_31_collision:    .4byte  0b00000000000000000000000000000000
 sprite_31_offset_x:     .4byte  0
 sprite_31_offset_y:     .4byte  0
 
-.macro  SPRITE p_sprite,p_function,p_frame,p_x,p_y,p_attributes,p_width,p_height,p_offset_x,p_offset_y
-    STMFD SP!,{R0-R1}
-    MVL R0,\p_sprite
-    MVL R1,\p_function
-    STR R1,[R0,#sprite_function]
-    MOV R1,#\p_frame
-    STR R1,[R0,#sprite_frame]
-    MOV R1,#\p_x
-    STR R1,[R0,#sprite_x]
-    MOV R1,#\p_y
-    STR R1,[R0,#sprite_y]
-    MOV R1,#\p_attributes
-    STR R1,[R0,#sprite_attributes]
-    MOV R1,#\p_width
-    STR R1,[R0,#sprite_width]
-    MOV R1,#\p_height
-    STR R1,[R0,#sprite_height]
-    MOV R1,#\p_offset_x
-    STR R1,[R0,#sprite_offset_x]
-    MOV R1,#\p_offset_y
-    STR R1,[R0,#sprite_offset_y]
-    LDMFD SP!,{R0-R1}
+.macro  SPRITE p_sprite, p_function, p_frame, p_x, p_y, p_attributes, p_width, p_height, p_offset_x, p_offset_y
+    STMFD SP!, {R0 - R1}
+    MVL R0, \p_sprite
+    MVL R1, \p_function
+    STR R1, [R0, #sprite_function]
+    MOV R1, #\p_frame
+    STR R1, [R0, #sprite_frame]
+    MOV R1, #\p_x
+    STR R1, [R0, #sprite_x]
+    MOV R1, #\p_y
+    STR R1, [R0, #sprite_y]
+    MOV R1, #\p_attributes
+    STR R1, [R0, #sprite_attributes]
+    MOV R1, #\p_width
+    STR R1, [R0, #sprite_width]
+    MOV R1, #\p_height
+    STR R1, [R0, #sprite_height]
+    MOV R1, #\p_offset_x
+    STR R1, [R0, #sprite_offset_x]
+    MOV R1, #\p_offset_y
+    STR R1, [R0, #sprite_offset_y]
+    LDMFD SP!, {R0 - R1}
 .endm
 
 ;   ****************************************************************
@@ -471,69 +471,69 @@ sprite_31_offset_y:     .4byte  0
 
 .ifne SPRITE_DEBUG
     draw_sprite_outline:
-        STMFD SP!,{R0-R12,R14}
+        STMFD SP!, {R0 - R12, R14}
 
-        CMP R1,#CLIP_LEFT + 16
+        CMP R1, #CLIP_LEFT + 16
         BGE draw_sprite_outline_noclip_left
-        ADD R4,R4,R1
-        SUB R4,R4,#16
-        MOV R1,#CLIP_LEFT + 16
-        CMP R4,#0
+        ADD R4, R4, R1
+        SUB R4, R4, #16
+        MOV R1, #CLIP_LEFT + 16
+        CMP R4, #0
         BLE draw_sprite_outline_exit
 
     draw_sprite_outline_noclip_left:
-        CMP R1,#CLIP_RIGHT - 16
+        CMP R1, #CLIP_RIGHT - 16
         BGE draw_sprite_outline_exit
-        ADD R3,R1,R4
-        CMP R3,#CLIP_RIGHT - 16
+        ADD R3, R1, R4
+        CMP R3, #CLIP_RIGHT - 16
         BLE draw_sprite_outline_noclip_right
-        SUB R3,R3,#CLIP_RIGHT - 16
-        SUB R4,R4,R3
-        CMP R4,#0
+        SUB R3, R3, #CLIP_RIGHT - 16
+        SUB R4, R4, R3
+        CMP R4, #0
         BLE draw_sprite_outline_exit
 
     draw_sprite_outline_noclip_right:
-        CMP R2,#CLIP_TOP
+        CMP R2, #CLIP_TOP
         BGE draw_sprite_outline_noclip_top
-        ADD R5,R5,R2
-        MOV R2,#CLIP_TOP
-        CMP R5,#0
+        ADD R5, R5, R2
+        MOV R2, #CLIP_TOP
+        CMP R5, #0
         BLE draw_sprite_outline_exit
 
     draw_sprite_outline_noclip_top:
-        CMP R2,#CLIP_BOTTOM
+        CMP R2, #CLIP_BOTTOM
         BGE draw_sprite_outline_exit
-        ADD R3,R2,R5
-        CMP R3,#CLIP_BOTTOM
+        ADD R3, R2, R5
+        CMP R3, #CLIP_BOTTOM
         BLE draw_sprite_outline_noclip_bottom
-        SUB R3,R3,#CLIP_BOTTOM
-        SUB R5,R5,R3
-        CMP R5,#0
+        SUB R3, R3, #CLIP_BOTTOM
+        SUB R5, R5, R3
+        CMP R5, #0
         BLE draw_sprite_outline_exit
 
     draw_sprite_outline_noclip_bottom:
-        ADD R11,R11,R1
-        MOV R3,#SCANLINE
-        MLA R11,R2,R3,R11
-        MLA R10,R5,R3,R11
-        SUB R10,R10,#SCANLINE
-        SUB R3,R4,#1
+        ADD R11, R11, R1
+        MOV R3, #SCANLINE
+        MLA R11, R2, R3, R11
+        MLA R10, R5, R3, R11
+        SUB R10, R10, #SCANLINE
+        SUB R3, R4, #1
 
     draw_sprite_outline_horizontal:
-        SUBS R4,R4,#1
-        STRB R0,[R11,R4]
-        STRB R0,[R10,R4]
+        SUBS R4, R4, #1
+        STRB R0, [R11, R4]
+        STRB R0, [R10, R4]
         BNE draw_sprite_outline_horizontal
 
     draw_sprite_outline_vertical:
-        STRB R0,[R11]
-        STRB R0,[R11,R3]
-        ADD R11,R11,#SCANLINE
-        SUBS R5,R5,#1
+        STRB R0, [R11]
+        STRB R0, [R11, R3]
+        ADD R11, R11, #SCANLINE
+        SUBS R5, R5, #1
         BNE draw_sprite_outline_vertical
 
     draw_sprite_outline_exit:
-        LDMFD SP!,{R0-R12,PC}
+        LDMFD SP!, {R0 - R12, PC}
 .endif
 
 
@@ -576,35 +576,35 @@ sprite_31_offset_y:     .4byte  0
 ;   ****************************************************************
 
 draw_sprites:
-    STMFD SP!,{R0-R12,R14}
+    STMFD SP!, {R0 - R12, R14}
 
-    MOV R9,#32
-    ADRL R10,sprites
+    MOV R9, #32
+    ADRL R10, sprites
 draw_sprites_loop:
-    LDR R12,[R10],#4
-    LDMFD R10!,{R0-R8}
-    MOV R0,R0,LSR #4
-    SUB R1,R1,R7
-    SUB R2,R2,R8
-    LDR R7,sprite_world_offset + sprite_world_offset_x
-    LDR R8,sprite_world_offset + sprite_world_offset_y
-    SUB R1,R1,R7
-    SUB R2,R2,R8
+    LDR R12, [R10], #4
+    LDMFD R10!, {R0 - R8}
+    MOV R0, R0, LSR #4
+    SUB R1, R1, R7
+    SUB R2, R2, R8
+    LDR R7, sprite_world_offset + sprite_world_offset_x
+    LDR R8, sprite_world_offset + sprite_world_offset_y
+    SUB R1, R1, R7
+    SUB R2, R2, R8
 
-    CMP R12,#0
+    CMP R12, #0
     BRLNE R12
 
     .ifne SPRITE_DEBUG
-        CMP R6,#0
-        MOVEQ R0,#255
-        MOVNE R0,#23
+        CMP R6, #0
+        MOVEQ R0, #255
+        MOVNE R0, #23
         DEBUG_REGISTERS
         BL draw_sprite_outline
     .endif
     
 draw_sprites_skip:
-    SUBS R9,R9,#1
+    SUBS R9, R9, #1
     BNE draw_sprites_loop
 
 draw_sprites_exit:
-    LDMFD SP!,{R0-R12,PC}
+    LDMFD SP!, {R0 - R12, PC}

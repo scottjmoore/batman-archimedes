@@ -50,8 +50,8 @@
 ;       R11     :   Unchanged
 ;   ****************************************************************
 memc_set_display_start:
-    ADD R0,R0,#MEMC         ; Add pre-shifted screen start address to VIDC address
-    STR R0,[R0]             ; Put VIDC address and screen start address onto address bus
+    ADD R0, R0, #MEMC         ; Add pre-shifted screen start address to VIDC address
+    STR R0, [R0]             ; Put VIDC address and screen start address onto address bus
 
-    MOV PC,R14              ; return from function
+    MOV PC, R14              ; return from function
 

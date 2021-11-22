@@ -51,58 +51,58 @@
 ;   ****************************************************************
 
 vidc_set_border_colour:
-    MOV R0,#0x40 << 24
-    MOV R1,R1,LSL #20
-    ORR R0,R0,R1,LSR #20
-    MOV R1,#VIDC
-    STR R0,[R1]
-    MOV PC,R14
+    MOV R0, #0x40 << 24
+    MOV R1, R1, LSL #20
+    ORR R0, R0, R1, LSR #20
+    MOV R1, #VIDC
+    STR R0, [R1]
+    MOV PC, R14
 
 vidc_set_HBSR:
-    MOV R0,#0x88 << 24
-    MOV R1,R1,LSL #22
-    ORR R0,R0,R1,LSR #8
-    MOV R1,#VIDC
-    STR R0,[R1]
-    MOV PC,R14
+    MOV R0, #0x88 << 24
+    MOV R1, R1, LSL #22
+    ORR R0, R0, R1, LSR #8
+    MOV R1, #VIDC
+    STR R0, [R1]
+    MOV PC, R14
 
 vidc_set_HDSR:
-    MOV R0,#0x8c << 24
-    MOV R1,R1,LSL #22
-    ORR R0,R0,R1,LSR #8
-    MOV R1,#VIDC
-    STR R0,[R1]
-    MOV PC,R14
+    MOV R0, #0x8c << 24
+    MOV R1, R1, LSL #22
+    ORR R0, R0, R1, LSR #8
+    MOV R1, #VIDC
+    STR R0, [R1]
+    MOV PC, R14
 
 vidc_set_HBER:
-    MOV R0,#0x94 << 24
-    MOV R1,R1,LSL #22
-    ORR R0,R0,R1,LSR #8
-    MOV R1,#VIDC
-    STR R0,[R1]
-    MOV PC,R14
+    MOV R0, #0x94 << 24
+    MOV R1, R1, LSL #22
+    ORR R0, R0, R1, LSR #8
+    MOV R1, #VIDC
+    STR R0, [R1]
+    MOV PC, R14
 
 vidc_set_HDER:
-    MOV R0,#0x90 << 24
-    MOV R1,R1,LSL #22
-    ORR R0,R0,R1,LSR #8
-    MOV R1,#VIDC
-    STR R0,[R1]
-    MOV PC,R14
+    MOV R0, #0x90 << 24
+    MOV R1, R1, LSL #22
+    ORR R0, R0, R1, LSR #8
+    MOV R1, #VIDC
+    STR R0, [R1]
+    MOV PC, R14
 
 vidc_set_VDSR:
-    MOV R0,#0xac << 24
-    MOV R1,R1,LSL #22
-    ORR R0,R0,R1,LSR #8
-    MOV R1,#VIDC
-    STR R0,[R1]
-    MOV PC,R14
+    MOV R0, #0xac << 24
+    MOV R1, R1, LSL #22
+    ORR R0, R0, R1, LSR #8
+    MOV R1, #VIDC
+    STR R0, [R1]
+    MOV PC, R14
 
 vidc_set_VDER:
-    MOV R0,#0xb0 << 24
-    MOV R1,R1,LSL #22
-    ORR R0,R0,R1,LSR #8
-    MOV R1,#VIDC
-    STR R0,[R1]
-    MOV PC,R14
+    MOV R0, #0xb0 << 24
+    MOV R1, R1, LSL #22
+    ORR R0, R0, R1, LSR #8
+    MOV R1, #VIDC
+    STR R0, [R1]
+    MOV PC, R14
 
