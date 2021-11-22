@@ -4,6 +4,11 @@
 ;       Copyright (c) 2021 Scott Moore, all rights reserved.
 ;   ****************************************************************
 
+.set    COLLISION_FEATHER_LEFT,     4
+.set    COLLISION_FEATHER_RIGHT,    4
+.set    COLLISION_FEATHER_TOP,      4
+.set    COLLISION_FEATHER_BOTTOM,   0
+
 .set    sprite_function,    0
 .set    sprite_frame,       4
 .set    sprite_x,           8
@@ -413,7 +418,7 @@ sprite_31_offset_y:     .4byte  0
     MVL R0, \p_sprite
     MVL R1, \p_function
     STR R1, [R0, #sprite_function]
-    MOV R1, #\p_frame
+    MOV R1, #\p_frame << 4
     STR R1, [R0, #sprite_frame]
     MOV R1, #\p_x
     STR R1, [R0, #sprite_x]
@@ -655,6 +660,8 @@ calculate_sprite_collisions:
     ADR R10, sprites
 
 calculate_sprite_collisions_loop:
+    LDR R1, [R10, #sprite_function]
+    BEQ calculate_sprite_collisions_next
     MOV R1, #0
     STR R1, [R10, #sprite_collision]
     ADR R11, sprites
@@ -662,19 +669,25 @@ calculate_sprite_collisions_loop:
 calculate_sprite_collisions_check_loop:
     CMP R0, R1
     BEQ calculate_sprite_collisions_check_next
+    LDR R2, [R11, #sprite_function]
+    BEQ calculate_sprite_collisions_check_next
 
     MOV R9, #0
 
     LDR R2, [R10, #sprite_x]
+    ADD R2, R2, #COLLISION_FEATHER_LEFT
     LDR R4, [R10, #sprite_offset_x]
     SUB R2, R2, R4
     LDR R4, [R10, #sprite_width]
+    SUB R4, R4, #COLLISION_FEATHER_RIGHT << 1
     ADD R3, R2, R4
 
     LDR R5, [R11, #sprite_x]
+    ADD R5, R5, #COLLISION_FEATHER_LEFT
     LDR R7, [R11, #sprite_offset_x]
     SUB R5, R5, R7
     LDR R7, [R11, #sprite_width]
+    SUB R7, R7, #COLLISION_FEATHER_RIGHT << 1
     ADD R6, R5, R7
 
     CMP R5, R3
@@ -683,15 +696,19 @@ calculate_sprite_collisions_check_loop:
     BLE calculate_sprite_collisions_check_next
 
     LDR R2, [R10, #sprite_y]
+    ADD R2, R2, #COLLISION_FEATHER_TOP
     LDR R4, [R10, #sprite_offset_y]
     SUB R2, R2, R4
     LDR R4, [R10, #sprite_height]
+    SUB R4, R4, #COLLISION_FEATHER_BOTTOM << 1
     ADD R3, R2, R4
 
     LDR R5, [R11, #sprite_y]
+    ADD R5, R5, #COLLISION_FEATHER_TOP
     LDR R7, [R11, #sprite_offset_y]
     SUB R5, R5, R7
     LDR R7, [R11, #sprite_height]
+    SUB R7, R7, #COLLISION_FEATHER_BOTTOM << 1
     ADD R6, R5, R7
 
     CMP R5, R3
@@ -717,6 +734,7 @@ calculate_sprite_collisions_check_next:
     CMP R1, #32
     BNE calculate_sprite_collisions_check_loop
 
+calculate_sprite_collisions_next:
     ADD R10, R10, #sprite_size
     ADD R0, R0, #1
     CMP R0, #32

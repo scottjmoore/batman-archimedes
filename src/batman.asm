@@ -1003,6 +1003,12 @@ main:
     ADRL R12, vdu_variables_buffer
 
     SPRITE sprite_00, draw_batman_sprite, 0, 4*16, 3*16, 0xff00, 32, 48, 0, 48
+    SPRITE sprite_10, draw_enemies_sprite, 0, 12*16, 3*16, 0xff00, 32, 48, 0, 48
+    SPRITE sprite_11, draw_enemies_sprite, 1, 2*16, 19*16, 0xff00, 32, 48, 0, 48
+    SPRITE sprite_12, draw_enemies_sprite, 2, 12*16, 15*16, 0xff00, 32, 48, 0, 48
+    SPRITE sprite_13, draw_enemies_sprite, 3, 16*16, 19*16, 0xff00, 32, 48, 0, 48
+    SPRITE sprite_14, draw_enemies_sprite, 0, 16*16, 31*16, 0xff00, 32, 48, 0, 48
+    SPRITE sprite_15, draw_enemies_sprite, 1, 5*16, 39*16, 0xff00, 32, 48, 0, 48
     SPRITE sprite_31, draw_pointers_sprite, 0, 160, 160, 0xff00, 11, 11, -16, 0
 
     ; MOV R3, #0
@@ -1118,7 +1124,7 @@ No_P_Key:
     CMP R1, #255
     BNE No_Up_Pressed
     LDR R0, batman_blocked
-    TST R0, #0b01000000
+    TST R0, #0b00100000
     BEQ No_Up_Pressed
     ADRL R1, sprite_00
     LDR R0, [R1, #sprite_y]
@@ -1185,6 +1191,8 @@ No_Right_Pressed:
     MOV R1, #-1
     STR R1, bat_bullet_debounce
     ADRL R1, sprite_00
+    MOV R0, #0
+    STR R0, [R1, #sprite_frame]
     LDR R0, [R1, #sprite_x]
     LDR R2, [R1, #sprite_y]
     LDR R8, [R1, #sprite_attributes]
@@ -1303,10 +1311,17 @@ batman_cant_drop:
         ORREQ R6, R6, #20
     .endif
     SUB R3, R3, R7, LSR #2
-    ADD R4, R4, #20
+    ADD R4, R4, #21
     BL lookup_tilemap_tile
     CMP R1, #0x9e
     ORREQ R5, R5, #0b01000000
+    .ifne SPRITE_DEBUG
+        ORREQ R6, R6, #100
+    .endif
+    SUB R4, R4, #1
+    BL lookup_tilemap_tile
+    CMP R1, #0x9e
+    ORREQ R5, R5, #0b00100000
     .ifne SPRITE_DEBUG
         ORREQ R6, R6, #100
     .endif
@@ -1339,8 +1354,10 @@ batman_cant_drop:
 batman_not_falling:
     MOV R0, #0
     STR R0, [R9, #sprite_function]
+    STR R0, [R9, #sprite_x]
+    STR R0, [R9, #sprite_y]
     TST R7, #0b10000000
-    MOVNEfe R8, #10 * 16
+    MOVNE R8, #10 * 16
 batman_is_falling:
     STR R8, [R10, #sprite_frame]
 
@@ -1368,7 +1385,9 @@ batman_is_falling:
 
 update_bat_bullets_loop:
     LDMIA R9, {R3 - R6}
-    DEBUG_MEMORY -10
+    
+    ; DEBUG_MEMORY -10
+    
     CMP R3, #-1
     BEQ disable_bat_bullet
     ADD R3, R3, R5
@@ -1392,19 +1411,82 @@ update_bat_bullets_loop:
     MOV R2, #9
     STR R2, [R10, #sprite_width]
     MOV R2, #9
-    STR R2, [R10, #sprite_height]    
-    BAL update_bat_bullets_next
-
+    STR R2, [R10, #sprite_height]
+    LDR R2, [R10, #sprite_collision]
+    BIC R2, R2, #0b11111111
+    BIC R2, R2, #0b11 << 8
+    BICS R2, R2, #0b1 << 31
+    BEQ update_bat_bullets_next
 disable_bat_bullet:
-    MOV R2, #0
-    STR R6, [R10, #sprite_function]
-    
+    MOV R3, #-1
+    MOV R7, #0
+    STR R7, [R10, #sprite_function]
+    STR R7, [R10, #sprite_x]
+    STR R7, [R10, #sprite_y]
+    STR R7, [R10, #sprite_function]
+    STR R7, [R10, #sprite_collision]
+
 update_bat_bullets_next:
-    ADD R10, R10, #40
+    ADD R10, R10, #sprite_size
     STMIA R9!, {R3 - R6}
     ADD R8, R8, #1
     CMP R8, #8
     BNE update_bat_bullets_loop
+
+    ADR R10, sprite_10
+    LDR R9, [R10, #sprite_collision]
+    ANDS R9, R9, #0b1111111100
+    BEQ skip_sprite_10_delete
+    MOV R9, #0
+    STR R9, [R10, #sprite_function]
+    STR R9, [R10, #sprite_x]
+    STR R9, [R10, #sprite_y]
+skip_sprite_10_delete:
+    ADR R10, sprite_11
+    LDR R9, [R10, #sprite_collision]
+    ANDS R9, R9, #0b1111111100
+    BEQ skip_sprite_11_delete
+    MOV R9, #0
+    STR R9, [R10, #sprite_function]
+    STR R9, [R10, #sprite_x]
+    STR R9, [R10, #sprite_y]
+skip_sprite_11_delete:
+    ADR R10, sprite_12
+    LDR R9, [R10, #sprite_collision]
+    ANDS R9, R9, #0b1111111100
+    BEQ skip_sprite_12_delete
+    MOV R9, #0
+    STR R9, [R10, #sprite_function]
+    STR R9, [R10, #sprite_x]
+    STR R9, [R10, #sprite_y]
+skip_sprite_12_delete:
+    ADR R10, sprite_13
+    LDR R9, [R10, #sprite_collision]
+    ANDS R9, R9, #0b1111111100
+    BEQ skip_sprite_13_delete
+    MOV R9, #0
+    STR R9, [R10, #sprite_function]
+    STR R9, [R10, #sprite_x]
+    STR R9, [R10, #sprite_y]
+skip_sprite_13_delete:
+    ADR R10, sprite_14
+    LDR R9, [R10, #sprite_collision]
+    ANDS R9, R9, #0b1111111100
+    BEQ skip_sprite_14_delete
+    MOV R9, #0
+    STR R9, [R10, #sprite_function]
+    STR R9, [R10, #sprite_x]
+    STR R9, [R10, #sprite_y]
+skip_sprite_14_delete:
+    ADR R10, sprite_15
+    LDR R9, [R10, #sprite_collision]
+    ANDS R9, R9, #0b1111111100
+    BEQ skip_sprite_15_delete
+    MOV R9, #0
+    STR R9, [R10, #sprite_function]
+    STR R9, [R10, #sprite_x]
+    STR R9, [R10, #sprite_y]
+skip_sprite_15_delete:
 
     LDR R11, [R12]
     LDR R0, frame_count
