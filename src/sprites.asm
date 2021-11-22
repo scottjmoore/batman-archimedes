@@ -471,7 +471,7 @@ sprite_31_offset_y:     .4byte  0
 
 .ifne SPRITE_DEBUG
     draw_sprite_outline:
-        STMFD SP!,{R0-R5,R10,R11,R14}
+        STMFD SP!,{R0-R12,R14}
 
         CMP R1,#CLIP_LEFT + 16
         BGE draw_sprite_outline_noclip_left
@@ -533,7 +533,7 @@ sprite_31_offset_y:     .4byte  0
         BNE draw_sprite_outline_vertical
 
     draw_sprite_outline_exit:
-        LDMFD SP!,{R0-R5,R10,R11,PC}
+        LDMFD SP!,{R0-R12,PC}
 .endif
 
 
@@ -598,6 +598,7 @@ draw_sprites_loop:
         CMP R6,#0
         MOVEQ R0,#255
         MOVNE R0,#23
+        DEBUG_REGISTERS
         BL draw_sprite_outline
     .endif
     

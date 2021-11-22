@@ -16,7 +16,7 @@
 .endm
 
 .macro DEBUG_MEMORY source
-    ; .nolist
+    .nolist
     .ifne DEBUG
         STMFD SP!,{R12}
         .if \source==0
@@ -36,7 +36,7 @@
         .endif
         .if \source==-5
             MOV R12,R5
-        .endif
+        .endif 
         .if \source==-6
             MOV R12,R6
         .endif
@@ -77,9 +77,10 @@
     .nolist
     .ifne DEBUG
         STMFD SP!,{R0-R3,R9,R11,R12}
-        MOV R9,#draw_system_font_sprite & 0xffff0000
-        MOV R0,#draw_system_font_sprite & 0x0000ffff
-        ORR R9,R9,R0
+        ; MOV R9,#draw_system_font_sprite & 0xffff0000
+        ; MOV R0,#draw_system_font_sprite & 0x0000ffff
+        ; ORR R9,R9,R0
+        MVL R9,draw_system_font_sprite
         ADRL R0,debug_registers_text
         MOV R1,#24
         MOV R2,#8
@@ -107,6 +108,7 @@
 .endm
 
 .macro  DEBUG_STEP
+    .nolist
     .ifne DEBUG
         STMFD SP!,{R0}
         LDR R0,single_step
@@ -114,9 +116,11 @@
         SWINE OS_ReadC
         LDMFD SP!,{R0}
     .endif
+    .list
 .endm
 
 .macro  DEBUG_STEP_OFF
+    .nolist
     .ifne DEBUG
         STMFD SP!,{R0,R1}
         MOV R0,#0
@@ -124,9 +128,11 @@
         STR R0,[R1]
         LDMFD SP!,{R0,R1}
     .endif
+    .list
 .endm
 
 .macro  DEBUG_STEP_ON
+    .nolist
     .ifne DEBUG
         STMFD SP!,{R0,R1}
         MOV R0,#-1
@@ -134,9 +140,11 @@
         STR R0,[R1]
         LDMFD SP!,{R0,R1}
     .endif
+    .list
 .endm
 
 .ifne DEBUG
+    .nolist
     debug_convert_register_to_hex:
         STMFD SP!,{R0-R3,R14}
 
@@ -617,5 +625,5 @@
         .align 4
     single_step:
         .4byte -1
-
+    .list
 .endif

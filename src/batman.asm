@@ -43,7 +43,7 @@ stack:
 .set    SCANLINE,   352
 
 swap_display_buffers:
-    STMFD SP!, {R0-R2,R14}
+    STMFD SP!, {R0-R2,LR}
 
     ADRL R2,vdu_variables_buffer
     LDR R0,[R2,#0]
@@ -101,7 +101,7 @@ swap_display_buffers:
 ;   ****************************************************************
 copy_4byte_to_screen:
 
-    STMFD SP!, {R0-R12,R14}     ; store all the registers onto the stack
+    STMFD SP!, {R0-R12,LR}     ; store all the registers onto the stack
 
     MOV R11,R1      ; move destination address into R11
     MOV R10,R2      ; move number of scanlines into R10
@@ -171,7 +171,7 @@ copy_4byte_to_screen_loop:      ; start of copy loop
 ;   ****************************************************************
 copy_buffer_to_screen:
 
-    STMFD SP!, {R0-R12,R14}     ; store all the registers onto the stack
+    STMFD SP!, {R0-R12,LR}     ; store all the registers onto the stack
 
     MOV R12,R0      ; move source address into R11
     MOV R11,R1      ; move destination address into R12
@@ -241,7 +241,7 @@ copy_buffer_to_screen_loop:     ; start of copy loop
 ;   ****************************************************************
 fade_buffer_with_lookup:
 
-    STMFD SP!, {R0-R12,R14}     ; store all registers onto the stack
+    STMFD SP!, {R0-R12,LR}     ; store all registers onto the stack
 
     MOV R11,R1
     MOV R12,R2
@@ -435,7 +435,7 @@ fade_buffer_with_lookup_loop:
 
 font_lookup:
 
-    STMFD SP!, {R2-R3,R14}     ; store all the registers onto the stack
+    STMFD SP!, {R2-R3,LR}     ; store all the registers onto the stack
 
     ; ADRL R1,font_lookup_table     ; load address of intro font conversion lookup table into R1
     MOV R3,#0                           ; move 0 into R3
@@ -495,7 +495,7 @@ font_lookup_exit:     ; found character in lookup table
 
 draw_font_string:
 
-    STMFD SP!, {R0-R12,R14}     ; store all registers onto the stack
+    STMFD SP!, {R0-R12,LR}     ; store all registers onto the stack
 
     MOV R9,R1       ; keep orignal x-coordinate
     MOV R8,R0      ; move address of ascii string into R11
@@ -563,7 +563,7 @@ draw_font_string_exit:                ; exit loop
 ;   ****************************************************************
 
 lookup_tilemap_tile:
-    STMFD SP!, {R3-R4,R14}     ; store all registers onto the stack
+    STMFD SP!, {R3-R4,LR}     ; store all registers onto the stack
 
     MOV R3,R3,LSR #4
     MOV R4,R4,LSR #4
@@ -623,7 +623,7 @@ lookup_tilemap_tile_exit:
 
 draw_tile_map:
 
-    STMFD SP!, {R0-R12,R14}     ; store all registers onto the stack
+    STMFD SP!, {R0-R12,LR}     ; store all registers onto the stack
 
     AND R5,R3,#0b1111   ; get pixel in tile to start from
     AND R6,R4,#0b1111   ; get scanline in tile to start from
@@ -669,7 +669,7 @@ draw_tile_map_exit:              ; exit loop
 
 fade_screen_to_black:
 
-    STMFD SP!, {R0-R12,R14}     ; store all registers onto the stack
+    STMFD SP!, {R0-R12,LR}     ; store all registers onto the stack
 
     ADRL R0,palette_fade
     LDR R1,[R12,#0]
@@ -705,7 +705,7 @@ fade_screen_to_black:
 
 
 clear_edges:
-    STMFD SP!, {R0-R12,R14}     ; store all registers onto the stack
+    STMFD SP!, {R0-R12,LR}     ; store all registers onto the stack
 
     ; LDR R11,[R12]
 
@@ -783,7 +783,7 @@ clear_edges_exit:
 ;       Initialise hardware and game state
 ;   ----------------------------------------------------------------
 initialise:
-    STMFD SP!,{R0-R12,R14}
+    STMFD SP!,{R0-R12,LR}
 
     VDU VDU_SelectScreenMode,15,-1,-1,-1,-1,-1,-1,-1,-1     ; change to mode 13 (320x256 256 colours) for A3000
     VDU VDU_SelectScreenMode,13,-1,-1,-1,-1,-1,-1,-1,-1     ; change to mode 13 (320x256 256 colours) for A3000
@@ -808,7 +808,7 @@ initialise_exit:
 ;       Draw title screen, then wait for a key
 ;   ----------------------------------------------------------------
 draw_title_screen:
-    STMFD SP!,{R0-R12,R14}
+    STMFD SP!,{R0-R12,LR}
 
     ADRL R12,vdu_variables_buffer    ; load address of vdu_variables_buffer into R12
     
@@ -831,7 +831,7 @@ draw_title_screen_exit:
 ;       wait for a key
 ;   ----------------------------------------------------------------
 draw_intro_screen:
-    STMFD SP!,{R0-R12,R14}
+    STMFD SP!,{R0-R12,LR}
 
     ADRL R12,vdu_variables_buffer
 
@@ -851,7 +851,7 @@ draw_intro_screen_exit:
 
 
 clear_display_buffers:
-    STMFD SP!,{R0-R12,R14}
+    STMFD SP!,{R0-R12,LR}
 
     ADRL R12,vdu_variables_buffer
 
@@ -874,7 +874,7 @@ clear_display_buffers_exit:
 ;       Setup our custom VIDC display mode (352x256)
 ;   ----------------------------------------------------------------
 setup_custom_display_mode_352x256:
-    STMFD SP!,{R0-R12,R14}
+    STMFD SP!,{R0-R12,LR}
 
     MOV R1,#45
     BL vidc_set_HDSR
@@ -891,7 +891,7 @@ setup_custom_display_mode_352x256_exit:
 ;       Setup our custom VIDC display mode (352x216)
 ;   ----------------------------------------------------------------
 setup_custom_display_mode_352x216:
-    STMFD SP!,{R0-R12,R14}
+    STMFD SP!,{R0-R12,LR}
 
     MOV R1,#45
     BL vidc_set_HDSR
@@ -912,7 +912,7 @@ setup_custom_display_mode_352x216_exit:
 ;       Draw status bar to both display buffers
 ;   ----------------------------------------------------------------
 draw_status_bar:
-    STMFD SP!,{R0-R12,R14}
+    STMFD SP!,{R0-R12,LR}
 
     ADRL R12,vdu_variables_buffer
     ADRL R0,status_bar
@@ -936,7 +936,7 @@ draw_status_bar_exit:
 ;       Update values of game loop key state variables
 ;   ----------------------------------------------------------------
 update_game_loop_key_state:
-    STMFD SP!,{R0-R12,R14}
+    STMFD SP!,{R0-R12,LR}
 
     MVL R12,game_loop_key_state
 
@@ -1002,7 +1002,7 @@ main:
     ADRL R12,vdu_variables_buffer
 
     SPRITE sprite_00,draw_batman_sprite,0,4*16,3*16,0xff00,32,48,0,48
-    ; SPRITE sprite_31,draw_pointers_sprite,0,160,160,11,11,-16,0
+    SPRITE sprite_31,draw_pointers_sprite,0,160,160,0xff00,11,11,-16,0
 
     ; MOV R3,#0
     ; MOV R4,#0
@@ -1116,7 +1116,7 @@ No_P_Key:
     CMP R1,#255
     BNE No_Up_Pressed
     LDR R0,batman_blocked
-    TST R0,#0b00001000
+    TST R0,#0b01000000
     BEQ No_Up_Pressed
     ADRL R1,sprite_00
     LDR R0,[R1,#sprite_y]
@@ -1127,7 +1127,7 @@ No_Up_Pressed:
     CMP R1,#255
     BNE No_Down_Pressed
     LDR R0,batman_blocked
-    TST R0,#0b00000100
+    TST R0,#0b01000000
     BEQ No_Down_Pressed
     ADRL R1,sprite_00
     LDR R0,[R1,#sprite_y]
@@ -1260,7 +1260,7 @@ Fire_Debounce:
         ORREQ R6,R6,#116
     .endif
     CMP R1,#0x9e
-    ORREQ R5,R5,#0b00000100
+    ORREQ R5,R5,#0b01000000
     .ifne SPRITE_DEBUG
         ORREQ R6,R6,#100
     .endif
@@ -1303,7 +1303,7 @@ batman_cant_drop:
     ADD R4,R4,#20
     BL lookup_tilemap_tile
     CMP R1,#0x9e
-    ORREQ R5,R5,#0b00001000
+    ORREQ R5,R5,#0b01000000
     .ifne SPRITE_DEBUG
         ORREQ R6,R6,#100
     .endif
