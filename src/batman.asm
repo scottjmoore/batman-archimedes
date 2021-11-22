@@ -448,7 +448,8 @@ font_lookup_loop:         ; start of loop
     B font_lookup_loop    ; go back to start of loop
 
 font_lookup_exit:     ; found character in lookup table
-    MOV R0, R3               ; move tile index into R0
+    ; MOV R0, R3               ; move tile index into R0
+    SUB R0, R3, #1
 
     LDMFD SP!, {R2 - R3, PC}     ; restore all registers from the stack
 
@@ -1021,6 +1022,7 @@ main_draw_tile_map_loop:
     LDR R11, [R12]
 
     BL draw_tile_map
+    BL calculate_sprite_collisions
     BL draw_sprites
     BL clear_edges
 
@@ -1273,11 +1275,12 @@ Fire_Debounce:
     .endif
     CMP R1, #0x9d
     BNE batman_cant_drop
-    ORR R5, R5, #0b00000100
+    ORR R5, R5, #0b01000000
     SUB R4, R4, #2
     BL lookup_tilemap_tile
     CMP R1, #0x9d
-    ORREQ R5, R5, #0b10000000
+    MOVEQ R5, #0b10000000
+    ORREQ R6, R6, #255
     MOVEQ R8, #0
     .ifne SPRITE_DEBUG
         ORREQ R6, R6, #116
@@ -1389,8 +1392,7 @@ update_bat_bullets_loop:
     MOV R2, #9
     STR R2, [R10, #sprite_width]
     MOV R2, #9
-    STR R2, [R10, #sprite_height]
-    DEBUG_REGISTERS
+    STR R2, [R10, #sprite_height]    
     BAL update_bat_bullets_next
 
 disable_bat_bullet:

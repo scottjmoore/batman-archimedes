@@ -14,6 +14,7 @@
 .set    sprite_collision,   28
 .set    sprite_offset_x,    32
 .set    sprite_offset_y,    36
+.set    sprite_size,        40
 
 sprite_world_offset:        .4byte  0, 0
     ; .4byte  0
@@ -598,7 +599,6 @@ draw_sprites_loop:
         CMP R6, #0
         MOVEQ R0, #255
         MOVNE R0, #23
-        DEBUG_REGISTERS
         BL draw_sprite_outline
     .endif
     
@@ -607,4 +607,120 @@ draw_sprites_skip:
     BNE draw_sprites_loop
 
 draw_sprites_exit:
+    LDMFD SP!, {R0 - R12, PC}
+
+
+;   ****************************************************************
+;       calculate_sprite_collisions
+;   ----------------------------------------------------------------
+;       Calculate sprite collisions
+;   ----------------------------------------------------------------
+;       Parameters
+;   ----------------------------------------------------------------
+;       R0      :   N/A
+;       R1      :   N/A
+;       R2      :   N/A
+;       R3      :   N/A
+;       R4      :   N/A
+;       R5      :   N/A
+;       R6      :   N/A
+;       R7      :   N/A
+;       R8      :   N/A
+;       R9      :   N/A
+;       R10     :   N/A
+;       R11     :   framebuffer destination
+;       R12     :   N/A
+;   ----------------------------------------------------------------
+;       Returns
+;   ----------------------------------------------------------------
+;       R0      :   Unchanged
+;       R1      :   Unchanged
+;       R2      :   Unchanged
+;       R3      :   Unchanged
+;       R4      :   Unchanged
+;       R5      :   Unchanged
+;       R6      :   Unchanged
+;       R7      :   Unchanged
+;       R8      :   Unchanged
+;       R9      :   Unchanged
+;       R10     :   Unchanged
+;       R11     :   Unchanged
+;       R11     :   Unchanged
+;   ****************************************************************
+
+calculate_sprite_collisions:
+    STMFD SP!, {R0 - R12, LR}
+
+    MOV R0, #0
+    ADR R10, sprites
+
+calculate_sprite_collisions_loop:
+    MOV R1, #0
+    STR R1, [R10, #sprite_collision]
+    ADR R11, sprites
+    
+calculate_sprite_collisions_check_loop:
+    CMP R0, R1
+    BEQ calculate_sprite_collisions_check_next
+
+    MOV R9, #0
+
+    LDR R2, [R10, #sprite_x]
+    LDR R4, [R10, #sprite_offset_x]
+    SUB R2, R2, R4
+    LDR R4, [R10, #sprite_width]
+    ADD R3, R2, R4
+
+    LDR R5, [R11, #sprite_x]
+    LDR R7, [R11, #sprite_offset_x]
+    SUB R5, R5, R7
+    LDR R7, [R11, #sprite_width]
+    ADD R6, R5, R7
+
+    CMP R5, R3
+    BGE calculate_sprite_collisions_check_next
+    CMP R6, R2
+    BLE calculate_sprite_collisions_check_next
+
+    LDR R2, [R10, #sprite_y]
+    LDR R4, [R10, #sprite_offset_y]
+    SUB R2, R2, R4
+    LDR R4, [R10, #sprite_height]
+    ADD R3, R2, R4
+
+    LDR R5, [R11, #sprite_y]
+    LDR R7, [R11, #sprite_offset_y]
+    SUB R5, R5, R7
+    LDR R7, [R11, #sprite_height]
+    ADD R6, R5, R7
+
+    CMP R5, R3
+    BGE calculate_sprite_collisions_check_next
+    CMP R6, R2
+    BLE calculate_sprite_collisions_check_next
+
+    MOV R2, #1
+    MOV R3, R2, LSL R0
+    MOV R4, R2, LSL R1
+    ORR R9, R3, R4
+
+    LDR R2, [R10, #sprite_collision]
+    ORR R2, R2, R9
+    STR R2, [R10, #sprite_collision]
+    LDR R2, [R11, #sprite_collision]
+    ORR R2, R2, R9
+    STR R2, [R11, #sprite_collision]
+
+calculate_sprite_collisions_check_next:
+    ADD R11, R11, #sprite_size
+    ADD R1, R1, #1
+    CMP R1, #32
+    BNE calculate_sprite_collisions_check_loop
+
+    ADD R10, R10, #sprite_size
+    ADD R0, R0, #1
+    CMP R0, #32
+    BNE calculate_sprite_collisions_loop
+
+calculate_sprite_collisions_exit:
     LDMFD SP!, {R0 - R12, PC}
