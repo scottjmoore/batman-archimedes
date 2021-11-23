@@ -1002,14 +1002,14 @@ main:
 
     ADRL R12, vdu_variables_buffer
 
-    SPRITE sprite_00, draw_batman_sprite, 0, 4*16, 3*16, 0xff00, 32, 48, 0, 48
-    SPRITE sprite_10, draw_enemies_sprite, 0, 12*16, 3*16, 0xff00, 32, 48, 0, 48
-    SPRITE sprite_11, draw_enemies_sprite, 1, 2*16, 19*16, 0xff00, 32, 48, 0, 48
-    SPRITE sprite_12, draw_enemies_sprite, 2, 12*16, 15*16, 0xff00, 32, 48, 0, 48
-    SPRITE sprite_13, draw_enemies_sprite, 3, 16*16, 19*16, 0xff00, 32, 48, 0, 48
-    SPRITE sprite_14, draw_enemies_sprite, 0, 16*16, 31*16, 0xff00, 32, 48, 0, 48
-    SPRITE sprite_15, draw_enemies_sprite, 1, 5*16, 39*16, 0xff00, 32, 48, 0, 48
-    SPRITE sprite_31, draw_pointers_sprite, 0, 160, 160, 0xff00, 11, 11, -16, 0
+    SPRITE sprite_00, draw_batman_sprite, 0, 4*16, 3*16, 0xff00, 32, 48, 0, 48, 5, 5, 8, 0
+    SPRITE sprite_10, draw_enemies_sprite, 0, 12*16, 3*16, 0xff00, 32, 48, 0, 48, 5, 5, 8, 0
+    SPRITE sprite_11, draw_enemies_sprite, 1, 2*16, 19*16, 0xff00, 32, 48, 0, 48, 5, 5, 8, 0
+    SPRITE sprite_12, draw_enemies_sprite, 2, 12*16, 15*16, 0xff00, 32, 48, 0, 48, 5, 5, 8, 0
+    SPRITE sprite_13, draw_enemies_sprite, 3, 16*16, 19*16, 0xff00, 32, 48, 0, 48, 5, 5, 8, 0
+    SPRITE sprite_14, draw_enemies_sprite, 0, 16*16, 31*16, 0xff00, 32, 48, 0, 48, 5, 5, 8, 0
+    SPRITE sprite_15, draw_enemies_sprite, 1, 5*16, 39*16, 0xff00, 32, 48, 0, 48, 5, 5, 8, 0
+    SPRITE sprite_31, draw_pointers_sprite, 0, 160, 160, 0xff00, 11, 11, -16, 0, 0, 0, 0, 0
 
     ; MOV R3, #0
     ; MOV R4, #0
