@@ -4,9 +4,9 @@
 ;       Copyright (c) 2021 Scott Moore, all rights reserved.
 ;   ****************************************************************
 
-.set    COLLISION_FEATHER_LEFT,     4
-.set    COLLISION_FEATHER_RIGHT,    4
-.set    COLLISION_FEATHER_TOP,      4
+.set    COLLISION_FEATHER_LEFT,     3
+.set    COLLISION_FEATHER_RIGHT,    3
+.set    COLLISION_FEATHER_TOP,      3
 .set    COLLISION_FEATHER_BOTTOM,   0
 
 .set    sprite_function,    0
@@ -698,12 +698,10 @@ calculate_sprite_collisions_loop:
     LDR R1, [R10, #sprite_function]
     CMP R1, #0
     BEQ calculate_sprite_collisions_next
-    MOV R1, R0
-    MOV R11, R10
+    ADD R1, R0, #1
+    ADD R11, R10, #sprite_size
 
 calculate_sprite_collisions_check_loop:
-    CMP R0, R1
-    BEQ calculate_sprite_collisions_check_next
     LDR R2, [R11, #sprite_function]
     CMP R2, #0
     BEQ calculate_sprite_collisions_check_next
@@ -773,7 +771,7 @@ calculate_sprite_collisions_check_next:
 calculate_sprite_collisions_next:
     ADD R10, R10, #sprite_size
     ADD R0, R0, #1
-    CMP R0, #32
+    CMP R0, #31
     BNE calculate_sprite_collisions_loop
 
 calculate_sprite_collisions_exit:

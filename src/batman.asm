@@ -1118,8 +1118,6 @@ No_P_Key:
     ADRL R0, sprite_world_offset
     STR R3, [R0, #0]
     STR R4, [R0, #4]
-    ; STR R3, sprite_world_offset_x
-    ; STR R4, sprite_world_offset_y
 
     BL update_game_loop_key_state
 
@@ -1227,8 +1225,6 @@ No_Fire_Pressed:
     STR R1, bat_bullet_debounce
 Fire_Debounce:
 
-    ; LDMFD SP!, {R0 - R2}
-
     MVL R0, game_loop_key_state
     LDR R1, [R0, #game_loop_key_state_quit_offset]
     CMP R1, #255
@@ -1242,18 +1238,19 @@ Fire_Debounce:
     SUB R3, R3, R4
     STR R3, monotonic_time_delta
 
-    ADRL R3, sprite_world_offset
-    LDR R4, [R3, #0]
-    LDR R5, [R3, #4]
-    MOV R2, R2, LSL #2
-    STR R2, sprite_31_frame
+    ADRL R6, sprite_world_offset
+    LDR R4, [R6, #0]
+    LDR R5, [R6, #4]
+    MOV R2, R2, LSL #4
+    MVL R6, sprite_31
+    STR R2, [R6, #sprite_frame]
     MOV R2, R0, LSR #2
     MOV R3, R1, LSR #2
     EOR R3, R3, #0b11111111
     ADD R2, R2, R4
     ADD R3, R3, R5
-    STR R2, sprite_31_x
-    STR R3, sprite_31_y
+    STR R2, [R6, #sprite_x]
+    STR R3, [R6, #sprite_y]
 
     ADRL R0, level_1_map_types
     ADRL R10, sprite_00
@@ -1389,8 +1386,6 @@ batman_is_falling:
 
 update_bat_bullets_loop:
     LDMIA R9, {R3 - R6}
-    
-    ; DEBUG_MEMORY -10
     
     CMP R3, #-1
     BEQ disable_bat_bullet
