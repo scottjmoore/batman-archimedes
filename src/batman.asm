@@ -13,6 +13,7 @@
 ;   ****************************************************************
 
     .org 0x00008000
+    ADR SP, stack            ; load stack pointer with our stack address
     B main
 
 
@@ -23,6 +24,24 @@
 ;   ----------------------------------------------------------------
     .space 256
 stack:
+
+
+;   ****************************************************************
+;       compiled sprite files
+;   ----------------------------------------------------------------
+;       Include the compiled sprite files and other LUTs
+;   ----------------------------------------------------------------
+    .align 4
+    .include "build/sprites/batman.asm"
+    .include "build/sprites/explosion.asm"
+    .include "build/sprites/enemies.asm"
+    .include "build/sprites/bullets.asm"
+    .include "build/sprites/bat_bullet.asm"
+    .include "build/sprites/pointers.asm"
+    .include "build/fonts/intro_font.asm"
+    .include "build/fonts/system_font.asm"
+    .include "build/fonts/system_bold_font.asm"
+    .include "build/sincos.asm"
 
 
 ;   ****************************************************************
@@ -45,12 +64,12 @@ stack:
 swap_display_buffers:
     STMFD SP!, {R0 - R2, LR}
 
-    ADRL R2, vdu_variables_buffer
+    ADR R2, vdu_variables_buffer
     LDR R0, [R2, #0]
     LDR R1, [R2, #4]
     STR R1, [R2, #0]
     STR R0, [R2, #4]
-    ADRL R2, memc_address_screen_start
+    ADR R2, memc_address_screen_start
     LDR R0, [R2, #0]
     LDR R1, [R2, #4]
     STR R1, [R2, #0]
@@ -437,7 +456,7 @@ font_lookup:
 
     STMFD SP!, {R2 - R3, LR}     ; store all the registers onto the stack
 
-    ; ADRL R1, font_lookup_table     ; load address of intro font conversion lookup table into R1
+    ; ADR R1, font_lookup_table     ; load address of intro font conversion lookup table into R1
     MOV R3, #0                           ; move 0 into R3
 
 font_lookup_loop:         ; start of loop
@@ -672,25 +691,25 @@ fade_screen_to_black:
 
     STMFD SP!, {R0 - R12, LR}     ; store all registers onto the stack
 
-    ADRL R0, palette_fade
+    ADR R0, palette_fade
     LDR R1, [R12, #0]
     LDR R2, [R12, #4]
     BL fade_buffer_with_lookup
     BL swap_display_buffers
     
-    ADRL R0, palette_fade
+    ADR R0, palette_fade
     LDR R1, [R12, #0]
     LDR R2, [R12, #4]
     BL fade_buffer_with_lookup
     BL swap_display_buffers
 
-    ADRL R0, palette_fade
+    ADR R0, palette_fade
     LDR R1, [R12, #0]
     LDR R2, [R12, #4]
     BL fade_buffer_with_lookup
     BL swap_display_buffers
 
-    ADRL R0, palette_fade
+    ADR R0, palette_fade
     LDR R1, [R12, #0]
     LDR R2, [R12, #4]
     BL fade_buffer_with_lookup
@@ -789,8 +808,8 @@ initialise:
     VDU VDU_SelectScreenMode, 15, -1, -1, -1, -1, -1, -1, -1, -1     ; change to mode 13 (320x256 256 colours) for A3000
     VDU VDU_SelectScreenMode, 13, -1, -1, -1, -1, -1, -1, -1, -1     ; change to mode 13 (320x256 256 colours) for A3000
     VDU VDU_MultiPurpose, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0                ; hide the disaply cursor
-    ADRL R0, vdu_variables_screen_start                      ; load address of OS_ReadVduVariables input block into R0
-    ADRL R1, vdu_variables_buffer                            ; load address of OS_ReadVduVariables output block into R1
+    ADR R0, vdu_variables_screen_start                      ; load address of OS_ReadVduVariables input block into R0
+    ADR R1, vdu_variables_buffer                            ; load address of OS_ReadVduVariables output block into R1
     SWI OS_ReadVduVariables                                 ; Call OS_ReadVduVariables SWI
 
     LDR R0, [R1, #0]
@@ -829,10 +848,10 @@ initialise_exit:
 draw_title_screen:
     STMFD SP!, {R0 - R12, LR}
 
-    ADRL R12, vdu_variables_buffer    ; load address of vdu_variables_buffer into R12
+    ADR R12, vdu_variables_buffer    ; load address of vdu_variables_buffer into R12
     
     MOV R0, #16                      ; OS_File 16 : Load named file without path
-    ADRL R1, main_title_filename     ; load address of filename string into R1
+    ADR R1, main_title_filename     ; load address of filename string into R1
     LDR R2, [R12, #0]                 ; load address of display start from vdu_variables_buffer
     MOV R3, #0                       ; set R3 to 0 to use load address in R2
 
@@ -852,10 +871,10 @@ draw_title_screen_exit:
 draw_intro_screen:
     STMFD SP!, {R0 - R12, LR}
 
-    ADRL R12, vdu_variables_buffer
+    ADR R12, vdu_variables_buffer
 
     MOV R0, #16                      ; OS_File 16 : Load named file without path
-    ADRL R1, intro_screen_filename   ; load address of filename string into R1
+    ADR R1, intro_screen_filename   ; load address of filename string into R1
     LDR R2, [R12, #0]                 ; load address of display start from vdu_variables_buffer
     MOV R3, #0                       ; set R3 to 0 to use load address in R2
 
@@ -872,7 +891,7 @@ draw_intro_screen_exit:
 clear_display_buffers:
     STMFD SP!, {R0 - R12, LR}
 
-    ADRL R12, vdu_variables_buffer
+    ADR R12, vdu_variables_buffer
 
     MOV R0, #0
     LDR R1, [R12, #0]                 
@@ -933,8 +952,8 @@ setup_custom_display_mode_352x216_exit:
 draw_status_bar:
     STMFD SP!, {R0 - R12, LR}
 
-    ADRL R12, vdu_variables_buffer
-    ADRL R0, status_bar
+    ADR R12, vdu_variables_buffer
+    ADR R0, status_bar
     LDR R1, [R12]
     ADD R1, R1, #16
     MOV R2, #CLIP_BOTTOM
@@ -957,7 +976,7 @@ draw_status_bar_exit:
 update_game_loop_key_state:
     STMFD SP!, {R0 - R12, LR}
 
-    MVL R12, game_loop_key_state
+    ADR R12, game_loop_key_state
 
     MOV R0, #129
     MOV R1, #game_loop_key_up
@@ -1005,8 +1024,6 @@ update_game_loop_key_state_exit:
 ;       Entry point of applicataion
 ;   ----------------------------------------------------------------
 main:
-
-    ADRL SP, stack            ; load stack pointer with our stack address
     STMFD SP!, {R14}        ; store link register R14 onto the stack
     SWI OS_EnterOS          ; enter supervisor mode
 
@@ -1018,7 +1035,7 @@ main:
     BL clear_display_buffers
     BL draw_status_bar
 
-    ADRL R12, vdu_variables_buffer
+    ADR R12, vdu_variables_buffer
 
 main_draw_tile_map_loop:
 
@@ -1028,7 +1045,7 @@ main_draw_tile_map_loop:
     .endif
 
     LDR R0, [R12, #8] ; level_1_map_types / level_1_map_tilemap
-    ADRL R1, level_1_tiles
+    ADR R1, level_1_tiles
     LDR R3, tilemap_x
     LDR R4, tilemap_y
     LDR R11, [R12]
@@ -1046,7 +1063,7 @@ main_draw_tile_map_loop:
     SWI OS_Byte
     CMP R2, #255
     BNE No_F1_Key
-    ADRL R0, level_1_map_tilemap
+    ADR R0, level_1_map_tilemap
     STR R0, [R12, #8]
 No_F1_Key:
     MOV R0, #129
@@ -1055,7 +1072,7 @@ No_F1_Key:
     SWI OS_Byte
     CMP R2, #255
     BNE No_F2_Key
-    ADRL R0, level_1_map_types
+    ADR R0, level_1_map_types
     STR R0, [R12, #8]
 No_F2_Key:
     MOV R0, #129
@@ -1117,20 +1134,20 @@ No_L_Key:
 No_P_Key:
     STR R3, tilemap_x
     STR R4, tilemap_y
-    ADRL R0, sprite_world_offset
+    ADR R0, sprite_world_offset
     STR R3, [R0, #0]
     STR R4, [R0, #4]
 
     BL update_game_loop_key_state
 
-    MVL R2, game_loop_key_state
+    ADR R2, game_loop_key_state
     LDR R1, [R2, #game_loop_key_state_up_offset]
     CMP R1, #255
     BNE No_Up_Pressed
     LDR R0, batman_blocked
     TST R0, #0b00100000
     BEQ No_Up_Pressed
-    ADRL R1, sprite_00
+    ADR R1, sprite_00
     LDR R0, [R1, #sprite_y]
     SUB R0, R0, #1
     STR R0, [R1, #sprite_y]
@@ -1138,6 +1155,17 @@ No_P_Key:
     BIC R0, R0, #0b1111
     ADD R0, R0, #8
     STR R0, [R1, #sprite_x]
+    LDR R2, [R1, #sprite_y]
+    MOV R2, R2, LSR #2
+    LDR R3, [R1, #sprite_attributes]
+    TST R2, #0b100
+    ORREQ R3, R3, #1 << 31
+    BICNE R3, R3, #1 << 31
+    STR R3, [R1, #sprite_attributes]
+    AND R2, R2, #0b11
+    ADD R0, R2, #11
+    MOV R0, R0, LSL #4
+    STR R0, [R1, #sprite_frame]
 No_Up_Pressed:
     LDR R1, [R2, #game_loop_key_state_down_offset]
     CMP R1, #255
@@ -1145,7 +1173,7 @@ No_Up_Pressed:
     LDR R0, batman_blocked
     TST R0, #0b01000000
     BEQ No_Down_Pressed
-    ADRL R1, sprite_00
+    ADR R1, sprite_00
     LDR R0, [R1, #sprite_y]
     ADD R0, R0, #1
     STR R0, [R1, #sprite_y]
@@ -1153,6 +1181,17 @@ No_Up_Pressed:
     BIC R0, R0, #0b1111
     ADD R0, R0, #8
     STR R0, [R1, #sprite_x]
+    LDR R2, [R1, #sprite_y]
+    MOV R2, R2, LSR #2
+    LDR R3, [R1, #sprite_attributes]
+    TST R2, #0b100
+    ORREQ R3, R3, #1 << 31
+    BICNE R3, R3, #1 << 31
+    STR R3, [R1, #sprite_attributes]
+    AND R2, R2, #0b11
+    ADD R0, R2, #11
+    MOV R0, R0, LSL #4
+    STR R0, [R1, #sprite_frame]
 No_Down_Pressed:
     LDR R1, [R2, #game_loop_key_state_left_offset]
     CMP R1, #255
@@ -1160,7 +1199,7 @@ No_Down_Pressed:
     LDR R0, batman_blocked
     TST R0, #0b10000001
     BNE No_Right_Pressed
-    ADRL R1, sprite_00
+    ADR R1, sprite_00
     LDR R0, [R1, #sprite_x]
     SUB R0, R0, #1
     STR R0, [R1, #sprite_x]
@@ -1180,7 +1219,7 @@ No_Left_Pressed:
     LDR R0, batman_blocked
     TST R0, #0b10000010
     BNE No_Right_Pressed
-    ADRL R1, sprite_00
+    ADR R1, sprite_00
     LDR R0, [R1, #sprite_x]
     ADD R0, R0, #1
     STR R0, [R1, #sprite_x]
@@ -1202,7 +1241,7 @@ No_Right_Pressed:
     BNE Fire_Debounce
     MOV R1, #-1
     STR R1, bat_bullet_debounce
-    ADRL R1, sprite_00
+    ADR R1, sprite_00
     MOV R0, #0
     STR R0, [R1, #sprite_frame]
     LDR R0, [R1, #sprite_x]
@@ -1213,7 +1252,7 @@ No_Right_Pressed:
     MOVNE R7, #-2
     LDR R8, bat_bullet_index
     MOV R8, R8, LSL #4
-    ADRL R1, bat_bullet_0_x
+    ADR R1, bat_bullet_0_x
     ADD R0, R0, #13
     ADD R0, R0, R7, ASL #2
     SUB R2, R2, #27
@@ -1235,7 +1274,7 @@ No_Fire_Pressed:
     STR R1, bat_bullet_debounce
 Fire_Debounce:
 
-    MVL R0, game_loop_key_state
+    ADR R0, game_loop_key_state
     LDR R1, [R0, #game_loop_key_state_quit_offset]
     CMP R1, #255
     BEQ main_exit
@@ -1248,11 +1287,11 @@ Fire_Debounce:
     SUB R3, R3, R4
     STR R3, monotonic_time_delta
 
-    ADRL R6, sprite_world_offset
+    ADR R6, sprite_world_offset
     LDR R4, [R6, #0]
     LDR R5, [R6, #4]
     MOV R2, R2, LSL #4
-    MVL R6, sprite_31
+    ADR R6, sprite_31
     STR R2, [R6, #sprite_frame]
     MOV R2, R0, LSR #2
     MOV R3, R1, LSR #2
@@ -1262,8 +1301,8 @@ Fire_Debounce:
     STR R2, [R6, #sprite_x]
     STR R3, [R6, #sprite_y]
 
-    ADRL R0, level_1_map_types
-    ADRL R10, sprite_00
+    ADR R0, level_1_map_types
+    ADR R10, sprite_00
     LDR R3, [R10, #sprite_x]
     LDR R4, [R10, #sprite_y]
     LDR R7, [R10, #sprite_width]
@@ -1282,9 +1321,9 @@ Fire_Debounce:
     .endif
     CMP R1, #0x9e
     ORREQ R5, R5, #0b01000000
-    .ifne SPRITE_DEBUG
-        ORREQ R6, R6, #100
-    .endif
+    ; .ifne SPRITE_DEBUG
+    ;     ORREQ R6, R6, #100
+    ; .endif
     ADD R4, R4, #1
     BL lookup_tilemap_tile
     CMP R1, #0x90
@@ -1326,16 +1365,16 @@ batman_cant_drop:
     BL lookup_tilemap_tile
     CMP R1, #0x9e
     ORREQ R5, R5, #0b01000000
-    .ifne SPRITE_DEBUG
-        ORREQ R6, R6, #100
-    .endif
+    ; .ifne SPRITE_DEBUG
+    ;     ORREQ R6, R6, #100
+    ; .endif
     SUB R4, R4, #1
     BL lookup_tilemap_tile
     CMP R1, #0x9e
     ORREQ R5, R5, #0b00100000
-    .ifne SPRITE_DEBUG
-        ORREQ R6, R6, #100
-    .endif
+    ; .ifne SPRITE_DEBUG
+    ;     ORREQ R6, R6, #100
+    ; .endif
 
     LDR R4, [R10, #sprite_y]
     TST R5, #0b10000000
@@ -1346,7 +1385,7 @@ batman_cant_drop:
     .ifne SPRITE_DEBUG
         STR R6, [R10, #sprite_attributes]
     .endif
-    MVL R9, sprite_01
+    ADR R9, sprite_01
     TST R5, #0b10000000
     BEQ batman_not_falling
     MOV R8, #9 * 16
@@ -1388,11 +1427,11 @@ batman_is_falling:
         BL vidc_set_border_colour
     .endif
 
-    ADRL R0, level_1_map_types
-    ADRL R9, bat_bullets
+    ADR R0, level_1_map_types
+    ADR R9, bat_bullets
     MOV R8, #0
-    MVL R6, draw_bat_bullet_sprite
-    ADRL R10, sprite_02
+    ADR R6, draw_bat_bullet_sprite
+    ADR R10, sprite_02
 
 update_bat_bullets_loop:
     LDMIA R9, {R3 - R6}
@@ -1503,10 +1542,10 @@ skip_sprite_15_delete:
 
     LDMFD SP!, {R0 - R8}
 
-    ADRL R0, level_1_map_types
+    ADR R0, level_1_map_types
     LDR R3, tilemap_x
     LDR R4, tilemap_y
-    ADRL R10, sprite_00
+    ADR R10, sprite_00
     LDR R1, [R10, #sprite_x]
     LDR R2, [R10, #sprite_y]
     SUB R1, R1, R3
@@ -1552,8 +1591,10 @@ batman_blocked:
 
 bat_bullet_index:
     .4byte  0
+
 bat_bullet_debounce:
     .4byte  0
+
 bat_bullets:
     bat_bullet_0_x:    .4byte  -1
     bat_bullet_0_y:    .4byte  -1
@@ -1796,20 +1837,3 @@ palette_fade:
     .align 4
 level_1_tiles:
     .incbin "build/level-1.bin"
-
-
-;   ****************************************************************
-;       compiled sprite files
-;   ----------------------------------------------------------------
-;       Include the compiled sprite files and other LUTs
-;   ----------------------------------------------------------------
-    .include "build/sprites/batman.asm"
-    .include "build/sprites/explosion.asm"
-    .include "build/sprites/enemies.asm"
-    .include "build/sprites/bullets.asm"
-    .include "build/sprites/bat_bullet.asm"
-    .include "build/sprites/pointers.asm"
-    .include "build/fonts/intro_font.asm"
-    .include "build/fonts/system_font.asm"
-    .include "build/fonts/system_bold_font.asm"
-    .include "build/sincos.asm"

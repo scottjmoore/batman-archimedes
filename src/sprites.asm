@@ -741,7 +741,7 @@ draw_sprites:
     .endif
 
     MOV R9, #32
-    ADRL R10, sprites
+    MVL R10, sprites
 draw_sprites_loop:
     LDR R12, [R10], #4
     LDMFD R10!, {R0 - R8}
@@ -836,7 +836,7 @@ calculate_sprite_collisions:
     .endif
 
     MOV R0, #0
-    ADR R10, sprites
+    MVL R10, sprites
     ADD R11, R10, #sprite_collision
     STR R0, [R11], #sprite_size
     STR R0, [R11], #sprite_size

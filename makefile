@@ -9,7 +9,8 @@ BUILD = 	build/level-1.bin \
 			build/main_title.bin \
 			build/intro_screen.bin \
 			build/status_bar.bin \
-			build/palette_fade.bin
+			build/palette_fade.bin \
+			build/sprites/batman.bin
 
 SPRITES =  	build/sprites/batman.asm \
 			build/sprites/explosion.asm \
@@ -28,7 +29,7 @@ LEVELS = 	build/level_1_map.asm
 LUTS = 		build/sincos.asm
 
 VASM = 		vasmarm_std
-DEBUG =		-D DEBUG=0 -D SPRITE_DEBUG=1
+DEBUG =		-D DEBUG=0 -D SPRITE_DEBUG=0
 OPTS =		-a2 -m2 -opt-ldrpc -opt-adr -Fbin
 
 PNG2ASM = 			./scripts/png2asm.py
@@ -104,7 +105,12 @@ build/palette_fade.asm: assets/images/palette_fade.png makefile
 		-i assets/images/palette_fade.png \
 		-o build/palette_fade.asm \
 		-sw 16 -sh 16
-		
+
+
+build/sprites/batman.bin: build/sprites/batman.asm
+	$(VASM) build/sprites/batman.asm $(OPTS) \
+	-L build/sprites/batman.lst \
+	-o build/sprites/batman.bin
 
 build/sprites/batman.asm: assets/sprites/batman.png makefile
 	$(COMPILESPRITE) \
@@ -114,8 +120,7 @@ build/sprites/batman.asm: assets/sprites/batman.png makefile
 		-mi 159 \
 		-at true \
 		-am true \
-		-afx true \
-		-afy true
+		-afx true 
 
 
 build/sprites/explosion.asm: assets/sprites/explosion.png makefile
