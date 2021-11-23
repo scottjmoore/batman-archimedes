@@ -4,35 +4,28 @@
 ;       Copyright (c) 2021 Scott Moore, all rights reserved.
 ;   ****************************************************************
 
-.set    COLLISION_FEATHER_LEFT,     3
-.set    COLLISION_FEATHER_RIGHT,    3
-.set    COLLISION_FEATHER_TOP,      3
-.set    COLLISION_FEATHER_BOTTOM,   0
+    .set    sprite_function,    0
+    .set    sprite_frame,       4
+    .set    sprite_x,           8
+    .set    sprite_y,           12
+    .set    sprite_attributes,  16
+    .set    sprite_width,       20
+    .set    sprite_height,      24
+    .set    sprite_collision,   28
+    .set    sprite_offset_x,    32
+    .set    sprite_offset_y,    36
+    .set    sprite_feather_l,   40
+    .set    sprite_feather_r,   44
+    .set    sprite_feather_t,   48
+    .set    sprite_feather_b,   52
+    .set    sprite_size,        56
 
-.set    sprite_function,    0
-.set    sprite_frame,       4
-.set    sprite_x,           8
-.set    sprite_y,           12
-.set    sprite_attributes,  16
-.set    sprite_width,       20
-.set    sprite_height,      24
-.set    sprite_collision,   28
-.set    sprite_offset_x,    32
-.set    sprite_offset_y,    36
-.set    sprite_feather_l,   40
-.set    sprite_feather_r,   44
-.set    sprite_feather_t,   48
-.set    sprite_feather_b,   52
-.set    sprite_size,        56
-
-.align  4
+    .align  4
 sprite_world_offset:        .4byte  0, 0
-    ; .4byte  0
-
     .set sprite_world_offset_x, 0
     .set sprite_world_offset_y, 4
 
-.align  4
+    .align  4
 sprites:
 
 sprite_00:
@@ -858,19 +851,25 @@ calculate_sprite_collisions_check_loop:
     MOV R9, #0
 
     LDR R2, [R10, #sprite_x]
-    ADD R2, R2, #COLLISION_FEATHER_LEFT
+    LDR R7, [R10, #sprite_feather_l]
+    LDR R8, [R10, #sprite_feather_r]
+    ADD R2, R2, R7
+    ADD R8, R8, R7
     LDR R4, [R10, #sprite_offset_x]
     SUB R2, R2, R4
     LDR R4, [R10, #sprite_width]
-    SUB R4, R4, #COLLISION_FEATHER_RIGHT + COLLISION_FEATHER_LEFT
+    SUB R4, R4, R8
     ADD R3, R2, R4
 
     LDR R5, [R11, #sprite_x]
-    ADD R5, R5, #COLLISION_FEATHER_LEFT
+    LDR R7, [R11, #sprite_feather_l]
+    LDR R8, [R11, #sprite_feather_r]
+    ADD R5, R5, R7
+    ADD R8, R8, R7
     LDR R7, [R11, #sprite_offset_x]
     SUB R5, R5, R7
     LDR R7, [R11, #sprite_width]
-    SUB R7, R7, #COLLISION_FEATHER_RIGHT + COLLISION_FEATHER_LEFT
+    SUB R7, R7, R8
     ADD R6, R5, R7
 
     CMP R5, R3
@@ -879,19 +878,25 @@ calculate_sprite_collisions_check_loop:
     BLE calculate_sprite_collisions_check_next
 
     LDR R2, [R10, #sprite_y]
-    ADD R2, R2, #COLLISION_FEATHER_TOP
+    LDR R7, [R10, #sprite_feather_t]
+    LDR R8, [R10, #sprite_feather_b]
+    ADD R2, R2, R7
+    ADD R8, R8, R7
     LDR R4, [R10, #sprite_offset_y]
     SUB R2, R2, R4
     LDR R4, [R10, #sprite_height]
-    SUB R4, R4, #COLLISION_FEATHER_BOTTOM + COLLISION_FEATHER_TOP
+    SUB R4, R4, R8
     ADD R3, R2, R4
 
     LDR R5, [R11, #sprite_y]
-    ADD R5, R5, #COLLISION_FEATHER_TOP
+    LDR R7, [R11, #sprite_feather_t]
+    LDR R8, [R11, #sprite_feather_b]
+    ADD R5, R5, R7
+    ADD R8, R8, R7
     LDR R7, [R11, #sprite_offset_y]
     SUB R5, R5, R7
     LDR R7, [R11, #sprite_height]
-    SUB R7, R7, #COLLISION_FEATHER_BOTTOM + COLLISION_FEATHER_TOP
+    SUB R7, R7, R8
     ADD R6, R5, R7
 
     CMP R5, R3
