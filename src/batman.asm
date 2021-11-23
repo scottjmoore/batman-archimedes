@@ -1028,7 +1028,11 @@ main_draw_tile_map_loop:
     LDR R11, [R12]
 
     BL draw_tile_map
+        MOV R1, #0b111100000000
+        BL vidc_set_border_colour
     BL calculate_sprite_collisions
+        MOV R1, #0b000000000000
+        BL vidc_set_border_colour
     BL draw_sprites
     BL clear_edges
 

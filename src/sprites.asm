@@ -21,12 +21,14 @@
 .set    sprite_offset_y,    36
 .set    sprite_size,        40
 
+.align  4
 sprite_world_offset:        .4byte  0, 0
     ; .4byte  0
 
     .set sprite_world_offset_x, 0
     .set sprite_world_offset_y, 4
 
+.align  4
 sprites:
 
 sprite_00:
@@ -658,18 +660,52 @@ calculate_sprite_collisions:
 
     MOV R0, #0
     ADR R10, sprites
+    ADD R11, R10, #sprite_collision
+    STR R0, [R11], #sprite_size
+    STR R0, [R11], #sprite_size
+    STR R0, [R11], #sprite_size
+    STR R0, [R11], #sprite_size
+    STR R0, [R11], #sprite_size
+    STR R0, [R11], #sprite_size
+    STR R0, [R11], #sprite_size
+    STR R0, [R11], #sprite_size
+    STR R0, [R11], #sprite_size
+    STR R0, [R11], #sprite_size
+    STR R0, [R11], #sprite_size
+    STR R0, [R11], #sprite_size
+    STR R0, [R11], #sprite_size
+    STR R0, [R11], #sprite_size
+    STR R0, [R11], #sprite_size
+    STR R0, [R11], #sprite_size
+    STR R0, [R11], #sprite_size
+    STR R0, [R11], #sprite_size
+    STR R0, [R11], #sprite_size
+    STR R0, [R11], #sprite_size
+    STR R0, [R11], #sprite_size
+    STR R0, [R11], #sprite_size
+    STR R0, [R11], #sprite_size
+    STR R0, [R11], #sprite_size
+    STR R0, [R11], #sprite_size
+    STR R0, [R11], #sprite_size
+    STR R0, [R11], #sprite_size
+    STR R0, [R11], #sprite_size
+    STR R0, [R11], #sprite_size
+    STR R0, [R11], #sprite_size
+    STR R0, [R11], #sprite_size
+    STR R0, [R11], #sprite_size
 
 calculate_sprite_collisions_loop:
     LDR R1, [R10, #sprite_function]
+    CMP R1, #0
     BEQ calculate_sprite_collisions_next
-    MOV R1, #0
-    STR R1, [R10, #sprite_collision]
-    ADR R11, sprites
-    
+    MOV R1, R0
+    MOV R11, R10
+
 calculate_sprite_collisions_check_loop:
     CMP R0, R1
     BEQ calculate_sprite_collisions_check_next
     LDR R2, [R11, #sprite_function]
+    CMP R2, #0
     BEQ calculate_sprite_collisions_check_next
 
     MOV R9, #0
@@ -679,7 +715,7 @@ calculate_sprite_collisions_check_loop:
     LDR R4, [R10, #sprite_offset_x]
     SUB R2, R2, R4
     LDR R4, [R10, #sprite_width]
-    SUB R4, R4, #COLLISION_FEATHER_RIGHT << 1
+    SUB R4, R4, #COLLISION_FEATHER_RIGHT + COLLISION_FEATHER_LEFT
     ADD R3, R2, R4
 
     LDR R5, [R11, #sprite_x]
@@ -687,7 +723,7 @@ calculate_sprite_collisions_check_loop:
     LDR R7, [R11, #sprite_offset_x]
     SUB R5, R5, R7
     LDR R7, [R11, #sprite_width]
-    SUB R7, R7, #COLLISION_FEATHER_RIGHT << 1
+    SUB R7, R7, #COLLISION_FEATHER_RIGHT + COLLISION_FEATHER_LEFT
     ADD R6, R5, R7
 
     CMP R5, R3
@@ -700,7 +736,7 @@ calculate_sprite_collisions_check_loop:
     LDR R4, [R10, #sprite_offset_y]
     SUB R2, R2, R4
     LDR R4, [R10, #sprite_height]
-    SUB R4, R4, #COLLISION_FEATHER_BOTTOM << 1
+    SUB R4, R4, #COLLISION_FEATHER_BOTTOM + COLLISION_FEATHER_TOP
     ADD R3, R2, R4
 
     LDR R5, [R11, #sprite_y]
@@ -708,7 +744,7 @@ calculate_sprite_collisions_check_loop:
     LDR R7, [R11, #sprite_offset_y]
     SUB R5, R5, R7
     LDR R7, [R11, #sprite_height]
-    SUB R7, R7, #COLLISION_FEATHER_BOTTOM << 1
+    SUB R7, R7, #COLLISION_FEATHER_BOTTOM + COLLISION_FEATHER_TOP
     ADD R6, R5, R7
 
     CMP R5, R3
