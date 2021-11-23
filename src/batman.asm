@@ -1134,6 +1134,10 @@ No_P_Key:
     LDR R0, [R1, #sprite_y]
     SUB R0, R0, #1
     STR R0, [R1, #sprite_y]
+    LDR R0, [R1, #sprite_x]
+    BIC R0, R0, #0b1111
+    ADD R0, R0, #8
+    STR R0, [R1, #sprite_x]
 No_Up_Pressed:
     LDR R1, [R2, #game_loop_key_state_down_offset]
     CMP R1, #255
@@ -1145,6 +1149,10 @@ No_Up_Pressed:
     LDR R0, [R1, #sprite_y]
     ADD R0, R0, #1
     STR R0, [R1, #sprite_y]
+    LDR R0, [R1, #sprite_x]
+    BIC R0, R0, #0b1111
+    ADD R0, R0, #8
+    STR R0, [R1, #sprite_x]
 No_Down_Pressed:
     LDR R1, [R2, #game_loop_key_state_left_offset]
     CMP R1, #255
