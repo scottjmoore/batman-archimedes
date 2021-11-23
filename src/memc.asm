@@ -10,7 +10,11 @@
 ;       Define constants used in this file and calling functions.
 ;   ****************************************************************
 
-.set    MEMC,   0x3600000
+.ifndef __MEMC_ASM
+    .set    __MEMC_ASM,    -1
+
+
+    .set    MEMC,   0x3600000
 
 ;   ****************************************************************
 ;       memc_set_display_start
@@ -54,4 +58,4 @@ memc_set_display_start:
     STR R0, [R0]             ; Put VIDC address and screen start address onto address bus
 
     MOV PC, R14              ; return from function
-
+.endif

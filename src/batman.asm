@@ -12,7 +12,7 @@
 ;       main function.
 ;   ****************************************************************
 
-.org 0x00008000
+    .org 0x00008000
     B main
 
 
@@ -800,7 +800,7 @@ initialise:
     STR R0, [R1, #4]
 
     SPRITE sprite_00, draw_batman_sprite, 0, 4*16, 3*16, 0xff00, 32, 48, 0, 48, 5, 5, 8, 0
-    SPRITE sprite_01, draw_batman_sprite, 0, -1, -1, 0xff00, 32, 48, 0, 48, 15, 15, 23, 23
+    SPRITE sprite_01, draw_batman_sprite, 0, -1, -1, 0xff00, 32, 48, 0, 48, 16, 16, 24, 24
     SPRITE sprite_02, draw_batman_sprite, 0, -1, -1, 0xff00, 9, 9, 4, 4, 2, 2, 2, 2
     SPRITE sprite_03, draw_batman_sprite, 0, -1, -1, 0xff00, 9, 9, 4, 4, 2, 2, 2, 2
     SPRITE sprite_04, draw_batman_sprite, 0, -1, -1, 0xff00, 9, 9, 4, 4, 2, 2, 2, 2
@@ -1034,11 +1034,7 @@ main_draw_tile_map_loop:
     LDR R11, [R12]
 
     BL draw_tile_map
-        MOV R1, #0b111100000000
-        BL vidc_set_border_colour
     BL calculate_sprite_collisions
-        MOV R1, #0b000000000000
-        BL vidc_set_border_colour
     BL draw_sprites
     BL clear_edges
 

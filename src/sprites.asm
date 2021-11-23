@@ -4,6 +4,13 @@
 ;       Copyright (c) 2021 Scott Moore, all rights reserved.
 ;   ****************************************************************
 
+.ifndef __SPRITES_ASM
+    .set    __SPRITES_ASM,    -1
+
+
+    .include    "macros.asm"
+    .include    "debug.asm"
+
     .set    sprite_function,    0
     .set    sprite_frame,       4
     .set    sprite_x,           8
@@ -660,12 +667,19 @@ sprite_31_feather_b:    .4byte  0
         SUB R10, R10, #SCANLINE
         SUB R3, R4, #1
 
+        CMP R4, #0
+        BLE draw_sprite_outline_horizontal_skip
     draw_sprite_outline_horizontal:
         SUBS R4, R4, #1
         STRB R0, [R11, R4]
         STRB R0, [R10, R4]
         BNE draw_sprite_outline_horizontal
 
+    draw_sprite_outline_horizontal_skip:
+        CMP R5, #0
+        BLE draw_sprite_outline_exit
+        CMP R3, #0
+        BLE draw_sprite_outline_exit
     draw_sprite_outline_vertical:
         STRB R0, [R11]
         STRB R0, [R11, R3]
@@ -719,6 +733,13 @@ sprite_31_feather_b:    .4byte  0
 draw_sprites:
     STMFD SP!, {R0 - R12, LR}
 
+    .ifne SPRITE_DEBUG
+        STMFD SP!, {R1}
+        MOV R1, #0b000000001111
+        BL vidc_set_border_colour
+        LDMFD SP!, {R1}
+    .endif
+
     MOV R9, #32
     ADRL R10, sprites
 draw_sprites_loop:
@@ -756,6 +777,13 @@ draw_sprites_skip:
     BNE draw_sprites_loop
 
 draw_sprites_exit:
+    .ifne SPRITE_DEBUG
+        STMFD SP!, {R1}
+        MOV R1, #0b000000000000
+        BL vidc_set_border_colour
+        LDMFD SP!, {R1}
+    .endif
+
     LDMFD SP!, {R0 - R12, PC}
 
 
@@ -799,6 +827,13 @@ draw_sprites_exit:
 
 calculate_sprite_collisions:
     STMFD SP!, {R0 - R12, LR}
+
+    .ifne SPRITE_DEBUG
+        STMFD SP!, {R1}
+        MOV R1, #0b111100000000
+        BL vidc_set_border_colour
+        LDMFD SP!, {R1}
+    .endif
 
     MOV R0, #0
     ADR R10, sprites
@@ -929,4 +964,12 @@ calculate_sprite_collisions_next:
     BNE calculate_sprite_collisions_loop
 
 calculate_sprite_collisions_exit:
+    .ifne SPRITE_DEBUG
+        STMFD SP!, {R1}
+        MOV R1, #0b000000000000
+        BL vidc_set_border_colour
+        LDMFD SP!, {R1}
+    .endif
+
     LDMFD SP!, {R0 - R12, PC}
+.endif

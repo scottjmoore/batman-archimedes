@@ -10,12 +10,15 @@
 ;       Define constants used in this file and calling functions.
 ;   ****************************************************************
 
-.set    CLIP_TOP,       0
-.set    CLIP_BOTTOM,    184 - 16
-.set    CLIP_LEFT,      0
-.set    CLIP_RIGHT,     352
+.ifndef __TILES_ASM
+    .set    __TILES_ASM,    -1
 
-.set    SCANLINE,       352
+    .set    CLIP_TOP,       0
+    .set    CLIP_BOTTOM,    184 - 16
+    .set    CLIP_LEFT,      0
+    .set    CLIP_RIGHT,     352
+
+    .set    SCANLINE,       352
 
 ;   ****************************************************************
 ;       draw_16x16_tile
@@ -3163,3 +3166,4 @@ draw_16x16_tile_clipped_right_01_11:
 draw_16x16_tile_exit:       ; exit function code
 
     LDMFD SP!, {R0 - R12, PC}     ; restore all the registers from the stack
+.endif

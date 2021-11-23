@@ -10,7 +10,11 @@
 ;       Define constants used in this file and calling functions.
 ;   ****************************************************************
 
-.set    VIDC,   0x3400000
+.ifndef __VIDC_ASM
+    .set    __VIDC_ASM,    -1
+
+
+    .set    VIDC,   0x3400000
 
 ;   ****************************************************************
 ;       vidc_set_border_colour
@@ -105,4 +109,4 @@ vidc_set_VDER:
     MOV R1, #VIDC
     STR R0, [R1]
     MOV PC, R14
-
+.endif
