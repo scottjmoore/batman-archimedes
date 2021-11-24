@@ -865,6 +865,89 @@ clear_edges_exit:
 
 
 ;   ****************************************************************
+;       draw_line
+;   ----------------------------------------------------------------
+;       Clear 32 pixels on the left and right of the screen
+;   ----------------------------------------------------------------
+;       Parameters
+;   ----------------------------------------------------------------
+;       R0      :   Colour of line (can be four different colours)
+;       R1      :   x0
+;       R2      :   y0
+;       R3      :   x1
+;       R4      :   y1
+;       R5      :   N/A
+;       R6      :   N/A
+;       R7      :   N/A
+;       R8      :   N/A
+;       R9      :   N/A
+;       R10     :   N/A
+;       R11     :   display buffer address
+;       R12     :   N/A
+;   ----------------------------------------------------------------
+;       Returns
+;   ----------------------------------------------------------------
+;       R0      :   Unchanged
+;       R1      :   Unchanged
+;       R2      :   Unchanged
+;       R3      :   Unchanged
+;       R4      :   Unchanged
+;       R5      :   Unchanged
+;       R6      :   Unchanged
+;       R7      :   Unchanged
+;       R8      :   Unchanged
+;       R9      :   Unchanged
+;       R10     :   Unchanged
+;       R11     :   Unchanged
+;       R11     :   Unchanged
+;   ****************************************************************
+draw_line:
+    STMFD SP!, {R0 - R12, LR}
+
+    CMP R1, R3
+    SUBLE R6, R3, R1
+    MOVLE R7, #1
+    SUBGT R6, R1, R3
+    MOVGT R7, #-1
+
+    CMP R2, R4
+    SUBLE R8, R4, R2
+    MOVLE R9, #1
+    SUBGT R8, R2, R4
+    MOVGT R9, #-1
+
+    CMP R6, R8
+    MOVGT R10, R6, ASR #2
+    MOVLE R12, #0
+    SUBLE R12, R12, R8
+    MOVLE R10, R12, ASR #2
+
+draw_line_loop:
+    TEQ R1, R3
+    TEQEQ R2, R4
+    BEQ draw_line_exit
+
+    MOV R5, #SCANLINE
+    MLA R12, R5, R2, R11
+    STRB R0, [R12, R1]
+    MOV R0, R0, ROR #8
+
+    MOV R5, R10
+    MOV R12, #0
+    SUB R12, R12, R6
+    CMP R5, R12
+    SUBGT R10, R10, R8
+    ADDGT R1, R1, R7
+    CMP R5, R8
+    ADDLT R10, R10, R6
+    ADDLT R2, R2, R9
+    B draw_line_loop
+
+draw_line_exit:
+    LDMFD SP!, {R0 - R12, PC}
+
+
+;   ****************************************************************
 ;       initialise
 ;   ----------------------------------------------------------------
 ;       Initialise hardware and game state
@@ -1120,6 +1203,21 @@ main_draw_tile_map_loop:
     LDR R11, [R12]
 
     BL draw_tile_map
+
+    STMFD SP!, {R0 - R4}
+    MOV R0, #0xff000000
+    ORR R0, R0, #0xff00
+    LDR R1, batman_x
+    ADD R1, R1, #16
+    SUB R1, R1, R3
+    LDR R2, batman_y
+    SUB R2, R2, #24
+    SUB R2, R2, R4
+    MOV R3, #176
+    MOV R4, #16
+    BL draw_line
+    LDMFD SP!, {R0 - R4}
+
     BL calculate_sprite_collisions
     BL draw_sprites
     BL clear_edges
@@ -1637,7 +1735,7 @@ skip_sprite_14_delete:
     LDR R9, [R10, #sprite_collision]
     ANDS R9, R9, #0b1111111100
     BEQ skip_sprite_15_delete
-    
+
     MOV R9, #0
     STR R9, [R10, #sprite_function]
     STR R9, [R10, #sprite_x]
