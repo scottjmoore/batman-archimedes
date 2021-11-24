@@ -1148,6 +1148,8 @@ No_P_Key:
     TST R0, #0b00100000
     BEQ No_Up_Pressed
     ADR R1, sprite_00
+    MOV R0, #48 - 3
+    STR R0, [R1, #sprite_offset_y]
     LDR R0, [R1, #sprite_y]
     SUB R0, R0, #1
     STR R0, [R1, #sprite_y]
@@ -1174,6 +1176,8 @@ No_Up_Pressed:
     TST R0, #0b01000000
     BEQ No_Down_Pressed
     ADR R1, sprite_00
+    MOV R0, #48 - 3
+    STR R0, [R1, #sprite_offset_y]
     LDR R0, [R1, #sprite_y]
     ADD R0, R0, #1
     STR R0, [R1, #sprite_y]
@@ -1200,6 +1204,8 @@ No_Down_Pressed:
     TST R0, #0b10000001
     BNE No_Right_Pressed
     ADR R1, sprite_00
+    MOV R0, #48
+    STR R0, [R1, #sprite_offset_y]
     LDR R0, [R1, #sprite_x]
     SUB R0, R0, #1
     STR R0, [R1, #sprite_x]
@@ -1220,6 +1226,8 @@ No_Left_Pressed:
     TST R0, #0b10000010
     BNE No_Right_Pressed
     ADR R1, sprite_00
+    MOV R0, #48
+    STR R0, [R1, #sprite_offset_y]
     LDR R0, [R1, #sprite_x]
     ADD R0, R0, #1
     STR R0, [R1, #sprite_x]
@@ -1242,6 +1250,8 @@ No_Right_Pressed:
     MOV R1, #-1
     STR R1, bat_bullet_debounce
     ADR R1, sprite_00
+    MOV R0, #48
+    STR R0, [R1, #sprite_offset_y]
     MOV R0, #0
     STR R0, [R1, #sprite_frame]
     LDR R0, [R1, #sprite_x]
