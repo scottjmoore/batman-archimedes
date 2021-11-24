@@ -112,7 +112,6 @@ swap_display_buffers:
     STR R1, [R2, #0]
     STR R0, [R2, #4]
     MOV R0, R1
-
     BL memc_set_display_start
 
 swap_display_buffers_exit:
@@ -526,6 +525,7 @@ draw_font_string_loop:                ; start of loop
     CMP R0, #0x0a                            ; check to see if we need to move down to the next line
     BEQ draw_font_string_nextline     ; if byte == 0x0a goto next line section
     BL font_lookup                    ; lookup tile number from ascii character in string
+    
     CMP R0, #0                               ; if tile number == 0
     ADDNE R14, PC, #0
     MOVNE PC, R12
@@ -659,11 +659,13 @@ draw_tile_map_y_loop:
 draw_tile_map_x_loop:
     LDRB R0, [R10, R8]
     BL draw_16x16_tile
+    
     ADD R2, R2, #16
     ADD R8, R8, #1
     AND R8, R8, #255
     SUBS R7, R7, #1
     BNE draw_tile_map_x_loop
+
     SUB R2, R2, #21 * 16
     ADD R3, R3, #16
     SUB R8, R8, #21
@@ -967,6 +969,7 @@ clear_display_buffers:
     LDR R1, [R12, #0]                 
     MOV R2, #232
     BL copy_4byte_to_screen
+    
     MOV R0, #0
     LDR R1, [R12, #4]                 
     MOV R2, #232
@@ -986,6 +989,7 @@ setup_custom_display_mode_352x256:
 
     MOV R1, #45
     BL vidc_set_HDSR
+    
     MOV R1, #221
     BL vidc_set_HDER
 
@@ -1031,6 +1035,7 @@ draw_status_bar:
     MLA R1, R2, R3, R1
     MOV R2, #53
     BL copy_buffer_to_screen
+
     ADD R1, R1, #SCANLINE*233
     BL copy_buffer_to_screen
 
@@ -1108,12 +1113,6 @@ main:
     ADR R12, vdu_variables_buffer
 
 main_draw_tile_map_loop:
-
-    .ifne DEBUG
-        MOV R1, #0b111100000000
-        BL vidc_set_border_colour
-    .endif
-
     LDR R0, [R12, #8] ; level_1_map_types / level_1_map_tilemap
     ADR R1, level_1_tiles
     LDR R3, tilemap_x
@@ -1125,8 +1124,6 @@ main_draw_tile_map_loop:
     BL draw_sprites
     BL clear_edges
 
-    ; STMFD SP!, {R0 - R2}
-
     MOV R0, #129
     MOV R1, #-114
     MOV R2, #255
@@ -1135,6 +1132,7 @@ main_draw_tile_map_loop:
     BNE No_F1_Key
     ADR R0, level_1_map_tilemap
     STR R0, [R12, #8]
+
 No_F1_Key:
     MOV R0, #129
     MOV R1, #-115
@@ -1144,6 +1142,7 @@ No_F1_Key:
     BNE No_F2_Key
     ADR R0, level_1_map_types
     STR R0, [R12, #8]
+
 No_F2_Key:
     MOV R0, #129
     MOV R1, #-117
@@ -1152,6 +1151,7 @@ No_F2_Key:
     CMP R2, #255
     BNE No_F5_Key
     DEBUG_STEP_ON
+
 No_F5_Key:
     MOV R0, #129
     MOV R1, #-118
@@ -1160,8 +1160,8 @@ No_F5_Key:
     CMP R2, #255
     BNE No_F6_Key
     DEBUG_STEP_OFF
-No_F6_Key:
 
+No_F6_Key:
     MOV R0, #129
     MOV R1, #-98
     MOV R2, #255
@@ -1171,6 +1171,7 @@ No_F6_Key:
     SUB R3, R3, #1
     CMP R3, #0
     MOVLE R3, #0
+
 No_Z_Key:
     MOV R0, #129
     MOV R1, #-67
@@ -1181,6 +1182,7 @@ No_Z_Key:
     ADD R3, R3, #1
     CMP R3, #256*16
     SUBGE R3, R3, #256*16
+
 No_X_Key:
     MOV R0, #129
     MOV R1, #-87
@@ -1191,6 +1193,7 @@ No_X_Key:
     ADD R4, R4, #1
     CMP R4, #48*16
     SUBGE R4, R4, #48*16
+
 No_L_Key:
     MOV R0, #129
     MOV R1, #-56
@@ -1201,13 +1204,13 @@ No_L_Key:
     SUB R4, R4, #1
     CMP R4, #0
     MOVLE R4, #0
+
 No_P_Key:
     STR R3, tilemap_x
     STR R4, tilemap_y
     ADR R0, sprite_world_offset
     STR R3, [R0, #0]
     STR R4, [R0, #4]
-
     BL update_game_loop_key_state
 
     ADR R2, game_loop_key_state
@@ -1238,6 +1241,7 @@ No_P_Key:
     ADD R0, R2, #11
     MOV R0, R0, LSL #4
     STR R0, [R1, #sprite_frame]
+
 No_Up_Pressed:
     LDR R1, [R2, #game_loop_key_state_down_offset]
     CMP R1, #255
@@ -1266,6 +1270,7 @@ No_Up_Pressed:
     ADD R0, R2, #11
     MOV R0, R0, LSL #4
     STR R0, [R1, #sprite_frame]
+
 No_Down_Pressed:
     LDR R1, [R2, #game_loop_key_state_left_offset]
     CMP R1, #255
@@ -1288,6 +1293,7 @@ No_Down_Pressed:
     SUBGE R0, R0, #8 * 16
     STR R0, [R1, #sprite_frame]
     B No_Right_Pressed
+
 No_Left_Pressed:
     LDR R1, [R2, #game_loop_key_state_right_offset]
     CMP R1, #255
@@ -1310,6 +1316,7 @@ No_Left_Pressed:
     CMP R0, #8 * 16
     SUBGE R0, R0, #8 * 16
     STR R0, [R1, #sprite_frame]
+
 No_Right_Pressed:
     LDR R1, [R2, #game_loop_key_state_fire_offset]
     CMP R1, #255
@@ -1349,11 +1356,12 @@ No_Right_Pressed:
     AND R8, R8, #0b111
     STR R8, bat_bullet_index
     B Fire_Debounce
+
 No_Fire_Pressed:
     MOV R1, #0
     STR R1, bat_bullet_debounce
-Fire_Debounce:
 
+Fire_Debounce:
     ADR R0, game_loop_key_state
     LDR R1, [R0, #game_loop_key_state_quit_offset]
     CMP R1, #255
@@ -1389,37 +1397,49 @@ Fire_Debounce:
     LDR R8, [R10, #sprite_frame]
     MOV R5, #0b00000000
     LDR R7, batman_blocked
+
     .ifne SPRITE_DEBUG
         LDR R6, [R10, #sprite_attributes]
         AND R6, R6, #0xffffff00
     .endif
+
     BL lookup_tilemap_tile
+
     CMP R1, #0x90
     ORREQ R5, R5, #0b10000000
+
     .ifne SPRITE_DEBUG
         ORREQ R6, R6, #116
     .endif
+
     CMP R1, #0x9e
     ORREQ R5, R5, #0b01000000
-    ; .ifne SPRITE_DEBUG
-    ;     ORREQ R6, R6, #100
-    ; .endif
+
+    .ifne SPRITE_DEBUG
+        ORREQ R6, R6, #100
+    .endif
+
     ADD R4, R4, #1
     BL lookup_tilemap_tile
+
     CMP R1, #0x90
     ORREQ R5, R5, #0b10000000
+
     .ifne SPRITE_DEBUG
         ORREQ R6, R6, #116
     .endif
+
     CMP R1, #0x9d
     BNE batman_cant_drop
     ORR R5, R5, #0b01000000
     SUB R4, R4, #2
     BL lookup_tilemap_tile
+
     CMP R1, #0x9d
     MOVEQ R5, #0b10000000
     ORREQ R6, R6, #255
     MOVEQ R8, #0
+    
     .ifne SPRITE_DEBUG
         ORREQ R6, R6, #116
     .endif
@@ -1428,33 +1448,42 @@ batman_cant_drop:
     SUB R3, R3, R7, LSR #2
     SUB R4, R4, #22
     BL lookup_tilemap_tile
+    
     CMP R1, #0x9f
     ORREQ R5, R5, #0b00000001
     ORREQ R6, R6, #20
     MOVEQ R8, #0
     ADD R3, R3, R7, LSR #1
     BL lookup_tilemap_tile
+    
     CMP R1, #0x9f
     ORREQ R5, R5, #0b00000010
     MOVEQ R8, #0
+    
     .ifne SPRITE_DEBUG
         ORREQ R6, R6, #20
     .endif
+    
     SUB R3, R3, R7, LSR #2
     ADD R4, R4, #21
     BL lookup_tilemap_tile
+    
     CMP R1, #0x9e
     ORREQ R5, R5, #0b01000000
-    ; .ifne SPRITE_DEBUG
-    ;     ORREQ R6, R6, #100
-    ; .endif
+    
+    .ifne SPRITE_DEBUG
+        ORREQ R6, R6, #100
+    .endif
+    
     SUB R4, R4, #1
     BL lookup_tilemap_tile
+
     CMP R1, #0x9e
     ORREQ R5, R5, #0b00100000
-    ; .ifne SPRITE_DEBUG
-    ;     ORREQ R6, R6, #100
-    ; .endif
+
+    .ifne SPRITE_DEBUG
+        ORREQ R6, R6, #100
+    .endif
 
     LDR R4, [R10, #sprite_y]
     TST R5, #0b10000000
@@ -1462,12 +1491,15 @@ batman_cant_drop:
     ANDNE R5, R5, #0b11111011
     STR R4, [R10, #sprite_y]
     STR R5, batman_blocked
+    
     .ifne SPRITE_DEBUG
         STR R6, [R10, #sprite_attributes]
     .endif
+    
     ADR R9, sprite_01
     TST R5, #0b10000000
     BEQ batman_not_falling
+    
     MOV R8, #9 * 16
     LDMIA R10!, {R0 - R4}
     MOV R1, #8 * 16
@@ -1488,9 +1520,9 @@ batman_not_falling:
     STR R0, [R9, #sprite_y]
     TST R7, #0b10000000
     MOVNE R8, #10 * 16
+
 batman_is_falling:
     STR R8, [R10, #sprite_frame]
-
     ADR R0, level_1_map_types
     ADR R9, bat_bullets
     MOV R8, #0
@@ -1510,6 +1542,7 @@ update_bat_bullets_loop:
     STR R4, [R10, #sprite_y]
     SUB R3, R3, #12
     BL lookup_tilemap_tile
+    
     ADD R3, R3, #12
     CMP R1, #0x9f
     MOVEQ R3, #-1
@@ -1528,6 +1561,7 @@ update_bat_bullets_loop:
     BIC R2, R2, #0b11 << 8
     BICS R2, R2, #0b1 << 31
     BEQ update_bat_bullets_next
+
 disable_bat_bullet:
     MOV R3, #-1
     MOV R7, #0
@@ -1548,57 +1582,68 @@ update_bat_bullets_next:
     LDR R9, [R10, #sprite_collision]
     ANDS R9, R9, #0b1111111100
     BEQ skip_sprite_10_delete
+
     MOV R9, #0
     STR R9, [R10, #sprite_function]
     STR R9, [R10, #sprite_x]
     STR R9, [R10, #sprite_y]
+
 skip_sprite_10_delete:
     ADR R10, sprite_11
     LDR R9, [R10, #sprite_collision]
     ANDS R9, R9, #0b1111111100
     BEQ skip_sprite_11_delete
+
     MOV R9, #0
     STR R9, [R10, #sprite_function]
     STR R9, [R10, #sprite_x]
     STR R9, [R10, #sprite_y]
+
 skip_sprite_11_delete:
     ADR R10, sprite_12
     LDR R9, [R10, #sprite_collision]
     ANDS R9, R9, #0b1111111100
     BEQ skip_sprite_12_delete
+
     MOV R9, #0
     STR R9, [R10, #sprite_function]
     STR R9, [R10, #sprite_x]
     STR R9, [R10, #sprite_y]
+
 skip_sprite_12_delete:
     ADR R10, sprite_13
     LDR R9, [R10, #sprite_collision]
     ANDS R9, R9, #0b1111111100
     BEQ skip_sprite_13_delete
+
     MOV R9, #0
     STR R9, [R10, #sprite_function]
     STR R9, [R10, #sprite_x]
     STR R9, [R10, #sprite_y]
+
 skip_sprite_13_delete:
     ADR R10, sprite_14
     LDR R9, [R10, #sprite_collision]
     ANDS R9, R9, #0b1111111100
     BEQ skip_sprite_14_delete
+
     MOV R9, #0
     STR R9, [R10, #sprite_function]
     STR R9, [R10, #sprite_x]
     STR R9, [R10, #sprite_y]
+
 skip_sprite_14_delete:
     ADR R10, sprite_15
     LDR R9, [R10, #sprite_collision]
     ANDS R9, R9, #0b1111111100
     BEQ skip_sprite_15_delete
+    
     MOV R9, #0
     STR R9, [R10, #sprite_function]
     STR R9, [R10, #sprite_x]
     STR R9, [R10, #sprite_y]
-skip_sprite_15_delete:
 
+skip_sprite_15_delete:
     LDR R11, [R12]
     LDR R0, frame_count
     ADD R0, R0, #1
