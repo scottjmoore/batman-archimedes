@@ -17,6 +17,7 @@ SPRITES =  	build/sprites/batman.asm \
 			build/sprites/enemies.asm \
 			build/sprites/bullets.asm \
 			build/sprites/bat_bullet.asm \
+			build/sprites/bat_hook.asm \
 			build/sprites/pointers.asm
 
 FONTS = 	build/fonts/intro_font.asm \
@@ -152,6 +153,14 @@ build/sprites/bat_bullet.asm: assets/sprites/bat_bullet.png makefile
 		-i assets/sprites/bat_bullet.png \
 		-o build/sprites/bat_bullet.asm \
 		-sw 9 -sh 9 \
+		-mi 159
+
+
+build/sprites/bat_hook.asm: assets/sprites/bat_hook.png makefile
+	$(COMPILESPRITE) \
+		-i assets/sprites/bat_hook.png \
+		-o build/sprites/bat_hook.asm \
+		-sw 7 -sh 4 \
 		-mi 159
 
 

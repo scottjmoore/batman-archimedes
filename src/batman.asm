@@ -36,6 +36,7 @@ stack:
     .include "build/sprites/enemies.asm"
     .include "build/sprites/bullets.asm"
     .include "build/sprites/bat_bullet.asm"
+    .include "build/sprites/bat_hook.asm"
     .include "build/sprites/pointers.asm"
     .include "build/fonts/intro_font.asm"
     .include "build/fonts/system_font.asm"
@@ -904,6 +905,23 @@ clear_edges_exit:
 draw_line:
     STMFD SP!, {R0 - R12, LR}
 
+    CMP R1, #0
+    BLT draw_line_exit
+    CMP R2, #0
+    BLT draw_line_exit
+    CMP R1, #SCANLINE
+    BGE draw_line_exit
+    CMP R2, #SCANLINE
+    BGE draw_line_exit
+    CMP R3, #0
+    BLT draw_line_exit
+    CMP R4, #0
+    BLT draw_line_exit
+    CMP R3, #CLIP_BOTTOM
+    BGE draw_line_exit
+    CMP R4, #CLIP_BOTTOM
+    BGE draw_line_exit
+
     CMP R1, R3
     SUBLE R6, R3, R1
     MOVLE R7, #1
@@ -984,6 +1002,7 @@ initialise:
     SPRITE sprite_13, draw_enemies_sprite, 3, 16*16, 19*16, 0xff00, 32, 48, 0, 48, 7, 7, 8, 0
     SPRITE sprite_14, draw_enemies_sprite, 0, 16*16, 31*16, 0xff00, 32, 48, 0, 48, 7, 7, 8, 0
     SPRITE sprite_15, draw_enemies_sprite, 1, 5*16, 39*16, 0xff00, 32, 48, 0, 48, 7, 7, 8, 0
+    SPRITE sprite_30, draw_bat_hook_sprite, 0, 60, 90, 0xff00, 7, 4, 3, 2, 0, 0, 0, 0
     SPRITE sprite_31, draw_pointers_sprite, 0, 160, 160, 0xff00, 11, 11, -16, 0, 0, 0, 0, 0
 
 initialise_exit:
@@ -1205,16 +1224,21 @@ main_draw_tile_map_loop:
     BL draw_tile_map
 
     STMFD SP!, {R0 - R4}
-    MOV R0, #0xff000000
-    ORR R0, R0, #0xff00
+    MOV R0, #0xcaca0000
+    ORR R0, R0, #0x7f00
+    ORR R0, R0, #0xca
     LDR R1, batman_x
     ADD R1, R1, #16
     SUB R1, R1, R3
     LDR R2, batman_y
     SUB R2, R2, #24
     SUB R2, R2, R4
-    MOV R3, #176
-    MOV R4, #16
+    MOV R5, R3
+    MOV R6, R4
+    LDR R3, sprite_30_x
+    SUB R3, R3, R5
+    LDR R4, sprite_30_y
+    SUB R4, R4, R6
     BL draw_line
     LDMFD SP!, {R0 - R4}
 
@@ -1317,7 +1341,18 @@ No_P_Key:
     BNE No_Up_Pressed
     LDR R0, batman_blocked
     TST R0, #0b00100000
-    BEQ No_Up_Pressed
+    BNE Up_Pressed_On_Ladder
+    ADR R1, sprite_00
+    ADR R2, sprite_30
+    LDR R0, [R1, #sprite_x]
+    ADD R0, R0, #16
+    STR R0, [R2, #sprite_x]
+    LDR R0, [R1, #sprite_y]
+    SUB R0, R0, #96
+    STR R0, [R2, #sprite_y]
+    B No_Up_Pressed
+
+Up_Pressed_On_Ladder:
     ADR R1, sprite_00
     MOV R0, #48 - 3
     STR R0, [R1, #sprite_offset_y]
