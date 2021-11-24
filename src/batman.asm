@@ -11,7 +11,6 @@
 ;       Set code to assemble from address 0x8000 and branch to
 ;       main function.
 ;   ****************************************************************
-
     .org 0x00008000
     ADR SP, stack            ; load stack pointer with our stack address
     B main
@@ -47,19 +46,18 @@ stack:
 ;   ****************************************************************
 ;       Include external source files
 ;   ****************************************************************
+    .include "swi.asm"
+    .include "vdu.asm"
+    .include "macros.asm"
+    .include "debug.asm"
 
-.include "swi.asm"
-.include "vdu.asm"
-.include "macros.asm"
-.include "debug.asm"
+    .include "memc.asm"
+    .include "vidc.asm"
 
-.include "memc.asm"
-.include "vidc.asm"
+    .include "tiles.asm"
+    .include "sprites.asm"
 
-.include "tiles.asm"
-.include "sprites.asm"
-
-.set    SCANLINE,  352
+    .set    SCANLINE,  352
 
 
 ;   ****************************************************************
@@ -458,7 +456,6 @@ fade_buffer_with_lookup_exit:
 ;       R11     :   Unchanged
 ;       R11     :   Unchanged
 ;   ****************************************************************
-
 font_lookup:
     STMFD SP!, {R2 - R3, LR}     ; store all the registers onto the stack
 
@@ -515,7 +512,6 @@ font_lookup_exit:     ; found character in lookup table
 ;       R11     :   Unchanged
 ;       R12     :   Unchanged
 ;   ****************************************************************
-
 draw_font_string:
     STMFD SP!, {R0 - R12, LR}     ; store all registers onto the stack
 
@@ -582,7 +578,6 @@ draw_font_string_exit:
 ;       R11     :   Unchanged
 ;       R11     :   Unchanged
 ;   ****************************************************************
-
 lookup_tilemap_tile:
     STMFD SP!, {R3 - R4, LR}     ; store all registers onto the stack
 
@@ -958,6 +953,11 @@ draw_intro_screen_exit:
     LDMFD SP!, {R0 - R12, PC}     ; restore all registers from the stack, and load saved R14 link registger into PC
 
 
+;   ****************************************************************
+;       clear_display_buffers
+;   ----------------------------------------------------------------
+;       Clear the front and back display buffers to black (0)
+;   ----------------------------------------------------------------
 clear_display_buffers:
     STMFD SP!, {R0 - R12, LR}
 
