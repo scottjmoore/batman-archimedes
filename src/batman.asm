@@ -61,6 +61,45 @@ stack:
 
 .set    SCANLINE,  352
 
+
+;   ****************************************************************
+;       swap_display_buffers
+;   ----------------------------------------------------------------
+;       Swap the front and back display buffer pointers and update
+;       MEMC pointer to display buffer start
+;   ----------------------------------------------------------------
+;       Parameters
+;   ----------------------------------------------------------------
+;       R0      :   N/A
+;       R1      :   N/A
+;       R2      :   N/A
+;       R3      :   N/A
+;       R4      :   N/A
+;       R5      :   N/A
+;       R6      :   N/A
+;       R7      :   N/A
+;       R8      :   N/A
+;       R9      :   N/A
+;       R10     :   N/A
+;       R11     :   N/A
+;       R11     :   N/A
+;   ----------------------------------------------------------------
+;       Returns
+;   ----------------------------------------------------------------
+;       R0      :   Unchanged
+;       R1      :   Unchanged
+;       R2      :   Unchanged
+;       R3      :   Unchanged
+;       R4      :   Unchanged
+;       R5      :   Unchanged
+;       R6      :   Unchanged
+;       R7      :   Unchanged
+;       R8      :   Unchanged
+;       R9      :   Unchanged
+;       R10     :   Unchanged
+;       R11     :   Unchanged
+;       R11     :   Unchanged
+;   ****************************************************************
 swap_display_buffers:
     STMFD SP!, {R0 - R2, LR}
 
@@ -78,7 +117,9 @@ swap_display_buffers:
 
     BL memc_set_display_start
 
+swap_display_buffers_exit:
     LDMFD SP!, {R0 - R2, PC}
+
 
 ;   ****************************************************************
 ;       copy_4byte_to_screen
@@ -119,7 +160,6 @@ swap_display_buffers:
 ;       R11     :   Unchanged
 ;   ****************************************************************
 copy_4byte_to_screen:
-
     STMFD SP!, {R0 - R12, LR}     ; store all the registers onto the stack
 
     MOV R11, R1      ; move destination address into R11
@@ -147,6 +187,7 @@ copy_4byte_to_screen_loop:      ; start of copy loop
     SUBS R10, R10, #1             ; decrease number of scanlines to copy by 1
     BNE copy_4byte_to_screen_loop   ; if the number of scanlines left to copy is not zero, branch back to start of loop
 
+copy_4byte_to_screen_exit:
     LDMFD SP!, {R0 - R12, PC}     ; restore all the registers from the stack
 
 
@@ -189,7 +230,6 @@ copy_4byte_to_screen_loop:      ; start of copy loop
 ;       R11     :   Unchanged
 ;   ****************************************************************
 copy_buffer_to_screen:
-
     STMFD SP!, {R0 - R12, LR}     ; store all the registers onto the stack
 
     MOV R12, R0      ; move source address into R11
@@ -217,6 +257,7 @@ copy_buffer_to_screen_loop:     ; start of copy loop
     SUBS R10, R10, #1             ; decrease number of scanlines to copy by 1
     BNE copy_buffer_to_screen_loop      ; if number of scanlines left to copy is not zero branch back to start of loop
 
+copy_buffer_to_screen_exit:
     LDMFD SP!, {R0 - R12, PC}     ; restore all the registers from the stack
 
 
@@ -259,13 +300,13 @@ copy_buffer_to_screen_loop:     ; start of copy loop
 ;       R11     :   Unchanged
 ;   ****************************************************************
 fade_buffer_with_lookup:
-
     STMFD SP!, {R0 - R12, LR}     ; store all registers onto the stack
 
     MOV R11, R1
     MOV R12, R2
 
     MOV R1, #5120
+
 fade_buffer_with_lookup_loop:
     LDMIA R11!, {R2 - R5}
 
@@ -374,42 +415,8 @@ fade_buffer_with_lookup_loop:
     SUBS R1, R1, #1
     BNE fade_buffer_with_lookup_loop
 
+fade_buffer_with_lookup_exit:
     LDMFD SP!, {R0 - R12, PC}     ; restore all the registers from the stack
-
-
-; copy_8x8_tile_to_screen:
-
-;     STMFD SP!, {R0 - R12}     ; store all registers onto the stack
-
-;     MOV R5, #8*8             ; put the size of a single tile in bytes into R5
-;     MLA R12, R0, R5, R1        ; calculate the address of the start of the tile [source = (tile number * (8 * 8)) + address of tileset]
-;     MOV R5, #SCANLINE             ; put the width of a scanline into R5
-;     MLA R11, R3, R5, R4        ; calculate the address of the destination [destination = (y * 320) + address of screen or buffer]
-;     ADD R11, R11, R2          ; add x to the destination address
-
-;     LDMIA R12!, {R0 - R3}      ; load 16 bytes from the soure address into R0 - R3
-;     STMIA R11, {R0 - R1}       ; store first 8 bytes from R0 - R1 to the destination address with incrementing it
-;     ADD R11, R11, #SCANLINE        ; move destination address to the next scanline
-;     STMIA R11, {R2 - R3}       ; store second 8 bytes from R2 - R3 to the destination address with incrementing it
-;     ADD R11, R11, #SCANLINE        ; move destination address to the next scanline
-;     LDMIA R12!, {R0 - R3}      ; load 16 bytes from the soure address into R0 - R3
-;     STMIA R11, {R0 - R1}       ; store first 8 bytes from R0 - R1 to the destination address with incrementing it
-;     ADD R11, R11, #SCANLINE        ; move destination address to the next scanline
-;     STMIA R11, {R2 - R3}       ; store second 8 bytes from R2 - R3 to the destination address with incrementing it
-;     ADD R11, R11, #SCANLINE        ; move destination address to the next scanline
-;     LDMIA R12!, {R0 - R3}      ; load 16 bytes from the soure address into R0 - R3
-;     STMIA R11, {R0 - R1}       ; store first 8 bytes from R0 - R1 to the destination address with incrementing it
-;     ADD R11, R11, #SCANLINE        ; move destination address to the next scanline
-;     STMIA R11, {R2 - R3}       ; store second 8 bytes from R2 - R3 to the destination address with incrementing it
-;     ADD R11, R11, #SCANLINE        ; move destination address to the next scanline
-;     LDMIA R12!, {R0 - R3}      ; load 16 bytes from the soure address into R0 - R3
-;     STMIA R11, {R0 - R1}       ; store first 8 bytes from R0 - R1 to the destination address with incrementing it
-;     ADD R11, R11, #SCANLINE        ; move destination address to the next scanline
-;     STMIA R11, {R2 - R3}       ; store second 8 bytes from R2 - R3 to the destination address with incrementing it
-;     ADD R11, R11, #SCANLINE        ; move destination address to the next scanline
-
-;     LDMFD SP!, {R0 - R12}     ; restore all registers from the stack
-;     MOV PC, R14              ; return from function
 
 
 ;   ****************************************************************
@@ -453,10 +460,8 @@ fade_buffer_with_lookup_loop:
 ;   ****************************************************************
 
 font_lookup:
-
     STMFD SP!, {R2 - R3, LR}     ; store all the registers onto the stack
 
-    ; ADR R1, font_lookup_table     ; load address of intro font conversion lookup table into R1
     MOV R3, #0                           ; move 0 into R3
 
 font_lookup_loop:         ; start of loop
@@ -467,14 +472,12 @@ font_lookup_loop:         ; start of loop
     B font_lookup_loop    ; go back to start of loop
 
 font_lookup_exit:     ; found character in lookup table
-    ; MOV R0, R3               ; move tile index into R0
     SUB R0, R3, #1
-
     LDMFD SP!, {R2 - R3, PC}     ; restore all registers from the stack
 
 
 ;   ****************************************************************
-;       draw_font_text
+;       draw_font_string
 ;   ----------------------------------------------------------------
 ;       Draw zero terminated ascii string using intro font to the
 ;       screen or display buffer, assumes a scanline width of
@@ -514,7 +517,6 @@ font_lookup_exit:     ; found character in lookup table
 ;   ****************************************************************
 
 draw_font_string:
-
     STMFD SP!, {R0 - R12, LR}     ; store all registers onto the stack
 
     MOV R9, R1       ; keep orignal x-coordinate
@@ -539,8 +541,7 @@ draw_font_string_nextline:            ; next line section
     ADD R2, R2, #8                            ; increase scanline to draw to by 8 (height of 1 character)
     B draw_font_string_loop           ; go back to start of loop
 
-draw_font_string_exit:                ; exit loop
-
+draw_font_string_exit:
     LDMFD SP!, {R0 - R12, PC}     ; restore all registers from the stack
 
 
@@ -640,9 +641,7 @@ lookup_tilemap_tile_exit:
 ;       R11     :   Unchanged
 ;       R11     :   Unchanged
 ;   ****************************************************************
-
 draw_tile_map:
-
     STMFD SP!, {R0 - R12, LR}     ; store all registers onto the stack
 
     AND R5, R3, #0b1111   ; get pixel in tile to start from
@@ -682,13 +681,48 @@ draw_tile_map_x_loop:
     CMP R3, #CLIP_BOTTOM 
     BLT draw_tile_map_y_loop
 
-draw_tile_map_exit:              ; exit loop
-
+draw_tile_map_exit:
     LDMFD SP!, {R0 - R12, PC}     ; restore all registers from the stack
 
 
+;   ****************************************************************
+;       fade_screen_to_black
+;   ----------------------------------------------------------------
+;       Fade display buffer to black using a LUT
+;   ----------------------------------------------------------------
+;       Parameters
+;   ----------------------------------------------------------------
+;       R0      :   N/A
+;       R1      :   N/A
+;       R2      :   N/A
+;       R3      :   N/A
+;       R4      :   N/A
+;       R5      :   N/A
+;       R6      :   N/A
+;       R7      :   N/A
+;       R8      :   N/A
+;       R9      :   N/A
+;       R10     :   N/A
+;       R11     :   N/A
+;       R12     :   vdu variables table
+;   ----------------------------------------------------------------
+;       Returns
+;   ----------------------------------------------------------------
+;       R0      :   Unchanged
+;       R1      :   Unchanged
+;       R2      :   Unchanged
+;       R3      :   Unchanged
+;       R4      :   Unchanged
+;       R5      :   Unchanged
+;       R6      :   Unchanged
+;       R7      :   Unchanged
+;       R8      :   Unchanged
+;       R9      :   Unchanged
+;       R10     :   Unchanged
+;       R11     :   Unchanged
+;       R11     :   Unchanged
+;   ****************************************************************
 fade_screen_to_black:
-
     STMFD SP!, {R0 - R12, LR}     ; store all registers onto the stack
 
     ADR R0, palette_fade
@@ -721,13 +755,49 @@ fade_screen_to_black:
     BL copy_4byte_to_screen
     BL swap_display_buffers
 
+fade_screen_to_black_exit:
     LDMFD SP!, {R0 - R12, PC}     ; restore all registers from the stack
 
 
+;   ****************************************************************
+;       clear_edges
+;   ----------------------------------------------------------------
+;       Clear 32 pixels on the left and right of the screen
+;   ----------------------------------------------------------------
+;       Parameters
+;   ----------------------------------------------------------------
+;       R0      :   N/A
+;       R1      :   N/A
+;       R2      :   N/A
+;       R3      :   N/A
+;       R4      :   N/A
+;       R5      :   N/A
+;       R6      :   N/A
+;       R7      :   N/A
+;       R8      :   N/A
+;       R9      :   N/A
+;       R10     :   N/A
+;       R11     :   display buffer address
+;       R12     :   N/A
+;   ----------------------------------------------------------------
+;       Returns
+;   ----------------------------------------------------------------
+;       R0      :   Unchanged
+;       R1      :   Unchanged
+;       R2      :   Unchanged
+;       R3      :   Unchanged
+;       R4      :   Unchanged
+;       R5      :   Unchanged
+;       R6      :   Unchanged
+;       R7      :   Unchanged
+;       R8      :   Unchanged
+;       R9      :   Unchanged
+;       R10     :   Unchanged
+;       R11     :   Unchanged
+;       R11     :   Unchanged
+;   ****************************************************************
 clear_edges:
     STMFD SP!, {R0 - R12, LR}     ; store all registers onto the stack
-
-    ; LDR R11, [R12]
 
     MOV R0, #0
     MOV R1, R0
@@ -1421,22 +1491,6 @@ batman_not_falling:
 batman_is_falling:
     STR R8, [R10, #sprite_frame]
 
-    .ifne DEBUG
-        MOV R1, #0b000011111111
-        BL vidc_set_border_colour
-    .endif
-
-    .ifne DEBUG
-        MOV R1, #0b111100001111
-        BL vidc_set_border_colour
-    .endif
-
-
-    .ifne DEBUG
-        MOV R1, #0b000011110000
-        BL vidc_set_border_colour
-    .endif
-
     ADR R0, level_1_map_types
     ADR R9, bat_bullets
     MOV R8, #0
@@ -1643,9 +1697,6 @@ monotonic_time:
 
 monotonic_time_delta:
     .4byte 0
-
-; pointer_mask:
-;     .4byte 0x0000ff00
 
 .set batman_frame, sprite_00_frame
 .set batman_x, sprite_00_x
