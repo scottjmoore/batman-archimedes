@@ -906,21 +906,21 @@ draw_line:
     STMFD SP!, {R0 - R12, LR}
 
     CMP R1, #0
-    BLT draw_line_exit
+    MOVLT R1, #0
     CMP R2, #0
-    BLT draw_line_exit
+    MOVLT R2, #0
     CMP R1, #SCANLINE
-    BGE draw_line_exit
+    MOVGE R1, #SCANLINE-1
     CMP R2, #SCANLINE
-    BGE draw_line_exit
+    MOVGE R2, #SCANLINE-1
     CMP R3, #0
-    BLT draw_line_exit
+    MOVLT R3,#0
     CMP R4, #0
-    BLT draw_line_exit
-    CMP R3, #CLIP_BOTTOM
-    BGE draw_line_exit
+    MOVLT R4, #0
+    CMP R3, #CLIP_RIGHT
+    MOVGE R3, #CLIP_RIGHT-1
     CMP R4, #CLIP_BOTTOM
-    BGE draw_line_exit
+    MOVGE R4, #CLIP_BOTTOM-1
 
     CMP R1, R3
     SUBLE R6, R3, R1
@@ -936,9 +936,11 @@ draw_line:
 
     CMP R6, R8
     MOVGT R10, R6, ASR #2
-    MOVLE R12, #0
-    SUBLE R12, R12, R8
-    MOVLE R10, R12, ASR #2
+    BGT draw_line_loop
+
+    MOV R12, #0
+    SUB R12, R12, R8
+    MOV R10, R12, ASR #2
 
 draw_line_loop:
     TEQ R1, R3
@@ -1223,24 +1225,26 @@ main_draw_tile_map_loop:
 
     BL draw_tile_map
 
-    STMFD SP!, {R0 - R4}
+    STMFD SP!, {R0 - R6}
     MOV R0, #0xcaca0000
     ORR R0, R0, #0x7f00
     ORR R0, R0, #0xca
-    LDR R1, batman_x
-    ADD R1, R1, #16
+    LDR R3, tilemap_x
+    LDR R4, tilemap_y
+    LDR R1, sprite_30_x
+    LDR R2, sprite_30_y
     SUB R1, R1, R3
-    LDR R2, batman_y
-    SUB R2, R2, #24
     SUB R2, R2, R4
-    MOV R5, R3
-    MOV R6, R4
-    LDR R3, sprite_30_x
+    LDR R5, tilemap_x
+    LDR R6, tilemap_y
+    LDR R3, sprite_00_x
+    LDR R4, sprite_00_y
+    ADD R3, R3, #16
     SUB R3, R3, R5
-    LDR R4, sprite_30_y
     SUB R4, R4, R6
+    SUB R4, R4, #24
     BL draw_line
-    LDMFD SP!, {R0 - R4}
+    LDMFD SP!, {R0 - R6}
 
     BL calculate_sprite_collisions
     BL draw_sprites
