@@ -1001,7 +1001,7 @@ initialise:
     SPRITE sprite_14, draw_enemies_sprite, 0, 16*16, 31*16, 0xff00, 32, 48, 0, 48, 7, 7, 8, 0
     SPRITE sprite_15, draw_enemies_sprite, 1, 5*16, 39*16, 0xff00, 32, 48, 0, 48, 7, 7, 8, 0
     SPRITE sprite_30, draw_bat_hook_sprite, 0, 60, 90, 0xff00, 7, 4, 3, 2, 0, 0, 0, 0
-    SPRITE sprite_31, draw_pointers_sprite, 0, 160, 160, 0xff00, 11, 11, -16, 0, 0, 0, 0, 0
+    SPRITE sprite_31, draw_pointers_sprite, 0, 160, 160, 1<<30|0xff00, 11, 11, -16, 0, 0, 0, 0, 0
 
 initialise_exit:
     LDMFD SP!, {R0 - R12, PC}     ; restore all registers from the stack, and load saved R14 link registger into PC

@@ -627,8 +627,7 @@ draw_16x16_tile_clipped_top_unclipped_left_right:
     MOV R7, #SCANLINE             ; put the width of a scanline into R7
     MOV R11, R4              ; move destination address into R11
     ADD R11, R11, R2          ; add x to the destination address
-    MOV R7, #CLIP_TOP        ; move 0 into R7
-    SUB R7, R7, R3            ; subtract y coordinate (-15...-1) from 0 to calculate how many tile lines to clip
+    RSB R7, R3, #CLIP_TOP       ; subtract y coordinate (-15...-1) from 0 to calculate how many tile lines to clip
 
     CMP R8, #0b00                                                ; check if x coordinate is word aligned
     BEQ draw_16x16_tile_clipped_top_unclipped_left_right_00     ;   if so, call word aligned draw function
@@ -693,8 +692,7 @@ draw_16x16_tile_clipped_bottom_unclipped_left_right:
     MOV R7, #SCANLINE             ; put the width of a scanline into R7
     MLA R11, R3, R7, R4        ; calculate the address of the destination [destination = (y * 320) + address of screen or buffer]
     ADD R11, R11, R2          ; add x to the destination address
-    MOV R7, #CLIP_BOTTOM     ; move clip bottom scanline into R7
-    SUB R7, R7, R3            ; subtract y coordinate from clip bottom scanline to calculate how many tile lines to draw
+    RSB R7, R3, #CLIP_BOTTOM    ; subtract y coordinate from clip bottom scanline to calculate how many tile lines to draw
 
     CMP R8, #0b00                                                    ; check if x coordinate is word aligned
     BEQ draw_16x16_tile_clipped_bottom_unclipped_left_right_00      ;   if so, call word aligned draw function
@@ -707,30 +705,26 @@ draw_16x16_tile_clipped_bottom_unclipped_left_right:
 
 draw_16x16_tile_clipped_bottom_unclipped_left_right_00:
     ADRL R0, draw_16x16_tile_unclipped_00    ; get address of word aligned draw function into R0
-    MOV R1, #16                              ; move 16 into R1
-    SUB R7, R1, R7                            ; calculate number of tile rows to clip : 16 - draw_y
+    RSB R7, R7, #16                            ; calculate number of tile rows to clip : 16 - draw_y
     MOV R1, #3 * 4                           ; put length of instructions needed per scanline
     MLA R0, R1, R7, R0                         ; calculate code start address : (12 * clip_y) + code_start_address
     MOV PC, R0                               ; move calculated code start address into program counter
 
 draw_16x16_tile_clipped_bottom_unclipped_left_right_01:
     ADRL R0, draw_16x16_tile_unclipped_01    ; get address of byte 1 aligned draw function into R0
-    MOV R1, #16                              ; move 16 into R1
-    SUB R7, R1, R7                            ; calculate number of tile rows to clip : 16 - draw_y
+    RSB R7, R7, #16                            ; calculate number of tile rows to clip : 16 - draw_y
     MOV R1, #8 * 4                           ; put length of instructions needed per scanline
     MLA R0, R1, R7, R0                         ; calculate code start address : (32 * clip_y) + code_start_address
     MOV PC, R0                               ; move calculated code start address into program counter
 draw_16x16_tile_clipped_bottom_unclipped_left_right_10:
     ADRL R0, draw_16x16_tile_unclipped_10    ; get address of byte 2 aligned draw function into R0
-    MOV R1, #16                              ; move 16 into R1
-    SUB R7, R1, R7                            ; calculate number of tile rows to clip : 16 - draw_y
+    RSB R7, R7, #16                            ; calculate number of tile rows to clip : 16 - draw_y
     MOV R1, #10 * 4                          ; put length of instructions needed per scanline
     MLA R0, R1, R7, R0                         ; calculate code start address : (40 * clip_y) + code_start_address
     MOV PC, R0                               ; move calculated code start address into program counter
 draw_16x16_tile_clipped_bottom_unclipped_left_right_11:
     ADRL R0, draw_16x16_tile_unclipped_11    ; get address of byte 3 aligned draw function into R0
-    MOV R1, #16                              ; move 16 into R1
-    SUB R7, R1, R7                            ; calculate number of tile rows to clip : 16 - draw_y
+    RSB R7, R7, #16                            ; calculate number of tile rows to clip : 16 - draw_y
     MOV R1, #8 * 4                           ; put length of instructions needed per scanline
     MLA R0, R1, R7, R0                         ; calculate code start address : (32 * clip_y) + code_start_address
     MOV PC, R0                               ; move calculated code start address into program counter
