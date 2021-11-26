@@ -860,7 +860,7 @@ clear_edges_loop:
     STMIA R11, {R0 - R7}
     
 clear_edges_exit:
-    LDMFD SP!, {R0 - R12, PC}     ; restore all registers from the stack, and load saved R14 link registger into PC
+    LDMFD SP!, {R0 - R12, PC}     ; restore all registers from the stack, and load saved R14 link register into PC
 
 
 ;   ****************************************************************
@@ -1004,7 +1004,7 @@ initialise:
     SPRITE sprite_31, draw_pointers_sprite, 0, 160, 160, 1<<30|0xff00, 11, 11, -16, 0, 0, 0, 0, 0
 
 initialise_exit:
-    LDMFD SP!, {R0 - R12, PC}     ; restore all registers from the stack, and load saved R14 link registger into PC
+    LDMFD SP!, {R0 - R12, PC}     ; restore all registers from the stack, and load saved R14 link register into PC
 
 
 ;   ****************************************************************
@@ -1052,7 +1052,7 @@ draw_intro_screen:
     ;   Scroll intro screen onto display and draw intro text as it scrolls up
 
 draw_intro_screen_exit:
-    LDMFD SP!, {R0 - R12, PC}     ; restore all registers from the stack, and load saved R14 link registger into PC
+    LDMFD SP!, {R0 - R12, PC}     ; restore all registers from the stack, and load saved R14 link register into PC
 
 
 ;   ****************************************************************
@@ -1076,7 +1076,7 @@ clear_display_buffers:
     BL copy_4byte_to_screen
 
 clear_display_buffers_exit:
-    LDMFD SP!, {R0 - R12, PC}     ; restore all registers from the stack, and load saved R14 link registger into PC
+    LDMFD SP!, {R0 - R12, PC}     ; restore all registers from the stack, and load saved R14 link register into PC
 
 
 ;   ****************************************************************
@@ -1094,7 +1094,7 @@ setup_custom_display_mode_352x256:
     BL vidc_set_HDER
 
 setup_custom_display_mode_352x256_exit:
-    LDMFD SP!, {R0 - R12, PC}     ; restore all registers from the stack, and load saved R14 link registger into PC
+    LDMFD SP!, {R0 - R12, PC}     ; restore all registers from the stack, and load saved R14 link register into PC
 
 
 ;   ****************************************************************
@@ -1115,7 +1115,7 @@ setup_custom_display_mode_352x216:
     BL vidc_set_VDER
 
 setup_custom_display_mode_352x216_exit:
-    LDMFD SP!, {R0 - R12, PC}     ; restore all registers from the stack, and load saved R14 link registger into PC
+    LDMFD SP!, {R0 - R12, PC}     ; restore all registers from the stack, and load saved R14 link register into PC
 
 
 ;   ****************************************************************
@@ -1140,7 +1140,7 @@ draw_status_bar:
     BL copy_buffer_to_screen
 
 draw_status_bar_exit:
-    LDMFD SP!, {R0 - R12, PC}     ; restore all registers from the stack, and load saved R14 link registger into PC
+    LDMFD SP!, {R0 - R12, PC}     ; restore all registers from the stack, and load saved R14 link register into PC
 
 
 ;   ****************************************************************
@@ -1190,7 +1190,7 @@ update_game_loop_key_state:
     STR R2, [R12, #game_loop_key_state_quit_offset]
 
 update_game_loop_key_state_exit:
-    LDMFD SP!, {R0 - R12, PC}     ; restore all registers from the stack, and load saved R14 link registger into PC
+    LDMFD SP!, {R0 - R12, PC}     ; restore all registers from the stack, and load saved R14 link register into PC
 
 
 ;   ****************************************************************
