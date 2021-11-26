@@ -938,8 +938,9 @@ draw_line:
     MOVGT R10, R6, ASR #2
     BGT draw_line_loop
 
-    MOV R12, #0
-    SUB R12, R12, R8
+    ; MOV R12, #0
+    ; SUB R12, R12, R8
+    RSB R12, R8, #0
     MOV R10, R12, ASR #2
 
 draw_line_loop:
@@ -953,8 +954,9 @@ draw_line_loop:
     MOV R0, R0, ROR #8
 
     MOV R5, R10
-    MOV R12, #0
-    SUB R12, R12, R6
+    ; MOV R12, #0
+    ; SUB R12, R12, R6
+    RSB R12, R6, #0
     CMP R5, R12
     SUBGT R10, R10, R8
     ADDGT R1, R1, R7
