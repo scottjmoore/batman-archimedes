@@ -176,8 +176,9 @@ for infile, outfile in zip(args.infile, args.outfile):
 
             f_out.write('\tCMP R2,#0\n')
             f_out.write('\tBGE '+label_name+f'_sprite_{tile}_scanline_0\n')
-            f_out.write('\tMOV R0,#0\n')
-            f_out.write('\tSUB R0,R0,R2\n')
+            # f_out.write('\tMOV R0,#0\n')
+            # f_out.write('\tSUB R0,R0,R2\n')
+            f_out.write('\tRSB R0,R2,#0\n')
             f_out.write('\tMOV R0,R0,LSL #2\n')
 
             if (allow_flip_y == True):
@@ -186,8 +187,9 @@ for infile, outfile in zip(args.infile, args.outfile):
                 f_out.write('\n'+label_name+f'_sprite_{tile}_flip_y:\n')
                 f_out.write('\tCMP R2,#'+f'{CLIP_BOTTOM}\n')
                 f_out.write('\tBLT '+label_name+f'_sprite_{tile}_scanline_0\n')
-                f_out.write('\tMOV R0,#'+f'{CLIP_BOTTOM-1}\n')
-                f_out.write('\tSUB R0,R2,R0\n')
+                # f_out.write('\tMOV R0,#'+f'{CLIP_BOTTOM-1}\n')
+                # f_out.write('\tSUB R0,R2,R0\n')
+                f_out.write('\tRSB R0,R2,#'+f'{CLIP_BOTTOM-1}\n')
                 f_out.write('\tMOV R0,R0,LSL #2\n')
                 f_out.write('\n'+label_name+f'_sprite_{tile}_skip_flip_y:\n')
 
