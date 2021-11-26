@@ -113,6 +113,10 @@ swap_display_buffers:
     STR R1, [R2, #0]
     STR R0, [R2, #4]
     MOV R0, R1
+
+        DEBUG_REGISTERS
+        DEBUG_MEMORY -2
+
     BL memc_set_display_start
 
 swap_display_buffers_exit:
@@ -1328,15 +1332,32 @@ No_L_Key:
     MOVLE R4, #0
 
 No_P_Key:
+    ADR R10, sprite_00
+    LDR R1, [R10, #sprite_x]
+    LDR R2, [R10, #sprite_y]
+    SUB R1, R1, R3
+    SUB R2, R2, R4
+    CMP R1, #96
+    SUBLT R3, R3, #1
+    CMP R3, #0
+    MOVLT R3, #0
+    CMP R1, #224
+    ADDGE R3, R3, #1
+    CMP R2, #80
+    SUBLT R4, R4, #1
+    CMP R4, #0
+    MOVLT R4, #0
+    CMP R2, #144
+    ADDGE R4, R4, #1
     STR R3, tilemap_x
     STR R4, tilemap_y
     ADR R0, sprite_world_offset
     STR R3, [R0, #0]
     STR R4, [R0, #4]
+
     BL update_game_loop_key_state
 
-    ADR R2, game_loop_key_state
-    LDR R1, [R2, #game_loop_key_state_up_offset]
+    LDR R1, game_loop_key_state+game_loop_key_state_up_offset
     CMP R1, #255
     BNE No_Up_Pressed
     LDR R0, batman_blocked
@@ -1376,7 +1397,7 @@ Up_Pressed_On_Ladder:
     STR R0, [R1, #sprite_frame]
 
 No_Up_Pressed:
-    LDR R1, [R2, #game_loop_key_state_down_offset]
+    LDR R1, game_loop_key_state+game_loop_key_state_down_offset
     CMP R1, #255
     BNE No_Down_Pressed
     LDR R0, batman_blocked
@@ -1405,7 +1426,7 @@ No_Up_Pressed:
     STR R0, [R1, #sprite_frame]
 
 No_Down_Pressed:
-    LDR R1, [R2, #game_loop_key_state_left_offset]
+    LDR R1, game_loop_key_state+game_loop_key_state_left_offset
     CMP R1, #255
     BNE No_Left_Pressed
     LDR R0, batman_blocked
@@ -1428,7 +1449,7 @@ No_Down_Pressed:
     B No_Right_Pressed
 
 No_Left_Pressed:
-    LDR R1, [R2, #game_loop_key_state_right_offset]
+    LDR R1, game_loop_key_state+game_loop_key_state_right_offset
     CMP R1, #255
     BNE No_Right_Pressed
     LDR R0, batman_blocked
@@ -1451,7 +1472,7 @@ No_Left_Pressed:
     STR R0, [R1, #sprite_frame]
 
 No_Right_Pressed:
-    LDR R1, [R2, #game_loop_key_state_fire_offset]
+    LDR R1, game_loop_key_state+game_loop_key_state_fire_offset
     CMP R1, #255
     BNE No_Fire_Pressed
     LDR R1, bat_bullet_debounce
@@ -1495,8 +1516,7 @@ No_Fire_Pressed:
     STR R1, bat_bullet_debounce
 
 Fire_Debounce:
-    ADR R0, game_loop_key_state
-    LDR R1, [R0, #game_loop_key_state_quit_offset]
+    LDR R1, game_loop_key_state+game_loop_key_state_quit_offset
     CMP R1, #255
     BEQ main_exit
 
@@ -1783,29 +1803,6 @@ skip_sprite_15_delete:
     STR R0, frame_count
 
     LDMFD SP!, {R0 - R8}
-
-    ADR R0, level_1_map_types
-    LDR R3, tilemap_x
-    LDR R4, tilemap_y
-    ADR R10, sprite_00
-    LDR R1, [R10, #sprite_x]
-    LDR R2, [R10, #sprite_y]
-    SUB R1, R1, R3
-    SUB R2, R2, R4
-    CMP R1, #96
-    SUBLT R3, R3, #1
-    CMP R3, #0
-    MOVLT R3, #0
-    CMP R1, #224
-    ADDGE R3, R3, #1
-    CMP R2, #80
-    SUBLT R4, R4, #1
-    CMP R4, #0
-    MOVLT R4, #0
-    CMP R2, #144
-    ADDGE R4, R4, #1
-    STR R3, tilemap_x
-    STR R4, tilemap_y
 
     DRAW_DEBUG
 
