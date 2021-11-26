@@ -650,10 +650,8 @@ draw_tile_map:
     MOV R9, R4           ; put tilemap start y-coordinate into R9
 
     MOV R4, R11
-    MOV R7, #0
-    SUB R2, R7, R5
-    ADD R2, R2, #16
-    SUB R3, R7, R6
+    RSB R2, R5, #16
+    RSB R3, R6, #0
 
 draw_tile_map_y_loop:
     MOV R7, #21
