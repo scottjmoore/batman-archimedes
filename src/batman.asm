@@ -1203,6 +1203,7 @@ update_collision_state:
     SUB R3, R3, #16
     LDR R4, [R10, #sprite_y]
     LDR R5, batman_blocked
+    MOV R11, R5
     AND R5, R5, #IS_FALLING
     LDR R7, [R10, #sprite_width]
     LDR R9, [R10, #sprite_height]
@@ -1326,32 +1327,38 @@ update_collision_state:
 ;         ORREQ R6, R6, #100
 ;     .endif    
     
-;     ADR R9, sprite_01
-;     TST R5, #0b10000000
-;     BEQ batman_not_falling
+    ADR R9, sprite_01
+    TST R5, #IS_FALLING
+    BEQ batman_not_falling
     
-;     MOV R8, #9 * 16
-;     LDMIA R10!, {R0 - R4}
-;     MOV R1, #8 * 16
-;     TST R4, #1 << 31
-;     SUBEQ R2, R2, #32
-;     ADDNE R2, R2, #32
-;     STMIA R9!, {R0 - R4}
-;     LDMIA R10!, {R0 - R4}
-;     STMIA R9!, {R0 - R4}
-;     SUB R9, R9, #40
-;     SUB R10, R10, #40
-;     B update_collision_state_exit
+    MOV R8, #9 * 16
+    LDMIA R10!, {R0 - R4}
+    MOV R1, #8 * 16
+    TST R4, #1 << 31
+    SUBEQ R2, R2, #32
+    ADDNE R2, R2, #32
+    STMIA R9!, {R0 - R4}
+    LDMIA R10!, {R0 - R4}
+    STMIA R9!, {R0 - R4}
+    SUB R9, R9, #40
+    SUB R10, R10, #40
+    B update_collision_state_exit
 
-; batman_not_falling:
-;     MOV R0, #0
-;     STR R0, [R9, #sprite_function]
-;     STR R0, [R9, #sprite_x]
-;     STR R0, [R9, #sprite_y]
-;     TST R7, #0b10000000
-;     MOVNE R8, #10 * 16
+batman_not_falling:
+    MOV R0, #0
+    STR R0, [R9, #sprite_function]
+    STR R0, [R9, #sprite_x]
+    STR R0, [R9, #sprite_y]
+    TST R7, #IS_FALLING
+    MOVNE R8, #10 * 16
 
 update_collision_state_exit:
+    TST R11, #IS_FALLING
+    BEQ .0000
+    TST R5, #IS_FALLING
+    BNE .0000
+    MOV R8, #0
+.0000:
     LDR R4, [R10, #sprite_y]
     TST R5, #IS_FALLING
     ADDNE R4, R4, #1
