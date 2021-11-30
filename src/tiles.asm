@@ -13,13 +13,9 @@
 .ifndef __TILES_ASM
     .set    __TILES_ASM,    -1
 
-    .set    CLIP_TOP,       0
-    .set    CLIP_BOTTOM,    184 - 16
-    .set    CLIP_LEFT,      0
-    .set    CLIP_RIGHT,     352
+    .include "constants.asm"
 
-    .set    SCANLINE,       352
-
+    
 ;   ****************************************************************
 ;       draw_16x16_tile
 ;   ----------------------------------------------------------------
@@ -291,7 +287,7 @@ draw_16x16_tile_unclipped_10:
     MOV R0, R0, LSL #16       ; mask out the destination we want to keep by shifting
     MOV R9, R5, LSL #16       ; get the shifted end of the tile into R9
     MOV R5, R5, LSR #16       ; mask out the shifted end of the tile
-    MOV R9, R9, LSR #16       ; shift back to the right bit position
+ MOV R9, R9, LSR #16       ; shift back to the right bit position
     MOV R5, R5, LSL #16       ; shift back to the right bit position
     ORR R5, R5, R0, LSR #16    ; put back the destination pixels we need to keep and shift them into the correct position
     STMIA R11, {R5 - R9}       ; store 20 bytes from R5 - R9 to the destination address with incrementing it

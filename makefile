@@ -1,8 +1,10 @@
 SRC = 		src/batman.asm \
+			src/constants.asm \
 			src/tiles.asm \
 			src/sprites.asm \
 			src/vidc.asm \
 			src/memc.asm \
+			src/macros.asm \
 			src/debug.asm
 
 BUILD = 	build/level-1.bin \
@@ -69,7 +71,7 @@ build/main_title.asm: assets/images/main_title.png makefile
 	$(PNG2ASM) \
 		-i assets/images/main_title.png \
 		-o build/main_title.asm \
-		-sw 352 -sh 256
+		-sw 320 -sh 256
 
 
 build/intro_screen.bin: build/intro_screen.asm makefile
@@ -81,7 +83,7 @@ build/intro_screen.asm: assets/images/intro_screen.png makefile
 	$(PNG2ASM) \
 		-i assets/images/intro_screen.png \
 		-o build/intro_screen.asm \
-		-sw 352 -sh 256
+		-sw 320 -sh 256
 
 
 build/status_bar.bin: build/status_bar.asm makefile

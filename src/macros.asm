@@ -33,7 +33,8 @@
     .endm    
 
     .macro MVL r, a
-        MOV \r, #\a & 0x0000ffff
-        ORR \r, \r, #\a & 0xffff0000
+        MOV \r, #\a&0x0000ffff
+        ORR \r, \r, #\a&0x00ff0000
+        ORR \r, \r, #\a&0xff000000
     .endm
 .endif

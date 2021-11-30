@@ -47,18 +47,15 @@ stack:
 ;   ****************************************************************
 ;       Include external source files
 ;   ****************************************************************
+    .include "constants.asm"
     .include "swi.asm"
     .include "vdu.asm"
     .include "macros.asm"
     .include "debug.asm"
-
     .include "memc.asm"
     .include "vidc.asm"
-
     .include "tiles.asm"
     .include "sprites.asm"
-
-    .set    SCANLINE,  352
 
 
 ;   ****************************************************************
@@ -113,9 +110,6 @@ swap_display_buffers:
     STR R1, [R2, #0]
     STR R0, [R2, #4]
     MOV R0, R1
-
-        DEBUG_REGISTERS
-        DEBUG_MEMORY -2
 
     BL memc_set_display_start
 
@@ -978,15 +972,16 @@ initialise:
     VDU VDU_SelectScreenMode, 15, -1, -1, -1, -1, -1, -1, -1, -1     ; change to mode 13 (320x256 256 colours) for A3000
     VDU VDU_SelectScreenMode, 13, -1, -1, -1, -1, -1, -1, -1, -1     ; change to mode 13 (320x256 256 colours) for A3000
     VDU VDU_MultiPurpose, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0                ; hide the disaply cursor
+
     ADR R0, vdu_variables_screen_start                      ; load address of OS_ReadVduVariables input block into R0
     ADR R1, vdu_variables_buffer                            ; load address of OS_ReadVduVariables output block into R1
     SWI OS_ReadVduVariables                                 ; Call OS_ReadVduVariables SWI
 
-    LDR R0, [R1, #0]
-    ADD R0, R0, #SCANLINE
-    STR R0, [R1, #0]
-    ADD R0, R0, #SCANLINE*233
-    STR R0, [R1, #4]
+    MOV R1, #320*256
+    MOV R1, R1, LSR #2
+    STR R1, memc_address_screen_start
+    MOV R1, #0
+    STR R1, memc_address_screen_start+4
 
     SPRITE sprite_00, draw_batman_sprite, 0, 4*16, 3*16, 0xff00, 32, 48, 0, 48, 5, 5, 8, 0
     SPRITE sprite_01, draw_batman_sprite, 0, -1, -1, 0xff00, 32, 48, 0, 48, 16, 16, 24, 24
@@ -1027,6 +1022,7 @@ draw_title_screen:
     MOV R3, #0                       ; set R3 to 0 to use load address in R2
 
     SWI OS_File                     ; load file
+    BL swap_display_buffers
     SWI OS_ReadC                    ; wait for keypress
 
 draw_title_screen_exit:
@@ -1050,6 +1046,7 @@ draw_intro_screen:
     MOV R3, #0                       ; set R3 to 0 to use load address in R2
 
     SWI OS_File                     ; load file
+    BL swap_display_buffers
     SWI OS_ReadC                    ; wait for keypress
 
     ;   TODO
@@ -1084,24 +1081,6 @@ clear_display_buffers_exit:
 
 
 ;   ****************************************************************
-;       setup_custom_display_mode_352x256
-;   ----------------------------------------------------------------
-;       Setup our custom VIDC display mode (352x256)
-;   ----------------------------------------------------------------
-setup_custom_display_mode_352x256:
-    STMFD SP!, {R0 - R12, LR}
-
-    MOV R1, #45
-    BL vidc_set_HDSR
-    
-    MOV R1, #221
-    BL vidc_set_HDER
-
-setup_custom_display_mode_352x256_exit:
-    LDMFD SP!, {R0 - R12, PC}     ; restore all registers from the stack, and load saved R14 link register into PC
-
-
-;   ****************************************************************
 ;       setup_custom_display_mode_352x216
 ;   ----------------------------------------------------------------
 ;       Setup our custom VIDC display mode (352x216)
@@ -1117,6 +1096,19 @@ setup_custom_display_mode_352x216:
     BL vidc_set_VDSR
     MOV R1, #271
     BL vidc_set_VDER
+
+    ADR R0, vdu_variables_screen_start                      ; load address of OS_ReadVduVariables input block into R0
+    ADR R1, vdu_variables_buffer                            ; load address of OS_ReadVduVariables output block into R1
+    SWI OS_ReadVduVariables                                 ; Call OS_ReadVduVariables SWI
+    LDR R0, [R1, #0]
+    ADD R0, R0, #352*216
+    STR R0, [R1, #4]
+
+    MOV R1, #352*216
+    MOV R1, R1, LSR #2
+    STR R1, memc_address_screen_start
+    MOV R1, #0
+    STR R1, memc_address_screen_start+4
 
 setup_custom_display_mode_352x216_exit:
     LDMFD SP!, {R0 - R12, PC}     ; restore all registers from the stack, and load saved R14 link register into PC
@@ -1140,7 +1132,7 @@ draw_status_bar:
     MOV R2, #53
     BL copy_buffer_to_screen
 
-    ADD R1, R1, #SCANLINE*233
+    ADD R1, R1, #SCANLINE*216
     BL copy_buffer_to_screen
 
 draw_status_bar_exit:
@@ -1207,7 +1199,6 @@ main:
     SWI OS_EnterOS          ; enter supervisor mode
 
     BL initialise
-    BL setup_custom_display_mode_352x256
     BL draw_title_screen
     BL draw_intro_screen
     BL setup_custom_display_mode_352x216

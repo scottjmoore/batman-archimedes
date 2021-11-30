@@ -4,7 +4,6 @@
 
     .include "swi.asm"
 
-    ; VDU function values
     .set VDU_ClearTextViewport, 12
     .set VDU_DefineTextColour, 17
     .set VDU_DefineGraphicsColour, 18

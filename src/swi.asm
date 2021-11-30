@@ -1,7 +1,6 @@
 .ifndef __SWI_ASM
     .set    __SWI_ASM,    -1
 
-    ; SWI function values
     .set OS_WriteC, 0x00
     .set OS_WriteS, 0x01
     .set OS_Write0, 0x02

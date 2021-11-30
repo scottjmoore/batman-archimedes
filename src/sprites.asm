@@ -7,7 +7,6 @@
 .ifndef __SPRITES_ASM
     .set    __SPRITES_ASM,    -1
 
-
     .include    "macros.asm"
     .include    "debug.asm"
 
