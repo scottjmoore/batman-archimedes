@@ -1202,7 +1202,8 @@ update_collision_state:
     LDR R3, [R10, #sprite_x]
     SUB R3, R3, #16
     LDR R4, [R10, #sprite_y]
-    MOV R5, #0b00000000
+    LDR R5, batman_blocked
+    AND R5, R5, #IS_FALLING
     LDR R7, [R10, #sprite_width]
     LDR R9, [R10, #sprite_height]
     LDR R8, [R10, #sprite_frame]
@@ -1222,9 +1223,18 @@ update_collision_state:
     .endif
     CMP R1, #TILE_LADDER
     ORREQ R5, R5, #CAN_GO_DOWN_LADDER
+    BICEQ R5, R5, #IS_FALLING
     .ifne SPRITE_DEBUG
         ORREQ R6, R6, #100
     .endif
+    CMP R1, #TILE_PLATFORM
+    ORREQ R5, R5, #CAN_FALL_DOWN
+    BICEQ R5, R5, #IS_FALLING
+    .ifne SPRITE_DEBUG
+        ORREQ R6, R6, #116
+    .endif    
+    CMP R1, #TILE_BLOCKED
+    BICEQ R5, R5, #IS_FALLING
 
     SUB R4, R4, #1
     BL lookup_tilemap_tile
@@ -1233,6 +1243,11 @@ update_collision_state:
     .ifne SPRITE_DEBUG
         ORREQ R6, R6, #100
     .endif
+    CMP R1, #TILE_PLATFORM
+    ORREQ R5, R5, #IS_FALLING
+    .ifne SPRITE_DEBUG
+        ORREQ R6, R6, #116
+    .endif    
 
     SUB R3, R3, R7, LSR #2
     SUB R4, R4, R9, LSR #1
@@ -1553,9 +1568,24 @@ No_Up_Pressed:
     LDR R1, game_loop_key_state+game_loop_key_state_down_offset
     CMP R1, #255
     BNE No_Down_Pressed
+
     LDR R0, batman_blocked
+    TST R0, #IS_FALLING
+    BNE No_Down_Pressed
+
+    TST R0, #CAN_FALL_DOWN
+    BEQ Down_Pressed_Check_Ladder
+
+    ADR R1, sprite_00
+    LDR R0, [R1, #sprite_y]
+    ADD R0, R0, #1
+    STR R0, [R1, #sprite_y]
+    BAL No_Down_Pressed
+
+Down_Pressed_Check_Ladder:
     TST R0, #CAN_GO_DOWN_LADDER
     BEQ No_Down_Pressed
+
     ADR R1, sprite_00
     MOV R0, #48 - 3
     STR R0, [R1, #sprite_offset_y]
