@@ -19,9 +19,9 @@
 ;   ****************************************************************
 ;       stack
 ;   ----------------------------------------------------------------
-;       Reserve 256 bytes for our stack
+;       Reserve 1024 bytes for our stack
 ;   ----------------------------------------------------------------
-    .space 256
+    .space 1024
 stack:
 
 
@@ -1190,6 +1190,168 @@ update_game_loop_key_state_exit:
 
 
 ;   ****************************************************************
+;       update_collision_state
+;   ----------------------------------------------------------------
+;       Update collision state of main character and other sprites
+;   ----------------------------------------------------------------
+update_collision_state:
+    STMFD SP!, {R0 - R12, LR}
+
+    ADR R0, level_1_map_types
+    ADR R10, sprite_00
+    LDR R3, [R10, #sprite_x]
+    SUB R3, R3, #16
+    LDR R4, [R10, #sprite_y]
+    MOV R5, #0b00000000
+    LDR R7, [R10, #sprite_width]
+    LDR R9, [R10, #sprite_height]
+    LDR R8, [R10, #sprite_frame]
+
+    .ifne SPRITE_DEBUG
+        LDR R6, [R10, #sprite_attributes]
+        AND R6, R6, #0xffffff00
+    .endif
+
+    ADD R3, R3, R7, LSR #1
+    BL lookup_tilemap_tile
+
+    CMP R1, #TILE_CLEAR
+    ORREQ R5, R5, #IS_FALLING
+    .ifne SPRITE_DEBUG
+        ORREQ R6, R6, #116
+    .endif
+    CMP R1, #TILE_LADDER
+    ORREQ R5, R5, #CAN_GO_DOWN_LADDER
+    .ifne SPRITE_DEBUG
+        ORREQ R6, R6, #100
+    .endif
+
+    SUB R4, R4, #1
+    BL lookup_tilemap_tile
+    CMP R1, #TILE_LADDER
+    ORREQ R5, R5, #CAN_GO_UP_LADDER
+    .ifne SPRITE_DEBUG
+        ORREQ R6, R6, #100
+    .endif
+
+    SUB R3, R3, R7, LSR #2
+    SUB R4, R4, R9, LSR #1
+    BL lookup_tilemap_tile
+
+    CMP R1, #TILE_BLOCKED
+    ORREQ R5, R5, #BLOCKED_LEFT
+    .ifne SPRITE_DEBUG
+        ORREQ R6, R6, #20
+    .endif
+    MOVEQ R8, #0
+
+    ADD R3, R3, R7, LSR #1
+    BL lookup_tilemap_tile
+
+    CMP R1, #TILE_BLOCKED
+    ORREQ R5, R5, #BLOCKED_RIGHT
+    .ifne SPRITE_DEBUG
+        ORREQ R6, R6, #20
+    .endif
+    MOVEQ R8, #0
+
+;     ADD R4, R4, #1
+;     BL lookup_tilemap_tile
+
+;     CMP R1, #TILE_CLEAR
+;     ORREQ R5, R5, #0b10000000
+
+;     .ifne SPRITE_DEBUG
+;         ORREQ R6, R6, #116
+;     .endif
+
+;     CMP R1, #TILE_PLATFORM
+;     BNE batman_cant_drop
+;     ORR R5, R5, #0b01000000
+;     SUB R4, R4, #2
+;     BL lookup_tilemap_tile
+
+;     CMP R1, #TILE_PLATFORM
+;     MOVEQ R5, #0b10000000
+;     ORREQ R6, R6, #255
+;     MOVEQ R8, #0
+    
+;     .ifne SPRITE_DEBUG
+;         ORREQ R6, R6, #116
+;     .endif
+
+; batman_cant_drop:
+;     SUB R3, R3, R7, LSR #2
+;     SUB R4, R4, #22
+;     BL lookup_tilemap_tile
+    
+;     CMP R1, #TILE_BLOCKED
+;     ORREQ R5, R5, #0b00000001
+;     ORREQ R6, R6, #20
+;     MOVEQ R8, #0
+;     ADD R3, R3, R7, LSR #1
+;     BL lookup_tilemap_tile
+    
+;     CMP R1, #TILE_BLOCKED
+;     ORREQ R5, R5, #0b00000010
+;     MOVEQ R8, #0
+    
+;     .ifne SPRITE_DEBUG
+;         ORREQ R6, R6, #20
+;     .endif
+    
+;     SUB R3, R3, R7, LSR #2
+;     ADD R4, R4, #21
+;     BL lookup_tilemap_tile
+    
+;     CMP R1, #TILE_LADDER
+;     ORREQ R5, R5, #0b01000000
+    
+;     .ifne SPRITE_DEBUG
+;         ORREQ R6, R6, #100
+;     .endif    
+    
+;     ADR R9, sprite_01
+;     TST R5, #0b10000000
+;     BEQ batman_not_falling
+    
+;     MOV R8, #9 * 16
+;     LDMIA R10!, {R0 - R4}
+;     MOV R1, #8 * 16
+;     TST R4, #1 << 31
+;     SUBEQ R2, R2, #32
+;     ADDNE R2, R2, #32
+;     STMIA R9!, {R0 - R4}
+;     LDMIA R10!, {R0 - R4}
+;     STMIA R9!, {R0 - R4}
+;     SUB R9, R9, #40
+;     SUB R10, R10, #40
+;     B update_collision_state_exit
+
+; batman_not_falling:
+;     MOV R0, #0
+;     STR R0, [R9, #sprite_function]
+;     STR R0, [R9, #sprite_x]
+;     STR R0, [R9, #sprite_y]
+;     TST R7, #0b10000000
+;     MOVNE R8, #10 * 16
+
+update_collision_state_exit:
+    LDR R4, [R10, #sprite_y]
+    TST R5, #IS_FALLING
+    ADDNE R4, R4, #1
+    ; ANDNE R5, R5, #0b11111011
+    STR R4, [R10, #sprite_y]
+    STR R5, batman_blocked
+    .ifne SPRITE_DEBUG
+        STR R6, [R10, #sprite_attributes]
+    .endif
+    STR R8, [R10, #sprite_frame]
+
+    LDMFD SP!, {R0 - R12, PC}     ; restore all registers from the stack, and load saved R14 link register into PC
+
+
+;   ****************************************************************
 ;       main
 ;   ----------------------------------------------------------------
 ;       Entry point of applicataion
@@ -1352,7 +1514,7 @@ No_P_Key:
     CMP R1, #255
     BNE No_Up_Pressed
     LDR R0, batman_blocked
-    TST R0, #0b00100000
+    TST R0, #CAN_GO_UP_LADDER
     BNE Up_Pressed_On_Ladder
     ADR R1, sprite_00
     ADR R2, sprite_30
@@ -1392,7 +1554,7 @@ No_Up_Pressed:
     CMP R1, #255
     BNE No_Down_Pressed
     LDR R0, batman_blocked
-    TST R0, #0b01000000
+    TST R0, #CAN_GO_DOWN_LADDER
     BEQ No_Down_Pressed
     ADR R1, sprite_00
     MOV R0, #48 - 3
@@ -1533,140 +1695,8 @@ Fire_Debounce:
     STR R2, [R6, #sprite_x]
     STR R3, [R6, #sprite_y]
 
-    ADR R0, level_1_map_types
-    ADR R10, sprite_00
-    LDR R3, [R10, #sprite_x]
-    LDR R4, [R10, #sprite_y]
-    LDR R7, [R10, #sprite_width]
-    LDR R8, [R10, #sprite_frame]
-    MOV R5, #0b00000000
-    LDR R7, batman_blocked
+    BL update_collision_state
 
-    .ifne SPRITE_DEBUG
-        LDR R6, [R10, #sprite_attributes]
-        AND R6, R6, #0xffffff00
-    .endif
-
-    BL lookup_tilemap_tile
-
-    CMP R1, #TILE_CLEAR
-    ORREQ R5, R5, #0b10000000
-
-    .ifne SPRITE_DEBUG
-        ORREQ R6, R6, #116
-    .endif
-
-    CMP R1, #TILE_LADDER
-    ORREQ R5, R5, #0b01000000
-
-    .ifne SPRITE_DEBUG
-        ORREQ R6, R6, #100
-    .endif
-
-    ADD R4, R4, #1
-    BL lookup_tilemap_tile
-
-    CMP R1, #TILE_CLEAR
-    ORREQ R5, R5, #0b10000000
-
-    .ifne SPRITE_DEBUG
-        ORREQ R6, R6, #116
-    .endif
-
-    CMP R1, #TILE_PLATFORM
-    BNE batman_cant_drop
-    ORR R5, R5, #0b01000000
-    SUB R4, R4, #2
-    BL lookup_tilemap_tile
-
-    CMP R1, #TILE_PLATFORM
-    MOVEQ R5, #0b10000000
-    ORREQ R6, R6, #255
-    MOVEQ R8, #0
-    
-    .ifne SPRITE_DEBUG
-        ORREQ R6, R6, #116
-    .endif
-
-batman_cant_drop:
-    SUB R3, R3, R7, LSR #2
-    SUB R4, R4, #22
-    BL lookup_tilemap_tile
-    
-    CMP R1, #TILE_BLOCKED
-    ORREQ R5, R5, #0b00000001
-    ORREQ R6, R6, #20
-    MOVEQ R8, #0
-    ADD R3, R3, R7, LSR #1
-    BL lookup_tilemap_tile
-    
-    CMP R1, #TILE_BLOCKED
-    ORREQ R5, R5, #0b00000010
-    MOVEQ R8, #0
-    
-    .ifne SPRITE_DEBUG
-        ORREQ R6, R6, #20
-    .endif
-    
-    SUB R3, R3, R7, LSR #2
-    ADD R4, R4, #21
-    BL lookup_tilemap_tile
-    
-    CMP R1, #TILE_LADDER
-    ORREQ R5, R5, #0b01000000
-    
-    .ifne SPRITE_DEBUG
-        ORREQ R6, R6, #100
-    .endif
-    
-    SUB R4, R4, #1
-    BL lookup_tilemap_tile
-
-    CMP R1, #TILE_LADDER
-    ORREQ R5, R5, #0b00100000
-
-    .ifne SPRITE_DEBUG
-        ORREQ R6, R6, #100
-    .endif
-
-    LDR R4, [R10, #sprite_y]
-    TST R5, #0b10000000
-    ADDNE R4, R4, #1
-    ANDNE R5, R5, #0b11111011
-    STR R4, [R10, #sprite_y]
-    STR R5, batman_blocked
-    
-    .ifne SPRITE_DEBUG
-        STR R6, [R10, #sprite_attributes]
-    .endif
-    
-    ADR R9, sprite_01
-    TST R5, #0b10000000
-    BEQ batman_not_falling
-    
-    MOV R8, #9 * 16
-    LDMIA R10!, {R0 - R4}
-    MOV R1, #8 * 16
-    TST R4, #1 << 31
-    SUBEQ R2, R2, #32
-    ADDNE R2, R2, #32
-    STMIA R9!, {R0 - R4}
-    LDMIA R10!, {R0 - R4}
-    STMIA R9!, {R0 - R4}
-    SUB R9, R9, #40
-    SUB R10, R10, #40
-    B batman_is_falling
-
-batman_not_falling:
-    MOV R0, #0
-    STR R0, [R9, #sprite_function]
-    STR R0, [R9, #sprite_x]
-    STR R0, [R9, #sprite_y]
-    TST R7, #0b10000000
-    MOVNE R8, #10 * 16
-
-batman_is_falling:
-    STR R8, [R10, #sprite_frame]
     ADR R0, level_1_map_types
     ADR R9, bat_bullets
     MOV R8, #0

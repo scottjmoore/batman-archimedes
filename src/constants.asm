@@ -31,7 +31,8 @@
     .set    BLOCKED_UP,             1<<3
     
     .set    PLATFORM_BELOW,         1<<4
-    .set    LADDER,                 1<<5
-    .set    FALLING,                1<<6
+    .set    CAN_GO_DOWN_LADDER,     1<<5
+    .set    CAN_GO_UP_LADDER,       1<<6
+    .set    IS_FALLING,             1<<7
     
 .endif
