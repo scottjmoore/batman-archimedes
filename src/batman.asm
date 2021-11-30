@@ -1363,6 +1363,7 @@ update_collision_state_exit:
     TST R5, #IS_FALLING
     ADDNE R4, R4, #1
     ; ANDNE R5, R5, #0b11111011
+    BICNE R5, R5, #CAN_GO_DOWN_LADDER|CAN_GO_UP_LADDER
     STR R4, [R10, #sprite_y]
     STR R5, batman_blocked
     .ifne SPRITE_DEBUG
