@@ -1202,7 +1202,7 @@ update_collision_state:
     LDR R3, [R10, #sprite_x]
     SUB R3, R3, #16
     LDR R4, [R10, #sprite_y]
-    LDR R5, batman_blocked
+    LDR R5, batman_state
     MOV R11, R5
     AND R5, R5, #IS_FALLING
     LDR R7, [R10, #sprite_width]
@@ -1357,15 +1357,24 @@ update_collision_state_exit:
     BEQ .0000
     TST R5, #IS_FALLING
     BNE .0000
-    MOV R8, #0
+    LDR R7, batman_fall_count
+    CMP R7,#FATAL_FALL_HEIGHT
+    ORRGT R5, R5, #IS_DEAD
+    CMP R7, #NO_CROUCH_FALL_HEIGHT
+    MOVGT R8, #10 * 16
+    MOVLE R8, #0 * 16
+    MOV R7, #0
+    STR R7, batman_fall_count
 .0000:
     LDR R4, [R10, #sprite_y]
+    LDR R7, batman_fall_count
     TST R5, #IS_FALLING
     ADDNE R4, R4, #1
-    ; ANDNE R5, R5, #0b11111011
     BICNE R5, R5, #CAN_GO_DOWN_LADDER|CAN_GO_UP_LADDER
+    ADDNE R7, R7, #1
     STR R4, [R10, #sprite_y]
-    STR R5, batman_blocked
+    STR R5, batman_state
+    STR R7, batman_fall_count
     .ifne SPRITE_DEBUG
         STR R6, [R10, #sprite_attributes]
     .endif
@@ -1425,6 +1434,8 @@ main_draw_tile_map_loop:
     BL calculate_sprite_collisions
     BL draw_sprites
     BL clear_edges
+    BL update_collision_state
+    BL update_game_loop_key_state
 
     MOV R0, #129
     MOV R1, #-114
@@ -1531,12 +1542,10 @@ No_P_Key:
     STR R3, [R0, #0]
     STR R4, [R0, #4]
 
-    BL update_game_loop_key_state
-
     LDR R1, game_loop_key_state+game_loop_key_state_up_offset
     CMP R1, #255
     BNE No_Up_Pressed
-    LDR R0, batman_blocked
+    LDR R0, batman_state
     TST R0, #CAN_GO_UP_LADDER
     BNE Up_Pressed_On_Ladder
     ADR R1, sprite_00
@@ -1577,7 +1586,7 @@ No_Up_Pressed:
     CMP R1, #255
     BNE No_Down_Pressed
 
-    LDR R0, batman_blocked
+    LDR R0, batman_state
     TST R0, #IS_FALLING
     BNE No_Down_Pressed
 
@@ -1620,7 +1629,7 @@ No_Down_Pressed:
     LDR R1, game_loop_key_state+game_loop_key_state_left_offset
     CMP R1, #255
     BNE No_Left_Pressed
-    LDR R0, batman_blocked
+    LDR R0, batman_state
     TST R0, #0b10000001
     BNE No_Right_Pressed
     ADR R1, sprite_00
@@ -1643,7 +1652,7 @@ No_Left_Pressed:
     LDR R1, game_loop_key_state+game_loop_key_state_right_offset
     CMP R1, #255
     BNE No_Right_Pressed
-    LDR R0, batman_blocked
+    LDR R0, batman_state
     TST R0, #0b10000010
     BNE No_Right_Pressed
     ADR R1, sprite_00
@@ -1733,13 +1742,15 @@ Fire_Debounce:
     STR R2, [R6, #sprite_x]
     STR R3, [R6, #sprite_y]
 
-    BL update_collision_state
-
     ADR R0, level_1_map_types
     ADR R9, bat_bullets
     MOV R8, #0
     ADR R6, draw_bat_bullet_sprite
     ADR R10, sprite_02
+
+    LDR R0, batman_state
+    TST R0, #IS_DEAD
+    BNE main_exit
 
 update_bat_bullets_loop:
     LDMIA R9, {R3 - R6}
@@ -1884,7 +1895,10 @@ main_exit:
 frame_count:
     .4byte  0
 
-batman_blocked:
+batman_state:
+    .4byte  0
+
+batman_fall_count:
     .4byte  0
 
 bat_bullet_index:

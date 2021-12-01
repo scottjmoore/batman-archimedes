@@ -34,5 +34,11 @@
     .set    CAN_GO_UP_LADDER,       1<<5
     .set    CAN_FALL_DOWN,          1<<6
     .set    IS_FALLING,             1<<7
+
+    .set    IS_DEAD,                1<<31
+
+
+    .set    FATAL_FALL_HEIGHT,      200
+    .set    NO_CROUCH_FALL_HEIGHT,  24
     
 .endif
