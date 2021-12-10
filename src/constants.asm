@@ -7,7 +7,7 @@
 ;   ****************************************************************
 ;       Constants
 ;   ----------------------------------------------------------------
-;       Define constants used in this file and calling functions.
+;       Define constants used in the game and calling functions.
 ;   ****************************************************************
 
 .ifndef __CONSTANTS_ASM
@@ -18,6 +18,13 @@
     .set    CLIP_LEFT,      0
     .set    CLIP_RIGHT,     352
     .set    SCANLINE,       352
+
+    .set    FATAL_FALL_HEIGHT,      200
+    .set    NO_CROUCH_FALL_HEIGHT,  24
+
+    .set    MAX_ROPE_LENGTH,        200
+    .set    MIN_ROPE_ANGLE,         -45
+    .set    MAX_ROPE_ANGLE,         +45
 
     .set    TILE_BLOCKED,           0x9f
     .set    TILE_LADDER,            0x9e
@@ -33,6 +40,8 @@
     .set    CAN_GO_UP_LADDER,       1<<5
     .set    CAN_FALL_DOWN,          1<<6
     .set    IS_FALLING,             1<<7
+    .set    IS_FIRING_ROPE,         1<<8
+    .set    IS_ON_ROPE,             1<<9
     .set    IS_DEAD,                1<<31
 
     .set    PRESSED_LEFT,           1<<0
@@ -40,8 +49,6 @@
     .set    PRESSED_UP,             1<<2
     .set    PRESSED_DOWN,           1<<3
     .set    PRESSED_FIRE,           1<<4
+    .set    RELEASED_FIRE,          1<<5
 
-    .set    FATAL_FALL_HEIGHT,      200
-    .set    NO_CROUCH_FALL_HEIGHT,  24
-    
 .endif
