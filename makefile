@@ -236,5 +236,8 @@ deploy:
 	@cp src/Sprites $(ARCULATOR)/hostfs/!Batman/!Sprites,ff9
 	@cp build/batman $(ARCULATOR)/hostfs/!Batman/!RunImage,ff8
 	@cp build/main_title.bin ${ARCULATOR}/hostfs/!Batman/MainTitle,ffd
-	@cp build/intro_screen.bin ${ARCULATOR}/hostfs/!Batman/IntroScreen,ffd
+	@cp build/intro_screen.bin ${ARCULATOR}/hostfs/!Batman/IntroScree,ffd
 	@cp assets/blank.adf build/batman.adf
+
+deploy-mister:
+	@scp build/batman.adf root@mister:/media/fat/games/ARCHIE/

@@ -2125,7 +2125,7 @@ main_title_filename:
 ;   ----------------------------------------------------------------
     .align 4
 intro_screen_filename:
-    .byte "<Batman$Dir>.IntroScreen", 0
+    .byte "<Batman$Dir>.IntroScree", 0
     
 
 ;   ****************************************************************
